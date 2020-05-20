@@ -8,19 +8,29 @@ import java.util.UUID;
  */
 public class BookingsLedger {
 
-/*    public CampLedger() {
+
+
+    public querySearchCampsite(int cID)
+    {
+
     }
 
-    private ValidationHelper vh  = new ValidationHelper();
-    private HashMap<Integer, Guest> guests = new HashMap<Integer, Guest>();
-    //declare controller with collection and validator as parameters
-    private GuestController guestCtrl = new GuestController(guests,vh);
+    public void removeReservation(int ReservationID)
+    {
+
+    }
+
+    public void displayLot(int LotID)
+    {
+
+    }
+
+    public void removeLot(int LotID)
+    {
+
+    }
 
 
 
-    //getters
-    public HashMap<Integer, Guest> getGuests() {return guests;}
-    public GuestController guestController() {return guestCtrl;}
-    public ValidationHelper validationHelper() {return vh;}
-    */
+
 }
