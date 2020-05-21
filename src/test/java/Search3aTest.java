@@ -1,6 +1,9 @@
+import campground_data.Lot;
+import campground_data.NewLotSearch;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static campground_data.NewLotSearch.chooseDate;
 
 public class Search3aTest {
     int nStartDay;
@@ -22,7 +25,6 @@ public class Search3aTest {
         nEndDay = 8;
         nStartMonth = 8;
         nEndMonth = 8;
-
 
         obLotResults = chooseDate(nStartYear, nStartMonth, nStartDay, nEndYear, nEndMonth, nEndDay);
 
@@ -122,4 +124,16 @@ public class Search3aTest {
 
         assertEquals(obLotResults.length, 0);
     }
+
+    public void testEndBeforeStart() {
+        nStartDay = 7;
+        nStartMonth = 7;
+        nEndDay = 1;
+        nEndMonth = 7;
+
+        obLotResults = chooseDate(nStartYear, nStartMonth, nStartDay, nEndYear, nEndMonth, nEndDay);
+
+        assertEquals(obLotResults.length, 0);
+    }
+
 }
