@@ -2,6 +2,8 @@ import campground_data.Lot;
 import campground_data.NewLotSearch;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertEquals;
 import static campground_data.NewLotSearch.chooseDate;
 
@@ -12,7 +14,7 @@ public class Search3aTest {
     int nEndMonth;
     int nStartYear = 2020;
     int nEndYear = 2020;
-    Lot[] obLotResults;
+    ArrayList<Lot> obLotResults = new ArrayList<>();
     final int TOTAL_LOTS = 28;
 
 
@@ -28,7 +30,7 @@ public class Search3aTest {
 
         obLotResults = chooseDate(nStartYear, nStartMonth, nStartDay, nEndYear, nEndMonth, nEndDay);
 
-        assertEquals(obLotResults.length, TOTAL_LOTS);
+        assertEquals(obLotResults.size(), TOTAL_LOTS);
     }
 
     /**
@@ -43,7 +45,7 @@ public class Search3aTest {
 
         obLotResults = chooseDate(nStartYear, nStartMonth, nStartDay, nEndYear, nEndMonth, nEndDay);
 
-        assertEquals(obLotResults.length, 0);
+        assertEquals(obLotResults.size(), 0);
     }
 
     /**
@@ -60,7 +62,7 @@ public class Search3aTest {
 
         obLotResults = chooseDate(nStartYear, nStartMonth, nStartDay, nEndYear, nEndMonth, nEndDay);
 
-        assertEquals(obLotResults.length, 0);
+        assertEquals(obLotResults.size(), 0);
     }
 
     /**
@@ -77,7 +79,7 @@ public class Search3aTest {
 
         obLotResults = chooseDate(nStartYear, nStartMonth, nStartDay, nEndYear, nEndMonth, nEndDay);
 
-        assertEquals(obLotResults.length, 0);
+        assertEquals(obLotResults.size(), 0);
     }
 
     /**
@@ -94,7 +96,7 @@ public class Search3aTest {
 
         obLotResults = chooseDate(nStartYear, nStartMonth, nStartDay, nEndYear, nEndMonth, nEndDay);
 
-        assertEquals(obLotResults.length, TOTAL_LOTS);
+        assertEquals(obLotResults.size(), TOTAL_LOTS);
     }
 
     /**
@@ -108,7 +110,7 @@ public class Search3aTest {
 
         obLotResults = chooseDate(nStartYear, nStartMonth, nStartDay, nEndYear, nEndMonth, nEndDay);
 
-        assertEquals(obLotResults.length, 0);
+        assertEquals(obLotResults.size(), 0);
     }
 
     /**
@@ -122,7 +124,7 @@ public class Search3aTest {
 
         obLotResults = chooseDate(nStartYear, nStartMonth, nStartDay, nEndYear, nEndMonth, nEndDay);
 
-        assertEquals(obLotResults.length, 0);
+        assertEquals(obLotResults.size(), 0);
     }
 
     public void testEndBeforeStart() {
@@ -133,7 +135,7 @@ public class Search3aTest {
 
         obLotResults = chooseDate(nStartYear, nStartMonth, nStartDay, nEndYear, nEndMonth, nEndDay);
 
-        assertEquals(obLotResults.length, 0);
+        assertEquals(obLotResults.size(), 0);
     }
 
 }
