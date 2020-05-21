@@ -15,7 +15,6 @@ public class BookingsLedgerTest {
         int LotID256 = 256;
         int LotID1000 = 1000;
 
-
         BookingsLedger TestLedger = new BookingsLedger();
 
         Lot testLot1 = TestLedger.querySearchCampsite(LotID1);
