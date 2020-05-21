@@ -12,14 +12,19 @@ public class BookingsLedger {
     ArrayList<Customer> aCustomer;
     ArrayList<Manager> aManager;
 
-    public void querySearchCampsite(int cID)
+    public Lot querySearchCampsite(int cID)
     {
+        ArrayList<Reservation> obReservationList = new ArrayList<>();
+        boolean sAvailable = true;
 
+        Lot testLot = new Lot(1, LotType.Serviced, obReservationList, 1, "", sAvailable);
+        return testLot;
     }
 
-    public void removeReservation(int ReservationID)
+    public ArrayList<Reservation> removeReservation(int ReservationID)
     {
-
+        ArrayList<Reservation> testReservation = new ArrayList<>();
+        return testReservation;
     }
 
     public void displayLot(int LotID)
@@ -27,9 +32,17 @@ public class BookingsLedger {
 
     }
 
-    public void removeLot(int LotID)
+    public ArrayList<Reservation> removeLot(int LotID)
     {
+        Lot testLot = querySearchCampsite(LotID);
+        return testLot.obReservationList;
 
+    }
+
+    public ArrayList<Reservation> getReservations(int lotID)
+    {
+        ArrayList<Reservation> testReservation = new ArrayList<>();
+        return testReservation;
     }
 
 
