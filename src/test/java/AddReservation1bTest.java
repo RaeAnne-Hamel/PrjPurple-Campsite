@@ -111,8 +111,31 @@ public class AddReservation1bTest extends TestCase
 
     }
 
+    @Test
+    public void testOneYearIntoFuture()
+    {
+        //GregorianCalendar of Jan 1st, 2021 12:00PM
+        Date testStartDate = new GregorianCalendar(2022, 0,10).getTime();
+        //GregorianCalendar of Jan 5th, 2021 12:00PM
+        Date testEndDate = new GregorianCalendar(2022,0,15).getTime();
+
+        assertEquals("Reservation over a year into the future", addReservation(0,testStartDate, testEndDate, testCustomer, 2));
+    }
+
+    @Test
+    public void testOverCapacity()
+    {
+        //GregorianCalendar of Jan 1st, 2021 12:00PM
+        Date testStartDate = new GregorianCalendar(2021, 0,10).getTime();
+        //GregorianCalendar of Jan 5th, 2021 12:00PM
+        Date testEndDate = new GregorianCalendar(2021,0,15).getTime();
+
+        assertEquals("Reservation overcapacity", addReservation(0,testStartDate, testEndDate, testCustomer, 12));
+    }
 
     //Gregorian Calendar Example stored using military time
     //GregorianCalendar(int year, int month, int date, int hour, int minute)
-    //Use .getTime() to return a date
+    //GregorianCalendar(int year, int month, int date)
+    //int month is 0 based. 0 = Jan, 11 = Dec
+    //Use .getTime() to return a Date object
 }
