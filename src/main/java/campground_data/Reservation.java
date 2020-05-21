@@ -21,10 +21,12 @@ public class Reservation {
         this.obStart = obStart;
         this.obEnd = EndDate;
         this.cabinType = cabinType;
-        this.ReservationCode = null;  //TODO: find where this comes from in booking leduger
+        this.ReservationCode = 0;  //TODO: find where this comes from in booking leduger
         this.price = CalculatePrice();
 
     }
+
+
 
     public String setCustomerNumber(int number)
     {
@@ -47,6 +49,9 @@ public class Reservation {
             return "There is already the maximum number of people booked";
         }
 
+    }
+
+    private double CalculatePrice() {
     }
 
 
