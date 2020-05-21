@@ -13,7 +13,7 @@ public class Guest  implements Serializable {
     public Guest() {
     }
 
-/*
+
     @Override
     public String toString() {
         JSONObject jsonObject = new JSONObject();
@@ -33,5 +33,5 @@ public class Guest  implements Serializable {
     public String getFirstName() {return firstName;}
     public void setFirstName(String firstName) {this.firstName = firstName;}
 
- */
+
 }

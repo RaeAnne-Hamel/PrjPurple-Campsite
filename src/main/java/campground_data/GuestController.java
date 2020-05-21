@@ -8,13 +8,13 @@ import java.util.UUID;
  */
 public class GuestController {
 
-/*    private HashMap<Integer, Guest> guests;
+    private HashMap<Integer, Guest> guests;
     private ValidationHelper vh;
 
     public GuestController(HashMap<Integer, Guest> guests, ValidationHelper vh) {
         this.guests = guests;
         this.vh = vh;
-    }*/
+    }
 
     /***
      * Add car as long as it's valid and not in the hashmap already

@@ -8,7 +8,7 @@ import java.util.UUID;
  */
 public class CampLedger {
 
-/*    public CampLedger() {
+    public CampLedger() {
     }
 
     private ValidationHelper vh  = new ValidationHelper();
@@ -22,5 +22,5 @@ public class CampLedger {
     public HashMap<Integer, Guest> getGuests() {return guests;}
     public GuestController guestController() {return guestCtrl;}
     public ValidationHelper validationHelper() {return vh;}
-    */
+
 }

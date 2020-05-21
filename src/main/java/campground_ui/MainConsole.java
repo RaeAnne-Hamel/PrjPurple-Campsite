@@ -10,6 +10,7 @@ import java.util.UUID;
  */
 public class MainConsole {
 
+
     //private static CampLedger campLedger = new CampLedger();
     private static Scanner read = new Scanner(System.in);
 
