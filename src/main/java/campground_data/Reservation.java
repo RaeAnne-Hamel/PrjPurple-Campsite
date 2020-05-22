@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Reservation {
 
+    Lot obLot;
     Customer[] obCustomerList;
     int nCustomerCount;
     Date obStartDate;
@@ -12,5 +13,7 @@ public class Reservation {
     int StaticReservationID;
     double price;
     String Status = "Active";
+
+
 
 }

@@ -45,28 +45,44 @@ public class BookingsLedger {
         return testReservation;
     }
 
+    /*
+    Outputs the information in a good looking format to the console
+     */
     public void displayLot(int LotID)
     {
+        Lot displayLot = querySearchCampsite(LotID);
+        System.out.printf("Lot ID: " + displayLot.nLotID +
+                "\nLot Type: " + displayLot.obType +
+                "\nRemoval Reason: " + displayLot.sRemovalReason +
+                "\nAvailability " + displayLot.bAvailability);
+    }
+
+    /*
+    Removes
+     */
+    public void removeLot(int LotID)
+    {
+
 
     }
 
     /*
-    Test Code make sure to remove and make actual code
+    Takes in a LotID and returns an ArrayList of reservations associated with that Lot based on the ID
      */
-    public ArrayList<Reservation> removeLot(int LotID)
+    public ArrayList<Reservation> getReservations(int LotID)
     {
-        Lot testLot = querySearchCampsite(LotID);
-        return testLot.obReservationList;
+        ArrayList<Reservation> obRes = new ArrayList<>();
 
-    }
+        for (int i=0; i<aReservation.size(); i++)
+        {
+            if (aReservation.get(i).obLot.nLotID == LotID)
+            {
+                obRes.add(aReservation.get(i));
+            }
+        }
 
-    /*
-    Test Code make sure to remove and make actual code
-     */
-    public ArrayList<Reservation> getReservations(int lotID)
-    {
-        ArrayList<Reservation> testReservation = new ArrayList<>();
-        return testReservation;
+        return obRes;
+
     }
 
 
