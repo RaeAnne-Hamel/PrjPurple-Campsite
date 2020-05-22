@@ -1,8 +1,6 @@
 package campground_data;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.UUID;
 
 /***
  * example class may be removed
@@ -11,7 +9,7 @@ public class BookingsLedger {
 
 
     public static Manager user = new Manager();
-    public ArrayList<Reservation> aReservation
+    private static ArrayList<Reservation> aReservation = new ArrayList<>();
 
     public Manager getUser()
     {
@@ -32,10 +30,52 @@ public class BookingsLedger {
         return true;
     }
 
-    public static boolean removeReservation(int ID)
+    /*Check if the inputted reservation string is a valid ID (long) */
+    public boolean isValidReservation()
     {
 
-        return true;
+    }
+
+
+
+    /* Checks whether a reservation to be removed exists */
+    public static Reservation getReservation(int ID)
+    {
+        for(Reservation res: aReservation)
+        {
+            /*If the Reservation ID is found*/
+            if (res.getID() == ID)
+            {
+                return res;
+            }
+        }
+        return null;
+    }
+
+
+    public static boolean removeReservation(int ID)
+    {
+        /* Create a temporary Reservation ArrayList */
+        ArrayList<Reservation> tmpReservations = new ArrayList<>();
+        boolean lotFound = false;
+
+        for(Reservation res: aReservation)
+        {
+            /*If the Reservation ID is found*/
+            if (res.getID() == ID)
+            {
+                lotFound = true;
+
+                /* Double check if they want to remove */
+                continue;
+            }
+
+            /* Add a reservation to the tmp resorvation */
+            tmpReservations.add(res);
+        }
+
+        aReservation = tmpReservations;
+        return lotFound;
     }
 
 /*    public CampLedger() {

@@ -13,7 +13,8 @@ public class MainConsole {
     //private static CampLedger campLedger = new CampLedger();
     private static Scanner read = new Scanner(System.in);
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
 
         boolean quit = false;
         do{
@@ -36,6 +37,13 @@ public class MainConsole {
             System.out.println("");
         } while (!quit);
         System.out.println("Quit Application");
+    }
+
+    public static String Prompt(String Message)
+    {
+        System.out.println(Message);
+
+        return
     }
 
     private static void listSomething(){
