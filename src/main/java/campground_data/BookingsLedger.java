@@ -1,7 +1,6 @@
 package campground_data;
 
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 public class BookingsLedger {
 

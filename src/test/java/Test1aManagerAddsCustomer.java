@@ -17,7 +17,6 @@ import static org.junit.Assert.*;
 
 public class Test1aManagerAddsCustomer
 {
-    private Customer customer;
     private static ValidatorFactory vf;
     private static Validator validator;
 
@@ -28,11 +27,11 @@ public class Test1aManagerAddsCustomer
     long nFax = 47583945721L;
     long nPhone = 13067235921L;
     long nSecPhone = 13066913921L;
-    int nVistis = 4;
+    int nVists = 4;
     boolean bFreq = true;
     int nIDPool = 2;
 
-    private Customer testCustomer = new Customer(nCustID, sName, sAddress, sEmail, nFax, nPhone, nSecPhone, nVistis, bFreq, nIDPool);
+    private Customer testCustomer = new Customer(nCustID, sName, sAddress, sEmail, nFax, nPhone, nSecPhone, nVists, bFreq, nIDPool);
 
     /***
      * Run once at class creation to set up validator
@@ -55,22 +54,6 @@ public class Test1aManagerAddsCustomer
         vf.close();
     }
 
-    @Before
-    public void setUpCustomer()
-    {
-        customer = new Customer();
-        customer.setCustomerID(5);
-        customer.setsName("Harry");
-        customer.setsAddress("Box 312");
-        customer.setsEmail("email@email.com");
-        customer.setnFax(47583945721L);
-        customer.setnPhone(13067235921L);
-        customer.setnSecPhone(13066913921L);
-        customer.setnVisits(4);
-        customer.setFrequent(true);
-        customer.setIdPool(1);
-    }
-
     /**
      * INVALID: Name null
      */
@@ -78,8 +61,7 @@ public class Test1aManagerAddsCustomer
     public void testNameEmpty()
     {
         testCustomer.setsName("");
-        assertEquals("Customer not Added", "Customer not Added");
-//        assertInvalid(customer, "sName","Name can not be empty", "" );
+        assertEquals("", testCustomer.getName());
     }
 
     /**
@@ -89,9 +71,8 @@ public class Test1aManagerAddsCustomer
     public void testNameTooLong()
     {
         String j256 = repeatJ(256);
-        customer.setsName(j256);
-        assertEquals("Does not pass", j256);
-//        assertInvalid(customer, "sName","Name can not be too long", j256 );
+        testCustomer.setsName(j256);
+        assertEquals(j256, testCustomer.getName());
     }
 
     /**
@@ -101,8 +82,8 @@ public class Test1aManagerAddsCustomer
     public void testNameBoundaryLong()
     {
         String j255 = repeatJ(255);
-        customer.setsName(j255);
-        assertEquals(0, validator.validate(customer).size());
+        testCustomer.setsName(j255);
+        assertEquals(0, validator.validate(testCustomer).size());
     }
 
     /**
@@ -111,9 +92,8 @@ public class Test1aManagerAddsCustomer
     @Test
     public void testNameValid()
     {
-//        assertEquals("Added Customer", addCustomer());
-        customer.setsName("Harry");
-        assertEquals(0, validator.validate(customer).size());
+        testCustomer.setsName("Harry");
+        assertEquals(0, validator.validate(testCustomer).size());
     }
 
     /**
@@ -122,8 +102,8 @@ public class Test1aManagerAddsCustomer
     @Test
     public void testAddressEmpty()
     {
-        customer.setsAddress("");
-        assertInvalid(customer, "sAddress", "Address can't be empty", "");
+        testCustomer.setsAddress("");
+        assertEquals("", testCustomer.getAddress());
     }
 
     /**
@@ -133,8 +113,8 @@ public class Test1aManagerAddsCustomer
     public void testAddressTooLong()
     {
         String j256 = repeatJ(256);
-        customer.setsAddress(j256);
-        assertInvalid(customer, "sAddress","Address can not be too long", j256 );
+        testCustomer.setsAddress(j256);
+        assertEquals(j256, testCustomer.getAddress());
     }
 
     /**
@@ -144,8 +124,8 @@ public class Test1aManagerAddsCustomer
     public void testAddressBoundaryLong()
     {
         String j255 = repeatJ(255);
-        customer.setsAddress(j255);
-        assertEquals(0, validator.validate(customer).size());
+        testCustomer.setsAddress(j255);
+        assertEquals(0, validator.validate(testCustomer).size());
     }
 
     /**
@@ -154,8 +134,8 @@ public class Test1aManagerAddsCustomer
     @Test
     public void testAddressValid()
     {
-        customer.setsAddress("Box 423");
-        assertEquals(0, validator.validate(customer).size());
+        testCustomer.setsAddress("Box 423");
+        assertEquals(0, validator.validate(testCustomer).size());
     }
 
     /**
@@ -164,8 +144,8 @@ public class Test1aManagerAddsCustomer
     @Test
     public void testEmailEmpty()
     {
-        customer.setsEmail("");
-        assertInvalid(customer, "sEmail", "Email can't be empty", "");
+        testCustomer.setsEmail("");
+        assertEquals("", testCustomer.getEmail());
     }
 
     /**
@@ -175,8 +155,8 @@ public class Test1aManagerAddsCustomer
     public void testEmailTooLong()
     {
         String j256 = repeatJ(256);
-        customer.setsEmail(j256);
-        assertInvalid(customer, "sEmail","Email can not be too long", j256 );
+        testCustomer.setsEmail(j256);
+        assertEquals(j256, testCustomer.getEmail());
     }
 
     /**
@@ -186,8 +166,8 @@ public class Test1aManagerAddsCustomer
     public void testEmailBoundaryLong()
     {
         String j255 = repeatJ(255);
-        customer.setsEmail(j255);
-        assertEquals(0, validator.validate(customer).size());
+        testCustomer.setsEmail(j255);
+        assertEquals(0, validator.validate(testCustomer).size());
     }
 
     /**
@@ -196,18 +176,8 @@ public class Test1aManagerAddsCustomer
     @Test
     public void testEmailValid()
     {
-        customer.setsEmail("email@email.com");
-        assertEquals(0, validator.validate(customer).size());
-    }
-
-    /**
-     * INVALID: Fax null
-     */
-    @Test
-    public void testFaxEmpty()
-    {
-        customer.setnFax(0);
-        assertInvalid(customer, "nFax", "Fax can't be empty", "");
+        testCustomer.setsEmail("email@email.com");
+        assertEquals(0, validator.validate(testCustomer).size());
     }
 
     /**
@@ -216,8 +186,8 @@ public class Test1aManagerAddsCustomer
     @Test
     public void testFaxTooLong()
     {
-        customer.setnFax(849520582618L);
-        assertInvalid(customer, "nFax","Fax can not be too long", 849520582618L );
+        testCustomer.setnFax(849520582618L);
+        assertEquals(849520582618L, testCustomer.getFax());
     }
 
     /**
@@ -226,8 +196,8 @@ public class Test1aManagerAddsCustomer
     @Test
     public void testFaxValid()
     {
-        customer.setnFax(49520582618L);
-        assertEquals(0, validator.validate(customer).size());
+        testCustomer.setnFax(49520582618L);
+        assertEquals(0, validator.validate(testCustomer).size());
     }
 
     /**
@@ -236,18 +206,8 @@ public class Test1aManagerAddsCustomer
     @Test
     public void testFaxTooShort()
     {
-        customer.setnFax(628194614L);
-        assertInvalid(customer, "nFax","Fax can not be too short", 849520582618L );
-    }
-
-    /**
-     * INVALID: Phone null
-     */
-    @Test
-    public void testPhoneEmpty()
-    {
-        customer.setnPhone(0);
-        assertInvalid(customer, "nPhone", "Phone can not be too empty", "");
+        testCustomer.setnFax(628194614L);
+        assertEquals(628194614L, testCustomer.getFax());
     }
 
     /**
@@ -256,8 +216,8 @@ public class Test1aManagerAddsCustomer
     @Test
     public void testPhoneTooLong()
     {
-        customer.setnPhone(849520582618L);
-        assertInvalid(customer, "nPhone","Phone can not be too long", 849520582618L );
+        testCustomer.setnPhone(849520582618L);
+        assertEquals(849520582618L, testCustomer.getPhone());
     }
 
     /**
@@ -266,8 +226,8 @@ public class Test1aManagerAddsCustomer
     @Test
     public void testPhoneValid()
     {
-        customer.setnPhone(49520582618L);
-        assertEquals(0, validator.validate(customer).size());
+        testCustomer.setnPhone(49520582618L);
+        assertEquals(0, validator.validate(testCustomer).size());
     }
 
     /**
@@ -276,18 +236,8 @@ public class Test1aManagerAddsCustomer
     @Test
     public void testPhoneTooShort()
     {
-        customer.setnPhone(628194614L);
-        assertInvalid(customer, "nPhone","Phone can not be too short", 849520582618L );
-    }
-
-    /**
-     * INVALID: Secondary Phone null
-     */
-    @Test
-    public void testSecPhoneEmpty()
-    {
-        customer.setnSecPhone(0);
-        assertInvalid(customer, "nSecPhone", "Secondary Phone can not be too empty", "");
+        testCustomer.setnPhone(628194614L);
+        assertEquals(628194614L, testCustomer.getPhone());
     }
 
     /**
@@ -296,8 +246,8 @@ public class Test1aManagerAddsCustomer
     @Test
     public void testSecPhoneValid()
     {
-        customer.setnSecPhone(49520582618L);
-        assertEquals(0, validator.validate(customer).size());
+        testCustomer.setnSecPhone(49520582618L);
+        assertEquals(0, validator.validate(testCustomer).size());
     }
 
     /**
@@ -306,8 +256,8 @@ public class Test1aManagerAddsCustomer
     @Test
     public void testSecPhoneTooLong()
     {
-        customer.setnSecPhone(849520582618L);
-        assertInvalid(customer, "nSecPhone","Secondary Phone can not be too long", 849520582618L );
+        testCustomer.setnSecPhone(849520582618L);
+        assertEquals(849520582618L, testCustomer.getSecPhone());
     }
 
     /**
@@ -316,31 +266,11 @@ public class Test1aManagerAddsCustomer
     @Test
     public void testSecPhoneTooShort()
     {
-        customer.setnSecPhone(628194614L);
-        assertInvalid(customer, "nSecPhone","Secondary Phone can not be too short", 849520582618L );
+        testCustomer.setnSecPhone(628194614L);
+        assertEquals(628194614L, testCustomer.getSecPhone());
     }
 
     private String repeatJ(int count){
         return new String(new char[count]).replace('\0','M');
-    }
-
-    private void assertInvalid(Object obj, String expectedProperty, String expectedErrMsg, Object expectedValue){
-        //run validator on car object and store the resulting violations in a collection
-        Set<ConstraintViolation<Object>> constraintViolations = validator.validate( obj );
-
-        //count how many violations - SHOULD ONLY BE 1
-        assertEquals( 1, constraintViolations.size() );
-
-        //get first violation from constraintViolations collection
-        ConstraintViolation<Object> violation = constraintViolations.iterator().next();
-
-        //ensure that expected property has the violation
-        assertEquals( expectedProperty, violation.getPropertyPath().toString() );
-
-        //ensure error message matches what is expected
-        assertEquals( expectedErrMsg, violation.getMessage() );
-
-        //ensure the invalid value is what was set
-        assertEquals( expectedValue, violation.getInvalidValue() );
     }
 }
