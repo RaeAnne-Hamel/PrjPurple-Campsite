@@ -1,7 +1,7 @@
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author RaeAnne Hamel
@@ -43,43 +43,43 @@ public class TransactionTest {
     @Test
     public void testCheckPaymentType()
     {
-        PaymentType testType1 = cash;
-        PaymentType testType2 = debit;
-        PaymentType testType3 = credit;
+        PaymentType testType1 = PaymentType.CASH;
+        PaymentType testType2 = PaymentType.CREDITCARD;
+        PaymentType testType3 = PaymentType.DEBIT;
 
-        PaymentMethod payMeth = inPerson;
+        PaymentMethod payMeth = PaymentMethod.INPERSON;
 
-        Transaction testTransaction = new Transaction(1, "", payMeth);
+        Transaction testTransaction = new Transaction(payMeth);
 
-        testTransaction.setPaymentType(testType1);
-        assertEquals(testType1, testTransaction.getPaymentType());
-        testTransaction.setPaymentType(testType2);
-        assertEquals(testType2, testTransaction.getPaymentType());
-        testTransaction.setPaymentType(testType3);
-        assertEquals(testType3, testTransaction.getPaymentType());
+        testTransaction.setPayType(testType1);
+        assertEquals(testType1, testTransaction.getPayType());
+        testTransaction.setPayType(testType2);
+        assertEquals(testType2, testTransaction.getPayType());
+        testTransaction.setPayType(testType3);
+        assertEquals(testType3, testTransaction.getPayType());
 
     }
 
     @Test
     public void testCheckPaymentMethod()
     {
-        PaymentMethod testType1 = inPerson;
-        PaymentMethod testType2 = fax;
-        PaymentMethod testType3 = email;
-        PaymentMethod testType4 = phone;
+        PaymentMethod testType1 = PaymentMethod.EMAIL;
+        PaymentMethod testType2 = PaymentMethod.FAX;
+        PaymentMethod testType3 = PaymentMethod.INPERSON;
+        PaymentMethod testType4 = PaymentMethod.PHONE;
 
-        PaymentType payType = debit;
+        PaymentType payType = PaymentType.CREDITCARD;
 
-        Transaction testTransaction = new Transaction(1, payType, "");
+        Transaction testTransaction = new Transaction(payType, "");
 
-        testTransaction.setPaymentMethod(testType1);
-        assertEquals(testType1, testTransaction.getPaymentMethod());
-        testTransaction.setPaymentMethod(testType2);
-        assertEquals(testType2, testTransaction.getPaymentMethod());
-        testTransaction.setPaymentMethod(testType3);
-        assertEquals(testType3, testTransaction.getPaymentMethod());
-        testTransaction.setPaymentMethod(testType4);
-        assertEquals(testType4, testTransaction.getPaymentMethod());
+        testTransaction.setPayMethod(testType1);
+        assertEquals(testType1, testTransaction.getPayMethod());
+        testTransaction.setPayMethod(testType2);
+        assertEquals(testType2, testTransaction.getPayMethod());
+        testTransaction.setPayMethod(testType3);
+        assertEquals(testType3, testTransaction.getPayMethod());
+        testTransaction.setPayMethod(testType4);
+        assertEquals(testType4, testTransaction.getPayMethod());
 
     }
 
@@ -96,12 +96,8 @@ public class TransactionTest {
         double expectedPrice2 = 105.00;
         double expectedPrice3 = 85.00;
         double expectedPrice4 = 345.00;
-        
-        assertEquals(expectedPrice1, testReservation.getPrice(), 0.001);
-        assertEquals(expectedPrice2, testReservation2.getPrice(), 0.001);
-        assertEquals(expectedPrice3, testReservation3.getPrice(), 0.001);
-        assertEquals(expectedPrice4, testReservation4.getPrice(), 0.001);
-        assertEquals(expectedPrice4, testReservation4.getPrice(), 0.001);
+
+        assertTrue(testReservation.getPrice());
 
     }
 
@@ -109,8 +105,8 @@ public class TransactionTest {
     public void testChangeReservationStatus()
     {
         String testStatus = "inActive";
-        PaymentType testType = debit;
-        PaymentMethod testMethod = inPerson;
+        PaymentType testType = PaymentType.DEBIT;
+        PaymentMethod testMethod = PaymentMethod.INPERSON;
 
         Reservation testReservation = new Reservation() //need constructor setup
         Reservation testReservation2 = new Reservation() //need constructor setup
