@@ -1,17 +1,11 @@
-import campground_data.BookingsLedger;
 import campground_data.Customer;
-import junit.framework.TestCase;
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-
-import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -60,7 +54,7 @@ public class Test1aManagerAddsCustomer
     @Test
     public void testNameEmpty()
     {
-        testCustomer.setsName("");
+        testCustomer.setName("");
         assertEquals("", testCustomer.getName());
     }
 
@@ -71,7 +65,7 @@ public class Test1aManagerAddsCustomer
     public void testNameTooLong()
     {
         String j256 = repeatJ(256);
-        testCustomer.setsName(j256);
+        testCustomer.setName(j256);
         assertEquals(j256, testCustomer.getName());
     }
 
@@ -82,7 +76,7 @@ public class Test1aManagerAddsCustomer
     public void testNameBoundaryLong()
     {
         String j255 = repeatJ(255);
-        testCustomer.setsName(j255);
+        testCustomer.setName(j255);
         assertEquals(0, validator.validate(testCustomer).size());
     }
 
@@ -92,7 +86,7 @@ public class Test1aManagerAddsCustomer
     @Test
     public void testNameValid()
     {
-        testCustomer.setsName("Harry");
+        testCustomer.setName("Harry");
         assertEquals(0, validator.validate(testCustomer).size());
     }
 
@@ -102,7 +96,7 @@ public class Test1aManagerAddsCustomer
     @Test
     public void testAddressEmpty()
     {
-        testCustomer.setsAddress("");
+        testCustomer.setAddress("");
         assertEquals("", testCustomer.getAddress());
     }
 
@@ -113,7 +107,7 @@ public class Test1aManagerAddsCustomer
     public void testAddressTooLong()
     {
         String j256 = repeatJ(256);
-        testCustomer.setsAddress(j256);
+        testCustomer.setAddress(j256);
         assertEquals(j256, testCustomer.getAddress());
     }
 
@@ -124,7 +118,7 @@ public class Test1aManagerAddsCustomer
     public void testAddressBoundaryLong()
     {
         String j255 = repeatJ(255);
-        testCustomer.setsAddress(j255);
+        testCustomer.setAddress(j255);
         assertEquals(0, validator.validate(testCustomer).size());
     }
 
@@ -134,7 +128,7 @@ public class Test1aManagerAddsCustomer
     @Test
     public void testAddressValid()
     {
-        testCustomer.setsAddress("Box 423");
+        testCustomer.setAddress("Box 423");
         assertEquals(0, validator.validate(testCustomer).size());
     }
 
@@ -144,7 +138,7 @@ public class Test1aManagerAddsCustomer
     @Test
     public void testEmailEmpty()
     {
-        testCustomer.setsEmail("");
+        testCustomer.setEmail("");
         assertEquals("", testCustomer.getEmail());
     }
 
@@ -155,7 +149,7 @@ public class Test1aManagerAddsCustomer
     public void testEmailTooLong()
     {
         String j256 = repeatJ(256);
-        testCustomer.setsEmail(j256);
+        testCustomer.setEmail(j256);
         assertEquals(j256, testCustomer.getEmail());
     }
 
@@ -166,7 +160,7 @@ public class Test1aManagerAddsCustomer
     public void testEmailBoundaryLong()
     {
         String j255 = repeatJ(255);
-        testCustomer.setsEmail(j255);
+        testCustomer.setEmail(j255);
         assertEquals(0, validator.validate(testCustomer).size());
     }
 
@@ -176,7 +170,7 @@ public class Test1aManagerAddsCustomer
     @Test
     public void testEmailValid()
     {
-        testCustomer.setsEmail("email@email.com");
+        testCustomer.setEmail("email@email.com");
         assertEquals(0, validator.validate(testCustomer).size());
     }
 
@@ -186,7 +180,7 @@ public class Test1aManagerAddsCustomer
     @Test
     public void testFaxTooLong()
     {
-        testCustomer.setnFax(849520582618L);
+        testCustomer.setFax(849520582618L);
         assertEquals(849520582618L, testCustomer.getFax());
     }
 
@@ -196,7 +190,7 @@ public class Test1aManagerAddsCustomer
     @Test
     public void testFaxValid()
     {
-        testCustomer.setnFax(49520582618L);
+        testCustomer.setFax(49520582618L);
         assertEquals(0, validator.validate(testCustomer).size());
     }
 
@@ -206,7 +200,7 @@ public class Test1aManagerAddsCustomer
     @Test
     public void testFaxTooShort()
     {
-        testCustomer.setnFax(628194614L);
+        testCustomer.setFax(628194614L);
         assertEquals(628194614L, testCustomer.getFax());
     }
 
@@ -216,7 +210,7 @@ public class Test1aManagerAddsCustomer
     @Test
     public void testPhoneTooLong()
     {
-        testCustomer.setnPhone(849520582618L);
+        testCustomer.setPhone(849520582618L);
         assertEquals(849520582618L, testCustomer.getPhone());
     }
 
@@ -226,7 +220,7 @@ public class Test1aManagerAddsCustomer
     @Test
     public void testPhoneValid()
     {
-        testCustomer.setnPhone(49520582618L);
+        testCustomer.setPhone(49520582618L);
         assertEquals(0, validator.validate(testCustomer).size());
     }
 
@@ -236,7 +230,7 @@ public class Test1aManagerAddsCustomer
     @Test
     public void testPhoneTooShort()
     {
-        testCustomer.setnPhone(628194614L);
+        testCustomer.setPhone(628194614L);
         assertEquals(628194614L, testCustomer.getPhone());
     }
 
@@ -246,7 +240,7 @@ public class Test1aManagerAddsCustomer
     @Test
     public void testSecPhoneValid()
     {
-        testCustomer.setnSecPhone(49520582618L);
+        testCustomer.setSecPhone(49520582618L);
         assertEquals(0, validator.validate(testCustomer).size());
     }
 
@@ -256,7 +250,7 @@ public class Test1aManagerAddsCustomer
     @Test
     public void testSecPhoneTooLong()
     {
-        testCustomer.setnSecPhone(849520582618L);
+        testCustomer.setSecPhone(849520582618L);
         assertEquals(849520582618L, testCustomer.getSecPhone());
     }
 
@@ -266,7 +260,7 @@ public class Test1aManagerAddsCustomer
     @Test
     public void testSecPhoneTooShort()
     {
-        testCustomer.setnSecPhone(628194614L);
+        testCustomer.setSecPhone(628194614L);
         assertEquals(628194614L, testCustomer.getSecPhone());
     }
 

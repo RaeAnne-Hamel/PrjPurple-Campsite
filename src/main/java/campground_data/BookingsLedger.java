@@ -51,15 +51,9 @@ public class BookingsLedger {
         }
     }
 
-    public void tooLongString(String word, int length)
-    {
-        if (word.length() >= length) bCustomerPasses = false;
-    }
+    public void tooLongString(String word, int length) { if (word.length() >= length) bCustomerPasses = false; }
 
-    public void tooShortString(String word, int length)
-    {
-        if (word.length() <= length) bCustomerPasses = false;
-    }
+    public void tooShortString(String word, int length) { if (word.length() <= length) bCustomerPasses = false; }
 
     public void tooBigLong(long number)
     {

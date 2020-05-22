@@ -1,15 +1,9 @@
 package campground_data;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
-
 public class Customer {
     private int CustomerID;
     private String sName;
     private String sAddress;
-
-//    String sName;
-//    String sAddress;
     private String sEmail;
     private long nFax;
     private long nPhone;
@@ -34,9 +28,6 @@ public class Customer {
     }
 
     public Customer() { }
-
-//    @NotEmpty(message = "Name can not be empty")
-//    @Size(max = 25, message = "Name can not be too long")
 
     public int getCustomerID() { return CustomerID; }
 
@@ -67,7 +58,7 @@ public class Customer {
         return nSecPhone;
     }
 
-    public int getnVisits() { return nVisits; }
+    public int getVisits() { return nVisits; }
 
     public boolean isFrequent() { return isFrequent; }
 
@@ -75,19 +66,19 @@ public class Customer {
 
     public void setCustomerID(int customerID) { CustomerID = customerID; }
 
-    public void setsName(String sName) { this.sName = sName; }
+    public void setName(String sName) { this.sName = sName; }
 
-    public void setsAddress(String sAddress) { this.sAddress = sAddress; }
+    public void setAddress(String sAddress) { this.sAddress = sAddress; }
 
-    public void setsEmail(String sEmail) { this.sEmail = sEmail; }
+    public void setEmail(String sEmail) { this.sEmail = sEmail; }
 
-    public void setnFax(long nFax) { this.nFax = nFax; }
+    public void setFax(long nFax) { this.nFax = nFax; }
 
-    public void setnPhone(long nPhone) { this.nPhone = nPhone; }
+    public void setPhone(long nPhone) { this.nPhone = nPhone; }
 
-    public void setnSecPhone(long nSecPhone) { this.nSecPhone = nSecPhone; }
+    public void setSecPhone(long nSecPhone) { this.nSecPhone = nSecPhone; }
 
-    public void setnVisits(int nVisits) { this.nVisits = nVisits; }
+    public void setVisits(int nVisits) { this.nVisits = nVisits; }
 
     public void setFrequent(boolean frequent) { isFrequent = frequent; }
 
