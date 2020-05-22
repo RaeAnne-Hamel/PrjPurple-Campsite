@@ -65,8 +65,6 @@ public class BookingsLedger
 
             default:
                 return false;
-                System.out.printf("LOTTYPE INVALID ENUM");
-                break;
         }
 
         //If all checks have succeeded add the reservation to aReservations and return true
