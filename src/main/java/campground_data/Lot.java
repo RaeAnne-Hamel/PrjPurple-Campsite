@@ -52,7 +52,8 @@ public class Lot {
         }
     }
 
-    public boolean getAvailability()
+
+        public boolean getAvailability()
     {
         return bAvailability;
     }

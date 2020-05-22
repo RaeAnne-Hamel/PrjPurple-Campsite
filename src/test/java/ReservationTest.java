@@ -1,3 +1,5 @@
+import campground_data.Lot;
+import campground_data.LotType;
 import campground_data.Reservation;
 import jdk.jfr.StackTrace;
 
@@ -12,11 +14,15 @@ class TestReservation {
     private Date obStart = new Date(2020, Calendar.JUNE, 11);
     private Date obEnd = new Date(2020, Calendar.JUNE, 15);
 
+    Lot obRegLot = new Lot( LotType.NonServicedIndividual);
+    Lot obGroupLot = new Lot( LotType.NonServicedIndividual);
+
+
 
     //this will be a basic reservation
-    private Reservation testRegularReservation = new Reservation(null, 3,obStart, obEnd, "Regualr");
+    private Reservation testRegularReservation = new Reservation(null, 3,obStart, obEnd, obRegLot);
     //this will be a group reservation
-    private Reservation testGroupReservation = new Reservation(null, 6,obStart, obEnd, "Group");
+    private Reservation testGroupReservation = new Reservation(null, 6,obStart, obEnd, obGroupLot);
 
     //this is the start of the test's for the Reservations Class
     @Test
@@ -85,15 +91,15 @@ class TestReservation {
         //this is a regualr case of someone changing the site type.
         //these are test done by the regualr vabins
         //from regular to regualr
-        Boolean test1 = testRegularReservation.setSiteType("Regular");
+        Boolean test1 = testRegularReservation.setSiteType(LotType.Cabin);
         //from regular to group
-        Boolean test2 = testRegularReservation.setSiteType("Group");
+        Boolean test2 = testRegularReservation.setSiteType(LotType.ServicedGroup);
 
         //these tests are for a group cabins
         //from group to group
-        Boolean test3 = testGroupReservation.setSiteType("Group");
+        Boolean test3 = testGroupReservation.setSiteType(LotType.ServicedGroup);
         //from group to regular
-        Boolean test4 = testGroupReservation.setSiteType("Regular");
+        Boolean test4 = testGroupReservation.setSiteType(LotType.NonServicedIndividual);
 
 
 
@@ -114,15 +120,15 @@ class TestReservation {
     @Test
     public void tCustomerStayTypeFail()
     {
-         Reservation test2RegularReservation = new Reservation(null, 3,obStart, obEnd, "regualr");
+         Reservation test2RegularReservation = new Reservation(null, 3,obStart, obEnd, obRegLot);
         //this will be a group reservation
-         Reservation test2GroupReservation = new Reservation(null, 6,obStart, obEnd, "group");
+         Reservation test2GroupReservation = new Reservation(null, 6,obStart, obEnd, obGroupLot);
         //fully booked group site
 
-        Boolean test1 = test2GroupReservation.setSiteType("Group");
+        Boolean test1 = test2GroupReservation.setSiteType(LotType.DeluxeCabin);
 
         //already fully booked regular site
-        Boolean test2 = test2RegularReservation.setSiteType("Group");
+        Boolean test2 = test2RegularReservation.setSiteType(LotType.ServicedIndividual);
 
         //both of these should fail.
         assertEquals(test1, false);
@@ -130,36 +136,6 @@ class TestReservation {
 
     }
 
-
-    /**
-     * thes user enters something in that is not what we want.
-     */
-    @Test
-    public void tCustomerStayTypeBoundry()
-    {
-        //this is a regualr case of someone changing the site type.
-        //these are test done by the regualr vabins
-        //from regular to no a site type
-        Boolean test1 = testRegularReservation.setSiteType("AAAAA");
-        //from regular to group but group mispelled
-        Boolean test2 = testRegularReservation.setSiteType("group");
-
-        //these tests are for a group cabins
-        //from group to to not a Site type
-        Boolean test3 = testGroupReservation.setSiteType("AAAA");
-        //from group to regular, but regualr mispelled
-        Boolean test4 = testGroupReservation.setSiteType("Reglar");
-
-
-
-        //all of these will work.
-        assertEquals(test1, false);
-        assertEquals(test2, false);
-        assertEquals(test3, false);
-        assertEquals(test4, false);
-
-
-    }
 
     //this is the start of the test's for the Reservations Class
     //these tests will check to make sure that the price changes correclty
