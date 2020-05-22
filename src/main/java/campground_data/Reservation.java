@@ -1,15 +1,15 @@
 package campground_data;
 
+import java.awt.print.Book;
 import java.util.Date;
 
-public class Reservation {
+public class Reservation<Static> {
     Customer[] obCustomerList;
     Date obStartDate, obEndDate;
     String Status = "Active";
     public static int StaticReservationID = 0;
     int ReservationID, nCustomerCount;
     Lot obLot;
-    double price;
     public double price;
 
 
@@ -34,36 +34,27 @@ public class Reservation {
      */
     public String setCustomerNumber(int number)
     {
-        switch(obLot){
-            case obLot.getLotType() == LotType.Cabin:
-                return  checkSmallType(number);
-                break;
-
-            case obLot.getLotType() == LotType.ServicedIndividual:
-                return  checkSmallType(number);
-                break;
-
-            case obLot.getLotType() == LotType.NonServicedIndividual:
-                return  checkSmallType(number);
-                break;
-
-            case obLot.getLotType() == LotType.ServicedGroup:
-                return  checkGroupType(number);
-                break;
-
-            case obLot.getLotType() == LotType.NonServicedGroup:
-                return  checkGroupType(number);
-                break;
-
-            case obLot.getLotType() == LotType.DeluxeCabin:
-                return  checkGroupType(number);
-                break;
-            default:
-                return "There is already the maximum number of people booked";
-
-    }
-
-
+        if (obLot.getLotType() == LotType.Cabin)
+        {
+            return checkSmallType(number);
+        } else if (obLot.getLotType() == LotType.ServicedIndividual)
+        {
+            return checkSmallType(number);
+        } else if (obLot.getLotType() == LotType.NonServicedIndividual)
+        {
+            return checkSmallType(number);
+        } else if (obLot.getLotType() == LotType.ServicedGroup)
+        {
+            return checkGroupType(number);
+        } else if (obLot.getLotType() == LotType.NonServicedGroup)
+        {
+            return checkGroupType(number);
+        } else if (obLot.getLotType() == LotType.DeluxeCabin)
+        {
+            return checkGroupType(number);
+        } else {
+            return "There is already the maximum number of people booked";
+        }
 
     }
 
@@ -125,6 +116,11 @@ public class Reservation {
 
         }
 
+        public int getID()
+        {
+            return this.obLot.getLotID();
+        }
+
 
         private double getPrice () {
             //for  now the price will always be 0
@@ -151,19 +147,46 @@ public class Reservation {
         {
             Lot TempLot = new Lot(NewLot);
             Boolean check = checkOverlap(TempLot.getLotID(), this.obStartDate, this.obEndDate);
-            if (check) {
+            if (!check) {
                 this.obLot = TempLot;
                 return true;
             } else {
                 return false;
             }
         }
-
-
-        public String changeDate (Date obStart, Date obEnd)
+        public Lot getLot()
         {
-            return "Need to create";
+            return this.obLot;
         }
+
+
+        public String changeDate(Date obStart, Date obEnd)
+        {
+            //if there is overlap between the sites
+            if(!checkOverlap(this.obLot.getLotID(), obStart, obEnd))
+            {
+                this.obStartDate = obStart;
+                this.obEndDate = obEnd;
+                return "";
+            }
+            else
+            {
+                return "These dates will not work for this reservation";
+            }
+
+        }
+
+
+    private boolean checkOverlap(int nLotID, Date obStartDate, Date obEndDate)
+    {
+        boolean returnMe = BookingsLedger.checkOverlap(nLotID, obStartDate, obEndDate);
+        return returnMe;
+
+    }
+
+
+
+
 
 
 }
