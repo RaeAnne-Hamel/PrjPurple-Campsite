@@ -33,4 +33,12 @@ public class Reservation {
         return this.ReservationID;
     }
 
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "obLot=" + obLot +
+                ", obStartDate=" + obStartDate +
+                ", obEndDate=" + obEndDate +
+                '}';
+    }
 }

@@ -1,7 +1,8 @@
 package campground_data;
 
 public enum LotType {
-    non_Serviced, Serviced, Cabin;
+    NonServicedIndividual, ServicedIndividual, NonServicedGroup, ServicedGroup, Cabin, DeluxeCabin;
+
 }
 
 

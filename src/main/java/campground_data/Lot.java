@@ -36,7 +36,7 @@ public class Lot {
     public Lot(int nLotID)
     {
         this.nLotID = nLotID;
-        this.obType = LotType.Serviced;
+        this.obType = LotType.ServicedIndividual;
         this.obReservationList = new ArrayList<Reservation>();
         this.StaticLotID = 0;
         this.sRemovalReason = "";

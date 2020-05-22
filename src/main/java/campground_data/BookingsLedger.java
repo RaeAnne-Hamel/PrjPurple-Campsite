@@ -34,7 +34,7 @@ public class BookingsLedger {
 
     public Lot querySearchCampsite(int LotID)
     {
-        
+
         for (Lot lot : aLot) {
 
             if (lot.nLotID == LotID) {
@@ -42,8 +42,14 @@ public class BookingsLedger {
             }
         }
 
+
+
         System.out.printf("Search could not find the Lot specified.\n");
         return null;
+
+
+
+
     }
 
     /*
@@ -66,11 +72,19 @@ public class BookingsLedger {
      */
     public void displayLot(int LotID)
     {
-        Lot displayLot = querySearchCampsite(LotID);
-        System.out.printf("Lot ID: " + displayLot.nLotID +
-                "\nLot Type: " + displayLot.obType +
-                "\nRemoval Reason: " + displayLot.sRemovalReason +
-                "\nAvailability " + displayLot.bAvailability);
+        try
+        {
+            Lot displayLot = querySearchCampsite(LotID);
+            System.out.printf("Lot ID: " + displayLot.nLotID +
+                    "\nLot Type: " + displayLot.obType +
+                    "\nRemoval Reason: " + displayLot.sRemovalReason +
+                    "\nAvailability " + displayLot.bAvailability + "\n");
+        }
+        catch (NullPointerException e)
+        {
+            System.out.println("Lot not found");
+        }
+
     }
 
     /*
