@@ -18,13 +18,12 @@ public class BookingsLedger
      * @param nLotID
      * @param obStartDate
      * @param obEndDate
-     * @param obCustomer
+     * @param obCustomers
      * @param nPeople
      * @return
      */
     public boolean addReservation(int nLotID, Date obStartDate, Date obEndDate, Customer[] obCustomers, int nPeople)
     {
-        //TODO
         List<Lot> filteredLots = aLot.stream()
                 .filter(e-> e.getLotID() == nLotID)
                 .collect(Collectors.toList());
@@ -42,8 +41,37 @@ public class BookingsLedger
             return false;
         }
 
-        switch ()
+        //Check if endDate is before startDate. If so it will fail and return false
+        if(obStartDate.compareTo(obEndDate) >0)
+        {
+            return false;
+        }
 
+        switch (obLot.getLotType())
+        {
+            case Cabin:
+            case DeluxeCabin:
+                break;
+
+            case NonServicedIndividual:
+            case ServicedIndividual:
+                if(nPeople > 4) { return false;}
+                break;
+
+            case NonServicedGroup:
+            case ServicedGroup:
+                if(nPeople > 8) { return false;}
+                break;
+
+            default:
+                return false;
+                System.out.printf("LOTTYPE INVALID ENUM");
+                break;
+        }
+
+        //If all checks have succeeded add the reservation to aReservations and return true
+        aReservation.add(new Reservation(obLot, obStartDate, obEndDate, obCustomers, nPeople));
+        return true;
 
     }
 
