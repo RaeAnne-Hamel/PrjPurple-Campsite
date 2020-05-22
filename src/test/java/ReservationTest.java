@@ -1,13 +1,13 @@
-<<<<<<< HEAD
-import campground_data.Lot;
-import campground_data.LotType;
-import campground_data.Reservation;
+import campground_data.*;
 import jdk.jfr.StackTrace;
 
 import org.junit.*;
+import org.junit.Test;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+
 import static org.junit.Assert.assertEquals;
 
 
@@ -19,7 +19,7 @@ import org.junit.*;
 import javax.xml.validation.Validator;
 
 
-class ReservationTest {
+public class ReservationTest {
 
     //these will be the start and end dates
     private Date obStart = new Date(2020, Calendar.JUNE, 11);
@@ -45,7 +45,7 @@ class ReservationTest {
     BookingsLedger BL = new BookingsLedger();
 
     /*Create Valid Reservation*/
-    Reservation oneReservation = new Reservation(new Lot(), startDate, endDate, payingCustomers, 9);
+    Reservation oneReservation = new Reservation(payingCustomers, 9, startDate, endDate, new Lot());
 
 
     //this is the start of the test's for the Reservations Class

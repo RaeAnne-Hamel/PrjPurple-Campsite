@@ -1,5 +1,8 @@
 package campground_data;
 
+import campground_ui.MainConsole;
+
+import javax.management.AttributeList;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -177,6 +180,10 @@ public class BookingsLedger {
             return user;
         }
 
+        public static ArrayList<Reservation> getReservations(){
+            return aReservation;
+        }
 
-    }
+
 }
+

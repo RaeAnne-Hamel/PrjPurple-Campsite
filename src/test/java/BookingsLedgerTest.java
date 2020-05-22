@@ -59,7 +59,7 @@ public class BookingsLedgerTest {
         ArrayList<Reservation> obReservationList = new ArrayList<>();
         boolean sAvailable = true;
 
-        Lot testLot = new Lot(1, LotType.Serviced, obReservationList, 1, "", sAvailable);
+        Lot testLot = new Lot(1, LotType.NonServicedIndividual, obReservationList, 1, "", sAvailable);
 
         testLot.setRemovalReason(testReason);
         assertEquals(testReason, testLot.getRemovalReason());
@@ -74,7 +74,7 @@ public class BookingsLedgerTest {
         ArrayList<Reservation> obReservationList = new ArrayList<>();
         boolean sAvailable = true;
 
-        Lot testLot = new Lot(1, LotType.Serviced, obReservationList, 1, "", sAvailable);
+        Lot testLot = new Lot(1, LotType.NonServicedIndividual, obReservationList, 1, "", sAvailable);
 
         testLot.setAvailability(false);
 

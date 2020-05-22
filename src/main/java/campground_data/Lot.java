@@ -45,6 +45,16 @@ public class Lot {
         this.bAvailability = true;
 
     }
+    public Lot()
+    {
+        this.nLotID = 999;
+        this.obType = LotType.ServicedGroup;
+        this.obReservationList = new ArrayList<Reservation>();
+        this.StaticLotID = 0;
+        this.sRemovalReason = "";
+        this.bAvailability = true;
+
+    }
 
     public String getRemovalReason()
     {

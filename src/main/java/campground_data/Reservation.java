@@ -54,7 +54,7 @@ public class Reservation<Static> {
 
 
             private String checkRegularType(int number) {
-                if (number <= 4) {
+                if (number <= 4 && number >= 1) {
                     this.nCustomerCount = number;
                     return "";
                 } else {
@@ -64,7 +64,7 @@ public class Reservation<Static> {
             }
 
             private String checkGroupType(int number) {
-                if (number <= 8) {
+                if (number <= 8 && number >= 1) {
                     this.nCustomerCount = number;
                     return "";
                 } else {
