@@ -63,6 +63,62 @@ public class TransactionTest {
     @Test
     public void testCheckPaymentMethod()
     {
+        PaymentMethod testType1 = inPerson;
+        PaymentMethod testType2 = fax;
+        PaymentMethod testType3 = email;
+        PaymentMethod testType4 = phone;
 
+        PaymentType payType = debit;
+
+        Transaction testTransaction = new Transaction(1, payType, "");
+
+        testTransaction.setPaymentMethod(testType1);
+        assertEquals(testType1, testTransaction.getPaymentMethod());
+        testTransaction.setPaymentMethod(testType2);
+        assertEquals(testType2, testTransaction.getPaymentMethod());
+        testTransaction.setPaymentMethod(testType3);
+        assertEquals(testType3, testTransaction.getPaymentMethod());
+        testTransaction.setPaymentMethod(testType4);
+        assertEquals(testType4, testTransaction.getPaymentMethod());
+
+    }
+
+
+    @Test
+    public void testCheckReservationPaymentAmount()
+    {
+        Reservation testReservation = new Reservation() //need constructor setup
+        Reservation testReservation2 = new Reservation() //need constructor setup
+        Reservation testReservation3 = new Reservation() //need constructor setup
+        Reservation testReservation4 = new Reservation() //need constructor setup
+
+        double expectedPrice1 = 45.00;
+        double expectedPrice2 = 105.00;
+        double expectedPrice3 = 85.00;
+        double expectedPrice4 = 345.00;
+        
+        assertEquals(expectedPrice1, testReservation.getPrice(), 0.001);
+        assertEquals(expectedPrice2, testReservation2.getPrice(), 0.001);
+        assertEquals(expectedPrice3, testReservation3.getPrice(), 0.001);
+        assertEquals(expectedPrice4, testReservation4.getPrice(), 0.001);
+        assertEquals(expectedPrice4, testReservation4.getPrice(), 0.001);
+
+    }
+
+    @Test
+    public void testChangeReservationStatus()
+    {
+        String testStatus = "inActive";
+        PaymentType testType = debit;
+        PaymentMethod testMethod = inPerson;
+
+        Reservation testReservation = new Reservation() //need constructor setup
+        Reservation testReservation2 = new Reservation() //need constructor setup
+
+        testReservation.setStatus(testStatus);
+        assertEquals(testStatus, testReservation.getStatus());
+
+        testReservation2.setStatus(testStatus);
+        assertEquals(testStatus, testReservation2.getStatus());
     }
 }
