@@ -9,7 +9,7 @@ public class Reservation {
     public Date obEnd;
     public String cabinType;
     public int ReservationCode;
-    public static int ReservationID = 0; //TODO: find where this comed from
+    public static int ReservationID = 0;
     public double price;
 
 
@@ -20,7 +20,7 @@ public class Reservation {
         this.obStart = obStart;
         this.obEnd = EndDate;
         this.cabinType = cabinType;
-        this.ReservationCode = 0;  //TODO: find where this comes from in booking leduger
+        this.ReservationCode = 0;
         this.price = getPrice();
 
     }
@@ -94,11 +94,21 @@ public class Reservation {
 
     }
 
-    //TODO: find id there is some kind of price guid that sows how to do this
+
     private double getPrice() {
+        //for  now the price will always be 0
+        //they can maualy input a price if they need.
         return 0.0;
+    }
 
-
+    /**
+     * allows the person to be able to
+     * set a price for the reservation.
+     * @param newPrice
+     */
+    private void setPrice(double newPrice)
+    {
+        this.price = newPrice;
     }
 
     public boolean setSiteType(String siteType){
