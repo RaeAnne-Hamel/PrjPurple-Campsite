@@ -43,13 +43,18 @@ public class TransactionTest {
         PaymentMethod payMeth = PaymentMethod.INPERSON;
         PaymentType testDefault = PaymentType.CASH ;
 
+        String testWrong = "";
+        long testWrong2 = 17398740;
+
         Transaction testTransaction = new Transaction(testReservation, testDefault, payMeth);
 
+        assertEquals(testDefault, testTransaction.getPayType());
         testTransaction.setPayType(testType1);
         assertEquals(testType1, testTransaction.getPayType());
         testTransaction.setPayType(testType2);
         assertEquals(testType2, testTransaction.getPayType());
-
+        assertNotEquals(testWrong, testTransaction.getPayType());
+        assertNotEquals(testWrong2, testTransaction.getPayType());
 
     }
 
@@ -62,6 +67,8 @@ public class TransactionTest {
         PaymentMethod testType2 = PaymentMethod.FAX;
         PaymentMethod testType3 = PaymentMethod.INPERSON;
         PaymentMethod testType4 = PaymentMethod.PHONE;
+        String testWrong1 = "";
+        String testWrong2 = "airplane";
 
         PaymentType payType = PaymentType.CREDITCARD;
 
@@ -69,12 +76,15 @@ public class TransactionTest {
         Transaction testTransaction = new Transaction(testReservation, payType, testDefault);
 
 
+        assertEquals(testDefault, testTransaction.getPayMethod());
         testTransaction.setPayMethod(testType2);
         assertEquals(testType2, testTransaction.getPayMethod());
         testTransaction.setPayMethod(testType3);
         assertEquals(testType3, testTransaction.getPayMethod());
         testTransaction.setPayMethod(testType4);
         assertEquals(testType4, testTransaction.getPayMethod());
+        assertNotEquals(testWrong1, testTransaction.getPayMethod());
+        assertNotEquals(testWrong2, testTransaction.getPayMethod());
 
     }
 
