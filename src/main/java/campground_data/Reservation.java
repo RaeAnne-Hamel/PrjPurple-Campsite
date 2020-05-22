@@ -6,8 +6,9 @@ public class Reservation {
 
     /*Primitive Variables */
     public static int StaticReservationID = 0;
-    int nLotID, ReservationID, nCustomerCount;
+    int ReservationID, nCustomerCount;
     double price;
+    Lot obLot;
 
     /*Reference Variables*/
     Customer[] obCustomerList;
@@ -15,10 +16,10 @@ public class Reservation {
     String Status = "Active";
 
     /*Reservation Constructor */
-    public Reservation(int lotID, Date startDate, Date endDate, Customer[] customers, int nPeople)
+    public Reservation(Lot obLot, Date startDate, Date endDate, Customer[] customers, int nPeople)
     {
         /*Set the passed in parameters*/
-        this.nLotID = lotID;
+        this.obLot = obLot;
         this.obStartDate = startDate;
         this.obEndDate = endDate;
         this.obCustomerList = customers;
@@ -34,4 +35,5 @@ public class Reservation {
     {
         return this.ReservationID;
     }
+    public Lot getLot() { return this.obLot; }
 }

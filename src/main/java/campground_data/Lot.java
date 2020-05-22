@@ -8,7 +8,7 @@ public class Lot {
     int nLotID;
     LotType obType;
     ArrayList<Reservation> obReservationList;
-    int StaticLotID;
+    static int StaticLotID;
     String sRemovalReason;
     boolean bAvailability;
 
