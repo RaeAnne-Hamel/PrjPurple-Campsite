@@ -1,9 +1,8 @@
 package campground_ui;
 
 import campground_data.*;
-import java.util.HashMap;
+
 import java.util.Scanner;
-import java.util.UUID;
 
 public class MainConsole {
 
@@ -11,11 +10,13 @@ public class MainConsole {
     //private static CampLedger campLedger = new CampLedger();
     private static Scanner read = new Scanner(System.in);
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args)
+    {
         boolean quit = false;
         do{
+
             System.out.print("Actions:[L]ots, [R]eservations, [Q]uit: ");
+
             switch (read.nextLine().toUpperCase()) {
                 case "L":
 
@@ -64,6 +65,13 @@ public class MainConsole {
 
                 case "R":
                     inputSomething();
+                    break;
+
+                case "RR":
+                        try {
+                            int searchID = Integer.parseInt(Prompt("List a reservation ID to Delete."));
+                            BookingLedger.removeReservation(searchID);
+                        } catch (Exception x){System.out.println("Please enter a number ID");};
                     break;
 
                 default:

@@ -28,6 +28,11 @@ public class Lot {
 
     }
 
+    public Lot()
+    {
+
+    }
+
     public Lot(int nLotID)
     {
         this.nLotID = nLotID;
