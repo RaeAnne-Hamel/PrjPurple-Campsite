@@ -26,8 +26,10 @@ public class MainConsole {
                     inputSomething();
                     break;
                 case "RR":
-                    int searchID = Integer.parseInt(Prompt("List a reservation ID to Delete."));
-                    BookingLedger.removeReservation(searchID);
+                        try {
+                            int searchID = Integer.parseInt(Prompt("List a reservation ID to Delete."));
+                            BookingLedger.removeReservation(searchID);
+                        } catch (Exception x){System.out.println("Please enter a number ID");};
                     break;
                 default:
                     quit = true;

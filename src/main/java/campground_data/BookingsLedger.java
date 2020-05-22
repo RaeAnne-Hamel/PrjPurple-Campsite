@@ -57,6 +57,7 @@ public class BookingsLedger {
      */
     public boolean removeReservation(int ID)
     {
+        System.out.println("SIZE BEFORE " + this.aReservation.size());
         /* Create a temporary Reservation ArrayList */
         ArrayList<Reservation> tmpReservations = new ArrayList<>();
         boolean resFound = false;
