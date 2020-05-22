@@ -27,10 +27,9 @@ public class Customer {
         this.idPool = idPool;
     }
 
-    public Customer()
-    {
+    public Customer() { }
 
-    }
+    public int getCustomerID() { return CustomerID; }
 
     public String getName()
     {
@@ -62,6 +61,30 @@ public class Customer {
         return nSecPhone;
     }
 
+    public int getnVisits() { return nVisits; }
 
+    public boolean isFrequent() { return isFrequent; }
+
+    public int getIdPool() { return idPool; }
+
+    public void setCustomerID(int customerID) { CustomerID = customerID; }
+
+    public void setsName(String sName) { this.sName = sName; }
+
+    public void setsAddress(String sAddress) { this.sAddress = sAddress; }
+
+    public void setsEmail(String sEmail) { this.sEmail = sEmail; }
+
+    public void setnFax(long nFax) { this.nFax = nFax; }
+
+    public void setnPhone(long nPhone) { this.nPhone = nPhone; }
+
+    public void setnSecPhone(long nSecPhone) { this.nSecPhone = nSecPhone; }
+
+    public void setnVisits(int nVisits) { this.nVisits = nVisits; }
+
+    public void setFrequent(boolean frequent) { isFrequent = frequent; }
+
+    public void setIdPool(int idPool) { this.idPool = idPool; }
 }
 
