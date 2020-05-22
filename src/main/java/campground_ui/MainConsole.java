@@ -24,6 +24,11 @@ public class MainConsole {
                     break;
                 case "A":
                     inputSomething();
+                    System.out.print("Actions:[C]ustomer");
+                    switch (read.nextLine().toUpperCase()) {
+                        case "C":
+                            BookingLedger.addCustomer();
+                    }
                     break;
                 case "RR":
                         try {
