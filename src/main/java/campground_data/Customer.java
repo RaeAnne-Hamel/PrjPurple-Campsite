@@ -1,5 +1,7 @@
 package campground_data;
 
+import java.util.ArrayList;
+
 public class Customer {
     private int CustomerID;
     private String sName;
@@ -31,32 +33,17 @@ public class Customer {
 
     public int getCustomerID() { return CustomerID; }
 
-    public String getName()
-    {
-        return sName;
-    }
+    public String getName() { return sName; }
 
     public String getAddress() { return sAddress; }
 
-    public String getEmail()
-    {
-        return sEmail;
-    }
+    public String getEmail() { return sEmail; }
 
-    public long getFax()
-    {
-        return nFax;
-    }
+    public long getFax() { return nFax; }
 
-    public long getPhone()
-    {
-        return nPhone;
-    }
+    public long getPhone() { return nPhone; }
 
-    public long getSecPhone()
-    {
-        return nSecPhone;
-    }
+    public long getSecPhone() { return nSecPhone; }
 
     public int getVisits() { return nVisits; }
 
@@ -84,4 +71,5 @@ public class Customer {
 
     public void setIdPool(int idPool) { this.idPool = idPool; }
 }
+
 

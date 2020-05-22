@@ -1,31 +1,92 @@
 package campground_ui;
 
 import campground_data.*;
-import java.util.HashMap;
-import java.util.Scanner;
-import java.util.UUID;
 
-/***
- * example of console user interface
- */
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class MainConsole {
 
+    public static BookingsLedger BookingLedger = new BookingsLedger();
 
     //private static CampLedger campLedger = new CampLedger();
     private static Scanner read = new Scanner(System.in);
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
+        ArrayList<Lot> aLot = new ArrayList<>();
+        Lot obLot1 = new Lot();
+        aLot.add(obLot1);
+        BookingLedger.setLotList(aLot);
 
         boolean quit = false;
         do{
-            System.out.print("Actions:[L]ist Something, [A]dd Something, [Q]uit: ");
+
+            System.out.print("Actions:[L]ots, [R]eservations, [C]ustomers, [Q]uit: ");
+
             switch (read.nextLine().toUpperCase()) {
                 case "L":
-                    listSomething();
-                    break;
-                case "A":
+                    System.out.printf("Actions: [S]earch for a lot: ");
+                    case "S":
+                        String lotID = Prompt("Please enter a Valid Lot ID to search for");
+
+                        int nLotID = Integer.parseInt(lotID);
+
+                        BookingLedger.displayLot(nLotID);
+                        Lot obLot;
+
+                        obLot = BookingLedger.querySearchCampsite(nLotID);
+
+                        System.out.print("[S]et Lot availability");
+                        switch (read.nextLine().toUpperCase())
+                        {
+                            case "S":
+                            {
+                                System.out.print("[A]vailable, [U]navailable");
+
+                                switch (read.nextLine().toUpperCase())
+                                {
+                                    case "A":
+
+                                        BookingLedger.setLotAvailability(obLot, true);
+                                        System.out.println("Lot has been set to available");
+                                        break;
+
+                                        case "U":
+                                        BookingLedger.setLotAvailability(obLot, false);
+
+                                        String sReason = Prompt("Why is this Lot being made unavailable?");
+                                        obLot.setRemovalReason(sReason);
+                                        System.out.println("Lot has been set to unavailable");
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+                            }
+                            default:
+                                break;
+                        }
+                        break;
+
+                case "R":
                     inputSomething();
                     break;
+
+                case "RR":
+                        try {
+                            int searchID = Integer.parseInt(Prompt("List a reservation ID to Delete."));
+                            BookingLedger.removeReservation(searchID);
+                        } catch (Exception x){System.out.println("Please enter a number ID");}
+                    break;
+
+                case "C":
+                    System.out.print("[A]dd Customer");
+
+                    case "A":
+                        BookingLedger.addCustomer();
+                break;
+
                 default:
                     quit = true;
                     break;
@@ -34,6 +95,12 @@ public class MainConsole {
             System.out.println("");
         } while (!quit);
         System.out.println("Quit Application");
+    }
+
+    public static String Prompt(String Message)
+    {
+        System.out.println(Message);
+        return read.nextLine().toUpperCase();
     }
 
     private static void listSomething(){
