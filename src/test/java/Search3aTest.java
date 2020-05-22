@@ -3,9 +3,11 @@ import campground_data.LotType;
 import campground_data.NewLotSearch;
 import org.junit.Test;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static campground_data.LotType.*;
+import static campground_data.NewLotSearch.getDates;
 import static org.junit.Assert.assertEquals;
 import static campground_data.NewLotSearch.chooseDate;
 
@@ -129,6 +131,9 @@ public class Search3aTest {
         assertEquals(obLotResults.size(), 0);
     }
 
+    /**
+     * INVALID: Can't make a reservation that ends before it starts.
+     */
     public void testEndBeforeStart() {
         nStartDay = 7;
         nStartMonth = 7;
@@ -140,4 +145,12 @@ public class Search3aTest {
         assertEquals(obLotResults.size(), 0);
     }
 
+    /**
+     * VALID: Test that the next 30 days are returned for each cabin.
+     */
+    public void testDatesReturned() {
+        ArrayList<LocalDate> allDates = getDates(nType);
+
+        assertEquals(allDates.size(), 90);
+    }
 }
