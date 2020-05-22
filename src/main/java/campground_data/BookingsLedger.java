@@ -31,12 +31,6 @@ public class BookingsLedger {
     }
 
     /*Check if the inputted reservation string is a valid ID (long) */
-    public boolean isValidReservation()
-    {
-
-    }
-
-
 
     /* Checks whether a reservation to be removed exists */
     public static Reservation getReservation(int ID)
@@ -52,12 +46,13 @@ public class BookingsLedger {
         return null;
     }
 
-
-    public static boolean removeReservation(int ID)
+    public boolean removeReservation(int ID)
     {
         /* Create a temporary Reservation ArrayList */
         ArrayList<Reservation> tmpReservations = new ArrayList<>();
         boolean lotFound = false;
+
+        String response = "yes";
 
         for(Reservation res: aReservation)
         {
@@ -65,6 +60,9 @@ public class BookingsLedger {
             if (res.getID() == ID)
             {
                 lotFound = true;
+
+                if (response.equals("yes"))
+
 
                 /* Double check if they want to remove */
                 continue;

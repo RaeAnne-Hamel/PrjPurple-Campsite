@@ -27,7 +27,8 @@ public class MainConsole {
                     inputSomething();
                     break;
                 case "RR":
-                    BookingLedger.editReservation();
+                    int searchID = Integer.parseInt(Prompt("List a reservation ID to Delete."));
+                    BookingLedger.removeReservation(searchID);
                     break;
                 default:
                     quit = true;
@@ -42,8 +43,7 @@ public class MainConsole {
     public static String Prompt(String Message)
     {
         System.out.println(Message);
-
-        return
+        return read.nextLine().toUpperCase();
     }
 
     private static void listSomething(){
