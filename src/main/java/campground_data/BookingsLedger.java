@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class BookingsLedger
 {
-    public static ArrayList<Reservation> = new ArrayList<>();
+    public static ArrayList<Reservation> aReservation = new ArrayList<>();
     private ArrayList<Lot> aLot = new ArrayList<>();
 
 
