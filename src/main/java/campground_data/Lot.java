@@ -1,8 +1,11 @@
 package campground_data;
 
+
 import java.util.ArrayList;
 
 public class Lot {
+
+
     int nLotID;
     LotType obType;
     ArrayList<Reservation> obReservationList;
@@ -11,6 +14,7 @@ public class Lot {
     boolean bAvailability;
 
     public Lot(int nLotID,
+
                LotType obType,
                ArrayList<Reservation> obReservationList,
                int StaticLotID,
@@ -22,8 +26,24 @@ public class Lot {
 
     public Lot(LotType obType)
     {
-        super();
+        this.nLotID = nLotID;
         this.obType = obType;
+        this.obReservationList = obReservationList;
+        this.StaticLotID = StaticLotID;
+        this.sRemovalReason = sRemovalReason;
+        this.bAvailability = bAvailability;
+
+    }
+
+    public Lot(int nLotID)
+    {
+        this.nLotID = nLotID;
+        this.obType = LotType.ServicedGroup;
+        this.obReservationList = new ArrayList<Reservation>();
+        this.StaticLotID = 0;
+        this.sRemovalReason = "";
+        this.bAvailability = true;
+
     }
 
     public String getRemovalReason()
@@ -52,8 +72,7 @@ public class Lot {
         }
     }
 
-
-        public boolean getAvailability()
+    public boolean getAvailability()
     {
         return bAvailability;
     }
@@ -63,11 +82,11 @@ public class Lot {
         bAvailability = b;
     }
 
+
     public LotType getLotType()
     {
         return this.obType;
     }
-
 
 
     public int getLotID()
@@ -76,3 +95,4 @@ public class Lot {
     }
 
 }
+

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import campground_data.Lot;
 import campground_data.LotType;
 import campground_data.Reservation;
@@ -24,31 +25,39 @@ class ReservationTest {
     private Date obStart = new Date(2020, Calendar.JUNE, 11);
     private Date obEnd = new Date(2020, Calendar.JUNE, 15);
 
-    Lot obRegLot = new Lot( LotType.NonServicedIndividual);
-    Lot obGroupLot = new Lot( LotType.NonServicedIndividual);
-
+    Lot obRegLot = new Lot(LotType.NonServicedIndividual);
+    Lot obGroupLot = new Lot(LotType.NonServicedIndividual);
 
 
     //this will be a basic reservation
-    private Reservation testRegularReservation = new Reservation(null, 3,obStart, obEnd, obRegLot);
+    private Reservation testRegularReservation = new Reservation(null, 3, obStart, obEnd, obRegLot);
     //this will be a group reservation
-    private Reservation testGroupReservation = new Reservation(null, 6,obStart, obEnd, obGroupLot);
+    private Reservation testGroupReservation = new Reservation(null, 6, obStart, obEnd, obGroupLot);
 
 
+    /*Create array of paying customers*/
+    private Customer[] payingCustomers = {new Customer(0, "", "", "", 1, 1, 1, 1, true, 1), new Customer(0, "", "", "", 1, 1, 1, 1, true, 1)};
 
+    /*Create dates of check-in and check-out*/
+    private Date startDate = new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime();
+    private Date endDate = new GregorianCalendar(2014, Calendar.FEBRUARY, 13).getTime();
+
+    BookingsLedger BL = new BookingsLedger();
+
+    /*Create Valid Reservation*/
+    Reservation oneReservation = new Reservation(new Lot(), startDate, endDate, payingCustomers, 9);
 
 
     //this is the start of the test's for the Reservations Class
     @Test
-    public void tCustomerNumberToLarge()
-    {
+    public void tCustomerNumberToLarge() {
         //these are test done by the regualr vabins that is the max number
         String test1 = testRegularReservation.setCustomerNumber(4);
 
         //these tests are for a group cabins and is the max number
         String test2 = testGroupReservation.setCustomerNumber(8);
 
-    //regualr site max people
+        //regualr site max people
         assertEquals(test1, "");
         //tests for the group campsistes that are the max
         assertEquals(test2, "");
@@ -59,8 +68,7 @@ class ReservationTest {
      * minumum number of people for group and regualr cabins
      */
     @Test
-    public void tCustomerNumberToSmall()
-    {
+    public void tCustomerNumberToSmall() {
         //testing both group and regualr customer numbers min's
         String test1 = testRegularReservation.setCustomerNumber(1);
         String test2 = testGroupReservation.setCustomerNumber(1);
@@ -75,8 +83,7 @@ class ReservationTest {
      * Boundry cases  of people for group and regualr cabins
      */
     @Test
-    public void tCustomerNumberBoundry()
-    {
+    public void tCustomerNumberBoundry() {
         //Regular cabins, boumdry cases for people who can stay
         String test1 = testRegularReservation.setCustomerNumber(0);
         String test2 = testRegularReservation.setCustomerNumber(5);
@@ -93,15 +100,10 @@ class ReservationTest {
     }
 
 
-
-
-
-
     //this is the start of the test's for the Reservations Class
     //these tests will check out the tests to change the site types
     @Test
-    public void tCustomerStayTypeRegular()
-    {
+    public void tCustomerStayTypeRegular() {
         //this is a regualr case of someone changing the site type.
         //these are test done by the regualr vabins
         //from regular to regualr
@@ -114,7 +116,6 @@ class ReservationTest {
         Boolean test3 = testGroupReservation.setSiteType(LotType.ServicedGroup);
         //from group to regular
         Boolean test4 = testGroupReservation.setSiteType(LotType.NonServicedIndividual);
-
 
 
         //all of these will work.
@@ -132,11 +133,10 @@ class ReservationTest {
      * are open.
      */
     @Test
-    public void tCustomerStayTypeFail()
-    {
-         Reservation test2RegularReservation = new Reservation(null, 3,obStart, obEnd, obRegLot);
+    public void tCustomerStayTypeFail() {
+        Reservation test2RegularReservation = new Reservation(null, 3, obStart, obEnd, obRegLot);
         //this will be a group reservation
-         Reservation test2GroupReservation = new Reservation(null, 6,obStart, obEnd, obGroupLot);
+        Reservation test2GroupReservation = new Reservation(null, 6, obStart, obEnd, obGroupLot);
         //fully booked group site
 
         Boolean test1 = test2GroupReservation.setSiteType(LotType.DeluxeCabin);
@@ -151,18 +151,16 @@ class ReservationTest {
     }
 
 
-
     //this is the start of the test's for the Reservations Class
     //these tests will check to make sure that the price changes correclty
     //when a discount it applied.
     //because both group sites and regualr sites will use the same method
     //it will not matter which site needs to get its dates changed
     @Test
-    public void tCustomerStayDates()
-    {
-        Date obStart = new Date(2020, Calendar.JUNE,1);
-        Date obEnd = new Date(2020,Calendar.JUNE,8);
-        Date obEndShort = new Date(2020,Calendar.JUNE,5);
+    public void tCustomerStayDates() {
+        Date obStart = new Date(2020, Calendar.JUNE, 1);
+        Date obEnd = new Date(2020, Calendar.JUNE, 8);
+        Date obEndShort = new Date(2020, Calendar.JUNE, 5);
 
 
         //normal cases sucessfule change
@@ -173,15 +171,15 @@ class ReservationTest {
         String test2 = testRegularReservation.changeDate(obStart, obEnd);
 
         //Dates that have passes
-        Date obPastStart = new Date(2019,Calendar.JUNE,1);
-        Date obPastEnd = new Date(2019,Calendar.JUNE,8);
+        Date obPastStart = new Date(2019, Calendar.JUNE, 1);
+        Date obPastEnd = new Date(2019, Calendar.JUNE, 8);
         String test3 = testRegularReservation.changeDate(obPastStart, obPastEnd);
         //on date is in the past
         String test4 = testRegularReservation.changeDate(obPastStart, obEnd);
 
         //Dates are too far into the future
-        Date obFutureStart = new Date(2021,Calendar.JUNE,1);
-        Date obFutureEnd = new Date(2021,Calendar.JUNE,8);
+        Date obFutureStart = new Date(2021, Calendar.JUNE, 1);
+        Date obFutureEnd = new Date(2021, Calendar.JUNE, 8);
         String test5 = testRegularReservation.changeDate(obFutureStart, obFutureEnd);
 
 
@@ -199,5 +197,42 @@ class ReservationTest {
 
     }
 
+        /*Test if a manager attempting to remove a reservation has IN adequate permissions*/
+        @Test
+        public void testPesmissions() {
+            //Simply returns false if permissions are Invalid
+            boolean access = false;
 
-}
+            assertEquals(access, !BookingsLedger.isValidPermissions(BookingsLedger.getUser()));
+            //assertEquals(access, BookingsLedger.isValidPermissions(BookingsLedger.user));
+        }
+
+
+        /*If the manager inputs a reservation ID that is not present*/
+        @Test
+        public void testRemoveReservationNotPresent() {
+            boolean access = true;
+            assertEquals(access, BookingsLedger.isValidPermissions(BookingsLedger.getUser()));
+
+            assertEquals(BL.removeReservation(0), false);
+        }
+
+        /*If the manager inputs a reservation ID that IS present*/
+        @Test
+        public void testRemoveReservationPresent() {
+
+            boolean access = true;
+
+            assertEquals(access, BookingsLedger.isValidPermissions(BookingsLedger.getUser()));
+
+            /*checks that the reservation was added */
+            BL.getReservations().add(oneReservation);
+            assertEquals(BL.getReservations().size(), 1);
+
+            /*checks that the reservation was successfully removed */
+            BL.removeReservation(0);
+            assertEquals(0, BL.getReservations().size());
+        }
+
+    }
+
