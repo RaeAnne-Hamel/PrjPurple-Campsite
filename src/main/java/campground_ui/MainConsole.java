@@ -1,15 +1,15 @@
 package campground_ui;
 
 import campground_data.*;
-import java.util.HashMap;
+
 import java.util.Scanner;
-import java.util.UUID;
 
 /***
  * example of console user interface
  */
 public class MainConsole {
 
+    public static BookingsLedger BookingLedger = new BookingsLedger();
     //private static CampLedger campLedger = new CampLedger();
     private static Scanner read = new Scanner(System.in);
 
@@ -17,13 +17,16 @@ public class MainConsole {
 
         boolean quit = false;
         do{
-            System.out.print("Actions:[L]ist Something, [A]dd Something, [Q]uit: ");
+            System.out.print("Actions:[L]ist Something, [A]dd Something, [Q]uit, [RR]RemoveReservation ");
             switch (read.nextLine().toUpperCase()) {
                 case "L":
                     listSomething();
                     break;
                 case "A":
                     inputSomething();
+                    break;
+                case "RR":
+                    BookingLedger.editReservation();
                     break;
                 default:
                     quit = true;
