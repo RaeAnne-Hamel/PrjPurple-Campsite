@@ -15,7 +15,6 @@ public class MainConsole {
 
     public static void main(String[] args)
     {
-
         boolean quit = false;
         do{
             System.out.print("Actions:[L]ist Something, [A]dd Something, [Q]uit, [RR]RemoveReservation ");

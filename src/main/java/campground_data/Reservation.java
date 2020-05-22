@@ -30,7 +30,7 @@ public class Reservation {
 
     }
 
-    public int getID()
+    public int getReservationID()
     {
         return this.ReservationID;
     }

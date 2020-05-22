@@ -29,44 +29,29 @@ public class ReservationTest
     {
         //Simply returns false if permissions are Invalid
         boolean access = false;
-        assertEquals(access, BookingsLedger.isValidPermissions(BookingsLedger.user));
+
+        assertEquals(access, !BookingsLedger.isValidPermissions(BookingsLedger.getUser()));
+        //assertEquals(access, BookingsLedger.isValidPermissions(BookingsLedger.user));
     }
 
-/*If a manager has adequate permissions the user should be prompted for ID*/
-    @Test
-    public void testRemoveReservationMethod()
-    {
-        //Simply returns true if permissions are valid
-        boolean access = true;
-        assertEquals(access, BookingsLedger.isValidPermissions(BookingsLedger.user));
 
-        //Simply returns true if permissions are valid
-        assertEquals(oneReservation.getID(), BL.removeReservation(1));
-
-    }
-
-/*If the manager inputs a reservation ID that is not present*/
+    /*If the manager inputs a reservation ID that is not present*/
     @Test
     public void testRemoveReservationNotPresent()
     {
-        //Simply returns true if permissions are valid
         boolean access = true;
-        assertEquals(access, BookingsLedger.isValidPermissions(BookingsLedger.user));
+        assertEquals(access, BookingsLedger.isValidPermissions(BookingsLedger.getUser()));
 
-        //Simply returns true if permissions are valid
-        assertEquals(oneReservation.getID(), BL.removeReservation(123456789));
+        assertEquals(BL.removeReservation(0), BL.removeReservation(123456789));
     }
 
-/*If a manager is prompted with a 1 or a 0 to confirm or cancel the reservation*/
+    /*If the manager inputs a reservation ID that IS present*/
     @Test
-    public void testRemoveReservation()
+    public void testRemoveReservationPresent()
     {
-        //Simply returns true if permissions are valid
         boolean access = true;
-        assertEquals(access, BookingsLedger.isValidPermissions(BookingsLedger.user));
+        assertEquals(access, BookingsLedger.isValidPermissions(BookingsLedger.getUser()));
 
-        //Simply returns true if permissions are valid
-        assertEquals(oneReservation.getID(), BL.removeReservation(1));
-
+        assertEquals(BL.removeReservation(0), false);
     }
 }

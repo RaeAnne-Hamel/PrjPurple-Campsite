@@ -10,10 +10,10 @@ import java.util.ArrayList;
 public class BookingsLedger {
 
 
-    public static Manager user = new Manager();
-    private static ArrayList<Reservation> aReservation = new ArrayList<>();
+    private static Manager user = new Manager();
+    public static ArrayList<Reservation> aReservation = new ArrayList<>();
 
-    public Manager getUser()
+    public static Manager getUser()
     {
         return user;
     }
@@ -42,7 +42,7 @@ public class BookingsLedger {
         for(Reservation res: aReservation)
         {
             /*If the Reservation ID is found*/
-            if (res.getID() == ID)
+            if (res.getReservationID() == ID)
             {
                 return res;
             }
@@ -66,7 +66,7 @@ public class BookingsLedger {
         for(Reservation res: aReservation)
         {
             /*If the Reservation ID is found*/
-            if (res.getID() == ID)
+            if (res.getReservationID() == ID)
             {
                 /*Asks for a confirmation from the user if they want to remove the reservatin */
                 String sConfirm = MainConsole.Prompt("Are you sure you want to remove the reservation? (Y , N )");
