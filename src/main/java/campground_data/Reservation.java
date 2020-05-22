@@ -11,6 +11,7 @@ public class Reservation {
     Lot obLot;
 
     /*Reference Variables*/
+    //MAX size for obCustomerList is 2
     Customer[] obCustomerList;
     Date obStartDate, obEndDate;
     String Status = "Active";

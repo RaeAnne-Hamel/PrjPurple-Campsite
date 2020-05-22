@@ -11,9 +11,40 @@ public class BookingsLedger
     private ArrayList<Lot> aLot = new ArrayList<>();
 
 
-    public void addReservation(int nLotID, Date obStartDate, Date obEndDate, Customer obCustomer, int nPeople)
+    /**
+     * addReservation will add a new Reservation into the aReservation ArrayList while checking and preventing any
+     * issues such as overlapping booking and overbooking. The method will return true if it has succeeded and false
+     * if it has failed.
+     * @param nLotID
+     * @param obStartDate
+     * @param obEndDate
+     * @param obCustomer
+     * @param nPeople
+     * @return
+     */
+    public boolean addReservation(int nLotID, Date obStartDate, Date obEndDate, Customer[] obCustomers, int nPeople)
     {
         //TODO
+        List<Lot> filteredLots = aLot.stream()
+                .filter(e-> e.getLotID() == nLotID)
+                .collect(Collectors.toList());
+        Lot obLot = filteredLots.get(0);
+
+        //If there are more than 2 customers fail and return false
+        if(obCustomers.length > 2)
+        {
+            return false;
+        }
+
+        //If there is a overlap with another reservation it will fail and return false
+        if(checkOverlap(nLotID,obStartDate,obEndDate))
+        {
+            return false;
+        }
+
+        switch ()
+
+
     }
 
     /**

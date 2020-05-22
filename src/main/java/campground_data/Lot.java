@@ -64,5 +64,6 @@ public class Lot {
     {
         return nLotID;
     }
+    public LotType getLotType() { return obType ;}
 
 }
