@@ -1,3 +1,5 @@
+package campground_data;
+
 public enum PaymentMethod {
 
     INPERSON,

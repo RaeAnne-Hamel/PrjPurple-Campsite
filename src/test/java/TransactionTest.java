@@ -1,7 +1,10 @@
+import campground_data.PaymentMethod;
+import campground_data.PaymentType;
+import campground_data.Reservation;
+import campground_data.Transaction;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * @author RaeAnne Hamel
@@ -10,32 +13,10 @@ import static org.junit.Assert.assertTrue;
 
 public class TransactionTest {
 
-    /**
-     * this test will check that the reservations have valid id to bring up the reservations
-     */
+
     @Test
-    public void testValidReservationID()
+    public void testCheckForReservationID()
     {
-        int ReserveID1 = 1;
-        int ReserveID2 =  20;
-
-        int NotReserveID = -1;
-        int NotReserveID2 = 500000000;
-
-       ArrayList<Reservation> obReservationList = new ArrayList<>();
-
-
-        Transaction transaction1  = testLedger.querySearchReservation(ReserveID1);
-        Transaction transaction3  = testLedger.querySearchReservation(ReserveID2);
-        Transaction transaction5  = testLedger.querySearchReservation(NotReserveID);
-        Transaction transaction6  = testLedger.querySearchReservation(NotReserveID2);
-
-
-
-        assertEquals(ReserveID1, transaction1.getReservation());
-        assertEquals(ReserveID2, transaction3.getReservation());
-        assertEquals(NotReserveID, transaction5.getResevation());
-        assertEquals(NotReserveID2, transaction6.getReservation());
 
     }
 
@@ -43,37 +24,40 @@ public class TransactionTest {
     @Test
     public void testCheckPaymentType()
     {
-        PaymentType testType1 = PaymentType.CASH;
+        PaymentType testType1 = PaymentType.DEBIT;
         PaymentType testType2 = PaymentType.CREDITCARD;
-        PaymentType testType3 = PaymentType.DEBIT;
+
+        Reservation testReservation = new Reservation();
 
         PaymentMethod payMeth = PaymentMethod.INPERSON;
+        PaymentType testDefault = PaymentType.CASH ;
 
-        Transaction testTransaction = new Transaction(payMeth);
+        Transaction testTransaction = new Transaction(testReservation, testDefault, payMeth);
 
         testTransaction.setPayType(testType1);
         assertEquals(testType1, testTransaction.getPayType());
         testTransaction.setPayType(testType2);
         assertEquals(testType2, testTransaction.getPayType());
-        testTransaction.setPayType(testType3);
-        assertEquals(testType3, testTransaction.getPayType());
+
 
     }
 
     @Test
     public void testCheckPaymentMethod()
     {
-        PaymentMethod testType1 = PaymentMethod.EMAIL;
+        Reservation testReservation = new Reservation();
+
+        PaymentMethod testDefault = PaymentMethod.EMAIL;
         PaymentMethod testType2 = PaymentMethod.FAX;
         PaymentMethod testType3 = PaymentMethod.INPERSON;
         PaymentMethod testType4 = PaymentMethod.PHONE;
 
         PaymentType payType = PaymentType.CREDITCARD;
 
-        Transaction testTransaction = new Transaction(payType, "");
 
-        testTransaction.setPayMethod(testType1);
-        assertEquals(testType1, testTransaction.getPayMethod());
+        Transaction testTransaction = new Transaction(testReservation, payType, testDefault);
+
+
         testTransaction.setPayMethod(testType2);
         assertEquals(testType2, testTransaction.getPayMethod());
         testTransaction.setPayMethod(testType3);
@@ -87,34 +71,37 @@ public class TransactionTest {
     @Test
     public void testCheckReservationPaymentAmount()
     {
-        Reservation testReservation = new Reservation() //need constructor setup
-        Reservation testReservation2 = new Reservation() //need constructor setup
-        Reservation testReservation3 = new Reservation() //need constructor setup
-        Reservation testReservation4 = new Reservation() //need constructor setup
+        Reservation testReservation = new Reservation();
+
 
         double expectedPrice1 = 45.00;
-        double expectedPrice2 = 105.00;
+        double expectedPrice2 = 100.00;
         double expectedPrice3 = 85.00;
-        double expectedPrice4 = 345.00;
 
-        assertTrue(testReservation.getPrice());
 
+        assertEquals(expectedPrice2,testReservation.getPrice(), 0.001);
+        assertNotEquals(expectedPrice1,testReservation.getPrice(), 0.001);
+        assertNotEquals(expectedPrice3, testReservation.getPrice(), 0.001);
     }
 
     @Test
     public void testChangeReservationStatus()
     {
-        String testStatus = "inActive";
+        Reservation testReservation = new Reservation();
+        Reservation testReservation2 = new Reservation();
+
+
         PaymentType testType = PaymentType.DEBIT;
         PaymentMethod testMethod = PaymentMethod.INPERSON;
 
-        Reservation testReservation = new Reservation() //need constructor setup
-        Reservation testReservation2 = new Reservation() //need constructor setup
+        assertEquals(true, testReservation.getStatus());
+        testReservation.setStatus();
+        assertEquals(false, testReservation.getStatus());
 
-        testReservation.setStatus(testStatus);
-        assertEquals(testStatus, testReservation.getStatus());
-
-        testReservation2.setStatus(testStatus);
-        assertEquals(testStatus, testReservation2.getStatus());
+        assertEquals(true, testReservation2.getStatus());
+        testReservation2.setStatus();
+        assertEquals(false, testReservation2.getStatus());
     }
+
+
 }
