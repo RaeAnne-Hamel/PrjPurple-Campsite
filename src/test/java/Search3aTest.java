@@ -1,3 +1,4 @@
+import campground_data.Lot;
 import campground_data.LotType;
 import org.junit.Test;
 

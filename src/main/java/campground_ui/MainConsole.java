@@ -1,29 +1,35 @@
 package campground_ui;
 
 import campground_data.*;
-import java.util.HashMap;
+
 import java.util.Scanner;
-import java.util.UUID;
 
 /***
  * example of console user interface
  */
 public class MainConsole {
 
+    public static BookingsLedger BookingLedger = new BookingsLedger();
     //private static CampLedger campLedger = new CampLedger();
     private static Scanner read = new Scanner(System.in);
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args)
+    {
         boolean quit = false;
         do{
-            System.out.print("Actions:[L]ist Something, [A]dd Something, [Q]uit: ");
+            System.out.print("Actions:[L]ist Something, [A]dd Something, [Q]uit, [RR]RemoveReservation ");
             switch (read.nextLine().toUpperCase()) {
                 case "L":
                     listSomething();
                     break;
                 case "A":
                     inputSomething();
+                    break;
+                case "RR":
+                        try {
+                            int searchID = Integer.parseInt(Prompt("List a reservation ID to Delete."));
+                            BookingLedger.removeReservation(searchID);
+                        } catch (Exception x){System.out.println("Please enter a number ID");};
                     break;
                 default:
                     quit = true;
@@ -33,6 +39,12 @@ public class MainConsole {
             System.out.println("");
         } while (!quit);
         System.out.println("Quit Application");
+    }
+
+    public static String Prompt(String Message)
+    {
+        System.out.println(Message);
+        return read.nextLine().toUpperCase();
     }
 
     private static void listSomething(){
