@@ -3,17 +3,31 @@ package campground_data;
 import campground_ui.MainConsole;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class BookingsLedger {
-
     ArrayList<Reservation> aReservation = new ArrayList<>();
     ArrayList<Lot> aLot;
     ArrayList<Customer> aCustomer;
     ArrayList<Manager> aManager;
+
+    public BookingsLedger()
+    {
+
+    }
+
+    public BookingsLedger(ArrayList<Lot> aLot, ArrayList<Reservation> aReservation, ArrayList<Customer> aCustomer, ArrayList<Manager> aManager)
+    {
+        this.aLot = aLot;
+        this.aManager = null;
+        this.aCustomer = null;
+        this.aReservation = aReservation;
+    }
+
+
+
 
     private static Manager user = new Manager();
 
@@ -146,7 +160,7 @@ public class BookingsLedger {
      * Check get a reservation based on the ID
      * @param ID - Inputs an ID
      */
-    public static Reservation getReservation(ArrayList<Reservation> aReservation, int ID)
+    public Reservation getReservation(ArrayList<Reservation> aReservation, int ID)
     {
         for(Reservation res: aReservation)
         {
@@ -156,6 +170,8 @@ public class BookingsLedger {
                 return res;
             }
         }
+        checkOverlap(5, new Date(), new Date());
+
         return null;
     }
 
@@ -178,5 +194,22 @@ public class BookingsLedger {
         return aReservation;
     }
 
+    public boolean checkOverlap(int nLotID, Date obStartDate, Date obEndDate)
+    {
+        List<Reservation> aFilteredReservation = aReservation.stream()
+                .filter(e -> e.getLot().getLotID() == nLotID)
+                .collect(Collectors.toList());
 
+        boolean bOverlap = false;
+        for(Reservation obReservation : aFilteredReservation)
+        {
+            //If dates Overlap set bOverlap to false and break loop
+            if (!((obStartDate.compareTo(obReservation.obEndDate) <=0) && (obEndDate.compareTo(obReservation.obStartDate) >=0)))
+            {
+                bOverlap = true;
+                break;
+            }
+        }
+        return bOverlap;
+    }
 }

@@ -33,4 +33,6 @@ public class Reservation {
         return this.ReservationID;
     }
 
+    public Lot getLot() { return this.obLot; }
+
 }
