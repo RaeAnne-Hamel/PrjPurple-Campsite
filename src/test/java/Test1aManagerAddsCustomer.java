@@ -1,4 +1,6 @@
+import campground_data.BookingsLedger;
 import campground_data.Customer;
+import junit.framework.TestCase;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -19,8 +21,18 @@ public class Test1aManagerAddsCustomer
     private static ValidatorFactory vf;
     private static Validator validator;
 
-    //private Guest guest;
+    int nCustID = 5;
+    String sName = "Harry";
+    String sAddress = "Box 312";
+    String sEmail = "email@email.com";
+    long nFax = 47583945721L;
+    long nPhone = 13067235921L;
+    long nSecPhone = 13066913921L;
+    int nVistis = 4;
+    boolean bFreq = true;
+    int nIDPool = 2;
 
+    private Customer testCustomer = new Customer(nCustID, sName, sAddress, sEmail, nFax, nPhone, nSecPhone, nVistis, bFreq, nIDPool);
 
     /***
      * Run once at class creation to set up validator
@@ -66,6 +78,7 @@ public class Test1aManagerAddsCustomer
     public void testNameEmpty()
     {
         customer.setsName("");
+//        assertEquals("Added Customer", );
         assertInvalid(customer, "sName","Name can not be empty", "" );
     }
 
@@ -77,7 +90,7 @@ public class Test1aManagerAddsCustomer
     {
         String j256 = repeatJ(256);
         customer.setsName(j256);
-        assertInvalid(customer, "Name","Name can not be too long", j256 );
+        assertInvalid(customer, "sName","Name can not be too long", j256 );
     }
 
     /**
@@ -97,6 +110,7 @@ public class Test1aManagerAddsCustomer
     @Test
     public void testNameValid()
     {
+//        assertEquals("Added Customer", addCustomer());
         customer.setsName("Harry");
         assertEquals(0, validator.validate(customer).size());
     }
@@ -108,7 +122,7 @@ public class Test1aManagerAddsCustomer
     public void testAddressEmpty()
     {
         customer.setsAddress("");
-        assertInvalid(customer, "Address", "Address can't be empty", "");
+        assertInvalid(customer, "sAddress", "Address can't be empty", "");
     }
 
     /**
@@ -119,7 +133,7 @@ public class Test1aManagerAddsCustomer
     {
         String j256 = repeatJ(256);
         customer.setsAddress(j256);
-        assertInvalid(customer, "Address","Address can not be too long", j256 );
+        assertInvalid(customer, "sAddress","Address can not be too long", j256 );
     }
 
     /**
@@ -150,7 +164,7 @@ public class Test1aManagerAddsCustomer
     public void testEmailEmpty()
     {
         customer.setsEmail("");
-        assertInvalid(customer, "Email", "Email can't be empty", "");
+        assertInvalid(customer, "sEmail", "Email can't be empty", "");
     }
 
     /**
@@ -161,7 +175,7 @@ public class Test1aManagerAddsCustomer
     {
         String j256 = repeatJ(256);
         customer.setsEmail(j256);
-        assertInvalid(customer, "Email","Email can not be too long", j256 );
+        assertInvalid(customer, "sEmail","Email can not be too long", j256 );
     }
 
     /**
@@ -192,7 +206,7 @@ public class Test1aManagerAddsCustomer
     public void testFaxEmpty()
     {
         customer.setnFax(0);
-        assertInvalid(customer, "Fax", "Fax can't be empty", "");
+        assertInvalid(customer, "nFax", "Fax can't be empty", "");
     }
 
     /**
@@ -202,7 +216,7 @@ public class Test1aManagerAddsCustomer
     public void testFaxTooLong()
     {
         customer.setnFax(849520582618L);
-        assertInvalid(customer, "Fax","Fax can not be too long", 849520582618L );
+        assertInvalid(customer, "nFax","Fax can not be too long", 849520582618L );
     }
 
     /**
@@ -222,7 +236,7 @@ public class Test1aManagerAddsCustomer
     public void testFaxTooShort()
     {
         customer.setnFax(628194614L);
-        assertInvalid(customer, "Fax","Fax can not be too short", 849520582618L );
+        assertInvalid(customer, "nFax","Fax can not be too short", 849520582618L );
     }
 
     /**
@@ -232,7 +246,7 @@ public class Test1aManagerAddsCustomer
     public void testPhoneEmpty()
     {
         customer.setnPhone(0);
-        assertInvalid(customer, "Phone", "Phone can not be too empty", "");
+        assertInvalid(customer, "nPhone", "Phone can not be too empty", "");
     }
 
     /**
@@ -242,7 +256,7 @@ public class Test1aManagerAddsCustomer
     public void testPhoneTooLong()
     {
         customer.setnPhone(849520582618L);
-        assertInvalid(customer, "Phone","Phone can not be too long", 849520582618L );
+        assertInvalid(customer, "nPhone","Phone can not be too long", 849520582618L );
     }
 
     /**
@@ -262,18 +276,18 @@ public class Test1aManagerAddsCustomer
     public void testPhoneTooShort()
     {
         customer.setnPhone(628194614L);
-        assertInvalid(customer, "Phone","Phone can not be too short", 849520582618L );
+        assertInvalid(customer, "nPhone","Phone can not be too short", 849520582618L );
     }
 
-    /**
-     * INVALID: Secondary Phone null
-     */
-    @Test
-    public void testSecPhoneEmpty()
-    {
-        customer.setnSecPhone(0);
-        assertInvalid(customer, "Secondary Phone", "Secondary Phone can not be too empty", "");
-    }
+//    /**
+//     * INVALID: Secondary Phone null
+//     */
+//    @Test
+//    public void testSecPhoneEmpty()
+//    {
+//        customer.setnSecPhone(0);
+//        assertInvalid(customer, "nSecPhone", "Secondary Phone can not be too empty", "");
+//    }
 
     /**
      * VALID: Secondary Phone is 11 characters long
@@ -292,7 +306,7 @@ public class Test1aManagerAddsCustomer
     public void testSecPhoneTooLong()
     {
         customer.setnSecPhone(849520582618L);
-        assertInvalid(customer, "Secondary Phone","Secondary Phone can not be too long", 849520582618L );
+        assertInvalid(customer, "nSecPhone","Secondary Phone can not be too long", 849520582618L );
     }
 
     /**
@@ -302,7 +316,7 @@ public class Test1aManagerAddsCustomer
     public void testSecPhoneTooShort()
     {
         customer.setnSecPhone(628194614L);
-        assertInvalid(customer, "Secondary Phone","Secondary Phone can not be too short", 849520582618L );
+        assertInvalid(customer, "nSecPhone","Secondary Phone can not be too short", 849520582618L );
     }
 
     private String repeatJ(int count){
