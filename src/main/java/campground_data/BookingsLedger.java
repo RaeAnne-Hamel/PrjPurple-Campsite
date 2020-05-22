@@ -1,9 +1,9 @@
 package campground_data;
 
+import java.awt.print.Book;
 import java.util.ArrayList;
 
 public class BookingsLedger {
-
 
     ArrayList<Customer> aCustomer;
 
@@ -47,7 +47,10 @@ public class BookingsLedger {
         word.toLowerCase();
         char[] arCh = word.toCharArray();
         for (char ch : arCh) {
-            if (!(ch >= 'a' && ch <= 'z')) bCustomerPasses = false;
+            if (!(ch >= 'a' && ch <= 'z')) {
+                bCustomerPasses = false;
+                break;
+            }
         }
     }
 
