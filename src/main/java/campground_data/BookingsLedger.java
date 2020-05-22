@@ -1,5 +1,6 @@
 package campground_data;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -10,6 +11,7 @@ public class BookingsLedger {
 
 
     public static Manager user = new Manager();
+    public ArrayList<Reservation> aReservation
 
     public Manager getUser()
     {
@@ -21,6 +23,10 @@ public class BookingsLedger {
 
     }
 
+    /*
+    A simple template class. Checks permissions. Always returns true
+    because the permission system is not yet implemented.
+     */
     public static boolean isValidPermissions(Manager user)
     {
         return true;
@@ -28,6 +34,7 @@ public class BookingsLedger {
 
     public static boolean removeReservation(int ID)
     {
+
         return true;
     }
 
