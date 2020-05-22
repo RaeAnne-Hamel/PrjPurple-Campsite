@@ -2,13 +2,15 @@ import campground_data.Reservation;
 import jdk.jfr.StackTrace;
 
 import org.junit.*;
+
+import java.util.Calendar;
 import java.util.Date;
 import static org.junit.Assert.assertEquals;
 
-public class TestReservation {
+class TestReservation {
     //these will be the start and end dates
-    private Date obStart = new Date(2020, 06, 11);
-    private Date obEnd = new Date(2020, 06, 15);
+    private Date obStart = new Date(2020, Calendar.JUNE, 11);
+    private Date obEnd = new Date(2020, Calendar.JUNE, 15);
 
 
     //this will be a basic reservation
@@ -20,66 +22,142 @@ public class TestReservation {
     @Test
     public void tCustomerNumberToLarge()
     {
-        //these are test done by the regualr vabins
+        //these are test done by the regualr vabins that is the max number
+        String test1 = testRegularReservation.setCustomerNumber(4);
+
+        //these tests are for a group cabins and is the max number
+        String test2 = testGroupReservation.setCustomerNumber(8);
+
+    //regualr site max people
+        assertEquals(test1, "");
+        //tests for the group campsistes that are the max
+        assertEquals(test2, "");
+
+    }
+
+    /**
+     * minumum number of people for group and regualr cabins
+     */
+    @Test
+    public void tCustomerNumberToSmall()
+    {
+        //testing both group and regualr customer numbers min's
         String test1 = testRegularReservation.setCustomerNumber(1);
-        String test2 = testRegularReservation.setCustomerNumber(4);
-        //boundy cases
-        String test3 = testRegularReservation.setCustomerNumber(0);
-        String test4 = testRegularReservation.setCustomerNumber(5);
-
-
-
-        //these tests are for a group cabins
-        String test5 = testGroupReservation.setCustomerNumber(1);
-        String test6 = testGroupReservation.setCustomerNumber(8);
-        //boundy cases
-        String test7 = testGroupReservation.setCustomerNumber(0);
-        String test8 = testGroupReservation.setCustomerNumber(9);
-
+        String test2 = testGroupReservation.setCustomerNumber(1);
 
         assertEquals(test1, "");
         assertEquals(test2, "");
+
+    }
+
+
+    /**
+     * Boundry cases  of people for group and regualr cabins
+     */
+    @Test
+    public void tCustomerNumberBoundry()
+    {
+        //Regular cabins, boumdry cases for people who can stay
+        String test1 = testRegularReservation.setCustomerNumber(0);
+        String test2 = testRegularReservation.setCustomerNumber(5);
+
+        //Group cabins, boumdry cases for people who can stay
+        String test3 = testGroupReservation.setCustomerNumber(0);
+        String test4 = testGroupReservation.setCustomerNumber(9);
+
+        assertEquals(test1, "There is already the maximum number of people booked");
+        assertEquals(test2, "There is already the maximum number of people booked");
         assertEquals(test3, "There is already the maximum number of people booked");
         assertEquals(test4, "There is already the maximum number of people booked");
 
-
-
-        //tests for the group campsistes
-        assertEquals(test5, "");
-        assertEquals(test6, "");
-        assertEquals(test7, "There is already the maximum number of people booked");
-        assertEquals(test8, "There is already the maximum number of people booked");
     }
+
+
+
+
+
 
     //this is the start of the test's for the Reservations Class
     //these tests will check out the tests to change the site types
     @Test
-    public void tCustomerStayType()
+    public void tCustomerStayTypeRegular()
     {
+        //this is a regualr case of someone changing the site type.
         //these are test done by the regualr vabins
         //from regular to regualr
-        Boolean test1 = testRegularReservation.setSiteType("Regular Site");
+        Boolean test1 = testRegularReservation.setSiteType("Regular");
         //from regular to group
-        Boolean test2 = testRegularReservation.setSiteType("Group Site");
-        //already fully booked regular site
-        Boolean test3 = testRegularReservation.setSiteType("Group Site");
-
+        Boolean test2 = testRegularReservation.setSiteType("Group");
 
         //these tests are for a group cabins
         //from group to group
-        Boolean test4 = testGroupReservation.setSiteType("Group Site");
+        Boolean test3 = testGroupReservation.setSiteType("Group");
         //from group to regular
-        Boolean test5 = testGroupReservation.setSiteType("Regular Site");
-        //fully booked group site
-        Boolean test6 = testGroupReservation.setSiteType("Group");
+        Boolean test4 = testGroupReservation.setSiteType("Regular");
 
 
+
+        //all of these will work.
         assertEquals(test1, true);
         assertEquals(test2, true);
-        assertEquals(test3, false);
+        assertEquals(test3, true);
         assertEquals(test4, true);
-        assertEquals(test5, true);
-        assertEquals(test6, false);
+
+
+    }
+
+    /**
+     * these tests will test to see if the method will fail,
+     * if the person can not change the site. you can only change the site if the dates
+     * are open.
+     */
+    @Test
+    public void tCustomerStayTypeFail()
+    {
+         Reservation test2RegularReservation = new Reservation(null, 3,obStart, obEnd, "regualr");
+        //this will be a group reservation
+         Reservation test2GroupReservation = new Reservation(null, 6,obStart, obEnd, "group");
+        //fully booked group site
+
+        Boolean test1 = test2GroupReservation.setSiteType("Group");
+
+        //already fully booked regular site
+        Boolean test2 = test2RegularReservation.setSiteType("Group");
+
+        //both of these should fail.
+        assertEquals(test1, false);
+        assertEquals(test2, false);
+
+    }
+
+
+    /**
+     * thes user enters something in that is not what we want.
+     */
+    @Test
+    public void tCustomerStayTypeBoundry()
+    {
+        //this is a regualr case of someone changing the site type.
+        //these are test done by the regualr vabins
+        //from regular to no a site type
+        Boolean test1 = testRegularReservation.setSiteType("AAAAA");
+        //from regular to group but group mispelled
+        Boolean test2 = testRegularReservation.setSiteType("group");
+
+        //these tests are for a group cabins
+        //from group to to not a Site type
+        Boolean test3 = testGroupReservation.setSiteType("AAAA");
+        //from group to regular, but regualr mispelled
+        Boolean test4 = testGroupReservation.setSiteType("Reglar");
+
+
+
+        //all of these will work.
+        assertEquals(test1, false);
+        assertEquals(test2, false);
+        assertEquals(test3, false);
+        assertEquals(test4, false);
+
 
     }
 
@@ -89,75 +167,107 @@ public class TestReservation {
     //group and regual sites cost diffreent so we need to check both when
     //applying a discount to the site.
     @Test
-    public void tCustomerDiscount()
+    public void tCustomerDiscountRegular()
     {
         //these are test done by the regualr Cabins
-        //normal cases
+        //normal cases for regualr cabins
         double newPriceTest1 = testRegularReservation.price * (0.9);
         double test1 = testRegularReservation.setDiscount(90);
 
         double newPriceTest2 = testRegularReservation.price * (0.5);
         double test2 = testRegularReservation.setDiscount(50);
 
-        //boundry cases
-        double test3 = testRegularReservation.setDiscount(100);
 
-        double newPriceTest4 = testRegularReservation.price;
-        double test4 = testRegularReservation.setDiscount(0);
-
-        double newPriceTest5 = testRegularReservation.price * (0.01);
-        double test5 = testRegularReservation.setDiscount(1);
-
-
-        double newPriceTest6 = testGroupReservation.price;
-        double test6 = testRegularReservation.setDiscount(101);
-
-        double newPriceTest7 = testGroupReservation.price;
-        double test7 = testRegularReservation.setDiscount(-1);
-
-
-
-//
-//        //these tests are for a group cabins
-
+       //these tests are for a group cabins
+        //normal cases for group cabins
         double newPriceTest8 = testGroupReservation.price * (0.9);
         double test8 = testGroupReservation.setDiscount(90);
 
         double newPriceTest9 = testGroupReservation.price * (0.5);
         double test9 = testGroupReservation.setDiscount(50);
 
-        //boundry cases
-        double test10 = testGroupReservation.setDiscount(100);
 
-        double newPriceTest11 = testGroupReservation.price;
-        double test11 = testGroupReservation.setDiscount(0);
-
-        double newPriceTest12 = testGroupReservation.price * (0.01);
-        double test12 = testGroupReservation.setDiscount(1);
-
-        double newPriceTest13 = testGroupReservation.price;
-        double test13 = testGroupReservation.setDiscount(101);
-
-        double newPriceTest14 = testGroupReservation.price;
-        double test14 = testGroupReservation.setDiscount(-1);
-
-//regular Cabins
-        assertEquals(test1, newPriceTest1);
-        assertEquals(test2, newPriceTest2);
-        assertEquals(test3, 0);
-        assertEquals(test4, newPriceTest4);
-        assertEquals(test5, newPriceTest5);
-        assertEquals(test6, newPriceTest6);
-        assertEquals(test7, newPriceTest7);
+        //regular Cabins
+        assertEquals(test1,  newPriceTest1, 0.001);
+        assertEquals(test2, newPriceTest2, 0.001);
 
         //group cabins
-        assertEquals(test8, newPriceTest8);
-        assertEquals(test9, newPriceTest9);
-        assertEquals(test10, 0);
-        assertEquals(test11, newPriceTest11);
-        assertEquals(test12, newPriceTest12);
-        assertEquals(test13, newPriceTest13);
-        assertEquals(test14, newPriceTest14);
+        assertEquals(test8, newPriceTest8, 0.001);
+        assertEquals(test9, newPriceTest9, 0.001);
+
+    }
+
+    /**
+     * maximum discount for group and regualr site
+     */
+    @Test
+    public void tCustomerDiscountMax()
+    {
+        //Regualr Site
+        double test1 = testRegularReservation.setDiscount(100);
+        //Group Site
+        double test2 = testGroupReservation.setDiscount(100);
+
+        assertEquals(test1, 0.0, 0.001);
+        assertEquals(test2, 0.0, 0.001);
+
+    }
+
+    /**
+     * Minumum discount for group and regualr site
+     */
+    @Test
+    public void tCustomerDiscountMin()
+    {
+        //Regualr Site minumum
+        double newPriceTest1 = testRegularReservation.price;
+        double test1 = testRegularReservation.setDiscount(0);
+
+        double newPriceTest2 = testRegularReservation.price * (0.01);
+        double test2 = testRegularReservation.setDiscount(1);
+
+        //Group Site minimum
+        double newPriceTest3 = testGroupReservation.price;
+        double test3 = testGroupReservation.setDiscount(0);
+
+        double newPriceTest4 = testGroupReservation.price * (0.01);
+        double test4 = testGroupReservation.setDiscount(1);
+
+        assertEquals(test1, newPriceTest1, 0.001);
+        assertEquals(test2, newPriceTest2, 0.001);
+
+        assertEquals(test3, newPriceTest3, 0.001);
+        assertEquals(test4, newPriceTest4, 0.001);
+
+
+    }
+
+    /**
+     * boundry cases for the cabin discount types
+     */
+    @Test
+    public void tCustomerDiscountBoundry()
+    {
+        //regular cabin boundry cases
+        double newPriceTest1 = testGroupReservation.price;
+        double test1 = testRegularReservation.setDiscount(101);
+
+        double newPriceTest2 = testGroupReservation.price;
+        double test2 = testRegularReservation.setDiscount(-1);
+
+
+        //group cabin boundry cases
+        double newPriceTest3 = testGroupReservation.price;
+        double test3 = testGroupReservation.setDiscount(101);
+
+        double newPriceTest4 = testGroupReservation.price;
+        double test4 = testGroupReservation.setDiscount(-1);
+
+
+        assertEquals(test1, newPriceTest1, 0.001);
+        assertEquals(test2, newPriceTest2, 0.001);
+        assertEquals(test3, newPriceTest3, 0.001);
+        assertEquals(test4, newPriceTest4, 0.001);
 
 
     }
@@ -171,9 +281,9 @@ public class TestReservation {
     @Test
     public void tCustomerStayDates()
     {
-        Date obStart = new Date(2020,6,1);
-        Date obEnd = new Date(2020,6,8);
-        Date obEndShort = new Date(2020,6,5)
+        Date obStart = new Date(2020, Calendar.JUNE,1);
+        Date obEnd = new Date(2020,Calendar.JUNE,8);
+        Date obEndShort = new Date(2020,Calendar.JUNE,5);
 
 
         //normal cases sucessfule change
@@ -184,15 +294,15 @@ public class TestReservation {
         String test2 = testRegularReservation.changeDate(obStart, obEnd);
 
         //Dates that have passes
-        Date obPastStart = new Date(2019,6,1);
-        Date obPastEnd = new Date(2019,6,8);
+        Date obPastStart = new Date(2019,Calendar.JUNE,1);
+        Date obPastEnd = new Date(2019,Calendar.JUNE,8);
         String test3 = testRegularReservation.changeDate(obPastStart, obPastEnd);
         //on date is in the past
         String test4 = testRegularReservation.changeDate(obPastStart, obEnd);
 
         //Dates are too far into the future
-        Date obFutureStart = new Date(2021,6,1);
-        Date obFutureEnd = new Date(2021,6,8)
+        Date obFutureStart = new Date(2021,Calendar.JUNE,1);
+        Date obFutureEnd = new Date(2021,Calendar.JUNE,8);
         String test5 = testRegularReservation.changeDate(obFutureStart, obFutureEnd);
 
 
@@ -200,8 +310,7 @@ public class TestReservation {
         String test6 = testRegularReservation.changeDate(obEnd, obStart);
 
 
-
-//regular Cabins
+        //regular Cabins
         assertEquals(test1, "");
         assertEquals(test2, "These dates will not work for this reservation");
         assertEquals(test3, "These dates will not work for this reservation");
