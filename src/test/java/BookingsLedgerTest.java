@@ -36,7 +36,7 @@ public class BookingsLedgerTest {
         aLot.add(testLot1000);
 
         TestLedger.setLotList(aLot);
-        
+
         assertEquals(LotID1, testLot1.getLotID());
         assertEquals(LotID0, testLot0.getLotID());
         assertEquals(LotID255, testLot255.getLotID());
