@@ -5,14 +5,28 @@ import java.util.Date;
 public class Reservation {
 
 
+
+    Lot obLot;
+    Customer[] obCustomerList;
+    int nCustomerCount;
+    Date obStartDate;
+    Date obEndDate;
+    int ReservationID;
+    int StaticReservationID = 0;
+    double price;
     public Boolean status;
-    public static int StaticReservationID = 0;
-    public int ReservationID;
 
-    public double price;
-
-    public Reservation()
+    /*Reservation Constructor */
+    public Reservation(Lot Lot, Date startDate, Date endDate, Customer[] customers, int nPeople)
     {
+        /*Set the passed in pramaters*/
+        this.obLot = Lot;
+        this.obStartDate = startDate;
+        this.obEndDate = endDate;
+        this.obCustomerList = customers;
+        this.nCustomerCount = nPeople;
+
+        /*Set the ID for the specific reservation*/
         ReservationID = StaticReservationID++;
         this.price = 100.00;
         this.status = true;
@@ -23,6 +37,7 @@ public class Reservation {
     {
         return this.ReservationID;
     }
+
     //get the status of the reservation option
     public boolean getStatus() {
         return this.status;
@@ -31,14 +46,15 @@ public class Reservation {
     /**
      * changes the status
      */
-    public void setStatus() {
+    public void setStatus(){
         this.status = false;
     }
 
-    public double getPrice () {
+    public double getPrice(){
         //for  now the price will always be 0
         //they can manually input a price if they need.
 
         return this.price;
          }
+
 }
