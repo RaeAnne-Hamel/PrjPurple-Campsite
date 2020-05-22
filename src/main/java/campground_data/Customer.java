@@ -4,65 +4,65 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 public class Customer {
-    private static int CustomerID;
-    private static String sName;
-    private static String sAddress;
+    private int CustomerID;
+    private String sName;
+    private String sAddress;
 
 //    String sName;
 //    String sAddress;
-    private static String sEmail;
-    private static long nFax;
-    private static long nPhone;
-    private static long nSecPhone;
-    private static int nVisits;
-    private static boolean isFrequent;
-    private static int idPool;
+    private String sEmail;
+    private long nFax;
+    private long nPhone;
+    private long nSecPhone;
+    private int nVisits;
+    private boolean isFrequent;
+    private int idPool;
 
     public Customer(int CustomerID, String sName, String sAddress, String sEmail, long nFax,
                     long nPhone, long nSecPhone, int nVisits, boolean isFrequent, int idPool)
     {
-        Customer.CustomerID = CustomerID;
-        Customer.sName = sName;
-        Customer.sAddress = sAddress;
-        Customer.sEmail = sEmail;
-        Customer.nFax = nFax;
-        Customer.nPhone = nPhone;
-        Customer.nSecPhone = nSecPhone;
-        Customer.nVisits = nVisits;
-        Customer.isFrequent = isFrequent;
-        Customer.idPool = idPool;
+        this.CustomerID = CustomerID;
+        this.sName = sName;
+        this.sAddress = sAddress;
+        this.sEmail = sEmail;
+        this.nFax = nFax;
+        this.nPhone = nPhone;
+        this.nSecPhone = nSecPhone;
+        this.nVisits = nVisits;
+        this.isFrequent = isFrequent;
+        this.idPool = idPool;
     }
 
     public Customer() { }
 
-    @NotEmpty(message = "Name can not be empty")
-    @Size(max = 25, message = "Name can not be too long")
+//    @NotEmpty(message = "Name can not be empty")
+//    @Size(max = 25, message = "Name can not be too long")
 
-    public static int getCustomerID() { return CustomerID; }
+    public int getCustomerID() { return CustomerID; }
 
-    public static String getName()
+    public String getName()
     {
         return sName;
     }
 
-    public static String getAddress() { return sAddress; }
+    public String getAddress() { return sAddress; }
 
-    public static String getEmail()
+    public String getEmail()
     {
         return sEmail;
     }
 
-    public static long getFax()
+    public long getFax()
     {
         return nFax;
     }
 
-    public static long getPhone()
+    public long getPhone()
     {
         return nPhone;
     }
 
-    public static long getSecPhone()
+    public long getSecPhone()
     {
         return nSecPhone;
     }

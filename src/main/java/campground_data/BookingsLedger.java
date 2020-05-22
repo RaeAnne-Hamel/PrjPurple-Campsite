@@ -1,7 +1,5 @@
 package campground_data;
 
-import sun.util.resources.cldr.ext.CurrencyNames_so;
-
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
@@ -16,12 +14,12 @@ public class BookingsLedger {
     {
         Customer obAddCustomer = new Customer();
 
-        String sName = Customer.getName();
-        String sAddress = Customer.getAddress();
-        String sEmail = Customer.getEmail();
-        long nFax = Customer.getFax();
-        long nPhone = Customer.getPhone();
-        long nSecPhone = Customer.getSecPhone();
+        String sName = obAddCustomer.getName();
+        String sAddress = obAddCustomer.getAddress();
+        String sEmail = obAddCustomer.getEmail();
+        long nFax = obAddCustomer.getFax();
+        long nPhone = obAddCustomer.getPhone();
+        long nSecPhone = obAddCustomer.getSecPhone();
 
         containsLetters(sName);
         tooLongString(sName, 256);
