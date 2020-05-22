@@ -30,16 +30,13 @@ public class BookingsLedger {
 
     public Lot querySearchCampsite(int LotID)
     {
-
-
+        
         for (Lot lot : aLot) {
 
             if (lot.nLotID == LotID) {
                 return lot;
             }
         }
-
-
 
         System.out.printf("Search could not find the Lot specified.\n");
         return null;
