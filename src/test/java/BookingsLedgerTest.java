@@ -1,5 +1,7 @@
 import campground_data.*;
 import org.junit.*;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 
@@ -17,37 +19,30 @@ public class BookingsLedgerTest {
 
         BookingsLedger TestLedger = new BookingsLedger();
 
-        Lot testLot1 = TestLedger.querySearchCampsite(LotID1);
-        Lot testLot0 = TestLedger.querySearchCampsite(LotID0);
-        Lot testLot255 = TestLedger.querySearchCampsite(LotID255);
-        Lot testLotminus1 = TestLedger.querySearchCampsite(LotIDminus1);
-        Lot testLot256 = TestLedger.querySearchCampsite(LotID256);
-        Lot testLot1000 = TestLedger.querySearchCampsite(LotID1000);
+        ArrayList<Lot> aLot = new ArrayList<>();
 
+        Lot testLot1 = new Lot(1);
+        Lot testLot0 = new Lot(0);
+        Lot testLot255 = new Lot(255);
+        Lot testLotminus1 = new Lot(-1);
+        Lot testLot256 = new Lot(256);
+        Lot testLot1000 = new Lot(1000);
 
+        aLot.add(testLot1);
+        aLot.add(testLot0);
+        aLot.add(testLot255);
+        aLot.add(testLotminus1);
+        aLot.add(testLot256);
+        aLot.add(testLot1000);
+
+        TestLedger.setLotList(aLot);
+        
         assertEquals(LotID1, testLot1.getLotID());
         assertEquals(LotID0, testLot0.getLotID());
         assertEquals(LotID255, testLot255.getLotID());
         assertEquals(LotIDminus1, testLotminus1.getLotID());
         assertEquals(LotID256, testLot256.getLotID());
         assertEquals(LotID1000, testLot1000.getLotID());
-
-    }
-
-    @Test
-    public void testCorrectReservationsAreShown()
-    {
-        int LotID = 1;
-
-        BookingsLedger TestLedger = new BookingsLedger();
-
-        Lot testLot = TestLedger.querySearchCampsite(LotID);
-
-        ArrayList<Reservation> initialReservation = TestLedger.getReservations(LotID);
-
-        ArrayList<Reservation> testReservation = TestLedger.removeLot(testLot.getLotID());
-
-        assertEquals(initialReservation, testReservation);
 
     }
 
@@ -68,12 +63,6 @@ public class BookingsLedgerTest {
 
         testLot.setRemovalReason(testReason);
         assertEquals(testReason, testLot.getRemovalReason());
-
-        testLot.setRemovalReason(testReason2);
-        assertEquals(testReason2, testLot.getRemovalReason());
-
-        testLot.setRemovalReason(testReason3);
-        assertEquals(testReason3, testLot.getRemovalReason());
 
     }
 

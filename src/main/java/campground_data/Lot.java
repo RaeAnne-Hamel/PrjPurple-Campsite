@@ -28,9 +28,9 @@ public class Lot {
 
     }
 
-    public Lot()
+    public Lot(int nLotID)
     {
-        this.nLotID = 0;
+        this.nLotID = nLotID;
         this.obType = LotType.Serviced;
         this.obReservationList = new ArrayList<Reservation>();
         this.StaticLotID = 0;

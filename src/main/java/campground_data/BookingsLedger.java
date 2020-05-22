@@ -17,20 +17,29 @@ public class BookingsLedger {
     Takes in a integer representing the LotID and returns a Lot with an ID matching the integer input.
     If No lot is found the system returns null and prints out a line of text notifying that the lot cannot be found.
      */
+
+    public ArrayList<Lot> getLotList()
+    {
+        return aLot;
+    }
+
+    public void setLotList(ArrayList<Lot> aLot)
+    {
+        this.aLot = aLot;
+    }
+
     public Lot querySearchCampsite(int LotID)
     {
-        try
-        {
-            for (Lot lot : aLot) {
-                if (lot.nLotID == LotID) {
-                    return lot;
-                }
+
+
+        for (Lot lot : aLot) {
+
+            if (lot.nLotID == LotID) {
+                return lot;
             }
         }
-        catch(NumberFormatException e)
-        {
-            System.out.printf("Something other than a whole number was passed in. only whole numbers from 1-255 may be passed\n");
-        }
+
+
 
         System.out.printf("Search could not find the Lot specified.\n");
         return null;
