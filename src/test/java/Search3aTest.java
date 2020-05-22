@@ -1,6 +1,4 @@
-import campground_data.Lot;
 import campground_data.LotType;
-import campground_data.NewLotSearch;
 import org.junit.Test;
 
 import java.time.LocalDate;
