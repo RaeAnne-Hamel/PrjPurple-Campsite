@@ -19,6 +19,23 @@ public class Lot {
             String sRemovalReason,
             boolean bAvailability)
     {
+        this.nLotID = nLotID;
+        this.obType = obType;
+        this.obReservationList = obReservationList;
+        this.StaticLotID = StaticLotID;
+        this.sRemovalReason = sRemovalReason;
+        this.bAvailability = bAvailability;
+
+    }
+
+    public Lot()
+    {
+        this.nLotID = 0;
+        this.obType = LotType.Serviced;
+        this.obReservationList = new ArrayList<Reservation>();
+        this.StaticLotID = 0;
+        this.sRemovalReason = "";
+        this.bAvailability = true;
 
     }
 

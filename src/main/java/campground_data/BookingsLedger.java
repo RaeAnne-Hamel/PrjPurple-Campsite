@@ -37,12 +37,18 @@ public class BookingsLedger {
     }
 
     /*
-    Test Code make sure to remove and make actual code
+    Runs through the reservations and removes any reservation associated with the Lot passed in.
      */
-    public ArrayList<Reservation> removeReservation(int ReservationID)
+    public void removeReservations(Lot obLot)
     {
-        ArrayList<Reservation> testReservation = new ArrayList<>();
-        return testReservation;
+
+        for (Reservation obRes : aReservation)
+        {
+            if (obRes.obLot == obLot)
+            {
+                aReservation.remove(obRes);
+            }
+        }
     }
 
     /*
@@ -58,11 +64,11 @@ public class BookingsLedger {
     }
 
     /*
-    Removes
+    Sets the availability of the lot to the boolean passed in.
      */
-    public void removeLot(int LotID)
+    public void setLotAvailability(Lot obLot, boolean bAvailable)
     {
-
+        obLot.bAvailability = bAvailable;
 
     }
 
