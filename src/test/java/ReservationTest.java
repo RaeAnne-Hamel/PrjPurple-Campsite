@@ -9,7 +9,17 @@ import java.util.Calendar;
 import java.util.Date;
 import static org.junit.Assert.assertEquals;
 
-class TestReservation {
+
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.*;
+
+import javax.xml.validation.Validator;
+
+
+class ReservationTest {
+
     //these will be the start and end dates
     private Date obStart = new Date(2020, Calendar.JUNE, 11);
     private Date obEnd = new Date(2020, Calendar.JUNE, 15);
@@ -23,6 +33,10 @@ class TestReservation {
     private Reservation testRegularReservation = new Reservation(null, 3,obStart, obEnd, obRegLot);
     //this will be a group reservation
     private Reservation testGroupReservation = new Reservation(null, 6,obStart, obEnd, obGroupLot);
+
+
+
+
 
     //this is the start of the test's for the Reservations Class
     @Test
@@ -136,117 +150,6 @@ class TestReservation {
 
     }
 
-
-    //this is the start of the test's for the Reservations Class
-    //these tests will check to make sure that the price changes correclty
-    //when a discount it applied.
-    //group and regual sites cost diffreent so we need to check both when
-    //applying a discount to the site.
-    @Test
-    public void tCustomerDiscountRegular()
-    {
-        //these are test done by the regualr Cabins
-        //normal cases for regualr cabins
-        double newPriceTest1 = testRegularReservation.price * (0.9);
-        double test1 = testRegularReservation.setDiscount(90);
-
-        double newPriceTest2 = testRegularReservation.price * (0.5);
-        double test2 = testRegularReservation.setDiscount(50);
-
-
-       //these tests are for a group cabins
-        //normal cases for group cabins
-        double newPriceTest8 = testGroupReservation.price * (0.9);
-        double test8 = testGroupReservation.setDiscount(90);
-
-        double newPriceTest9 = testGroupReservation.price * (0.5);
-        double test9 = testGroupReservation.setDiscount(50);
-
-
-        //regular Cabins
-        assertEquals(test1,  newPriceTest1, 0.001);
-        assertEquals(test2, newPriceTest2, 0.001);
-
-        //group cabins
-        assertEquals(test8, newPriceTest8, 0.001);
-        assertEquals(test9, newPriceTest9, 0.001);
-
-    }
-
-    /**
-     * maximum discount for group and regualr site
-     */
-    @Test
-    public void tCustomerDiscountMax()
-    {
-        //Regualr Site
-        double test1 = testRegularReservation.setDiscount(100);
-        //Group Site
-        double test2 = testGroupReservation.setDiscount(100);
-
-        assertEquals(test1, 0.0, 0.001);
-        assertEquals(test2, 0.0, 0.001);
-
-    }
-
-    /**
-     * Minumum discount for group and regualr site
-     */
-    @Test
-    public void tCustomerDiscountMin()
-    {
-        //Regualr Site minumum
-        double newPriceTest1 = testRegularReservation.price;
-        double test1 = testRegularReservation.setDiscount(0);
-
-        double newPriceTest2 = testRegularReservation.price * (0.01);
-        double test2 = testRegularReservation.setDiscount(1);
-
-        //Group Site minimum
-        double newPriceTest3 = testGroupReservation.price;
-        double test3 = testGroupReservation.setDiscount(0);
-
-        double newPriceTest4 = testGroupReservation.price * (0.01);
-        double test4 = testGroupReservation.setDiscount(1);
-
-        assertEquals(test1, newPriceTest1, 0.001);
-        assertEquals(test2, newPriceTest2, 0.001);
-
-        assertEquals(test3, newPriceTest3, 0.001);
-        assertEquals(test4, newPriceTest4, 0.001);
-
-
-    }
-
-    /**
-     * boundry cases for the cabin discount types
-     */
-    @Test
-    public void tCustomerDiscountBoundry()
-    {
-        //regular cabin boundry cases
-        double newPriceTest1 = testGroupReservation.price;
-        double test1 = testRegularReservation.setDiscount(101);
-
-        double newPriceTest2 = testGroupReservation.price;
-        double test2 = testRegularReservation.setDiscount(-1);
-
-
-        //group cabin boundry cases
-        double newPriceTest3 = testGroupReservation.price;
-        double test3 = testGroupReservation.setDiscount(101);
-
-        double newPriceTest4 = testGroupReservation.price;
-        double test4 = testGroupReservation.setDiscount(-1);
-
-
-        assertEquals(test1, newPriceTest1, 0.001);
-        assertEquals(test2, newPriceTest2, 0.001);
-        assertEquals(test3, newPriceTest3, 0.001);
-        assertEquals(test4, newPriceTest4, 0.001);
-
-
-    }
 
 
     //this is the start of the test's for the Reservations Class

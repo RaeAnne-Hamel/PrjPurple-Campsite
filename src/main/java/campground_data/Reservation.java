@@ -4,12 +4,12 @@ import java.awt.print.Book;
 import java.util.Date;
 
 public class Reservation<Static> {
+    Lot obLot;
     Customer[] obCustomerList;
     Date obStartDate, obEndDate;
     String Status = "Active";
     public static int StaticReservationID = 0;
     int ReservationID, nCustomerCount;
-    Lot obLot;
     public double price;
 
 
@@ -36,13 +36,13 @@ public class Reservation<Static> {
     {
         if (obLot.getLotType() == LotType.Cabin)
         {
-            return checkSmallType(number);
+            return checkRegularType(number);
         } else if (obLot.getLotType() == LotType.ServicedIndividual)
         {
-            return checkSmallType(number);
+            return checkRegularType(number);
         } else if (obLot.getLotType() == LotType.NonServicedIndividual)
         {
-            return checkSmallType(number);
+            return checkRegularType(number);
         } else if (obLot.getLotType() == LotType.ServicedGroup)
         {
             return checkGroupType(number);
@@ -59,7 +59,7 @@ public class Reservation<Static> {
     }
 
 
-    private String checkSmallType(int number)
+    private String checkRegularType(int number)
     {
         if(number <= 4)
         {
@@ -83,38 +83,6 @@ public class Reservation<Static> {
     }
 
 
-        public double setDiscount ( int discount)
-        {
-            if (discount == 100) {
-                this.price = 0.00;
-                return 0.0;
-            } else if (discount < 100 && discount > 0) {
-                double dCalPrice = this.getPrice() * (discount / 100);
-                dCalPrice = round(dCalPrice, 2);
-                this.price = dCalPrice;
-                return dCalPrice;
-
-            }
-            //if the number is a bad number
-            //we will not change the price of the object.
-            return this.getPrice();
-        }
-
-        /**
-         * this is a method to round the numbers when
-         * calulating the price of items.
-         * @param dVal
-         * @param places
-         * @return
-         */
-        private double round ( double dVal, int places)
-        {
-            long factor = (long) Math.pow(10, places);
-            dVal = dVal * factor;
-            long temp = Math.round(dVal);
-            return (temp / factor);
-
-        }
 
         public int getID()
         {
@@ -183,10 +151,5 @@ public class Reservation<Static> {
         return returnMe;
 
     }
-
-
-
-
-
 
 }
