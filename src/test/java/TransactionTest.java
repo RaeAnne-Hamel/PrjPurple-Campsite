@@ -17,7 +17,18 @@ public class TransactionTest {
     @Test
     public void testCheckForReservationID()
     {
+        Reservation testReservation = new Reservation();
+        Reservation testReservation2 = new Reservation();
 
+        int testID1 = 0;
+        int testID2 = 1;
+        int testID3 = -1;
+        int testID4 =2000000;
+
+        assertEquals(testID1, testReservation.getReservationID());
+        assertEquals(testID2, testReservation2.getReservationID());
+        assertNotEquals(testID3, testReservation.getReservationID());
+        assertNotEquals(testID4, testReservation2.getReservationID());
     }
 
 
