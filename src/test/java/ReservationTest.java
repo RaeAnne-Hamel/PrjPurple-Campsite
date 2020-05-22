@@ -18,6 +18,8 @@ public class ReservationTest
     private Date startDate = new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime();
     private Date endDate = new GregorianCalendar(2014, Calendar.FEBRUARY, 13).getTime();
 
+    BookingsLedger BL = new BookingsLedger();
+
 /*Create Valid Reservation*/
     Reservation oneReservation = new Reservation(1,startDate,endDate,payingCustomers,9);
 
@@ -39,7 +41,7 @@ public class ReservationTest
         assertEquals(access, BookingsLedger.isValidPermissions(BookingsLedger.user));
 
         //Simply returns true if permissions are valid
-        assertEquals(oneReservation.getID(), BookingsLedger.removeReservation(1));
+        assertEquals(oneReservation.getID(), BL.removeReservation(1));
 
     }
 
@@ -52,7 +54,7 @@ public class ReservationTest
         assertEquals(access, BookingsLedger.isValidPermissions(BookingsLedger.user));
 
         //Simply returns true if permissions are valid
-        assertEquals(oneReservation.getID(), BookingsLedger.removeReservation(123456789));
+        assertEquals(oneReservation.getID(), BL.removeReservation(123456789));
     }
 
 /*If a manager is prompted with a 1 or a 0 to confirm or cancel the reservation*/
@@ -64,7 +66,7 @@ public class ReservationTest
         assertEquals(access, BookingsLedger.isValidPermissions(BookingsLedger.user));
 
         //Simply returns true if permissions are valid
-        assertEquals(oneReservation.getID(), BookingsLedger.removeReservation(1));
+        assertEquals(oneReservation.getID(), BL.removeReservation(1));
 
     }
 }

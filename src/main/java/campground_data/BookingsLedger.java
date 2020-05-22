@@ -1,5 +1,7 @@
 package campground_data;
 
+import campground_ui.MainConsole;
+
 import java.util.ArrayList;
 
 /***
@@ -30,9 +32,11 @@ public class BookingsLedger {
         return true;
     }
 
-    /*Check if the inputted reservation string is a valid ID (long) */
 
-    /* Checks whether a reservation to be removed exists */
+    /**
+     * Check get a reservation based on the ID
+     * @param ID - Inputs an ID
+     */
     public static Reservation getReservation(int ID)
     {
         for(Reservation res: aReservation)
@@ -46,11 +50,16 @@ public class BookingsLedger {
         return null;
     }
 
+    /**
+     * Removes a reservation based on the ID input
+     * @param ID
+     * @return
+     */
     public boolean removeReservation(int ID)
     {
         /* Create a temporary Reservation ArrayList */
         ArrayList<Reservation> tmpReservations = new ArrayList<>();
-        boolean lotFound = false;
+        boolean resFound = false;
 
         String response = "yes";
 
@@ -59,21 +68,26 @@ public class BookingsLedger {
             /*If the Reservation ID is found*/
             if (res.getID() == ID)
             {
-                lotFound = true;
-
-                if (response.equals("yes"))
-
-
-                /* Double check if they want to remove */
-                continue;
+                /*Asks for a confirmation from the user if they want to remove the reservatin */
+                String sConfirm = MainConsole.Prompt("Are you sure you want to remove the reservation? (Y , N )");
+                if (sConfirm.equals("Y"))
+                {
+                    resFound = true;
+                    /* Double check if they want to remove */
+                    continue;
+                }
             }
 
             /* Add a reservation to the tmp resorvation */
             tmpReservations.add(res);
         }
 
+        /*If the reservation is not fount */
+        if (resFound == false)
+            System.out.println("Reservation Not Found");
+
         aReservation = tmpReservations;
-        return lotFound;
+        return resFound;
     }
 
 /*    public CampLedger() {
