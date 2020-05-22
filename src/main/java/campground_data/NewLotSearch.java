@@ -1,24 +1,44 @@
 package campground_data;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAmount;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 
 public class NewLotSearch {
 
-    public static Date[] getDates(String nType) {
+    private static final long DAYS_TO_SEARCH = 30;
+
+    public static ArrayList<LocalDate> getDates(LotType nType) {
 
         Date dateStart = new Date();
 
+        ArrayList<LocalDate> allDates = new ArrayList<>();
 
         for (Lot obLot : BookingsLedger.aLot) {
             if (obLot.getType.equals(nType)) {
-                
+                LocalDate localDateStart = LocalDate.now();
+                LocalDate localDateEnd = localDateStart.plus(DAYS_TO_SEARCH, ChronoUnit.DAYS);
+
+
+                List<LocalDate> cabinDates = IntStream.iterate(0, i -> i + 1)
+                        .limit(DAYS_TO_SEARCH)
+                        .mapToObj(i -> localDateStart.plusDays(i))
+                        .collect(Collectors.toList());
+                for (LocalDate obDate : cabinDates)
+                {
+                    allDates.add(obDate);
+                }
             }
         }
 
-        return null;
+        return (ArrayList<LocalDate>) allDates;
     }
 
     /**
@@ -33,7 +53,7 @@ public class NewLotSearch {
      * @param nEndDay
      * @return
      */
-    public static ArrayList<Lot> chooseDate(String nType, int nStartYear, int nStartMonth, int nStartDay, int nEndYear, int nEndMonth, int nEndDay) {
+    public static ArrayList<Lot> chooseDate(LotType nType, int nStartYear, int nStartMonth, int nStartDay, int nEndYear, int nEndMonth, int nEndDay) {
         ArrayList<Lot> obLots = new ArrayList<>();
 
         Date dateStart = new Date(nStartYear, nStartMonth, nStartDay);
@@ -54,19 +74,11 @@ public class NewLotSearch {
 //        {
 //            throw new Exception("Start date must be before end date.");
 //        }
-
-        //BookingsLedger.checkOverlap()
-
-//        LocalDate localDateStart = dateStart.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-//        LocalDate localDateEnd = dateEnd.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-//
-//        long lDaysBetween = ChronoUnit.DAYS.between(localDateStart, localDateEnd);
-//
-//        List<LocalDate> allDates = IntStream.iterate(0, i -> i + 1)
-//                .limit(lDaysBetween)
-//                .mapToObj(i -> localDateStart.plusDays(i))
-//                .collect(Collectors.toList());
-
         return obLots;
+    }
+
+    @Override
+    public String toString(){
+        return null;
     }
 }

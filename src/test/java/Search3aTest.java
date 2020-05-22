@@ -1,9 +1,11 @@
 import campground_data.Lot;
+import campground_data.LotType;
 import campground_data.NewLotSearch;
 import org.junit.Test;
 
 import java.util.ArrayList;
 
+import static campground_data.LotType.*;
 import static org.junit.Assert.assertEquals;
 import static campground_data.NewLotSearch.chooseDate;
 
@@ -15,8 +17,8 @@ public class Search3aTest {
     int nStartYear = 2020;
     int nEndYear = 2020;
     ArrayList<Lot> obLotResults = new ArrayList<>();
-    final int TOTAL_LOTS = 28;
-
+    final int TOTAL_LOTS = 3;
+    LotType nType = Cabin;
 
     /***
      * VALID: Dates appropriate
@@ -28,7 +30,7 @@ public class Search3aTest {
         nStartMonth = 8;
         nEndMonth = 8;
 
-        obLotResults = chooseDate(nStartYear, nStartMonth, nStartDay, nEndYear, nEndMonth, nEndDay);
+        obLotResults = chooseDate(nType, nStartYear, nStartMonth, nStartDay, nEndYear, nEndMonth, nEndDay);
 
         assertEquals(obLotResults.size(), TOTAL_LOTS);
     }
@@ -43,7 +45,7 @@ public class Search3aTest {
         nEndDay = 8;
         nEndMonth = 7;
 
-        obLotResults = chooseDate(nStartYear, nStartMonth, nStartDay, nEndYear, nEndMonth, nEndDay);
+        obLotResults = chooseDate(nType, nStartYear, nStartMonth, nStartDay, nEndYear, nEndMonth, nEndDay);
 
         assertEquals(obLotResults.size(), 0);
     }
@@ -60,7 +62,7 @@ public class Search3aTest {
         nEndDay = 8;
         nEndMonth = 7;
 
-        obLotResults = chooseDate(nStartYear, nStartMonth, nStartDay, nEndYear, nEndMonth, nEndDay);
+        obLotResults = chooseDate(nType, nStartYear, nStartMonth, nStartDay, nEndYear, nEndMonth, nEndDay);
 
         assertEquals(obLotResults.size(), 0);
     }
@@ -77,7 +79,7 @@ public class Search3aTest {
         nEndDay = 8;
         nEndMonth = 7;
 
-        obLotResults = chooseDate(nStartYear, nStartMonth, nStartDay, nEndYear, nEndMonth, nEndDay);
+        obLotResults = chooseDate(nType, nStartYear, nStartMonth, nStartDay, nEndYear, nEndMonth, nEndDay);
 
         assertEquals(obLotResults.size(), 0);
     }
@@ -94,7 +96,7 @@ public class Search3aTest {
         nEndDay = 6;
         nEndMonth = 30;
 
-        obLotResults = chooseDate(nStartYear, nStartMonth, nStartDay, nEndYear, nEndMonth, nEndDay);
+        obLotResults = chooseDate(nType, nStartYear, nStartMonth, nStartDay, nEndYear, nEndMonth, nEndDay);
 
         assertEquals(obLotResults.size(), TOTAL_LOTS);
     }
@@ -108,7 +110,7 @@ public class Search3aTest {
         nEndDay = 7;
         nEndMonth = 7;
 
-        obLotResults = chooseDate(nStartYear, nStartMonth, nStartDay, nEndYear, nEndMonth, nEndDay);
+        obLotResults = chooseDate(nType, nStartYear, nStartMonth, nStartDay, nEndYear, nEndMonth, nEndDay);
 
         assertEquals(obLotResults.size(), 0);
     }
@@ -122,7 +124,7 @@ public class Search3aTest {
         nEndDay = 7;
         nEndMonth = 8;
 
-        obLotResults = chooseDate(nStartYear, nStartMonth, nStartDay, nEndYear, nEndMonth, nEndDay);
+        obLotResults = chooseDate(nType, nStartYear, nStartMonth, nStartDay, nEndYear, nEndMonth, nEndDay);
 
         assertEquals(obLotResults.size(), 0);
     }
@@ -133,7 +135,7 @@ public class Search3aTest {
         nEndDay = 1;
         nEndMonth = 7;
 
-        obLotResults = chooseDate(nStartYear, nStartMonth, nStartDay, nEndYear, nEndMonth, nEndDay);
+        obLotResults = chooseDate(nType, nStartYear, nStartMonth, nStartDay, nEndYear, nEndMonth, nEndDay);
 
         assertEquals(obLotResults.size(), 0);
     }
