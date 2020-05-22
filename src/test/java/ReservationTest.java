@@ -1,5 +1,6 @@
 import campground_data.BookingsLedger;
 import campground_data.Customer;
+import campground_data.Lot;
 import campground_data.Reservation;
 import org.junit.Test;
 
@@ -12,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 public class ReservationTest
 {
     /*Create array of paying customers*/
-    private Customer[] payingCustomers = {new Customer(),new Customer()};
+    private Customer[] payingCustomers = {new Customer(0,"","","", 1  ,1,1,1,true,1),new Customer(0,"","","", 1  ,1,1,1,true,1)};
 
     /*Create dates of check-in and check-out*/
     private Date startDate = new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime();
@@ -21,7 +22,8 @@ public class ReservationTest
     BookingsLedger BL = new BookingsLedger();
 
 /*Create Valid Reservation*/
-    Reservation oneReservation = new Reservation(0,startDate,endDate,payingCustomers,9);
+    Reservation oneReservation = new Reservation(new Lot(),startDate,endDate,payingCustomers,9);
+
 
     /*Test if a manager attempting to remove a reservation has IN adequate permissions*/
     @Test
@@ -49,16 +51,17 @@ public class ReservationTest
     @Test
     public void testRemoveReservationPresent()
     {
+
         boolean access = true;
 
         assertEquals(access, BookingsLedger.isValidPermissions(BookingsLedger.getUser()));
 
         /*checks that the reservation was added */
-        BL.aReservation.add(oneReservation);
-        assertEquals(BL.aReservation.size(), 1);
+        BL.getReservations().add(oneReservation);
+        assertEquals(BL.getReservations().size(), 1);
 
         /*checks that the reservation was successfully removed */
-        BL.removeReservation(1);
-        assertEquals(0, BL.aReservation.size());
+        BL.removeReservation(0);
+        assertEquals(0, BL.getReservations().size());
     }
 }

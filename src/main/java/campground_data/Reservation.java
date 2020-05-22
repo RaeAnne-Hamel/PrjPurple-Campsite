@@ -4,21 +4,21 @@ import java.util.Date;
 
 public class Reservation {
 
-    /*Primative Variables */
-    public static int StaticReservationID = 0;
-    int nLotID, ReservationID, nCustomerCount;
-    double price;
-
-    /*Reference Variables*/
+    Lot obLot;
     Customer[] obCustomerList;
-    Date obStartDate, obEndDate;
+    int nCustomerCount;
+    Date obStartDate;
+    Date obEndDate;
+    int ReservationID;
+    int StaticReservationID = 0;
+    double price;
     String Status = "Active";
 
     /*Reservation Constructor */
-    public Reservation(int lotID, Date startDate, Date endDate, Customer[] customers, int nPeople)
+    public Reservation(Lot Lot, Date startDate, Date endDate, Customer[] customers, int nPeople)
     {
         /*Set the passed in pramaters*/
-        this.nLotID = lotID;
+        this.obLot = Lot;
         this.obStartDate = startDate;
         this.obEndDate = endDate;
         this.obCustomerList = customers;
@@ -26,17 +26,11 @@ public class Reservation {
 
         /*Set the ID for the specific reservation*/
         ReservationID = StaticReservationID++;
-
-
     }
 
     public int getReservationID()
     {
         return this.ReservationID;
     }
-
-    
-
-
 
 }
