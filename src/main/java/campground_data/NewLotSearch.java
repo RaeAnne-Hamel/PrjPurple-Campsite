@@ -16,29 +16,34 @@ public class NewLotSearch {
         return null;
     }
 
-    public static ArrayList<Lot> chooseDate(int nStartYear, int nStartMonth, int nStartDay, int nEndYear, int nEndMonth, int nEndDay) throws Exception {
+    public static void main(String[] args)
+    {
+        chooseDate(2020, 7, 23, 2020, 7, 30);
+    }
+
+    public static ArrayList<Lot> chooseDate(int nStartYear, int nStartMonth, int nStartDay, int nEndYear, int nEndMonth, int nEndDay) {
 
         ArrayList<Lot> obLots = new ArrayList<>();
 
         Date dateStart = new Date(nStartYear, nStartMonth, nStartDay);
         Date dateEnd = new Date(nEndYear, nEndMonth, nEndDay);
 
-        if (dateStart.compareTo(dateEnd) > 0)
-        {
-            throw new Exception("Start date must be before end date.");
-        }
+//        if (dateStart.compareTo(dateEnd) > 0)
+//        {
+//            throw new Exception("Start date must be before end date.");
+//        }
 
         //BookingsLedger.checkOverlap()
 
-        LocalDate localDateStart = dateStart.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate localDateEnd = dateEnd.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-        long lDaysBetween = ChronoUnit.DAYS.between(localDateStart, localDateEnd);
-
-        List<LocalDate> allDates = IntStream.iterate(0, i -> i + 1)
-                .limit(lDaysBetween)
-                .mapToObj(i -> localDateStart.plusDays(i))
-                .collect(Collectors.toList());
+//        LocalDate localDateStart = dateStart.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+//        LocalDate localDateEnd = dateEnd.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+//
+//        long lDaysBetween = ChronoUnit.DAYS.between(localDateStart, localDateEnd);
+//
+//        List<LocalDate> allDates = IntStream.iterate(0, i -> i + 1)
+//                .limit(lDaysBetween)
+//                .mapToObj(i -> localDateStart.plusDays(i))
+//                .collect(Collectors.toList());
 
 
 
