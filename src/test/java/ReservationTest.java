@@ -57,11 +57,11 @@ public class ReservationTest
         assertEquals(access, BookingsLedger.isValidPermissions(BookingsLedger.getUser()));
 
         /*checks that the reservation was added */
-        BL.getReservations().add(oneReservation);
-        assertEquals(BL.getReservations().size(), 1);
+        BL.getAllReservations().add(oneReservation);
+        assertEquals(BL.getAllReservations().size(), 1);
 
         /*checks that the reservation was successfully removed */
         BL.removeReservation(0);
-        assertEquals(0, BL.getReservations().size());
+        assertEquals(0, BL.getAllReservations().size());
     }
 }

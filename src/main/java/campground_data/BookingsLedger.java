@@ -121,7 +121,7 @@ public class BookingsLedger {
             if (res.getReservationID() == ID)
             {
                 /*Asks for a confirmation from the user if they want to remove the reservatin */
-                String sConfirm = MainConsole.Prompt("Are you sure you want to remove the reservation? (Y , N )");
+                String sConfirm = "Y";//MainConsole.Prompt("Are you sure you want to remove the reservation? (Y , N )");
                 if (sConfirm.equals("Y"))
                 {
                     resFound = true;
@@ -173,7 +173,7 @@ public class BookingsLedger {
         return user;
     }
 
-    public ArrayList<Reservation> getReservations()
+    public ArrayList<Reservation> getAllReservations()
     {
         return aReservation;
     }
