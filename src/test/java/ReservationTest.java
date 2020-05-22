@@ -14,9 +14,9 @@ class TestReservation {
 
 
     //this will be a basic reservation
-    private Reservation testRegularReservation = new Reservation(null, 3,obStart, obEnd, "regualr");
+    private Reservation testRegularReservation = new Reservation(null, 3,obStart, obEnd, "Regualr");
     //this will be a group reservation
-    private Reservation testGroupReservation = new Reservation(null, 6,obStart, obEnd, "group");
+    private Reservation testGroupReservation = new Reservation(null, 6,obStart, obEnd, "Group");
 
     //this is the start of the test's for the Reservations Class
     @Test
