@@ -44,12 +44,12 @@ public class BookingsLedgerTest {
         Lot QueryTestLot256 = TestLedger.querySearchCampsite(LotID256);
         Lot QueryTestLot1000 = TestLedger.querySearchCampsite(LotID1000);
 
-        assertEquals(testLot1, testLot1.getLotID());
-        assertEquals(testLot0, testLot0.getLotID());
-        assertEquals(testLot255, testLot255.getLotID());
-        assertEquals(testLotminus1, testLotminus1.getLotID());
-        assertEquals(testLot256, testLot256.getLotID());
-        assertEquals(testLot1000, testLot1000.getLotID());
+        assertEquals(LotID1, testLot1.getLotID());
+        assertEquals(LotID0, testLot0.getLotID());
+        assertEquals(LotID255, testLot255.getLotID());
+        assertEquals(LotIDminus1, testLotminus1.getLotID());
+        assertEquals(LotID256, testLot256.getLotID());
+        assertEquals(LotID1000, testLot1000.getLotID());
 
     }
 

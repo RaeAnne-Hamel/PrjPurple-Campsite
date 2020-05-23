@@ -129,7 +129,7 @@ public class MainConsole {
                     System.out.print("Actions:[C]ustomer: ");
                     switch (read.nextLine().toUpperCase()) {
                         case "C":
-                            
+
                             break;
                     }
                     break;
