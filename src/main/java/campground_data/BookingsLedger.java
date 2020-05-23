@@ -1,5 +1,6 @@
 package campground_data;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,14 +15,14 @@ public class BookingsLedger
 {
     ArrayList<Reservation> aReservation = new ArrayList<>();
     ArrayList<Lot> aLot = new ArrayList<>();
-    ArrayList<Customer> aCustomer;
+    ArrayList<Customer> aCustomer = new ArrayList<>();
     ArrayList<Manager> aManager;
 
 
     /**
      * addReservation will add a new Reservation into the aReservation ArrayList while checking and preventing any
      * issues such as overlapping booking and overbooking. The method will return true if it has succeeded and false
-     * if it has failed.
+     * if it has failed. --Andrew
      * @param nLotID
      * @param obStartDate
      * @param obEndDate
@@ -202,7 +203,7 @@ public class BookingsLedger
     /**
      * checkOverlap is a method that with the lotID find a reservation and check if the specified dates overlap
      * with any other reservation in the date range. if the method returns false there is no overlap and if it returns
-     * true there is a overlap.
+     * true there is a overlap. --Andrew
      * @param nLotID
      * @param obStartDate
      * @param obEndDate
@@ -280,6 +281,28 @@ public class BookingsLedger
             }
         }
         return null;
+    }
+
+    /**
+     * Takes in a CustomerID and returns a customer object --Andrew
+     * @param ID
+     */
+    public Customer getCustomerByID(int ID)
+    {
+        System.out.println("test1");
+        List<Customer> obCustomerList = aCustomer.stream()
+                .filter(e-> e.getCustomerID() == ID)
+                .collect(Collectors.toList());
+
+        //Return null if no customer is found
+        if(obCustomerList.size() == 0)
+        {
+            return null;
+        }
+        else {
+            Customer obCustomer = obCustomerList.get(0);
+            return obCustomer;
+        }
     }
 
     /*

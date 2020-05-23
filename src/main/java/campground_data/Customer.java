@@ -30,5 +30,10 @@ public class Customer
         CustomerID = IdPool;
         IdPool++;
     }
+    public int getCustomerID()
+    {
+        return CustomerID;
+    }
+
 
 }
