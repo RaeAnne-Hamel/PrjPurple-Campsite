@@ -27,7 +27,9 @@ public class MainConsole {
                     System.out.print("Actions:[C]ustomer");
                     switch (read.nextLine().toUpperCase()) {
                         case "C":
-                            BookingLedger.addCustomer();
+
+                            Customer obCustomer = new Customer();
+                            BookingLedger.addCustomer(obCustomer);
                     }
                     break;
                 case "RR":

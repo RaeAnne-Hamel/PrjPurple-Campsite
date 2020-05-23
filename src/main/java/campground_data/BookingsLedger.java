@@ -162,12 +162,10 @@ public class BookingsLedger {
     Boolean bCustomerPasses = true;
 
     /**
-     * Add a customer based off of valid
+     * Add a customer if valid
      */
-    public void addCustomer()
+    public void addCustomer(Customer customer)
     {
-        Customer customer = new Customer();
-
         String sName = customer.getName();
         String sAddress = customer.getAddress();
         String sEmail = customer.getEmail();
