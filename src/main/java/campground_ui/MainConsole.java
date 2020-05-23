@@ -42,7 +42,7 @@ public class MainConsole {
                         {
                             case "S":
                             {
-                                System.out.print("[A]vailable, [U]navailable");
+                                System.out.println("[A]vailable, [U]navailable");
 
                                 switch (read.nextLine().toUpperCase())
                                 {
@@ -81,10 +81,22 @@ public class MainConsole {
                     break;
 
                 case "C":
-                    System.out.print("[A]dd Customer");
+                    System.out.print("[A]dd Customer\n");
 
                     case "A":
-                        BookingLedger.addCustomer();
+                        int customerID = 0;
+                        String name = PromptNormal("Please enter a name");
+                        String address = PromptNormal("Please enter an address");
+                        String email = PromptNormal("Please enter an email");
+                        long fax = Long.parseLong(PromptNormal("Please enter a fax"));
+                        long phone = Long.parseLong(PromptNormal("Please enter a phone"));
+                        long secPhone = Long.parseLong(PromptNormal("Please enter a secondary phone"));
+                        int nVisits = 0;
+                        boolean bFreq = true;
+                        int idPool = 0;
+
+                        Customer customer = new Customer(customerID, name, address, email, fax, phone, secPhone, nVisits, bFreq, idPool);
+                        BookingLedger.addCustomer(customer);
                 break;
 
                 default:
@@ -101,6 +113,12 @@ public class MainConsole {
     {
         System.out.println(Message);
         return read.nextLine().toUpperCase();
+    }
+
+    public static String PromptNormal(String Message)
+    {
+        System.out.println(Message);
+        return read.nextLine();
     }
 
     private static void listSomething(){

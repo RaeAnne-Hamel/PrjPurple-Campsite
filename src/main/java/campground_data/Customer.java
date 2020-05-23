@@ -29,8 +29,6 @@ public class Customer {
         this.idPool = idPool;
     }
 
-    public Customer() { }
-
     public int getCustomerID() { return CustomerID; }
 
     public String getName() { return sName; }
@@ -47,7 +45,7 @@ public class Customer {
 
     public int getVisits() { return nVisits; }
 
-    public boolean isFrequent() { return isFrequent; }
+    public boolean getFrequent() { return isFrequent; }
 
     public int getIdPool() { return idPool; }
 

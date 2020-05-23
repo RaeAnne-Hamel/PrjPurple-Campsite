@@ -12,7 +12,7 @@ public class BookingsLedger {
 
     ArrayList<Reservation> aReservation = new ArrayList<>();
     ArrayList<Lot> aLot;
-    ArrayList<Customer> aCustomer;
+    ArrayList<Customer> aCustomer = new ArrayList<>();
     ArrayList<Manager> aManager;
 
     Boolean bCustomerPasses = true;
@@ -159,18 +159,20 @@ public class BookingsLedger {
     }
 
     /**
-     * Add a customer based off of valid
+     * Add a customer based off if valid
      */
-    public void addCustomer()
+    public void addCustomer(Customer customer)
     {
-        Customer customer = new Customer();
-
+//        int custID = customer.getCustomerID();
         String sName = customer.getName();
         String sAddress = customer.getAddress();
         String sEmail = customer.getEmail();
         long nFax = customer.getFax();
         long nPhone = customer.getPhone();
         long nSecPhone = customer.getSecPhone();
+        int nVisits = customer.getVisits();
+        boolean bFreq = customer.getFrequent();
+        int idPool = customer.getIdPool();
 
         containsLetters(sName);
         tooLongString(sName, 256);
@@ -191,29 +193,39 @@ public class BookingsLedger {
         tooBigLong(nSecPhone);
         tooSmallLong(nSecPhone);
 
-        if (bCustomerPasses) aCustomer.add(customer);
+        if (bCustomerPasses) {
+            aCustomer.add(customer);
+            System.out.println("Customer has been added");
+        }
         else System.out.println("Customer could not be added");
     }
 
     public void containsLetters(String word)
     {
-        word.toLowerCase();
         char[] arCh = word.toCharArray();
         for (char ch : arCh) {
-            if (!(ch >= 'a' && ch <= 'z')) {
+            if (!(Character.isLetter(ch))) {
                 bCustomerPasses = false;
                 break;
             }
         }
     }
 
-    public void tooLongString(String word, int length) { if (word.length() >= length) bCustomerPasses = false; }
+    public void tooLongString(String word, int length) {
+        if (word.length() >= length) bCustomerPasses = false;
+    }
 
-    public void tooShortString(String word, int length) { if (word.length() <= length) bCustomerPasses = false; }
+    public void tooShortString(String word, int length) {
+        if (word.length() <= length) bCustomerPasses = false;
+        }
 
-    public void tooBigLong(long number) { if (number > 99999999999L) bCustomerPasses = false; }
+    public void tooBigLong(long number) {
+        if (number > 99999999999L) bCustomerPasses = false;
+        }
 
-    public void tooSmallLong(long number) { if (number < 1000000000) bCustomerPasses = false; }
+    public void tooSmallLong(long number) {
+        if (number < 1000000000) bCustomerPasses = false;
+    }
 
     /*
     A simple template class. Checks permissions. Always returns true

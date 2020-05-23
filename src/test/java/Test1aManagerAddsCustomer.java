@@ -3,9 +3,13 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import javax.validation.constraints.NotNull;
+
+import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -26,6 +30,9 @@ public class Test1aManagerAddsCustomer
     int nIDPool = 2;
 
     private Customer testCustomer = new Customer(nCustID, sName, sAddress, sEmail, nFax, nPhone, nSecPhone, nVists, bFreq, nIDPool);
+
+    private Customer obCustomer;
+    @NotNull(message = "Can not be empty")
 
     /***
      * Run once at class creation to set up validator
@@ -266,5 +273,35 @@ public class Test1aManagerAddsCustomer
 
     private String repeatJ(int count){
         return new String(new char[count]).replace('\0','M');
+    }
+
+    /***
+     * Helper: performs the same 4 asserts for invalid field / violations
+     *      1.assert only 1 violation (multiple violations may indicate poor choice of test values)
+     *      2.assert the property with the violation is the one we expect
+     *      3.assert that the error message we get is the expected error message
+     *      4.assert the invalid value is what was set to ensure th setter dod not change the value somehow
+     * @param expectedProperty - the string name of the property/attribute in the cst1.color.carfleet.pink.cars_data.Car class we are testing
+     * @param expectedErrMsg - the EXACT expected error message
+     * @param expectedValue - the EXACT invalid value (ensure the value was not changed by the class or setter)
+     */
+    private void assertInvalid(Object obj, String expectedProperty, String expectedErrMsg, Object expectedValue){
+        //run validator on car object and store the resulting violations in a collection
+        Set<ConstraintViolation<Object>> constraintViolations = validator.validate( obj );
+
+        //count how many violations - SHOULD ONLY BE 1
+        assertEquals( 1, constraintViolations.size() );
+
+        //get first violation from constraintViolations collection
+        ConstraintViolation<Object> violation = constraintViolations.iterator().next();
+
+        //ensure that expected property has the violation
+        assertEquals( expectedProperty, violation.getPropertyPath().toString() );
+
+        //ensure error message matches what is expected
+        assertEquals( expectedErrMsg, violation.getMessage() );
+
+        //ensure the invalid value is what was set
+        assertEquals( expectedValue, violation.getInvalidValue() );
     }
 }
