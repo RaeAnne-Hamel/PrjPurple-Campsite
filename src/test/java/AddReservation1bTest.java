@@ -20,20 +20,18 @@ public class AddReservation1bTest {
     //Will have a lotID of 0
     private static Lot testLot = new Lot(LotType.NonServicedIndividual, true);
     ArrayList<Lot> lotArray = new ArrayList<>();
-    private Customer[] testCustomer = {new Customer("John Doe",
-            "111 A Street",
-            "email@email.org",
-            3424443336L,
-            1532223334L,
-            6535556662L)};
+    ArrayList<Customer> testCustomer = new ArrayList<>();
+    private static Customer obCustomer = new Customer(0,"John Doe","Addr","Email@Email",1L,1L,1L,1,true,1);
 
 
     @Test
     public void testBasicOverlap()
     {
         lotArray.add(testLot);
+        testCustomer.add(obCustomer);
         BookingsLedger BL = new BookingsLedger();
         BL.setLotList(lotArray);
+
 
 
         //GregorianCalendar of Jan 1st, 2021 12:00PM
@@ -56,6 +54,7 @@ public class AddReservation1bTest {
     public void testEarlyEdge()
     {
         lotArray.add(testLot);
+        testCustomer.add(obCustomer);
         BookingsLedger BL = new BookingsLedger();
         BL.setLotList(lotArray);
 
@@ -75,6 +74,7 @@ public class AddReservation1bTest {
     public void testLateEdge()
     {
         lotArray.add(testLot);
+        testCustomer.add(obCustomer);
         BookingsLedger BL = new BookingsLedger();
         BL.setLotList(lotArray);
 
@@ -94,6 +94,7 @@ public class AddReservation1bTest {
     public void testInternalOverlap()
     {
         lotArray.add(testLot);
+        testCustomer.add(obCustomer);
         BookingsLedger BL = new BookingsLedger();
         BL.setLotList(lotArray);
 
@@ -114,6 +115,7 @@ public class AddReservation1bTest {
     public void testImpossibleTime()
     {
         lotArray.add(testLot);
+        testCustomer.add(obCustomer);
         BookingsLedger BL = new BookingsLedger();
         BL.setLotList(lotArray);
 
@@ -129,6 +131,7 @@ public class AddReservation1bTest {
     public void testPastReservation()
     {
         lotArray.add(testLot);
+        testCustomer.add(obCustomer);
         BookingsLedger BL = new BookingsLedger();
         BL.setLotList(lotArray);
 
@@ -144,6 +147,7 @@ public class AddReservation1bTest {
     public void testOneYearIntoFuture()
     {
         lotArray.add(testLot);
+        testCustomer.add(obCustomer);
         BookingsLedger BL = new BookingsLedger();
         BL.setLotList(lotArray);
 
@@ -159,6 +163,7 @@ public class AddReservation1bTest {
     public void testOverCapacity()
     {
         lotArray.add(testLot);
+        testCustomer.add(obCustomer);
         BookingsLedger BL = new BookingsLedger();
         BL.setLotList(lotArray);
 
