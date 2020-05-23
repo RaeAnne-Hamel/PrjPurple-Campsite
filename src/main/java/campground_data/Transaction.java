@@ -60,17 +60,16 @@ public class Transaction {
     /**
      * this method will call get price from the reservation that will display the total price
      * of the reservation that need to be collected
+     * @return
      */
-    public void getPrice()
+    public double getPrice()
     {
-        Transaction obTrans = new Transaction(obRes, PaymentType.CREDITCARD, PaymentMethod.INPERSON);
-
-        obTrans.getPrice();
+        return obRes.getPrice();
     }
 
      @Override
     public String toString()
      {
-         return String.format("Reservation: %s, Payment type: %s, Payment method: %s", this.obRes, this.payMethod, this.payMethod);
+         return String.format("Reservation: %s, Payment type: %s, Payment method: %s Price: %.2f", this.obRes, this.payType, this.payMethod, this.getPrice());
      }
 }

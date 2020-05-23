@@ -93,6 +93,10 @@ public class Lot {
     }
     public LotType getLotType() { return obType ;}
 
+    @Override
+    public String toString(){
+        return ("Lot ID " + this.getLotID() + " Lot Type: " + this.getLotType() + " Removal Reason: " + this.sRemovalReason + " Availability: " + this.getAvailability());
+    }
 }
 
 

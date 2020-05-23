@@ -2,8 +2,11 @@ package campground_ui;
 
 import campground_data.*;
 
+import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
 import java.util.Scanner;
 import java.util.*;
 
@@ -31,6 +34,7 @@ public class MainConsole {
         /*
         Sample Lot is created and added to the ArrayList and then the Ledger -EB
          */
+
         Lot obLot1 = new Lot();
         aLot.add(obLot1);
         BookingLedger.setLotList(aLot);
@@ -68,14 +72,13 @@ public class MainConsole {
 
             System.out.print("Actions: [L]ots, [C]ustomers, [T]ransactions,  [R]eservations, [Q]uit: ");
 
-
+            String choice = read.nextLine().toUpperCase();
             //Named switch for breaking functionality
             mainSwitch:
 
-            switch (read.nextLine().toUpperCase()) {
-
+            switch (choice) {
                 case "L":
-                    System.out.print("Actions: [S]earch for a lot: ");
+                    System.out.print("Actions: [S]earch for a lot");
                     switch (read.nextLine().toUpperCase()) {
                         case "S":
                             String lotID = Prompt("Please enter a Valid Lot ID to search for: ");
@@ -91,12 +94,10 @@ public class MainConsole {
                                 break mainSwitch;
                             }
 
-
                             System.out.print("Actions: [S]et Lot availability, [V]iew Reservations: ");
                             switch (read.nextLine().toUpperCase()) {
                                 case "S":
                                     System.out.print("Actions: [A]vailable, [U]navailable: ");
-
                                     switch (read.nextLine().toUpperCase()) {
                                         case "A":
 
@@ -135,7 +136,7 @@ public class MainConsole {
 
                 //Reservations option
                 case "R":
-                    System.out.print("Actions: [A]dd Reservation, [RR]emove Reservation");
+                    System.out.print("Actions: [A]dd Reservation, [RR]emove Reservation, [S]earch to make a new reservation");
                     switch (read.nextLine().toUpperCase()) {
                         case "RR":
                             try {
@@ -145,10 +146,70 @@ public class MainConsole {
                                 System.out.println("Please enter a number ID");
                             }
                             break;
+                        case "S":
+                            System.out.println("Actions: [G]et available reservations for specific dates");
+                            LotType obType = null;
+                            switch (read.nextLine().toUpperCase()) {
+                                case "G":
+                                    int nType = Integer.parseInt(Prompt("Pick your Lot Type. 1: Non-Serviced Individual Campsite, 2: Serviced Individual Campsite," +
+                                            "3: Non Serviced Group Campsite, 4: Serviced Group Campsite, 5: Cabin, 6: Deluxe Cabin"));
 
+                                    switch (nType) {
+                                        case 1:
+                                            obType = LotType.NonServicedIndividual;
+                                        case 2:
+                                            obType = LotType.ServicedIndividual;
+                                        case 3:
+                                            obType = LotType.NonServicedGroup;
+                                        case 4:
+                                            obType = LotType.ServicedGroup;
+                                        case 5:
+                                            obType = LotType.Cabin;
+                                        case 6:
+                                            obType = LotType.DeluxeCabin;
+                                        default:
+                                            System.out.println("Please choose an available lot type.");
+                                            break;
+                                    }
+                                    int nStartYear = Integer.parseInt(Prompt("Enter a 4 digit starting year (2020)"));
+                                    int nStartMonth = Integer.parseInt(Prompt("Enter a starting month from 1 to 12"));
+                                    int nStartDay = Integer.parseInt(Prompt("Enter a starting day of the month"));
+                                    int nEndYear = Integer.parseInt(Prompt("Enter a 4 digit ending year (2020)"));
+                                    int nEndMonth = Integer.parseInt(Prompt("Enter an ending month from 1 to 12"));
+                                    int nEndDay = Integer.parseInt(Prompt("Enter the ending day of the month"));
+                                    ArrayList<Lot> obLots = new NewLotSearch(BookingLedger).chooseDate(obType, nStartYear, nStartMonth, nStartDay, nEndYear, nEndMonth, nEndDay);
+                                    for (Lot obLot : obLots) {
+                                        System.out.println(obLot.toString());
+                                    }
+//                                case "S":
+//                                    switch (nType){
+//                                        case 1:
+//                                            obType = LotType.NonServicedIndividual;
+//                                        case 2:
+//                                            obType = LotType.ServicedIndividual;
+//                                        case 3:
+//                                            obType = LotType.NonServicedGroup;
+//                                        case 4:
+//                                            obType = LotType.ServicedGroup;
+//                                        case 5:
+//                                            obType = LotType.Cabin;
+//                                        case 6:
+//                                            obType = LotType.DeluxeCabin;
+//                                        default:
+//                                            System.out.println("Non-standard type entered.");
+//                                            break;
+//                                    }
+//                                    ArrayList<LocalDate> obDates= new NewLotSearch(BookingLedger).getDates(obType);
+//                                    for (LocalDate LD : obDates)
+//                                    {
+//                                        System.out.println(LD.toString());
+//                                    }
+                                    break mainSwitch;
+                                default:
+                                    break mainSwitch;
+                            }
 
-
-                        //Start of Add reservation option --Andrew
+                            //Start of Add reservation option --Andrew
                         case "A":
                             int nARLotID = Integer.parseInt(Prompt("Please enter a lot ID to select a lot"));
                             Date obARStartDate = PromptDate("Please Enter the date of arrival");
@@ -162,7 +223,7 @@ public class MainConsole {
                                     obARCustomers.add(BookingLedger.getCustomerByID(
                                             Integer.parseInt(Prompt("Please enter customer ID"))
                                     ));
-                                    if (obARCustomers.get(obARCustomers.size()-1) == null) {
+                                    if (obARCustomers.get(obARCustomers.size() - 1) == null) {
                                         System.out.println("Customer not found");
                                         break mainSwitch;
                                     }
@@ -171,7 +232,7 @@ public class MainConsole {
                                     obARCustomers.add(BookingLedger.getCustomerByID(
                                             Integer.parseInt(Prompt("Please Enter customer ID"))
                                     ));
-                                    if (obARCustomers.get(obARCustomers.size()-1) == null) {
+                                    if (obARCustomers.get(obARCustomers.size() - 1) == null) {
                                         System.out.println("Customer not found");
                                         break mainSwitch;
                                     }
@@ -180,7 +241,6 @@ public class MainConsole {
                             int nARPeople = Integer.parseInt(Prompt("Please enter how many people will be using the reservation"));
                             BookingLedger.addReservation(nARLotID, obARStartDate, obAREndDate, obARCustomers, nARPeople);
                             break;
-
                         default:
                             break;
                         //End of Add Reservation option --Andrew
@@ -189,24 +249,34 @@ public class MainConsole {
                     break;
 
                 case "C":
-                    System.out.print("Actions:[C]ustomer: ");
+                    System.out.print("[A]dd Customer\n");
                     switch (read.nextLine().toUpperCase()) {
-                        case "C":
+                        case "A":
+                            int customerID = 0;
+                            String name = PromptNormal("Please enter a name");
+                            String address = PromptNormal("Please enter an address");
+                            String email = PromptNormal("Please enter an email");
+                            long fax = Long.parseLong(PromptNormal("Please enter a fax"));
+                            long phone = Long.parseLong(PromptNormal("Please enter a phone"));
+                            long secPhone = Long.parseLong(PromptNormal("Please enter a secondary phone"));
+                            int nVisits = 0;
+                            boolean bFreq = true;
+                            int idPool = 0;
 
+                            Customer customer = new Customer(customerID, name, address, email, fax, phone, secPhone, nVisits, bFreq, idPool);
+                            BookingLedger.addCustomer(customer);
                             break;
                     }
                     //Break for "C"
+
                     break;
                 case "T":
-                    System.out.println("Please Enter [G]Get Reservation, [PT]SetPayment Type, [PM]Set Payment Method, " +
+                    System.out.println("Please Enter  [PT]SetPayment Type, [PM]Set Payment Method, " +
                             " [S]setStatus and [C]Check for Price");
-                        String choice = read.nextLine();
 
-                        switch(choice)
+
+                        switch(read.nextLine().toUpperCase())
                         {
-                            case "G":
-                                promptReservation();
-                                break mainSwitch;
                             case "PT":
                                 setPayType();
                                 break mainSwitch;
@@ -215,14 +285,15 @@ public class MainConsole {
                                 break mainSwitch;
                             case "S":
                                 setStatus();
-                                break mainSwitch;
+                                break;
                             case "C":
                                 checkPrice();
-                                break mainSwitch;
-
+                                break ;
+                            default:
+                                break;
                         }
-
                         break;
+
                 default:
                     quit = true;
                     break;
@@ -237,32 +308,15 @@ public class MainConsole {
         System.out.println("Quit Application");
     }
 
-            public static String Prompt (String Message)
-            {
-                System.out.println(Message);
-                return read.nextLine().toUpperCase();
-            }
+    public static String Prompt(String Message) {
+        System.out.println(Message);
+        return read.nextLine().toUpperCase();
+    }
 
-            /**
-             * This method will prompt the user with a message of your choice.
-             * It will then prompt the user for Year, Month and Day and construct a Date class
-             * The will be returned
-             * @param Message
-             * @return
-             */
-            public static Date PromptDate(String Message)
-            {
-                System.out.println(Message);
-                System.out.println("Please enter year in the format \"2020\"");
-                int nYear = Integer.parseInt(read.nextLine().toUpperCase());
-                System.out.println("Please enter the month in the format \"5\"");
-                int nMonth = Integer.parseInt(read.nextLine().toUpperCase());
-                System.out.println("Please enter the day in the format \"27\"");
-                int nDay = Integer.parseInt(read.nextLine().toUpperCase());
-
-                Date obDate = new GregorianCalendar(nYear, nMonth, nDay).getTime();
-                return obDate;
-            }
+    public static String PromptNormal(String Message) {
+        System.out.println(Message);
+        return read.nextLine();
+    }
 
 
 
@@ -279,7 +333,7 @@ public class MainConsole {
        System.out.println("Choose a payment Type: [CA]Cash, [DB] debit and [CC]CreditCard");
 
        // set the variable
-       String input1 = read.next();
+       String input1 = read.nextLine().toUpperCase();
 
        //the variable to set the paytype
        PaymentType payType;
@@ -301,6 +355,7 @@ public class MainConsole {
                 break;
         }
 
+        read.nextLine();
         // builds transaction
         Transaction obTransaction = new Transaction(obRes, payType, PaymentMethod.INPERSON);
 
@@ -318,6 +373,7 @@ public class MainConsole {
     {
         System.out.println("Enter Reservation ID number:");
         int resId = read.nextInt();
+        read.nextLine();
         return BookingsLedger.getReservation(BookingLedger.getAllReservations(), resId);
     }
 
@@ -333,7 +389,7 @@ public class MainConsole {
         System.out.println("Choose a payment Type: [IN]inPerson, [FX] Fax, [EM]Email and [PH]Phone");
 
         // set the variable
-        String input2 = read.next();
+        String input2 = read.nextLine().toUpperCase();
 
         //the variable to set the paytype
         PaymentMethod payMeth;
@@ -380,8 +436,7 @@ public class MainConsole {
         //set status
         obTrans.setStatus();
 
-        //Prints information
-        System.out.printf("%s", obTrans);
+        System.out.printf("%s", obTrans.isActive());
 
     }
 
@@ -405,10 +460,29 @@ public class MainConsole {
 
     }
 
+
+
+        /**
+         * This method will prompt the user with a message of your choice.
+         * It will then prompt the user for Year, Month and Day and construct a Date class
+         * The date will be returned
+         * @param Message
+         * @return
+         */
+        public static Date PromptDate (String Message)
+        {
+            System.out.println(Message);
+            System.out.println("Please enter year in the format \"2020\"");
+            int nYear = Integer.parseInt(read.nextLine().toUpperCase());
+            System.out.println("Please enter the month in the format \"5\"");
+            int nMonth = Integer.parseInt(read.nextLine().toUpperCase());
+            System.out.println("Please enter the day in the format \"27\"");
+            int nDay = Integer.parseInt(read.nextLine().toUpperCase());
+
+            Date obDate = new GregorianCalendar(nYear, nMonth, nDay).getTime();
+            return obDate;
+        }
+
+
 }
-
-
-
-
-
 

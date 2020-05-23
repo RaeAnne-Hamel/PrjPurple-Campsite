@@ -14,7 +14,6 @@ public class Customer {
     private boolean isFrequent;
     private int idPool;
 
-
     public Customer(int CustomerID, String sName, String sAddress, String sEmail, long nFax,
                     long nPhone, long nSecPhone, int nVisits, boolean isFrequent, int idPool)
     {
@@ -46,7 +45,7 @@ public class Customer {
 
     public int getVisits() { return nVisits; }
 
-    public boolean isFrequent() { return isFrequent; }
+    public boolean getFrequent() { return isFrequent; }
 
     public int getIdPool() { return idPool; }
 
@@ -70,3 +69,4 @@ public class Customer {
 
     public void setIdPool(int idPool) { this.idPool = idPool; }
 }
+
