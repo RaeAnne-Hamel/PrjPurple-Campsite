@@ -35,7 +35,6 @@ public class Lot {
         this.obReservationList = new ArrayList<Reservation>();
         this.sRemovalReason = "";
         this.bAvailability = true;
-        System.out.printf("Lot " + this.nLotID + " created");
     }
 
     public String getRemovalReason()
