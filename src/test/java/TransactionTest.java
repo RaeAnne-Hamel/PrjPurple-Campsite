@@ -1,8 +1,9 @@
-import campground_data.PaymentMethod;
-import campground_data.PaymentType;
-import campground_data.Reservation;
-import campground_data.Transaction;
+import campground_data.*;
 import org.junit.Test;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import static org.junit.Assert.*;
 
@@ -14,11 +15,22 @@ import static org.junit.Assert.*;
 public class TransactionTest {
 
 
+    /*Create array of paying customers*/
+    private Customer[] payingCustomers = {new Customer(0,"","","", 1  ,1,1,1,true,1),new Customer(0,"","","", 1  ,1,1,1,true,1)};
+
+    /*Create dates of check-in and check-out*/
+    private Date startDate = new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime();
+    private Date endDate = new GregorianCalendar(2014, Calendar.FEBRUARY, 13).getTime();
+
+
+
+
+
     @Test
     public void testCheckForReservationID()
     {
-        Reservation testReservation = new Reservation();
-        Reservation testReservation2 = new Reservation();
+        Reservation testReservation = new Reservation(new Lot(),startDate,endDate,payingCustomers,9);
+        Reservation testReservation2 = new Reservation(new Lot(),startDate,endDate,payingCustomers,9);
 
         int testID1 = 0;
         int testID2 = 1;
@@ -38,7 +50,7 @@ public class TransactionTest {
         PaymentType testType1 = PaymentType.DEBIT;
         PaymentType testType2 = PaymentType.CREDITCARD;
 
-        Reservation testReservation = new Reservation();
+        Reservation testReservation = new Reservation(new Lot(),startDate,endDate,payingCustomers,9);
 
         PaymentMethod payMeth = PaymentMethod.INPERSON;
         PaymentType testDefault = PaymentType.CASH ;
@@ -61,7 +73,7 @@ public class TransactionTest {
     @Test
     public void testCheckPaymentMethod()
     {
-        Reservation testReservation = new Reservation();
+        Reservation testReservation = new Reservation(new Lot(),startDate,endDate,payingCustomers,9);
 
         PaymentMethod testDefault = PaymentMethod.EMAIL;
         PaymentMethod testType2 = PaymentMethod.FAX;
@@ -92,7 +104,7 @@ public class TransactionTest {
     @Test
     public void testCheckReservationPaymentAmount()
     {
-        Reservation testReservation = new Reservation();
+        Reservation testReservation = new Reservation(new Lot(),startDate,endDate,payingCustomers,9);
 
 
         double expectedPrice1 = 45.00;
@@ -108,8 +120,8 @@ public class TransactionTest {
     @Test
     public void testChangeReservationStatus()
     {
-        Reservation testReservation = new Reservation();
-        Reservation testReservation2 = new Reservation();
+        Reservation testReservation = new Reservation(new Lot(),startDate,endDate,payingCustomers,9);
+        Reservation testReservation2 = new Reservation(new Lot(),startDate,endDate,payingCustomers,9);
 
 
         PaymentType testType = PaymentType.DEBIT;

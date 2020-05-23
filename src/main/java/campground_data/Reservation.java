@@ -12,7 +12,7 @@ public class Reservation {
     Date obStartDate;
     Date obEndDate;
     int ReservationID;
-    int StaticReservationID = 0;
+    static int StaticReservationID = 0;
     double price;
     public Boolean status;
 
@@ -27,7 +27,7 @@ public class Reservation {
         this.nCustomerCount = nPeople;
 
         /*Set the ID for the specific reservation*/
-        ReservationID = StaticReservationID++;
+        this.ReservationID = StaticReservationID++;
         this.price = 100.00;
         this.status = true;
 

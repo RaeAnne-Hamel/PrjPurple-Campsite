@@ -15,7 +15,7 @@ public class MainConsole {
         boolean quit = false;
         do{
 
-            System.out.print("Actions:[L]ots, [R]eservations, [Q]uit: ");
+            System.out.print("Actions:[L]ots, [R]eservations, [T]ransaction, [Q]uit: ");
 
             switch (read.nextLine().toUpperCase()) {
                 case "L":
@@ -73,7 +73,30 @@ public class MainConsole {
                             BookingLedger.removeReservation(searchID);
                         } catch (Exception x){System.out.println("Please enter a number ID");};
                     break;
-
+                case "T":
+                    System.out.println("Please Enter [G]Get Reservation, [PT]SetPayment Type, [PM]Set Payment Method, " +
+                            " [S]setStatus and [C]Check for Price");
+                        String choice = read.nextLine();
+                        switch(choice)
+                        {
+                            case "G":
+                                promptReservation();
+                                break;
+                            case "PT":
+                                setPayType();
+                                break;
+                            case "PM":
+                                setPayMethod();
+                                break;
+                            case "S":
+                                setStatus();
+                                break;
+                            case "C":
+                                checkPrice();
+                                break;
+                            default:
+                                break;
+                        }
                 default:
                     quit = true;
                     break;
@@ -106,8 +129,7 @@ public class MainConsole {
 */
 
     }
-    private static void inputSomething()
-    {
+    private static void inputSomething() {
 /*
 
         Guest guest = new Guest();
@@ -131,4 +153,146 @@ public class MainConsole {
 
 
     }
+
+    /**
+     * method helper: to set the payment type
+     * @param - RaeAnne Hamel CST212
+     */
+    public static void setPayType()
+    {
+        // prompt user for a specific reservation
+       Reservation obRes =  promptReservation();
+
+       //prompt for a Payment type
+       System.out.println("Choose a payment Type: [CA]Cash, [DB] debit and [CC]CreditCard");
+
+       // set the variable
+       String input1 = read.nextLine();
+
+       //the variable to set the paytype
+       PaymentType payType;
+
+       //sets the actual type
+        switch(input1)
+        {
+            case "CA":
+               payType = PaymentType.CASH;
+               break;
+            case "DB":
+                payType = PaymentType.DEBIT;
+                break;
+            case "CC":
+                payType = PaymentType.CREDITCARD;
+                break;
+            default:
+                payType = PaymentType.CREDITCARD;
+                break;
+        }
+
+        // builds transaction
+        Transaction obTransaction = new Transaction(obRes, payType, PaymentMethod.INPERSON);
+
+        //prints out the information
+        System.out.printf("%s", obTransaction);
+    }
+
+
+    /**
+     * prompts user for a Id number to call a reservation
+     * @return reservation - RaeAnne Hamel CST212
+     *
+     */
+    public static Reservation promptReservation()
+    {
+        System.out.println("Enter Reservation ID number:");
+        int resId = read.nextInt();
+        return BookingsLedger.getReservation(BookingLedger.getReservations(), resId);
+    }
+
+    /**
+     * sets payment method - RaeAnne Hamel CST212
+     */
+    public static void setPayMethod()
+    {
+        // prompt user for a specific reservation
+        Reservation obRes =  promptReservation();
+
+        //prompt for a Payment type
+        System.out.println("Choose a payment Type: [IN]inPerson, [FX] Fax, [EM]Email and [PH]Phone");
+
+        // set the variable
+        String input2 = read.nextLine();
+
+        //the variable to set the paytype
+        PaymentMethod payMeth;
+
+        //set payment method
+        switch (input2)
+        {
+            case "IN":
+                payMeth = PaymentMethod.INPERSON;
+                break;
+            case "FX":
+                payMeth = PaymentMethod.FAX;
+                break;
+            case "EM":
+                payMeth = PaymentMethod.EMAIL;
+                break;
+            case "PH":
+                payMeth = PaymentMethod.PHONE;
+            default:
+                payMeth = PaymentMethod.INPERSON;
+                break;
+        }
+
+        //builds transaction object
+        Transaction obTransaction = new Transaction(obRes, PaymentType.CREDITCARD, payMeth);
+
+        //prints out the information
+        System.out.printf("%s", obTransaction);
+    }
+
+    /**
+     * helper method: sets status of a reservation through transaction
+     * RaeAnne Hamel CST212
+     *
+     */
+    public static void setStatus()
+    {
+        //prompts to get an id
+        Reservation obRes = promptReservation();
+
+        //set a Transaction
+        Transaction obTrans = new Transaction(obRes, PaymentType.CREDITCARD, PaymentMethod.INPERSON);
+
+        //set status
+        obTrans.setStatus();
+
+        //Prints information
+        System.out.printf("%s", obTrans);
+
+    }
+
+    /**
+     * helper method: check for the price in a Reservation
+     * RaeAnne Hamel
+     */
+    public static void checkPrice()
+    {
+        //prompt for reservation
+        Reservation obRes = promptReservation();
+
+        //build transaction object
+        Transaction obTrans = new Transaction(obRes, PaymentType.CREDITCARD, PaymentMethod.INPERSON);
+
+        //get the price
+        obTrans.getPrice();
+
+        //print out information
+        System.out.printf("%s", obTrans);
+
+    }
+
 }
+
+
