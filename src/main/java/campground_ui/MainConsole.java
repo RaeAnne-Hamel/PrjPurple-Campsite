@@ -2,30 +2,67 @@ package campground_ui;
 
 import campground_data.*;
 
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 public class MainConsole {
 
+    /*
+    Ledger is started up so that data can be added and edited to it. -EB
+     */
     public static BookingsLedger BookingLedger = new BookingsLedger();
 
-
-
-    //private static CampLedger campLedger = new CampLedger();
+    /*
+    Scanner is created to take input from the user -EB
+     */
     private static Scanner read = new Scanner(System.in);
 
+    /*
+    Main Method
+     */
     public static void main(String[] args)
     {
+        /*
+        ArrayList for Lots is created so that there is data to use -EB
+         */
         ArrayList<Lot> aLot = new ArrayList<>();
+
+        /*
+        Sample Lot is created and added to the ArrayList and then the Ledger -EB
+         */
         Lot obLot1 = new Lot();
         aLot.add(obLot1);
         BookingLedger.setLotList(aLot);
 
+        /*
+        Creating a Customer to add to the Reservation using an ArrayList -EB
+         */
+        Customer obCustomer1 = new Customer (0, "John Smith", "223 Real St", "Johnsmith@hotmail.com",
+                1233211234, 1233322221, 1399587473, 0, false, 0);
+        ArrayList<Customer> obCustArray = new ArrayList<>();
+        obCustArray.add(obCustomer1);
+
+        /*
+        Creating a Reservation and Reservation ArrayList to add to the Ledger for data -EB
+         */
+        Date startDate = new GregorianCalendar(2020, Calendar.JANUARY, 14).getTime();
+        Date endDate = new GregorianCalendar(2020, Calendar.JANUARY, 17).getTime();
+        Reservation obReservation = new Reservation(obLot1, startDate, endDate, obCustArray, 1);
+        ArrayList<Reservation> aReservations = new ArrayList<>();
+        aReservations.add(obReservation);
+        BookingLedger.setReservationsList(aReservations);
+
         boolean quit = false;
+
+        /*
+        The main loop of the program, containing all paths and programs that are to be run by the program. -EB
+         */
         do{
 
+            /*
+            System asks which section of the program the user wants to go to. User responds with one of the letters
+            and the program takes them to that section using switch cases. -EB
+             */
             System.out.print("Actions: [L]ots, [R]eservations, [Q]uit: ");
-
             switch (read.nextLine().toUpperCase()) {
                 case "L":
                     System.out.print("Actions: [S]earch for a lot: ");
@@ -78,7 +115,10 @@ public class MainConsole {
                                     break;
 
                                 case "V":
-
+                                    for (Reservation rReservation : BookingLedger.getReservations())
+                                    {
+                                        System.out.println(rReservation.toString());
+                                    }
                                     break;
 
                                 default:

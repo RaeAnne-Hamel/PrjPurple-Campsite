@@ -8,9 +8,9 @@ public class Customer {
     String sName;
     String sAddress;
     String sEmail;
-    int nFax;
-    int nPhone;
-    int nSecPhone;
+    long nFax;
+    long nPhone;
+    long nSecPhone;
     int nVisits;
     boolean isFrequent;
     int idPool;
@@ -19,9 +19,9 @@ public class Customer {
                     String sName,
                     String sAddress,
                     String sEmail,
-                    int nFax,
-                    int nPhone,
-                    int nSecPhone,
+                    long nFax,
+                    long nPhone,
+                    long nSecPhone,
                     int nVisits,
                     boolean isFrequent,
                     int idPool)

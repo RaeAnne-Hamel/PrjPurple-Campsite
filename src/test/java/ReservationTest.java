@@ -2,8 +2,10 @@ import campground_data.BookingsLedger;
 import campground_data.Customer;
 import campground_data.Lot;
 import campground_data.Reservation;
+import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -13,16 +15,27 @@ import static org.junit.Assert.assertEquals;
 public class ReservationTest
 {
     /*Create array of paying customers*/
-    private Customer[] payingCustomers = {new Customer(0,"","","", 1  ,1,1,1,true,1),new Customer(0,"","","", 1  ,1,1,1,true,1)};
+    ArrayList<Customer> payingCustomers;
+
+    @Before
+    public void setup()
+    {
+         payingCustomers = new ArrayList<>();
+        payingCustomers.add(new Customer(0,"","","", 1  ,1,1,1,true,1));
+        payingCustomers.add(new Customer(0,"","","", 1  ,1,1,1,true,1));
+
+
+    }
+
 
     /*Create dates of check-in and check-out*/
     private Date startDate = new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime();
     private Date endDate = new GregorianCalendar(2014, Calendar.FEBRUARY, 13).getTime();
-
+    Reservation oneReservation = new Reservation(new Lot(),startDate,endDate,payingCustomers,9);
     BookingsLedger BL = new BookingsLedger();
 
 /*Create Valid Reservation*/
-    Reservation oneReservation = new Reservation(new Lot(),startDate,endDate,payingCustomers,9);
+
 
 
     /*Test if a manager attempting to remove a reservation has IN adequate permissions*/

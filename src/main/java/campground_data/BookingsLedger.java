@@ -42,12 +42,7 @@ public class BookingsLedger {
             }
         }
 
-
-
-        System.out.printf("Search could not find the Lot specified.\n");
         return null;
-
-
 
 
     }
@@ -187,6 +182,11 @@ public class BookingsLedger {
     public ArrayList<Reservation> getReservations()
     {
         return aReservation;
+    }
+
+    public void setReservationsList(ArrayList<Reservation> obReservations)
+    {
+        this.aReservation = obReservations;
     }
 
 

@@ -1,11 +1,12 @@
 package campground_data;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Reservation {
 
     Lot obLot;
-    Customer[] obCustomerList;
+    ArrayList<Customer> obCustomerList;
     int nCustomerCount;
     Date obStartDate;
     Date obEndDate;
@@ -15,7 +16,7 @@ public class Reservation {
     String Status = "Active";
 
     /*Reservation Constructor */
-    public Reservation(Lot Lot, Date startDate, Date endDate, Customer[] customers, int nPeople)
+    public Reservation(Lot Lot, Date startDate, Date endDate, ArrayList<Customer> customers, int nPeople)
     {
         /*Set the passed in pramaters*/
         this.obLot = Lot;
@@ -28,6 +29,7 @@ public class Reservation {
         ReservationID = StaticReservationID++;
     }
 
+
     public int getReservationID()
     {
         return this.ReservationID;
@@ -35,10 +37,9 @@ public class Reservation {
 
     @Override
     public String toString() {
-        return "Reservation{" +
-                "obLot=" + obLot +
-                ", obStartDate=" + obStartDate +
-                ", obEndDate=" + obEndDate +
-                '}';
+        return "Reservation: " +
+                "ID: " + ReservationID +
+                "\t " + obStartDate +
+                " - " + obEndDate;
     }
 }
