@@ -30,8 +30,6 @@ public class Customer {
         this.idPool = idPool;
     }
 
-    public Customer() { }
-
     public int getCustomerID() { return CustomerID; }
 
     public String getName() { return sName; }

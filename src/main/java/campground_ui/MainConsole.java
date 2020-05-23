@@ -2,6 +2,7 @@ package campground_ui;
 
 import campground_data.*;
 
+import java.time.LocalDate;
 import java.util.*;
 
 public class MainConsole {
@@ -64,7 +65,7 @@ public class MainConsole {
             System.out.print("Actions: [L]ots, [C]ustomers, [R]eservations, [Q]uit: ");
             switch (read.nextLine().toUpperCase()) {
                 case "L":
-                    System.out.print("Actions: [S]earch for a lot: ");
+                    System.out.print("Actions: [S]earch for a lot");
                     switch (read.nextLine().toUpperCase()) {
                         case "S":
                             String lotID = Prompt("Please enter a Valid Lot ID to search for: ");
@@ -136,7 +137,7 @@ public class MainConsole {
 
                 case "R":
 
-                    System.out.print("Actions: [RR]emove Reservation");
+                    System.out.print("Actions: [RR]emove Reservation, [S]earch to make a new reservation");
                     switch (read.nextLine().toUpperCase()) {
                         case "RR":
                             try {
@@ -145,8 +146,70 @@ public class MainConsole {
                             } catch (Exception x) {
                                 System.out.println("Please enter a number ID");
                             }
-                            ;
                             break;
+                        case "S":
+                            System.out.println("Actions: [G]et available reservations for specific dates");
+                            LotType obType = null;
+                            switch (read.nextLine().toUpperCase()) {
+                                case "G":
+                                    int nType = Integer.parseInt(Prompt("Pick your Lot Type. 1: Non-Serviced Individual Campsite, 2: Serviced Individual Campsite," +
+                                            "3: Non Serviced Group Campsite, 4: Serviced Group Campsite, 5: Cabin, 6: Deluxe Cabin"));
+
+                                    switch (nType){
+                                        case 1:
+                                            obType = LotType.NonServicedIndividual;
+                                        case 2:
+                                            obType = LotType.ServicedIndividual;
+                                        case 3:
+                                            obType = LotType.NonServicedGroup;
+                                        case 4:
+                                            obType = LotType.ServicedGroup;
+                                        case 5:
+                                            obType = LotType.Cabin;
+                                        case 6:
+                                            obType = LotType.DeluxeCabin;
+                                        default:
+                                            System.out.println("Please choose an available lot type.");
+                                            break;
+                                    }
+                                    int nStartYear = Integer.parseInt(Prompt("Enter a 4 digit starting year (2020)"));
+                                    int nStartMonth = Integer.parseInt(Prompt("Enter a starting month from 1 to 12"));
+                                    int nStartDay = Integer.parseInt(Prompt("Enter a starting day of the month"));
+                                    int nEndYear = Integer.parseInt(Prompt("Enter a 4 digit ending year (2020)"));
+                                    int nEndMonth = Integer.parseInt(Prompt("Enter an ending month from 1 to 12"));
+                                    int nEndDay = Integer.parseInt(Prompt("Enter the ending day of the month"));
+                                    ArrayList<Lot> obLots = new NewLotSearch(BookingLedger).chooseDate(obType, nStartYear, nStartMonth, nStartDay, nEndYear, nEndMonth, nEndDay);
+                                    for (Lot obLot : obLots)
+                                    {
+                                        System.out.println(obLot.toString());
+                                    }
+//                                case "S":
+//                                    switch (nType){
+//                                        case 1:
+//                                            obType = LotType.NonServicedIndividual;
+//                                        case 2:
+//                                            obType = LotType.ServicedIndividual;
+//                                        case 3:
+//                                            obType = LotType.NonServicedGroup;
+//                                        case 4:
+//                                            obType = LotType.ServicedGroup;
+//                                        case 5:
+//                                            obType = LotType.Cabin;
+//                                        case 6:
+//                                            obType = LotType.DeluxeCabin;
+//                                        default:
+//                                            System.out.println("Non-standard type entered.");
+//                                            break;
+//                                    }
+//                                    ArrayList<LocalDate> obDates= new NewLotSearch(BookingLedger).getDates(obType);
+//                                    for (LocalDate LD : obDates)
+//                                    {
+//                                        System.out.println(LD.toString());
+//                                    }
+                                    break;
+                                default:
+                                    break;
+                            }
                         default:
                             break;
                     }
