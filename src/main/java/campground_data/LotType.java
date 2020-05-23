@@ -8,3 +8,4 @@ public enum LotType {
     Cabin,
     DeluxeCabin
 }
+

@@ -28,11 +28,25 @@ public class Lot {
 
     }
 
-    public Lot(LotType obType, boolean bAvailability)
-    {
+    public Lot(LotType obType, boolean bAvailability) {
         this.nLotID = StaticLotID++;
         this.obType = LotType.NonServicedIndividual;
         this.obReservationList = new ArrayList<Reservation>();
+        this.sRemovalReason = "";
+        this.bAvailability = true;
+    }
+
+    public Lot()
+    {
+
+    }
+
+    public Lot(int nLotID)
+    {
+        this.nLotID = nLotID;
+        this.obType = LotType.ServicedIndividual;
+        this.obReservationList = new ArrayList<Reservation>();
+        this.StaticLotID = 0;
         this.sRemovalReason = "";
         this.bAvailability = true;
     }
@@ -79,9 +93,8 @@ public class Lot {
     }
     public LotType getLotType() { return obType ;}
 
-
-
 }
+
 
 
 

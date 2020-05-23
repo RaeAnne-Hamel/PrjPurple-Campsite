@@ -9,6 +9,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -18,6 +19,7 @@ public class AddReservation1bTest {
 
     //Will have a lotID of 0
     private static Lot testLot = new Lot(LotType.NonServicedIndividual, true);
+    ArrayList<Lot> lotArray = new ArrayList<>();
     private Customer[] testCustomer = {new Customer("John Doe",
             "111 A Street",
             "email@email.org",
@@ -29,8 +31,11 @@ public class AddReservation1bTest {
     @Test
     public void testBasicOverlap()
     {
+        lotArray.add(testLot);
         BookingsLedger BL = new BookingsLedger();
-        BL.aLot.add(testLot);
+        BL.setLotList(lotArray);
+
+
         //GregorianCalendar of Jan 1st, 2021 12:00PM
         Date testStartDate = new GregorianCalendar(2021, 0,1).getTime();
         //GregorianCalendar of Jan 5th, 2021 12:00PM
@@ -50,8 +55,9 @@ public class AddReservation1bTest {
     @Test
     public void testEarlyEdge()
     {
+        lotArray.add(testLot);
         BookingsLedger BL = new BookingsLedger();
-        BL.aLot.add(testLot);
+        BL.setLotList(lotArray);
 
         //GregorianCalendar of Jan 1st, 2021 12:00PM
         Date testStartDate = new GregorianCalendar(2021, 0,10).getTime();
@@ -68,8 +74,9 @@ public class AddReservation1bTest {
     @Test
     public void testLateEdge()
     {
+        lotArray.add(testLot);
         BookingsLedger BL = new BookingsLedger();
-        BL.aLot.add(testLot);
+        BL.setLotList(lotArray);
 
         //GregorianCalendar of Jan 1st, 2021 12:00PM
         Date testStartDate = new GregorianCalendar(2021, 0,10).getTime();
@@ -86,8 +93,9 @@ public class AddReservation1bTest {
     @Test
     public void testInternalOverlap()
     {
+        lotArray.add(testLot);
         BookingsLedger BL = new BookingsLedger();
-        BL.aLot.add(testLot);
+        BL.setLotList(lotArray);
 
         //GregorianCalendar of Jan 1st, 2021 12:00PM
         Date testStartDate = new GregorianCalendar(2021, 0,10).getTime();
@@ -105,8 +113,9 @@ public class AddReservation1bTest {
     @Test
     public void testImpossibleTime()
     {
+        lotArray.add(testLot);
         BookingsLedger BL = new BookingsLedger();
-        BL.aLot.add(testLot);
+        BL.setLotList(lotArray);
 
         //GregorianCalendar of Jan 1st, 2021 12:00PM
         Date testStartDate = new GregorianCalendar(2021, 0,10).getTime();
@@ -119,8 +128,9 @@ public class AddReservation1bTest {
     @Test
     public void testPastReservation()
     {
+        lotArray.add(testLot);
         BookingsLedger BL = new BookingsLedger();
-        BL.aLot.add(testLot);
+        BL.setLotList(lotArray);
 
         //GregorianCalendar of Jan 1st, 2021 12:00PM
         Date testStartDate = new GregorianCalendar(2020, 0,10).getTime();
@@ -133,8 +143,9 @@ public class AddReservation1bTest {
     @Test
     public void testOneYearIntoFuture()
     {
+        lotArray.add(testLot);
         BookingsLedger BL = new BookingsLedger();
-        BL.aLot.add(testLot);
+        BL.setLotList(lotArray);
 
         //GregorianCalendar of Jan 1st, 2021 12:00PM
         Date testStartDate = new GregorianCalendar(2022, 0,10).getTime();
@@ -147,8 +158,9 @@ public class AddReservation1bTest {
     @Test
     public void testOverCapacity()
     {
+        lotArray.add(testLot);
         BookingsLedger BL = new BookingsLedger();
-        BL.aLot.add(testLot);
+        BL.setLotList(lotArray);
 
         //GregorianCalendar of Jan 1st, 2021 12:00PM
         Date testStartDate = new GregorianCalendar(2021, 0,10).getTime();

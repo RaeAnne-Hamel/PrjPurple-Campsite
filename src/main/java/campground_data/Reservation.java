@@ -17,8 +17,7 @@ public class Reservation {
     String Status = "Active";
 
     /*Reservation Constructor */
-    public Reservation(Lot obLot, Date startDate, Date endDate, Customer[] customers, int nPeople)
-    {
+    public Reservation(Lot obLot, Date startDate, Date endDate, Customer[] customers, int nPeople) {
         /*Set the passed in parameters*/
         this.obLot = obLot;
         this.obStartDate = startDate;
@@ -28,13 +27,13 @@ public class Reservation {
 
         /*Set the ID for the specific reservation*/
         ReservationID = StaticReservationID++;
-
-
     }
 
-    public int getID()
-    {
+    public int getID() {
         return this.ReservationID;
     }
-    public Lot getLot() { return this.obLot; }
+
+    public Lot getLot() {
+        return this.obLot;
+    }
 }
