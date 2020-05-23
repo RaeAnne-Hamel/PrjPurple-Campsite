@@ -19,8 +19,7 @@ public class MainConsole {
     /*
     Main Method
      */
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         /*
         ArrayList for Lots is created so that there is data to use -EB
          */
@@ -36,7 +35,7 @@ public class MainConsole {
         /*
         Creating a Customer to add to the Reservation using an ArrayList -EB
          */
-        Customer obCustomer1 = new Customer (0, "John Smith", "223 Real St", "Johnsmith@hotmail.com",
+        Customer obCustomer1 = new Customer(0, "John Smith", "223 Real St", "Johnsmith@hotmail.com",
                 1233211234, 1233322221, 1399587473, 0, false, 0);
         ArrayList<Customer> obCustArray = new ArrayList<>();
         obCustArray.add(obCustomer1);
@@ -56,18 +55,17 @@ public class MainConsole {
         /*
         The main loop of the program, containing all paths and programs that are to be run by the program. -EB
          */
-        do{
+        do {
 
             /*
             System asks which section of the program the user wants to go to. User responds with one of the letters
             and the program takes them to that section using switch cases. -EB
              */
-            System.out.print("Actions: [L]ots, [R]eservations, [Q]uit: ");
+            System.out.print("Actions: [L]ots, [C]ustomers, [R]eservations, [Q]uit: ");
             switch (read.nextLine().toUpperCase()) {
                 case "L":
                     System.out.print("Actions: [S]earch for a lot: ");
-                    switch(read.nextLine().toUpperCase())
-                    {
+                    switch (read.nextLine().toUpperCase()) {
                         case "S":
                             String lotID = Prompt("Please enter a Valid Lot ID to search for: ");
 
@@ -76,19 +74,15 @@ public class MainConsole {
                             BookingLedger.displayLot(nLotID);
                             Lot obLot;
 
-                            try
-                            {
+                            try {
                                 obLot = BookingLedger.querySearchCampsite(nLotID);
-                            }
-                            catch(NullPointerException e)
-                            {
+                            } catch (NullPointerException e) {
                                 break;
                             }
 
 
                             System.out.print("Actions: [S]et Lot availability, [V]iew Reservations: ");
-                            switch (read.nextLine().toUpperCase())
-                            {
+                            switch (read.nextLine().toUpperCase()) {
                                 case "S":
                                     System.out.print("Actions: [A]vailable, [U]navailable: ");
 
@@ -115,8 +109,7 @@ public class MainConsole {
                                     break;
 
                                 case "V":
-                                    for (Reservation rReservation : BookingLedger.getReservations())
-                                    {
+                                    for (Reservation rReservation : BookingLedger.getReservations(nLotID)) {
                                         System.out.println(rReservation.toString());
                                     }
                                     break;
@@ -128,19 +121,31 @@ public class MainConsole {
 
                         default:
                             break;
+
+
+                    }
+                    break;
+                case "C":
+                    System.out.print("Actions:[C]ustomer: ");
+                    switch (read.nextLine().toUpperCase()) {
+                        case "C":
+                            
+                            break;
                     }
                     break;
 
                 case "R":
 
                     System.out.print("Actions: [RR]emove Reservation");
-                    switch(read.nextLine().toUpperCase())
-                    {
+                    switch (read.nextLine().toUpperCase()) {
                         case "RR":
                             try {
                                 int searchID = Integer.parseInt(Prompt("List a reservation ID to Delete."));
                                 BookingLedger.removeReservation(searchID);
-                            } catch (Exception x){System.out.println("Please enter a number ID");};
+                            } catch (Exception x) {
+                                System.out.println("Please enter a number ID");
+                            }
+                            ;
                             break;
                         default:
                             break;
@@ -157,6 +162,7 @@ public class MainConsole {
         } while (!quit);
         System.out.println("Quit Application");
     }
+
 
     public static String Prompt(String Message)
     {
