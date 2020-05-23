@@ -30,13 +30,16 @@ public class Search3aTest {
         aLot.add(new Lot(2));
         aLot.add(new Lot(3));
 
+        ArrayList<Customer> aCustomer = new ArrayList<>();
         ArrayList<Reservation> aReservation = new ArrayList<>();
 
-        aReservation.add(new Reservation(new Lot(1), new GregorianCalendar(2021, 3, 1).getTime(),
-                new GregorianCalendar(2021, 3, 6).getTime(), null, 4));
+        aCustomer.add(new Customer(1, "bob", "215 bob street", "bob@bob.com", 3, 7801234, 3144567, 4, true, 3));
+
+        aReservation.add(new Reservation(new Lot(1), new GregorianCalendar(2020, 7, 1).getTime(),
+                new GregorianCalendar(2020, 7, 8).getTime(), aCustomer, 4));
 
 
-        BookingsLedger BL = new BookingsLedger(aLot, null, null, null);
+        BookingsLedger BL = new BookingsLedger(aLot, aReservation, null, null);
 
         NLS = new NewLotSearch(BL);
     }
@@ -60,20 +63,20 @@ public class Search3aTest {
         assertEquals(obLotResults.size(), TOTAL_LOTS);
     }
 
-//    /**
-//     * VALID: No dates returned
-//     */
-//    @Test
-//    public void testReservedDates() {
-//        nStartDay = 1;
-//        nStartMonth = 7;
-//        nEndDay = 8;
-//        nEndMonth = 7;
-//
-//        obLotResults = NLS.chooseDate(nType, nStartYear, nStartMonth, nStartDay, nEndYear, nEndMonth, nEndDay);
-//
-//        assertEquals(obLotResults.size(), 0);
-//    }
+    /**
+     * VALID: The two lots that aren't reserved are returned.
+     */
+    @Test
+    public void testReservedDates() {
+        nStartDay = 1;
+        nStartMonth = 7;
+        nEndDay = 8;
+        nEndMonth = 7;
+
+        obLotResults = NLS.chooseDate(nType, nStartYear, nStartMonth, nStartDay, nEndYear, nEndMonth, nEndDay);
+
+        assertEquals(obLotResults.size(), 2);
+    }
 
     /**
      * INVALID: Can't search dates in past.

@@ -95,10 +95,10 @@ public class NewLotSearch {
         {
             if (obLot.getType().equals(nType))
             {
-//                if (!BL.checkOverlap(obLot.getLotID(), dateStart, dateEnd))
-//                {
+                if (!BL.checkOverlap(obLot.getLotID(), dateStart, dateEnd))
+                {
                     obLots.add(obLot);
-//                }
+                }
             }
         }
         return obLots;

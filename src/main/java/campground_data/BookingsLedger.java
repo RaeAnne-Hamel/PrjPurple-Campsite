@@ -204,7 +204,7 @@ public class BookingsLedger {
         for(Reservation obReservation : aFilteredReservation)
         {
             //If dates Overlap set bOverlap to false and break loop
-            if (!((obStartDate.compareTo(obReservation.obEndDate) <=0) && (obEndDate.compareTo(obReservation.obStartDate) >=0)))
+            if ((obStartDate.compareTo(obReservation.obEndDate) <=0) && (obEndDate.compareTo(obReservation.obStartDate) >=0))
             {
                 bOverlap = true;
                 break;
