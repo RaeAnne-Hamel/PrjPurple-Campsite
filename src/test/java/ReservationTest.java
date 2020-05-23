@@ -25,7 +25,7 @@ public class ReservationTest
     Reservation oneReservation = new Reservation(new Lot(),startDate,endDate,payingCustomers,9);
 
 
-    /*Test if a manager attempting to remove a reservation has IN adequate permissions*/
+    /*Test if a manager has adiquate permissions*/
     @Test
     public void testPesmissions()
     {
@@ -33,7 +33,6 @@ public class ReservationTest
         boolean access = false;
 
         assertEquals(access, !BookingsLedger.isValidPermissions(BookingsLedger.getUser()));
-        //assertEquals(access, BookingsLedger.isValidPermissions(BookingsLedger.user));
     }
 
 
@@ -41,22 +40,24 @@ public class ReservationTest
     @Test
     public void testRemoveReservationNotPresent()
     {
+        /*If permissions are valid*/
         boolean access = true;
         assertEquals(access, BookingsLedger.isValidPermissions(BookingsLedger.getUser()));
 
+        /*No reservation exists so expect false*/
         assertEquals(BL.removeReservation(0), false);
     }
 
-    /*If the manager inputs a reservation ID that IS present*/
+    /*If the manager inputs a reservation ID that IS present it is removed*/
     @Test
     public void testRemoveReservationPresent()
     {
 
+        /*If permissions are valid*/
         boolean access = true;
-
         assertEquals(access, BookingsLedger.isValidPermissions(BookingsLedger.getUser()));
 
-        /*checks that the reservation was added */
+        /* Add a reservation, check if the reservation is added in arraylist */
         BL.getAllReservations().add(oneReservation);
         assertEquals(BL.getAllReservations().size(), 1);
 
