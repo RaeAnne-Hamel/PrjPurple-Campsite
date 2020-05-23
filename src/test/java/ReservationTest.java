@@ -15,6 +15,7 @@ import static org.junit.Assert.assertEquals;
 public class ReservationTest
 {
     /*Create array of paying customers*/
+
     ArrayList<Customer> payingCustomers;
 
     @Before
@@ -26,7 +27,6 @@ public class ReservationTest
 
 
     }
-
 
     /*Create dates of check-in and check-out*/
     private Date startDate = new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime();

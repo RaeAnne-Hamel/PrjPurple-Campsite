@@ -98,3 +98,7 @@ public class Lot {
         return ("Lot ID " + this.getLotID() + " Lot Type: " + this.getLotType() + " Removal Reason: " + this.sRemovalReason + " Availability: " + this.getAvailability());
     }
 }
+
+
+
+

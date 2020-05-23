@@ -227,8 +227,6 @@ public class BookingsLedger
         return obRes;
     }
 
-
-
     /**
      * checkOverlap is a method that with the lotID find a reservation and check if the specified dates overlap
      * with any other reservation in the date range. if the method returns false there is no overlap and if it returns
