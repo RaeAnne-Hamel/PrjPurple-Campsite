@@ -7,21 +7,27 @@ public class Reservation {
 
 
 
+
+
+    /*Primitive Variables */
+    public static int StaticReservationID = 0;
+    int ReservationID, nCustomerCount;
+    double price;
     Lot obLot;
     ArrayList<Customer> obCustomerList;
-    int nCustomerCount;
     Date obStartDate;
     Date obEndDate;
-    int ReservationID = 0;
-    static int  StaticReservationID = 0;
-    double price;
     public Boolean status;
 
+
+
+
+
     /*Reservation Constructor */
-    public Reservation(Lot Lot, Date startDate, Date endDate, ArrayList<Customer> customers, int nPeople)
+    public Reservation(Lot obLot, Date startDate, Date endDate, ArrayList<Customer> customers, int nPeople)
     {
-        /*Set the passed in pramaters*/
-        this.obLot = Lot;
+        /*Set the passed in parameters*/
+        this.obLot = obLot;
         this.obStartDate = startDate;
         this.obEndDate = endDate;
         this.obCustomerList = customers;
@@ -35,6 +41,10 @@ public class Reservation {
 
     }
 
+
+    public Lot getLot() {
+        return this.obLot;
+    }
 
     public int getReservationID()
     {
