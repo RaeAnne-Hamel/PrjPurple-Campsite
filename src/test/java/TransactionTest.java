@@ -1,6 +1,8 @@
 import campground_data.*;
+import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -14,16 +16,18 @@ import static org.junit.Assert.*;
 
 public class TransactionTest {
 
+    ArrayList<Customer> payingCustomers;
 
-    /*Create array of paying customers*/
-    private Customer[] payingCustomers = {new Customer(0,"","","", 1  ,1,1,1,true,1),new Customer(0,"","","", 1  ,1,1,1,true,1)};
+    @Before
+    public void setup()
+    {
+        payingCustomers = new ArrayList<>();
+        payingCustomers.add(new Customer(0,"","","", 1  ,1,1,1,true,1));
+        payingCustomers.add(new Customer(0,"","","", 1  ,1,1,1,true,1));
+    }
 
-    /*Create dates of check-in and check-out*/
     private Date startDate = new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime();
     private Date endDate = new GregorianCalendar(2014, Calendar.FEBRUARY, 13).getTime();
-
-
-
 
 
     @Test
@@ -37,7 +41,7 @@ public class TransactionTest {
         int testID3 = -1;
         int testID4 =2000000;
 
-        assertEquals(testID1, testReservation.getReservationID());
+        assertNotEquals(testID1, testReservation.getReservationID());
         assertEquals(testID2, testReservation2.getReservationID());
         assertNotEquals(testID3, testReservation.getReservationID());
         assertNotEquals(testID4, testReservation2.getReservationID());
