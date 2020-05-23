@@ -8,16 +8,16 @@ public class Lot {
     int nLotID;
     LotType obType;
     ArrayList<Reservation> obReservationList;
-    int StaticLotID;
+    int StaticLotID = 0;
     String sRemovalReason;
     boolean bAvailability;
 
     public Lot(int nLotID,
-            LotType obType,
-            ArrayList<Reservation> obReservationList,
-            int StaticLotID,
-            String sRemovalReason,
-            boolean bAvailability)
+               LotType obType,
+               ArrayList<Reservation> obReservationList,
+               int StaticLotID,
+               String sRemovalReason,
+               boolean bAvailability)
     {
         this.nLotID = nLotID;
         this.obType = obType;
@@ -28,6 +28,14 @@ public class Lot {
 
     }
 
+    public Lot(LotType obType, boolean bAvailability) {
+        this.nLotID = StaticLotID++;
+        this.obType = LotType.NonServicedIndividual;
+        this.obReservationList = new ArrayList<Reservation>();
+        this.sRemovalReason = "";
+        this.bAvailability = true;
+    }
+
     public Lot()
     {
 
@@ -36,12 +44,11 @@ public class Lot {
     public Lot(int nLotID)
     {
         this.nLotID = nLotID;
-        this.obType = LotType.Serviced;
+        this.obType = LotType.ServicedIndividual;
         this.obReservationList = new ArrayList<Reservation>();
         this.StaticLotID = 0;
         this.sRemovalReason = "";
         this.bAvailability = true;
-
     }
 
     public String getRemovalReason()
@@ -80,11 +87,18 @@ public class Lot {
         bAvailability = b;
     }
 
-
-
     public int getLotID()
     {
         return nLotID;
     }
+    public LotType getLotType() { return obType ;}
 
+    @Override
+    public String toString(){
+        return ("Lot ID " + this.getLotID() + " Lot Type: " + this.getLotType() + " Removal Reason: " + this.sRemovalReason + " Availability: " + this.getAvailability());
+    }
 }
+
+
+
+

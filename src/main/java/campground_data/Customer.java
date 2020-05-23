@@ -70,4 +70,3 @@ public class Customer {
     public void setIdPool(int idPool) { this.idPool = idPool; }
 }
 
-
