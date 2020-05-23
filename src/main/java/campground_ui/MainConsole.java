@@ -48,7 +48,7 @@ public class MainConsole {
          */
         Date startDate = new GregorianCalendar(2020, Calendar.JANUARY, 14).getTime();
         Date endDate = new GregorianCalendar(2020, Calendar.JANUARY, 17).getTime();
-        Reservation obReservation = new Reservation(obLot1, startDate, endDate, obCustArray, 1);
+        Reservation obReservation = new Reservation(obLot1, startDate, endDate, obCustArray, 1, 0);
         ArrayList<Reservation> aReservations = new ArrayList<>();
         aReservations.add(obReservation);
         BookingLedger.setReservationsList(aReservations);
@@ -201,26 +201,28 @@ public class MainConsole {
                     System.out.println("Please Enter [G]Get Reservation, [PT]SetPayment Type, [PM]Set Payment Method, " +
                             " [S]setStatus and [C]Check for Price");
                         String choice = read.nextLine();
+
                         switch(choice)
                         {
                             case "G":
                                 promptReservation();
-                                break;
+                                break mainSwitch;
                             case "PT":
                                 setPayType();
-                                break;
+                                break mainSwitch;
                             case "PM":
                                 setPayMethod();
-                                break;
+                                break mainSwitch;
                             case "S":
                                 setStatus();
-                                break;
+                                break mainSwitch;
                             case "C":
                                 checkPrice();
-                                break;
-                            default:
-                                break;
+                                break mainSwitch;
+
                         }
+
+                        break;
                 default:
                     quit = true;
                     break;
@@ -277,7 +279,7 @@ public class MainConsole {
        System.out.println("Choose a payment Type: [CA]Cash, [DB] debit and [CC]CreditCard");
 
        // set the variable
-       String input1 = read.nextLine();
+       String input1 = read.next();
 
        //the variable to set the paytype
        PaymentType payType;
@@ -331,7 +333,7 @@ public class MainConsole {
         System.out.println("Choose a payment Type: [IN]inPerson, [FX] Fax, [EM]Email and [PH]Phone");
 
         // set the variable
-        String input2 = read.nextLine();
+        String input2 = read.next();
 
         //the variable to set the paytype
         PaymentMethod payMeth;

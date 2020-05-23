@@ -10,7 +10,7 @@ public class Reservation {
 
 
     /*Primitive Variables */
-    public static int StaticReservationID = 0;
+    int StaticReservationID = 0;
     int ReservationID, nCustomerCount;
     double price;
     Lot obLot;
@@ -24,8 +24,9 @@ public class Reservation {
 
 
     /*Reservation Constructor */
-    public Reservation(Lot obLot, Date startDate, Date endDate, ArrayList<Customer> customers, int nPeople)
+    public Reservation(Lot obLot, Date startDate, Date endDate, ArrayList<Customer> customers, int nPeople, int StaticReservationID)
     {
+
         /*Set the passed in parameters*/
         this.obLot = obLot;
         this.obStartDate = startDate;
@@ -34,8 +35,8 @@ public class Reservation {
         this.nCustomerCount = nPeople;
 
         /*Set the ID for the specific reservation*/
-        this.ReservationID = StaticReservationID;
-        StaticReservationID++;
+        this.ReservationID = StaticReservationID++;
+
         this.price = 100.00;
         this.status = true;
 

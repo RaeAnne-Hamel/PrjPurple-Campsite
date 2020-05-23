@@ -108,7 +108,7 @@ public class BookingsLedger
 
         //If all checks have succeeded add the reservation to aReservations and return true
         System.out.printf("Adding Reservation...\n");
-        aReservation.add(new Reservation(obLot, obStartDate, obEndDate, obCustomers, nPeople));
+        aReservation.add(new Reservation(obLot, obStartDate, obEndDate, obCustomers, nPeople, 0));
         System.out.printf("Reservation Added\n");
         return true;
     }

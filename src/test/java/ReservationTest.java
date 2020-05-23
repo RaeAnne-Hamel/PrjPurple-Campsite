@@ -31,7 +31,7 @@ public class ReservationTest
     /*Create dates of check-in and check-out*/
     private Date startDate = new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime();
     private Date endDate = new GregorianCalendar(2014, Calendar.FEBRUARY, 13).getTime();
-    Reservation oneReservation = new Reservation(new Lot(),startDate,endDate,payingCustomers,9);
+    Reservation oneReservation = new Reservation(new Lot(),startDate,endDate,payingCustomers,9,0);
     BookingsLedger BL = new BookingsLedger();
 
 /*Create Valid Reservation*/
