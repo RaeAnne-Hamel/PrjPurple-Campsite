@@ -13,7 +13,7 @@ public class Customer
     private boolean isFrequent;
     private static int IdPool = 1;
 
-    public void Customer(String sName, String sAddress, String sEmail, long nFax, long nPhone, long nSecPhone)
+    public Customer(String sName, String sAddress, String sEmail, long nFax, long nPhone, long nSecPhone)
     {
         this.sName = sName;
         this.sAddress = sAddress;

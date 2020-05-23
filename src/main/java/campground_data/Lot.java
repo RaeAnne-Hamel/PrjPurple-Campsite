@@ -8,7 +8,7 @@ public class Lot {
     int nLotID;
     LotType obType;
     ArrayList<Reservation> obReservationList;
-    static int StaticLotID;
+    int StaticLotID = 0;
     String sRemovalReason;
     boolean bAvailability;
 
@@ -19,7 +19,23 @@ public class Lot {
                String sRemovalReason,
                boolean bAvailability)
     {
+        this.nLotID = nLotID;
+        this.obType = obType;
+        this.obReservationList = obReservationList;
+        this.StaticLotID = StaticLotID;
+        this.sRemovalReason = sRemovalReason;
+        this.bAvailability = bAvailability;
 
+    }
+
+    public Lot(LotType obType, boolean bAvailability)
+    {
+        this.nLotID = StaticLotID++;
+        this.obType = LotType.NonServicedIndividual;
+        this.obReservationList = new ArrayList<Reservation>();
+        this.sRemovalReason = "";
+        this.bAvailability = true;
+        System.out.printf("Lot " + this.nLotID + " created");
     }
 
     public String getRemovalReason()
@@ -58,12 +74,15 @@ public class Lot {
         bAvailability = b;
     }
 
-
-
     public int getLotID()
     {
         return nLotID;
     }
     public LotType getLotType() { return obType ;}
 
+
+
 }
+
+
+

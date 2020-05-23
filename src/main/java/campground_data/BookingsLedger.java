@@ -29,6 +29,12 @@ public class BookingsLedger
                 .collect(Collectors.toList());
         Lot obLot = filteredLots.get(0);
 
+        //Get todays date
+        Date obToday = new Date();
+        //Get todays date one year from now
+        Date obYearAfter = new Date();
+        obYearAfter.setYear(obYearAfter.getYear()+1);
+
         //If there are more than 2 customers fail and return false
         if(obCustomers.length > 2)
         {
@@ -43,6 +49,18 @@ public class BookingsLedger
 
         //Check if endDate is before startDate. If so it will fail and return false
         if(obStartDate.compareTo(obEndDate) >0)
+        {
+            return false;
+        }
+
+        //Check if obStartDate is placed before today
+        if (obStartDate.compareTo(obToday) <0)
+        {
+            return false;
+        }
+
+        //Check if obStartDate is over one year into the future
+        if(obStartDate.compareTo(obYearAfter) >0)
         {
             return false;
         }
