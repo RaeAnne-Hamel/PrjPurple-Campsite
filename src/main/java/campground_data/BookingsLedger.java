@@ -12,7 +12,7 @@ import java.util.UUID;
 
 public class BookingsLedger
 {
-    ArrayList<Reservation> aReservation = new ArrayList<>();
+    public static ArrayList<Reservation> aReservation = new ArrayList<>();
     ArrayList<Lot> aLot = new ArrayList<>();
     ArrayList<Customer> aCustomer = new ArrayList<>();
     ArrayList<Manager> aManager;
@@ -223,7 +223,7 @@ public class BookingsLedger
      * @param obEndDate
      * @return
      */
-    public boolean checkOverlap(int nLotID, Date obStartDate, Date obEndDate)
+    public static boolean checkOverlap(int nLotID, Date obStartDate, Date obEndDate)
     {
         List<Reservation> aFilteredReservation = aReservation.stream()
                 .filter(e -> e.getLot().getLotID() == nLotID)

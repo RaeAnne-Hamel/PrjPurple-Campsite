@@ -11,13 +11,6 @@ import java.util.GregorianCalendar;
 import static org.junit.Assert.assertEquals;
 
 
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.*;
-
-import javax.xml.validation.Validator;
-
 
 public class ReservationTest {
 
@@ -181,36 +174,18 @@ public class ReservationTest {
         //normal cases sucessfule change
         String test1 = testRegularReservation.changeDate(obStart, obEnd);
 
-
         BL.addReservation(testRegularReservation);
 
-        //unsucessfuly change
+        //unsucessfuly change, because there is already a booking on that day
         String test2 = testRegularReservation.changeDate(obStart, obEnd);
-
-        //Dates that have passes
-        Date obPastStart = new Date(2019, Calendar.JUNE, 1);
-        Date obPastEnd = new Date(2019, Calendar.JUNE, 8);
-        String test3 = testRegularReservation.changeDate(obPastStart, obPastEnd);
-        //on date is in the past
-        String test4 = testRegularReservation.changeDate(obPastStart, obEnd);
-
-        //Dates are too far into the future
-        Date obFutureStart = new Date(2021, Calendar.JUNE, 1);
-        Date obFutureEnd = new Date(2021, Calendar.JUNE, 8);
-        String test5 = testRegularReservation.changeDate(obFutureStart, obFutureEnd);
-
-
-        //End date comes before the start date
-        String test6 = testRegularReservation.changeDate(obEnd, obStart);
-
+        //the end date comes before the start date
+        String test3 = testRegularReservation.changeDate(obEnd, obStart);
 
         //regular Cabins
         assertEquals(test1, "");
         assertEquals(test2, "These dates will not work for this reservation");
         assertEquals(test3, "These dates will not work for this reservation");
-        assertEquals(test4, "These dates will not work for this reservation");
-        assertEquals(test5, "These dates will not work for this reservation");
-        assertEquals(test6, "These dates will not work for this reservation");
+
 
     }
 

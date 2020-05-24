@@ -2,6 +2,8 @@ package campground_data;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Reservation<Static> {
 
@@ -28,7 +30,6 @@ public class Reservation<Static> {
 
         /*Set the ID for the specific reservation*/
         this.ReservationID = StaticReservationID++;
-
         this.price = 100.00;
         this.status = true;
 
@@ -119,7 +120,7 @@ public class Reservation<Static> {
              */
             public boolean setSiteType(LotType NewLot) {
                 Lot TempLot = new Lot(NewLot);
-                Boolean check = checkOverlap(TempLot.getLotID(), this.obStartDate, this.obEndDate);
+                Boolean check = BookingsLedger.checkOverlap(TempLot.getLotID(), this.obStartDate, this.obEndDate);
                 if (!check) {
                     this.obLot = TempLot;
                     return true;
@@ -131,21 +132,40 @@ public class Reservation<Static> {
 
             public String changeDate(Date obStart, Date obEnd) {
                 //if there is overlap between the sites
-                if (!checkOverlap(this.obLot.getLotID(), obStart, obEnd)) {
-                    this.obStartDate = obStart;
-                    this.obEndDate = obEnd;
-                    return "";
-                } else {
+                if(CheckDateCases(obStart, obEnd))
+                {
+                    if (!BookingsLedger.checkOverlap(this.obLot.getLotID(), obStart, obEnd)) {
+                        this.obStartDate = obStart;
+                        this.obEndDate = obEnd;
+                        return "";
+                    } else {
+                        return "These dates will not work for this reservation";
+                    }
+                }
+                else
+                {
                     return "These dates will not work for this reservation";
                 }
-
             }
 
 
-            private boolean checkOverlap(int nLotID, Date obStartDate, Date obEndDate) {
-                boolean returnMe = checkOverlap(nLotID, obStartDate, obEndDate);
-                return returnMe;
+    /**
+     * this will return true if it does not trigger any exceptions and false otherwise.
+     * @param obStartDate
+     * @param obEndDate
+     * @return
+     */
+    public boolean CheckDateCases(Date obStartDate, Date obEndDate)
+            {
+                //checks to make sure the start date is not before the end date
+                if(obStartDate.compareTo(obEndDate) > 0)
+                {
+                    return false;
+                }
+                return true;
             }
+
+
 
             public int getReservationID() {
                 /*Set the ID for the specific reservation*/
