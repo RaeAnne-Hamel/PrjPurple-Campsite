@@ -9,19 +9,23 @@ public class Lot {
     int nLotID;
     LotType obType;
     ArrayList<Reservation> obReservationList;
-    int StaticLotID;
+    int StaticLotID = 0;
     String sRemovalReason;
     boolean bAvailability;
 
     public Lot(int nLotID,
-
                LotType obType,
                ArrayList<Reservation> obReservationList,
                int StaticLotID,
                String sRemovalReason,
                boolean bAvailability)
     {
-
+        this.nLotID = nLotID;
+        this.obType = obType;
+        this.obReservationList = obReservationList;
+        this.StaticLotID = StaticLotID;
+        this.sRemovalReason = sRemovalReason;
+        this.bAvailability = bAvailability;
     }
 
     public Lot(LotType obType)
@@ -34,26 +38,34 @@ public class Lot {
         this.bAvailability = bAvailability;
 
     }
-
     public Lot(int nLotID)
     {
         this.nLotID = nLotID;
-        this.obType = LotType.ServicedGroup;
-        this.obReservationList = new ArrayList<Reservation>();
-        this.StaticLotID = 0;
-        this.sRemovalReason = "";
-        this.bAvailability = true;
+        this.obType = obType;
+        this.obReservationList = obReservationList;
+        this.StaticLotID = StaticLotID;
+        this.sRemovalReason = sRemovalReason;
+        this.bAvailability = bAvailability;
 
     }
+
+
+    public Lot(LotType obType, boolean bAvailability) {
+        this.nLotID = StaticLotID++;
+        this.obType = LotType.NonServicedIndividual;
+        this.obReservationList = new ArrayList<Reservation>();
+        this.sRemovalReason = "";
+        this.bAvailability = true;
+    }
+
     public Lot()
     {
-        this.nLotID = 999;
-        this.obType = LotType.ServicedGroup;
+        this.nLotID = nLotID;
+        this.obType = LotType.ServicedIndividual;
         this.obReservationList = new ArrayList<Reservation>();
         this.StaticLotID = 0;
         this.sRemovalReason = "";
         this.bAvailability = true;
-
     }
 
     public String getRemovalReason()
@@ -104,5 +116,9 @@ public class Lot {
         return nLotID;
     }
 
+    @Override
+    public String toString(){
+        return ("Lot ID " + this.getLotID() + " Lot Type: " + this.getLotType() + " Removal Reason: " + this.sRemovalReason + " Availability: " + this.getAvailability());
+    }
 }
 

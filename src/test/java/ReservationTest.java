@@ -1,9 +1,9 @@
-import campground_data.*;
-import jdk.jfr.StackTrace;
 
-import org.junit.*;
+import campground_data.*;
+import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -36,16 +36,25 @@ public class ReservationTest {
 
 
     /*Create array of paying customers*/
-    private Customer[] payingCustomers = {new Customer(0, "", "", "", 1, 1, 1, 1, true, 1), new Customer(0, "", "", "", 1, 1, 1, 1, true, 1)};
+
+    ArrayList<Customer> payingCustomers;
+
+    @Before
+    public void setup()
+    {
+         payingCustomers = new ArrayList<>();
+        payingCustomers.add(new Customer(0,"","","", 1  ,1,1,1,true,1));
+        payingCustomers.add(new Customer(0,"","","", 1  ,1,1,1,true,1));
+
+
+    }
 
     /*Create dates of check-in and check-out*/
     private Date startDate = new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime();
     private Date endDate = new GregorianCalendar(2014, Calendar.FEBRUARY, 13).getTime();
-
+    Reservation oneReservation = new Reservation(new Lot(),startDate,endDate,payingCustomers,9,0);
     BookingsLedger BL = new BookingsLedger();
 
-    /*Create Valid Reservation*/
-    Reservation oneReservation = new Reservation(payingCustomers, 9, startDate, endDate, new Lot());
 
 
     //this is the start of the test's for the Reservations Class
@@ -140,10 +149,10 @@ public class ReservationTest {
         //fully booked group site
 
         //we have to add these reservation to our reservation list.
-        BookingsLedger.addReservation(testGroupReservation);
-        BookingsLedger.addReservation(testRegularReservation);
-        BookingsLedger.addReservation(test2RegularReservation);
-        BookingsLedger.addReservation(test2RegularReservation);
+        BL.addReservation(testGroupReservation);
+        BL.addReservation(testRegularReservation);
+        BL.addReservation(test2RegularReservation);
+        BL.addReservation(test2RegularReservation);
 
         Boolean test1 = test2GroupReservation.setSiteType(LotType.NonServicedIndividual);
 
@@ -169,13 +178,11 @@ public class ReservationTest {
         Date obEndShort = new Date(2020, Calendar.JUNE, 5);
 
 
-
-
         //normal cases sucessfule change
         String test1 = testRegularReservation.changeDate(obStart, obEnd);
 
 
-        BookingsLedger.addReservation(testRegularReservation);
+        BL.addReservation(testRegularReservation);
 
         //unsucessfuly change
         String test2 = testRegularReservation.changeDate(obStart, obEnd);
@@ -208,41 +215,42 @@ public class ReservationTest {
     }
 
         /*Test if a manager attempting to remove a reservation has IN adequate permissions*/
-//        @Test
-//        public void testPesmissions() {
-//            //Simply returns false if permissions are Invalid
-//            boolean access = false;
-//
-//            assertEquals(access, !BookingsLedger.isValidPermissions(BookingsLedger.getUser()));
-//            //assertEquals(access, BookingsLedger.isValidPermissions(BookingsLedger.user));
-//        }
+        @Test
+        public void testPesmissions() {
+            //Simply returns false if permissions are Invalid
+            boolean access = false;
+
+            assertEquals(access, !BookingsLedger.isValidPermissions(BookingsLedger.getUser()));
+            //assertEquals(access, BookingsLedger.isValidPermissions(BookingsLedger.user));
+        }
 
 
         /*If the manager inputs a reservation ID that is not present*/
-//        @Test
-//        public void testRemoveReservationNotPresent() {
-//            boolean access = true;
-//            assertEquals(access, BookingsLedger.isValidPermissions(BookingsLedger.getUser()));
-//
-//            assertEquals(BL.removeReservation(0), false);
-//        }
+        @Test
+        public void testRemoveReservationNotPresent() {
+            boolean access = true;
+            assertEquals(access, BookingsLedger.isValidPermissions(BookingsLedger.getUser()));
+
+            assertEquals(BL.removeReservation(0), false);
+        }
 
         /*If the manager inputs a reservation ID that IS present*/
-//        @Test
-//        public void testRemoveReservationPresent() {
-//
-//            boolean access = true;
-//
-//            assertEquals(access, BookingsLedger.isValidPermissions(BookingsLedger.getUser()));
-//
-//            /*checks that the reservation was added */
-//            BL.getReservations().add(oneReservation);
-//            assertEquals(BL.getReservations().size(), 1);
-//
-//            /*checks that the reservation was successfully removed */
-//            BL.removeReservation(0);
-//            assertEquals(0, BL.getReservations().size());
-//        }
+        @Test
+        public void testRemoveReservationPresent() {
+
+            boolean access = true;
+
+            assertEquals(access, BookingsLedger.isValidPermissions(BookingsLedger.getUser()));
+
+            /*checks that the reservation was added */
+            BL.getAllReservations().add(oneReservation);
+            assertEquals(BL.getAllReservations().size(), 1);
+
+            /*checks that the reservation was successfully removed */
+            BL.removeReservation(0);
+            assertEquals(0, BL.getAllReservations().size());
+        }
+
 
     }
 

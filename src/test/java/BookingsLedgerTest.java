@@ -37,6 +37,13 @@ public class BookingsLedgerTest {
 
         TestLedger.setLotList(aLot);
 
+        Lot QueryTestLot1 = TestLedger.querySearchCampsite(LotID1);
+        Lot QueryTestLot0 = TestLedger.querySearchCampsite(LotID0);
+        Lot QueryTestLot255 = TestLedger.querySearchCampsite(LotID255);
+        Lot QueryTestLotMinus1 = TestLedger.querySearchCampsite(LotIDminus1);
+        Lot QueryTestLot256 = TestLedger.querySearchCampsite(LotID256);
+        Lot QueryTestLot1000 = TestLedger.querySearchCampsite(LotID1000);
+
         assertEquals(LotID1, testLot1.getLotID());
         assertEquals(LotID0, testLot0.getLotID());
         assertEquals(LotID255, testLot255.getLotID());
@@ -59,7 +66,9 @@ public class BookingsLedgerTest {
         ArrayList<Reservation> obReservationList = new ArrayList<>();
         boolean sAvailable = true;
 
-        Lot testLot = new Lot(1, LotType.NonServicedIndividual, obReservationList, 1, "", sAvailable);
+
+        Lot testLot = new Lot(1, LotType.ServicedIndividual, obReservationList, 1, "", sAvailable);
+
 
         testLot.setRemovalReason(testReason);
         assertEquals(testReason, testLot.getRemovalReason());
@@ -74,7 +83,8 @@ public class BookingsLedgerTest {
         ArrayList<Reservation> obReservationList = new ArrayList<>();
         boolean sAvailable = true;
 
-        Lot testLot = new Lot(1, LotType.NonServicedIndividual, obReservationList, 1, "", sAvailable);
+
+        Lot testLot = new Lot(1, LotType.ServicedIndividual, obReservationList, 1, "", sAvailable);
 
         testLot.setAvailability(false);
 

@@ -1,20 +1,46 @@
 package campground_data;
 
-
-import java.awt.print.Book;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Reservation<Static> {
-    Lot obLot;
-    Customer[] obCustomerList;
-    Date obStartDate, obEndDate;
-    String Status = "Active";
-    public static int StaticReservationID = 0;
+
+    /*Primitive Variables */
+    int StaticReservationID = 0;
     int ReservationID, nCustomerCount;
-    public double price;
+    double price;
+    Lot obLot;
+    ArrayList<Customer> obCustomerList;
+    Date obStartDate;
+    Date obEndDate;
+    public Boolean status;
+
+    /*Reservation Constructor */
+    public Reservation(Lot obLot, Date startDate, Date endDate, ArrayList<Customer> customers, int nPeople, int StaticReservationID)
+    {
+
+        /*Set the passed in parameters*/
+        this.obLot = obLot;
+        this.obStartDate = startDate;
+        this.obEndDate = endDate;
+        this.obCustomerList = customers;
+        this.nCustomerCount = nPeople;
+
+        /*Set the ID for the specific reservation*/
+        this.ReservationID = StaticReservationID++;
+
+        this.price = 100.00;
+        this.status = true;
+
+    }
 
 
-    public Reservation(Customer[] customers, int nPeople, Date startDate, Date endDate, Lot obLot)
+    public Lot getLot() {
+        return this.obLot;
+    }
+
+
+    public Reservation(ArrayList<Customer> customers, int nPeople, Date startDate, Date endDate, Lot obLot)
     {
             this.obLot = obLot;
             this.obCustomerList = customers;
@@ -25,7 +51,6 @@ public class Reservation<Static> {
             double price;
             String Status = "Active";
     }
-
 
             /**
              * this method will check to make sure that the proper number of people have been set
@@ -78,12 +103,6 @@ public class Reservation<Static> {
             }
 
 
-            private double getPrice() {
-                //for  now the price will always be 0
-                //they can maualy input a price if they need.
-                return 0.0;
-            }
-
             /**
              * allows the person to be able to
              * set a price for the reservation.
@@ -109,10 +128,6 @@ public class Reservation<Static> {
                 }
             }
 
-            public Lot getLot() {
-                return this.obLot;
-            }
-
 
             public String changeDate(Date obStart, Date obEnd) {
                 //if there is overlap between the sites
@@ -128,7 +143,7 @@ public class Reservation<Static> {
 
 
             private boolean checkOverlap(int nLotID, Date obStartDate, Date obEndDate) {
-                boolean returnMe = BookingsLedger.checkOverlap(nLotID, obStartDate, obEndDate);
+                boolean returnMe = checkOverlap(nLotID, obStartDate, obEndDate);
                 return returnMe;
             }
 
@@ -138,4 +153,34 @@ public class Reservation<Static> {
                 return this.ReservationID;
 
             }
-        }
+
+    //get the status of the reservation option
+    public boolean getStatus() {
+        return this.status;
+    }
+
+    /**
+     * changes the status
+     */
+    public void setStatus(){
+        this.status = false;
+    }
+
+    public double getPrice(){
+        //for  now the price will always be 0
+        //they can manually input a price if they need.
+
+        return this.price;
+         }
+
+
+    @Override
+    public String toString() {
+        return "Reservation: " +
+                "ID: " + ReservationID +
+                "\t " + obStartDate +
+                " - " + obEndDate;
+    }
+
+}
+
