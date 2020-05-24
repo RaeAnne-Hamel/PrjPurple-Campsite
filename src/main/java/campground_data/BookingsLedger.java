@@ -184,6 +184,13 @@ public class BookingsLedger {
             return aReservation;
         }
 
+        /*
+        this will add a reservation to the reservation list.
+         */
+        public static void addReservation(Reservation reservation) {
+            aReservation.add(reservation);
+    }
+
 
 }
 
