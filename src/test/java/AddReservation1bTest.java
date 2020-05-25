@@ -59,9 +59,9 @@ public class AddReservation1bTest {
         BL.setLotList(lotArray);
 
         //GregorianCalendar of Jan 1st, 2021 12:00PM
-        Date testStartDate = new GregorianCalendar(2021, 0,10).getTime();
+        Date testStartDate = new GregorianCalendar(2020, 6,10).getTime();
         //GregorianCalendar of Jan 5th, 2021 12:00PM
-        Date testEndDate = new GregorianCalendar(2021,0,15).getTime();
+        Date testEndDate = new GregorianCalendar(2020,6,15).getTime();
 
         Date secondaryStartDate = new GregorianCalendar(2021,0,5).getTime();
         Date secondaryEndDate = new GregorianCalendar(2021,0,13).getTime();
@@ -99,12 +99,12 @@ public class AddReservation1bTest {
         BL.setLotList(lotArray);
 
         //GregorianCalendar of Jan 1st, 2021 12:00PM
-        Date testStartDate = new GregorianCalendar(2021, 0,10).getTime();
+        Date testStartDate = new GregorianCalendar(2020, 7,10).getTime();
         //GregorianCalendar of Jan 5th, 2021 12:00PM
-        Date testEndDate = new GregorianCalendar(2021,0,15).getTime();
+        Date testEndDate = new GregorianCalendar(2020,7,15).getTime();
 
-        Date secondaryStartDate = new GregorianCalendar(2021,0,11).getTime();
-        Date secondaryEndDate = new GregorianCalendar(2021,0,14).getTime();
+        Date secondaryStartDate = new GregorianCalendar(2020,7,11).getTime();
+        Date secondaryEndDate = new GregorianCalendar(2020,7,14).getTime();
 
         Assert.assertTrue(BL.addReservation(0, testStartDate, testEndDate, testCustomer, 2));
         Assert.assertFalse(BL.addReservation(0, secondaryStartDate, secondaryEndDate, testCustomer

@@ -1,5 +1,6 @@
 package campground_data;
 
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -8,7 +9,6 @@ import java.util.stream.Collectors;
 public class Reservation<Static> {
 
     /*Primitive Variables */
-    int StaticReservationID = 0;
     int ReservationID, nCustomerCount;
     double price;
     Lot obLot;
@@ -169,9 +169,7 @@ public class Reservation<Static> {
 
             public int getReservationID() {
                 /*Set the ID for the specific reservation*/
-                ReservationID = StaticReservationID++;
                 return this.ReservationID;
-
             }
 
     //get the status of the reservation option

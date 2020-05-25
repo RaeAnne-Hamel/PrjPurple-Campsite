@@ -110,6 +110,11 @@ public class Lot {
         return this.obType;
     }
 
+    public void setLotType(LotType type)
+    {
+        this.obType = type;
+    }
+
 
     public int getLotID()
     {
