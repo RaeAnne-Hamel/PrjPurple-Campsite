@@ -136,7 +136,7 @@ public class MainConsole {
 
                 //Reservations option
                 case "R":
-                    System.out.print("Actions: [A]dd Reservation, [RR]emove Reservation, [S]earch to make a new reservation");
+                    System.out.print("Actions: [A]dd Reservation, [RR]emove Reservation, [S]earch to make a new reservation [E]dit Reservation: ");
                     switch (read.nextLine().toUpperCase()) {
                         case "RR":
                             try {
@@ -181,6 +181,8 @@ public class MainConsole {
                                     for (Lot obLot : obLots) {
                                         System.out.println(obLot.toString());
                                     }
+                                    //allows someone to edit the reservation
+
 //                                case "S":
 //                                    switch (nType){
 //                                        case 1:
@@ -204,10 +206,105 @@ public class MainConsole {
 //                                    {
 //                                        System.out.println(LD.toString());
 //                                    }
-                                    break mainSwitch;
+
                                 default:
                                     break mainSwitch;
                             }
+                        case "E":
+                            //input the reservation id
+                            System.out.println("Please input a reservation ID to edit: ");
+                            int ResID = read.nextInt();
+                            read.nextLine();
+                            try{
+                                Reservation reservation = BookingLedger.NonStaticgetReservation(BookingLedger.getAllReservations(), ResID);
+                                //display the one we found.
+                                System.out.println(reservation.OthertoString());
+                                System.out.println("Edit [D]ate, Edit [C]ustomer's Staying: ");
+                                switch (read.nextLine().toUpperCase())
+                                {
+                                    case "D":
+                                        Date obARStartDate = PromptDate("Please Enter the New date of arrival");
+                                        System.out.println();
+                                        Date obAREndDate = PromptDate("Please enter the New date of departure");
+
+                                        String returnVal = reservation.changeDate(obARStartDate, obAREndDate);
+                                        if(returnVal.equals(""))
+                                        {
+                                            System.out.println(reservation.OthertoString());
+                                        }
+
+                                        else
+                                        {
+                                            System.out.println(returnVal);
+                                        }
+                                        break;
+
+//
+//                                    case "L":
+//                                        System.out.println("Pick your Lot Type. 1: Non-Serviced Individual Campsite, 2: Serviced Individual Campsite," +
+//                                                "3: Non Serviced Group Campsite, 4: Serviced Group Campsite, 5: Cabin, 6: Deluxe Cabin");
+//                                        int nType = read.nextInt();
+//                                        read.nextLine();
+//
+//                                        switch (nType) {
+//                                            case 1:
+//                                                reservation.setSiteType(LotType.NonServicedIndividual);
+//                                                System.out.println(reservation.OthertoString());
+//                                                break;
+//                                            case 2:
+//                                                reservation.setSiteType(LotType.ServicedIndividual);
+//                                                System.out.println(reservation.OthertoString());
+//                                                break;
+//                                            case 3:
+//                                                reservation.setSiteType(LotType.NonServicedGroup);
+//                                                System.out.println(reservation.OthertoString());
+//                                                break;
+//                                            case 4:
+//                                                reservation.setSiteType(LotType.ServicedGroup);
+//                                                System.out.println(reservation.OthertoString());
+//                                                break;
+//                                            case 5:
+//                                                reservation.setSiteType(LotType.Cabin);
+//                                                System.out.println(reservation.OthertoString());
+//                                                break;
+//                                            case 6:
+//                                                reservation.setSiteType(LotType.DeluxeCabin);
+//                                                System.out.println(reservation.OthertoString());
+//                                                break;
+//                                            default:
+//                                                System.out.println("Please choose an available lot type.");
+//                                                break;
+//                                        }
+//                                        break;
+
+                                    case "C":
+                                        System.out.println("Please input the new number of customers staying: ");
+                                        int NewCustomerNumber = read.nextInt();
+                                        read.nextLine();
+                                        reservation.setCustomerNumber(NewCustomerNumber);
+                                        System.out.println(reservation.OthertoString());
+                                        break;
+
+                                    default:
+                                        System.out.println("This is not possible.");
+                                }
+
+
+
+
+
+
+
+
+
+
+                            }
+                            catch (Exception e)
+                            {
+                                System.out.println("This reservation does not Exist");
+                            }
+
+                            break;
 
                             //Start of Add reservation option --Andrew
                         case "A":

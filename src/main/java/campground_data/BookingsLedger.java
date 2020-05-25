@@ -293,6 +293,16 @@ public class BookingsLedger
                     return null;
                 }
 
+        public Reservation NonStaticgetReservation(ArrayList < Reservation > aReservation,int ID){
+        for (Reservation res : aReservation) {
+            /*If the Reservation ID is found*/
+            if (res.getReservationID() == ID) {
+                return res;
+            }
+        }
+        return null;
+    }
+
 
         /*
         A simple template class. Checks permissions. Always returns true

@@ -200,5 +200,15 @@ public class Reservation<Static> {
                 " - " + obEndDate;
     }
 
+
+    public String OthertoString() {
+        return "Reservation: " +
+                "ID: " + ReservationID +
+                "\t " + obStartDate +
+                " - " + obEndDate +
+                " Number Of People " + nCustomerCount +
+                " Lot Type: " + obLot.getLotType();
+    }
+
 }
 

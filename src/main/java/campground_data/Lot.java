@@ -41,7 +41,7 @@ public class Lot {
     public Lot(int nLotID)
     {
         this.nLotID = nLotID;
-        this.obType = obType;
+        this.obType = LotType.ServicedIndividual;
         this.obReservationList = obReservationList;
         this.StaticLotID = StaticLotID;
         this.sRemovalReason = sRemovalReason;
