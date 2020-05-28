@@ -7,6 +7,9 @@ public class Customer {
     private String sName;
     private String sAddress;
     private String sEmail;
+    private String sProvince;
+    private String sCity;
+    private String sPostal;
     private long nFax;
     private long nPhone;
     private long nSecPhone;
@@ -28,6 +31,22 @@ public class Customer {
         this.isFrequent = isFrequent;
         this.idPool = idPool;
     }
+
+    public Customer(int CustomerID, String sName, String sAddress, String sEmail,
+                    long nPhone, int idPool)
+    {
+        this.CustomerID = CustomerID;
+        this.sName = sName;
+        this.sAddress = sAddress;
+        this.sEmail = sEmail;
+        this.nPhone = nPhone;
+        this.idPool = idPool;
+        this.isFrequent = false;
+        this.nSecPhone = 0;
+        this.nVisits = 0;
+        this.nFax = 0;
+    }
+
     public String Name;
 
     public Customer(String name)
