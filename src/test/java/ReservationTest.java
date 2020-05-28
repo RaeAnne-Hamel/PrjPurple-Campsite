@@ -20,7 +20,7 @@ public class ReservationTest
     @Before
     public void setup()
     {
-         payingCustomers = new ArrayList<>();
+        payingCustomers = new ArrayList<>();
         payingCustomers.add(new Customer(0,"","","", 1  ,1,1,1,true,1));
         payingCustomers.add(new Customer(0,"","","", 1  ,1,1,1,true,1));
 
