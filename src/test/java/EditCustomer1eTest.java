@@ -19,12 +19,13 @@ public class EditCustomer1eTest {
     String j1 = repeatJ(1);
     long nPhone = 3067235921L;
 
-    long nFax = 47583945721L;
+    long nFax = 4758394571L;
     int nVisits = 4;
     boolean bFreq = true;
     int nIDPool = 2;
 
-    private Customer testCustomer = new Customer(nCustID, sName, sAddress, sEmail, nPhone, nPhone, nPhone, nVisits, bFreq, nIDPool);
+    private Customer testCustomer = new Customer(sName, sAddress, sProvince, sCity, sPostal, sCountry, sEmail,
+            nFax, nPhone, nPhone, nVisits, bFreq);
 
 
     /**
@@ -120,9 +121,9 @@ public class EditCustomer1eTest {
     @Test
     public void TestValidAddress()
     {
-        testCustomer.setName(j255);
+        testCustomer.setAddress(j255);
         assertEquals(j255, testCustomer.getAddress());
-        testCustomer.setName(j1);
+        testCustomer.setAddress(j1);
         assertEquals(j1, testCustomer.getAddress());
     }
 
@@ -159,7 +160,7 @@ public class EditCustomer1eTest {
         testCustomer.setCity("");
         assertEquals(sCity, testCustomer.getCity());
         testCustomer.setCity(j256);
-        assertEquals(sCountry, testCustomer.getCity());
+        assertEquals(sCity, testCustomer.getCity());
     }
 
     /**
@@ -183,7 +184,7 @@ public class EditCustomer1eTest {
         testCustomer.setEmail("");
         assertEquals(sEmail, testCustomer.getEmail());
         testCustomer.setEmail(j256);
-        assertEquals(sCountry, testCustomer.getEmail());
+        assertEquals(sEmail, testCustomer.getEmail());
     }
 
     /**

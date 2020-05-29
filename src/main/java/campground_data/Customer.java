@@ -1,47 +1,53 @@
 package campground_data;
 
-
-
 public class Customer {
     private final int MAX_LENGTH = 255;
     private int CustomerID;
     private String sName;
     private String sAddress;
-    private String sEmail;
     private String sProvince;
     private String sCity;
     private String sPostal;
+    private String sCountry;
+    private String sEmail;
     private long nFax;
     private long nPhone;
     private long nSecPhone;
     private int nVisits;
     private boolean isFrequent;
-    private int idPool;
+    private static int idPool = 0;
 
-    public Customer(int CustomerID, String sName, String sAddress, String sEmail, long nFax,
-                    long nPhone, long nSecPhone, int nVisits, boolean isFrequent, int idPool)
+    public Customer(String sName, String sAddress, String sProvince, String sCity,
+                    String sPostal, String sCountry, String sEmail, long nFax, long nPhone,
+                    long nSecPhone, int nVisits, boolean isFrequent)
     {
-        this.CustomerID = CustomerID;
+        this.CustomerID = idPool++;
         this.sName = sName;
         this.sAddress = sAddress;
+        this.sProvince = sProvince;
+        this.sCity = sCity;
+        this.sPostal = sPostal;
+        this.sCountry = sCountry;
         this.sEmail = sEmail;
         this.nFax = nFax;
         this.nPhone = nPhone;
         this.nSecPhone = nSecPhone;
         this.nVisits = nVisits;
         this.isFrequent = isFrequent;
-        this.idPool = idPool;
     }
 
-    public Customer(int CustomerID, String sName, String sAddress, String sEmail,
-                    long nPhone, int idPool)
+    public Customer(String sName, String sAddress, String sProvince, String sCity,
+                    String sPostal, String sCountry, String sEmail, long nPhone)
     {
-        this.CustomerID = CustomerID;
+        this.CustomerID = idPool++;
         this.sName = sName;
         this.sAddress = sAddress;
+        this.sProvince = sProvince;
+        this.sCity = sCity;
+        this.sPostal = sPostal;
+        this.sCountry = sCountry;
         this.sEmail = sEmail;
         this.nPhone = nPhone;
-        this.idPool = idPool;
         this.isFrequent = false;
         this.nSecPhone = 0;
         this.nVisits = 0;
@@ -60,6 +66,14 @@ public class Customer {
     public String getName() { return sName; }
 
     public String getAddress() { return sAddress; }
+
+    public String getProvince() {return sProvince; }
+
+    public String getCity() {return sCity; }
+
+    public String getPostal() {return sPostal; }
+
+    public String getCountry() {return sCountry; }
 
     public String getEmail() { return sEmail; }
 
@@ -84,23 +98,77 @@ public class Customer {
         }
     }
 
-    public void setAddress(String sAddress) { this.sAddress = sAddress; }
+    public void setAddress(String sAddress) {
+        if (sAddress.length() > 0 && sAddress.length()<=MAX_LENGTH)
+        {
+            this.sAddress = sAddress;
+        }
+    }
 
-    public void setEmail(String sEmail) { this.sEmail = sEmail; }
+    public void setProvince(String sProvince) {
+        if (sProvince.length() > 0 && sProvince.length()<=MAX_LENGTH)
+        {
+            this.sProvince = sProvince;
+        }
+    }
 
-    public void setFax(long nFax) { this.nFax = nFax; }
+    public void setCity(String sCity) {
+        if (sCity.length() > 0 && sCity.length()<=MAX_LENGTH)
+        {
+            this.sCity = sCity;
+        }
+    }
 
-    public void setPhone(long nPhone) { this.nPhone = nPhone; }
+    public void setPostal(String sPostal) {
+        if (sPostal.length() > 2 && sPostal.length()<=10)
+        {
+            this.sPostal = sPostal;
+        }
+    }
 
-    public void setSecPhone(long nSecPhone) { this.nSecPhone = nSecPhone; }
+    public void setCountry(String sCountry) {
+        if (sCountry.length() > 0 && sCountry.length()<=MAX_LENGTH)
+        {
+            this.sCountry = sCountry;
+        }
+    }
+
+    public void setEmail(String sEmail) {
+        if (sEmail.length() > 0 && sEmail.length()<=MAX_LENGTH)
+        {
+            this.sEmail = sEmail;
+        }
+    }
+
+    public void setFax(long nPhone) {
+        if (nPhone > 1000000000L && nPhone < 9999999999L)
+            this.nFax = nPhone;
+    }
+
+    public void setPhone(long nPhone) {
+        if (nPhone > 1000000000L && nPhone < 9999999999L)
+            this.nPhone = nPhone;
+    }
+
+    public void setSecPhone(long nPhone) {
+        if (nPhone > 1000000000L && nPhone < 9999999999L)
+            this.nSecPhone = nPhone;
+    }
 
     public void setVisits(int nVisits) { this.nVisits = nVisits; }
 
     public void setFrequent(boolean frequent) { isFrequent = frequent; }
 
-    public void setIdPool(int idPool) { this.idPool = idPool; }
+
+    public String updateCustomer(Customer obCust, String sName, String sAddress, String sProvince,
+                                 String sCity, String sPostal, String sCountry, String sEmail,
+                                 long nPhone, long nFax, long nSecPhone){
+
+        String sVal = "Successfully changed";
 
 
+        return sVal;
+    }
 }
 
 
