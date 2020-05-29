@@ -40,7 +40,7 @@ public class Test2bManagerEditsThePriceOfAnAccomidation {
 
          //make the new reservation be the global ones so all the classes can get to them
         GlobalRegularReservation = testRegularReservation;
-        GlobalGroupReservation = testGroupReservation
+        GlobalGroupReservation = testGroupReservation;
 
 
     }
@@ -57,19 +57,19 @@ public class Test2bManagerEditsThePriceOfAnAccomidation {
         //these are test done by the regualr Cabins
         //normal cases for regualr cabins
         double newPriceTest1 = GlobalRegularReservation.getPrice() * (0.9);
-        double test1 = GlobalRegularReservation.setDiscount(90);
+        double test1 = GlobalRegularReservation.getTransaction().setDiscount(90);
 
         double newPriceTest2 = GlobalRegularReservation.getPrice() * (0.5);
-        double test2 = GlobalRegularReservation.setDiscount(50);
+        double test2 = GlobalRegularReservation.getTransaction().setDiscount(50);
 
 
         //these tests are for a group cabins
         //normal cases for group cabins
         double newPriceTest8 = GlobalGroupReservation.getPrice() * (0.9);
-        double test8 = GlobalGroupReservation.setDiscount(90);
+        double test8 = GlobalGroupReservation.getTransaction().setDiscount(90);
 
         double newPriceTest9 = GlobalGroupReservation.getPrice() * (0.5);
-        double test9 = GlobalGroupReservation.setDiscount(50);
+        double test9 = GlobalGroupReservation.getTransaction().setDiscount(50);
 
 
 
@@ -92,9 +92,9 @@ public class Test2bManagerEditsThePriceOfAnAccomidation {
     public void tCustomerDiscountMax()
     {
         //Regualr Site
-        double test1 = GlobalRegularReservation.setDiscount(100);
+        double test1 = GlobalRegularReservation.getTransaction().setDiscount(100);
         //Group Site
-        double test2 = GlobalGroupReservation.setDiscount(100);
+        double test2 = GlobalGroupReservation.getTransaction().setDiscount(100);
 
         assertEquals(test1, 0.0, 0.001);
         assertEquals(test2, 0.0, 0.001);
@@ -111,12 +111,12 @@ public class Test2bManagerEditsThePriceOfAnAccomidation {
         //Regualr Site minumum
         //the discount price is 0 meaninf the price should not change
         double newPriceTest1 = GlobalRegularReservation.getPrice();
-        double test1 = GlobalRegularReservation.setDiscount(0);
+        double test1 = GlobalRegularReservation.getTransaction().setDiscount(0);
 
         //Group Site minimum
         //the price is set to 0 meaning the price of the cabin will not change
         double newPriceTest2 = GlobalGroupReservation.getPrice();
-        double test2 = GlobalGroupReservation.setDiscount(0);
+        double test2 = GlobalGroupReservation.getTransaction().setDiscount(0);
 
         assertEquals(test1, newPriceTest1, 0.001);
         assertEquals(test2, newPriceTest2, 0.001);
@@ -134,18 +134,18 @@ public class Test2bManagerEditsThePriceOfAnAccomidation {
     {
         //regular cabin boundry cases
         double newPriceTest1 = GlobalRegularReservation.getPrice();
-        double test1 = GlobalRegularReservation.setDiscount(101);
+        double test1 = GlobalRegularReservation.getTransaction().setDiscount(101);
 
         double newPriceTest2 = GlobalRegularReservation.getPrice();
-        double test2 = GlobalRegularReservation.setDiscount(-1);
+        double test2 = GlobalRegularReservation.getTransaction().setDiscount(-1);
 
 
         //group cabin boundry cases
         double newPriceTest3 = GlobalGroupReservation.getPrice();
-        double test3 = GlobalGroupReservation.setDiscount(101);
+        double test3 = GlobalGroupReservation.getTransaction().setDiscount(101);
 
         double newPriceTest4 = GlobalGroupReservation.getPrice();
-        double test4 = GlobalGroupReservation.setDiscount(-1);
+        double test4 = GlobalGroupReservation.getTransaction().setDiscount(-1);
 
 
         assertEquals(test1, newPriceTest1, 0.001);

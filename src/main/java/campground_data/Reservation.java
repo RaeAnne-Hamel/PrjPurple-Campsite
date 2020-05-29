@@ -17,6 +17,9 @@ public class Reservation<Static> {
     Date obEndDate;
     public Boolean status;
 
+    //a new transaction
+    Transaction transaction;
+
     /*Reservation Constructor */
     public Reservation(Lot obLot, Date startDate, Date endDate, ArrayList<Customer> customers, int nPeople, int StaticReservationID)
     {
@@ -27,6 +30,7 @@ public class Reservation<Static> {
         this.obEndDate = endDate;
         this.obCustomerList = customers;
         this.nCustomerCount = nPeople;
+        this.transaction = new Transaction(this);
 
         /*Set the ID for the specific reservation*/
         this.ReservationID = StaticReservationID++;
@@ -49,6 +53,8 @@ public class Reservation<Static> {
             this.obStartDate = startDate;
             this.obEndDate = endDate;
             int StaticReservationID = 0;
+            //a New Transaction
+            this.transaction = new Transaction(this);
             double price;
             String Status = "Active";
     }
@@ -189,6 +195,16 @@ public class Reservation<Static> {
         //they can manually input a price if they need.
 
         return this.price;
+         }
+
+    /**
+     * this is used for testing cases, it will let me test the trandaction class
+     * for a reservation.
+     * @return
+     */
+    public Transaction getTransaction()
+         {
+             return this.transaction;
          }
 
 
