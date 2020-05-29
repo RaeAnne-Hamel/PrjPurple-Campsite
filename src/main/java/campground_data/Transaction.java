@@ -6,7 +6,7 @@ public class Transaction {
     public PaymentMethod payMethod;
     //this is the discount for the price of that reservation.
     public double discount;
-    Reservation obRes;
+    public Reservation obRes;
 
 
     public Transaction(Reservation obRes, PaymentType type, PaymentMethod method)

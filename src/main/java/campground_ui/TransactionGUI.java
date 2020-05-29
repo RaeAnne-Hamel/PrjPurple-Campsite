@@ -73,31 +73,82 @@ public class TransactionGUI  extends Application {
         grid.add(PaymentMethodBox, 1, 2);
 
 //this is the discount Informtion
-        Label discountinfo = new Label("Discount");
+        Label discountinfo = new Label("Discount:");
         grid.add(discountinfo, 0, 3);
         //place a textinput and a empty label to display an error if needed
-        Text
+        TextField discountBox = new TextField(); //error handeling will be in the Save button.
+        grid.add(discountBox,1,3);
+
+
+//this is the price information
+        Label Priceinfo = new Label("Price:");
+        grid.add(Priceinfo, 0, 4);
+        //place a textinput for the price infomration
+        TextField Price = new TextField(); //error handeling will be in the Save button.
+        grid.add(Price,1,4);
+
+//this is the total price of the reservation after the discount and everything has been applied.
+        Label Total = new Label("Total Price:");
+        grid.add(Total, 0, 5);
+        //display the price after all of these changes
+        //get the price of this reservation and display it.
+        Text adustedPrice = new Text(Double.toString(transaction.obRes.getPrice()) + "$");
+        adustedPrice.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
+        grid.add(adustedPrice, 1,5);
+
+//this radio button will set weather or not this reservation has been paid or still needs to be
+        CheckBox paidBox = getPaidBox(transaction); //erroe handeling and setting will be in the save button.
+        grid.add(paidBox, 2, 5);
 
 
 
 
+//this will update all of the information for the current transaction and reservation.
+        Button btnSave = new Button("Save");
+        btnSave.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
 
-
-        Button btn = new Button("Sign in");
+            }
+        });
+        //this button will clode the window and not update any of the inforamtion that was selected
+        Button btnExit = new Button("Exit");
+        //exit this
         HBox hbBtn = new HBox(10);
-        hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
-        hbBtn.getChildren().add(btn);
+        hbBtn.setAlignment(Pos.CENTER);
+        hbBtn.getChildren().addAll(btnSave, btnExit);
         grid.add(hbBtn, 1, 7);
-
-
-
-
-
 
         //return the Grid pane we have made
         return grid;
     }
 
+    /**
+     * this method will create a check box that will either be
+     * this being a paid reservation or is it still needs to be paid.
+     * @param transaction
+     * @return
+     */
+    private CheckBox getPaidBox(Transaction transaction) {
+        CheckBox returnThis = new CheckBox("Paid");
+        if(transaction.obRes.getStatus())
+        {
+            returnThis.setSelected(true);
+        }
+        else
+        {
+            returnThis.setSelected(false);
+        }
+
+        return returnThis;
+    }
+
+    /**
+     * this method takes in the current transaction information
+     * it will create a comboBox with all the Payment Method infomration and make a combo Box
+     * this combo box will chnage the payment method type.
+     * @param transaction
+     * @return
+     */
     private ComboBox<PaymentMethod> PaymentMethodCombo(Transaction transaction) {
 
         ComboBox<PaymentMethod> comboBox = new ComboBox<PaymentMethod>();
@@ -126,6 +177,13 @@ public class TransactionGUI  extends Application {
 
     }
 
+    /**
+     * this method will take in the current transaction that we are editing
+     * and creat a combo box that has all of the paymentTypes
+     * when a new one is selected it will update the transaction that was sent in.
+     * @param transaction
+     * @return
+     */
     private ComboBox<PaymentType> PaymentTypeCombo(Transaction transaction)
     {
         ComboBox<PaymentType> comboBox = new ComboBox<PaymentType>();
