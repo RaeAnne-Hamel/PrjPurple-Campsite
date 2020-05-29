@@ -13,6 +13,7 @@ public class EditCustomer1eTest {
     String sProvince = "Saskatchewan";
     String sPostal = "S7N4V2";
     String sCountry = "South Africa";
+    String sCity = "Johannesburg";
     String j256 = repeatJ(256);
     String j255 = repeatJ(255);
     String j1 = repeatJ(1);
@@ -114,7 +115,7 @@ public class EditCustomer1eTest {
     }
 
     /**
-     * VALID: Name can be 255 characters.
+     * VALID: Address can be 255 characters.
      */
     @Test
     public void TestValidAddress()
@@ -126,7 +127,7 @@ public class EditCustomer1eTest {
     }
 
     /**
-     * INVALID: Address length must be no more than 255 characters and must be at least 1 character.
+     * INVALID: Country length must be no more than 255 characters and must be at least 1 character.
      */
     @Test
     public void TestCountryLength()
@@ -138,7 +139,7 @@ public class EditCustomer1eTest {
     }
 
     /**
-     * VALID: Name can be 255 characters.
+     * VALID: Country can be 255 characters.
      */
     @Test
     public void TestValidCountry()
@@ -149,7 +150,53 @@ public class EditCustomer1eTest {
         assertEquals(j1, testCustomer.getCountry());
     }
 
+    /**
+     * INVALID: City length must be no more than 255 characters and must be at least 1 character.
+     */
+    @Test
+    public void TestCityLength()
+    {
+        testCustomer.setCity("");
+        assertEquals(sCity, testCustomer.getCity());
+        testCustomer.setCity(j256);
+        assertEquals(sCountry, testCustomer.getCity());
+    }
 
+    /**
+     * VALID: City can be 255 characters.
+     */
+    @Test
+    public void TestValidCity()
+    {
+        testCustomer.setCity(j255);
+        assertEquals(j255, testCustomer.getCity());
+        testCustomer.setCity(j1);
+        assertEquals(j1, testCustomer.getCity());
+    }
+
+    /**
+     * INVALID: City length must be no more than 255 characters and must be at least 1 character.
+     */
+    @Test
+    public void TestEmailLength()
+    {
+        testCustomer.setEmail("");
+        assertEquals(sCity, testCustomer.getCity());
+        testCustomer.setCity(j256);
+        assertEquals(sCountry, testCustomer.getCity());
+    }
+
+    /**
+     * VALID: City can be 255 characters.
+     */
+    @Test
+    public void TestValidEmail()
+    {
+        testCustomer.setCity(j255);
+        assertEquals(j255, testCustomer.getCity());
+        testCustomer.setCity(j1);
+        assertEquals(j1, testCustomer.getCity());
+    }
 
 
 
