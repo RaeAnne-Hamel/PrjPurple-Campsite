@@ -2,6 +2,7 @@ import campground_data.Lot;
 import campground_data.LotType;
 import campground_data.Reservation;
 import org.junit.*;
+import campground_ui.*;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -19,10 +20,6 @@ public class Test2bManagerEditsThePriceOfAnAccomidation {
     private Date obStart = new Date(2020, Calendar.JUNE, 11);
     private Date obEnd = new Date(2020, Calendar.JUNE, 15);
 
-    //the types of lots that the reserrvations are staying on.
-    Lot obRegLot = new Lot(LotType.NonServicedIndividual);
-    Lot obGroupLot = new Lot(LotType.NonServicedGroup);
-
 
     //this will be a basic reservation
      Reservation GlobalRegularReservation;
@@ -32,11 +29,18 @@ public class Test2bManagerEditsThePriceOfAnAccomidation {
     @Before
     public void setUp()
     {
+        //the types of lots that the reserrvations are staying on.
+        Lot obRegLot = new Lot(LotType.NonServicedIndividual);
+        Lot obGroupLot = new Lot(LotType.NonServicedGroup);
 
         //this will be a basic reservation
          Reservation testRegularReservation = new Reservation(null, 3, obStart, obEnd, obRegLot);
+         //set the price of the campgound to be 100 - for easy math
+        testRegularReservation.setPrice(100.0);
         //this will be a group reservation
          Reservation testGroupReservation = new Reservation(null, 6, obStart, obEnd, obGroupLot);
+        //set the price of the campgound to be 100 - for easy math
+        testGroupReservation.setPrice(100.0);
 
          //make the new reservation be the global ones so all the classes can get to them
         GlobalRegularReservation = testRegularReservation;

@@ -213,7 +213,7 @@ public class Reservation<Static> {
     public String toString() {
         return "Reservation: " +
                 "ID: " + ReservationID +
-                "\t " + obStartDate +
+                "\n\t " + obStartDate +
                 " - " + obEndDate;
     }
 
