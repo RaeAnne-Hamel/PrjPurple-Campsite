@@ -3,7 +3,7 @@ package campground_data;
 
 import java.util.ArrayList;
 
-public class Lot {
+public class Lot extends Persistent{
 
 
     int nLotID;
@@ -125,5 +125,6 @@ public class Lot {
     public String toString(){
         return ("Lot ID " + this.getLotID() + " Lot Type: " + this.getLotType() + " Removal Reason: " + this.sRemovalReason + " Availability: " + this.getAvailability());
     }
+
 }
 

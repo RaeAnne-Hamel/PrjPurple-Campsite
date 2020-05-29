@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Reservation<Static> {
+public class Reservation<Static> extends Persistent {
 
     /*Primitive Variables */
     int ReservationID, nCustomerCount;
@@ -209,6 +209,5 @@ public class Reservation<Static> {
                 " Number Of People " + nCustomerCount +
                 " Lot Type: " + obLot.getLotType();
     }
-
 }
 

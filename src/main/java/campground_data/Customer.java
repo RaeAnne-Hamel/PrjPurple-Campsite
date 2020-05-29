@@ -2,7 +2,7 @@ package campground_data;
 
 import java.util.ArrayList;
 
-public class Customer {
+public class Customer extends Persistent{
     private int CustomerID;
     private String sName;
     private String sAddress;
@@ -34,6 +34,8 @@ public class Customer {
     {
         this.Name = name;
     }
+
+    public Customer() {}
 
     public int getCustomerID() { return CustomerID; }
 

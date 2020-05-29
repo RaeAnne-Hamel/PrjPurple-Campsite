@@ -1,6 +1,6 @@
 package campground_data;
 
-public class Manager {
+public class Manager extends Persistent{
 
 
     private int Permissions;
