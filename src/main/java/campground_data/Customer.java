@@ -1,8 +1,9 @@
 package campground_data;
 
-import java.util.ArrayList;
+
 
 public class Customer {
+    private final int MAX_LENGTH = 255;
     private int CustomerID;
     private String sName;
     private String sAddress;
@@ -76,7 +77,12 @@ public class Customer {
 
     public void setCustomerID(int customerID) { CustomerID = customerID; }
 
-    public void setName(String sName) { this.sName = sName; }
+    public void setName(String sName) {
+        if (sName.length() > 0 && sName.length()<=MAX_LENGTH)
+        {
+            this.sName = sName;
+        }
+    }
 
     public void setAddress(String sAddress) { this.sAddress = sAddress; }
 
@@ -93,6 +99,8 @@ public class Customer {
     public void setFrequent(boolean frequent) { isFrequent = frequent; }
 
     public void setIdPool(int idPool) { this.idPool = idPool; }
+
+
 }
 
 

@@ -17,14 +17,14 @@ public class EditCustomer1eTest {
     String j256 = repeatJ(256);
     String j255 = repeatJ(255);
     String j1 = repeatJ(1);
+    long nPhone = 3067235921L;
+
     long nFax = 47583945721L;
-    long nPhone = 13067235921L;
-    long nSecPhone = 13066913921L;
-    int nVists = 4;
+    int nVisits = 4;
     boolean bFreq = true;
     int nIDPool = 2;
 
-    private Customer testCustomer = new Customer(nCustID, sName, sAddress, sEmail, nFax, nPhone, nSecPhone, nVists, bFreq, nIDPool);
+    private Customer testCustomer = new Customer(nCustID, sName, sAddress, sEmail, nPhone, nPhone, nPhone, nVisits, bFreq, nIDPool);
 
 
     /**
@@ -175,31 +175,94 @@ public class EditCustomer1eTest {
     }
 
     /**
-     * INVALID: City length must be no more than 255 characters and must be at least 1 character.
+     * INVALID: Email length must be no more than 255 characters and must be at least 1 character.
      */
     @Test
     public void TestEmailLength()
     {
         testCustomer.setEmail("");
-        assertEquals(sCity, testCustomer.getCity());
-        testCustomer.setCity(j256);
-        assertEquals(sCountry, testCustomer.getCity());
+        assertEquals(sEmail, testCustomer.getEmail());
+        testCustomer.setEmail(j256);
+        assertEquals(sCountry, testCustomer.getEmail());
     }
 
     /**
-     * VALID: City can be 255 characters.
+     * VALID: Email can be 255 characters.
      */
     @Test
     public void TestValidEmail()
     {
-        testCustomer.setCity(j255);
-        assertEquals(j255, testCustomer.getCity());
-        testCustomer.setCity(j1);
-        assertEquals(j1, testCustomer.getCity());
+        testCustomer.setEmail(j255);
+        assertEquals(j255, testCustomer.getEmail());
+        testCustomer.setEmail(j1);
+        assertEquals(j1, testCustomer.getEmail());
     }
 
+    /**
+     * INVALID: Phone length must be 10 characters.
+     */
+    @Test
+    public void TestPhoneLength()
+    {
+        testCustomer.setPhone(0);
+        assertEquals(nPhone, testCustomer.getPhone());
+        testCustomer.setPhone(12345678901L);
+        assertEquals(nPhone, testCustomer.getPhone());
+    }
 
+    /**
+     * VALID: Phone can be 10 characters.
+     */
+    @Test
+    public void TestValidPhone()
+    {
+        testCustomer.setPhone(nFax);
+        assertEquals(nFax, testCustomer.getPhone());
+    }
 
+    /**
+     * INVALID: Phone length must be 10 characters.
+     */
+    @Test
+    public void TestSecPhoneLength()
+    {
+        testCustomer.setSecPhone(0);
+        assertEquals(nPhone, testCustomer.getSecPhone());
+        testCustomer.setSecPhone(12345678901L);
+        assertEquals(nPhone, testCustomer.getSecPhone());
+    }
+
+    /**
+     * VALID: Phone can be 10 characters.
+     */
+    @Test
+    public void TestValidSecPhone()
+    {
+        testCustomer.setSecPhone(nFax);
+        assertEquals(nFax, testCustomer.getSecPhone());
+    }
+
+    /**
+     * INVALID: Fax length must be 10 characters.
+     */
+    @Test
+    public void TestFaxLength()
+    {
+        testCustomer.setFax(0);
+        assertEquals(nFax, testCustomer.getFax());
+        testCustomer.setFax(12345678901L);
+        assertEquals(nFax, testCustomer.getFax());
+    }
+
+    /**
+     * VALID: Fax can be 10 characters.
+     */
+    @Test
+    public void TestValidFax()
+    {
+        testCustomer.setFax(nPhone);
+        assertEquals(nPhone, testCustomer.getFax());
+    }
 
 
 
