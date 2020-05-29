@@ -26,11 +26,20 @@ public class Transaction {
 
     public double setDiscount ( int discount)
     {
+        //if they want the campground to be free
         if (discount == 100) {
-            obRes.getPrice() = 0.00;
-            return 0.0;
-        } else if (discount < 100 && discount > 0) {
-            double dCalPrice = obRes.getPrice() * (discount / 100);
+            //set the price to be 0.
+            obRes.setPrice(0.00);
+            return 0.0; // return the new price
+            //if the price is smaller than 100 and bigger than 0
+        }else if((discount == 0)) //if the discount is 0, which will be the defult
+        {
+            //set the price to be 0.
+            obRes.setPrice(obRes.getPrice());
+            return obRes.getPrice(); // return the new price
+        }
+        else if (discount < 100 && discount > 0) {
+            double dCalPrice = obRes.getPrice() * (double) (discount / 100);
             dCalPrice = round(dCalPrice, 2);
             obRes.price = dCalPrice;
             return dCalPrice;
