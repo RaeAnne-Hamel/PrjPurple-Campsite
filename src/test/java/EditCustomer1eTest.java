@@ -12,6 +12,7 @@ public class EditCustomer1eTest {
     String sEmail = "email@email.com";
     String sProvince = "Saskatchewan";
     String sPostal = "S7N4V2";
+    String sCountry = "South Africa";
     String j256 = repeatJ(256);
     String j255 = repeatJ(255);
     String j1 = repeatJ(1);
@@ -32,9 +33,9 @@ public class EditCustomer1eTest {
     public void TestProvinceLength()
     {
         testCustomer.setProvince("");
-        assertEquals("Saskatchewan", testCustomer.getProvince());
+        assertEquals(sProvince, testCustomer.getProvince());
         testCustomer.setProvince(j256);
-        assertEquals("Saskatchewan", testCustomer.getProvince());
+        assertEquals(sProvince, testCustomer.getProvince());
     }
 
     /**
@@ -56,9 +57,9 @@ public class EditCustomer1eTest {
     public void TestNameLength()
     {
         testCustomer.setName("");
-        assertEquals("Harry", testCustomer.getName());
+        assertEquals(sName, testCustomer.getName());
         testCustomer.setName(j256);
-        assertEquals("Harry", testCustomer.getName());
+        assertEquals(sName, testCustomer.getName());
     }
 
     /**
@@ -99,6 +100,56 @@ public class EditCustomer1eTest {
         testCustomer.setPostal(postal10);
         assertEquals(postal10, testCustomer.getPostal());
     }
+
+    /**
+     * INVALID: Address length must be no more than 255 characters and must be at least 1 character.
+     */
+    @Test
+    public void TestAddressLength()
+    {
+        testCustomer.setAddress("");
+        assertEquals(sAddress, testCustomer.getAddress());
+        testCustomer.setName(j256);
+        assertEquals(sAddress, testCustomer.getAddress());
+    }
+
+    /**
+     * VALID: Name can be 255 characters.
+     */
+    @Test
+    public void TestValidAddress()
+    {
+        testCustomer.setName(j255);
+        assertEquals(j255, testCustomer.getAddress());
+        testCustomer.setName(j1);
+        assertEquals(j1, testCustomer.getAddress());
+    }
+
+    /**
+     * INVALID: Address length must be no more than 255 characters and must be at least 1 character.
+     */
+    @Test
+    public void TestCountryLength()
+    {
+        testCustomer.setCountry("");
+        assertEquals(sCountry, testCustomer.getCountry());
+        testCustomer.setCountry(j256);
+        assertEquals(sCountry, testCustomer.getCountry());
+    }
+
+    /**
+     * VALID: Name can be 255 characters.
+     */
+    @Test
+    public void TestValidCountry()
+    {
+        testCustomer.setCountry(j255);
+        assertEquals(j255, testCustomer.getCountry());
+        testCustomer.setCountry(j1);
+        assertEquals(j1, testCustomer.getCountry());
+    }
+
+
 
 
 
