@@ -192,6 +192,14 @@ public class BookingsLedger
 
     }
 
+    /*
+    Test Code Change Later -EB
+     */
+    public void addAccommodation(Lot obLot)
+    {
+
+    }
+
         /*
         Sets the availability of the lot to the boolean passed in.
          */
