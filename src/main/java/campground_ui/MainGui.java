@@ -10,7 +10,7 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 
-public class MainGUI extends Application {
+public class MainGui extends Application {
 
     @Override
     public void start(Stage stage) {
