@@ -27,20 +27,18 @@ public class AddCustomerWindow extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Customer obCustomer = new Customer("", "",
-                "", "", "", "", "",
-                0, 0, 0, 0, true);
+        Customer obCustomer = new Customer();
 
-        obCustomer.setName(txtName.getText());
-        obCustomer.setAddress(txtAddress.getText());
-        obCustomer.setCity(txtCity.getText());
-        obCustomer.setProvince(txtProvince.getText());
-        obCustomer.setCountry(txtCountry.getText());
-        obCustomer.setPostal(txtPostal.getText());
-        obCustomer.setEmail(txtEmail.getText());
-        obCustomer.setFax(Long.parseLong(txtFax.getText()));
-        obCustomer.setPhone(Long.parseLong(txtPhone.getText()));
-        obCustomer.setSecPhone(Long.parseLong(txtSecPhone.getText()));
+//        obCustomer.setName(txtName.getText());
+//        obCustomer.setAddress(txtAddress.getText());
+//        obCustomer.setCity(txtCity.getText());
+//        obCustomer.setProvince(txtProvince.getText());
+//        obCustomer.setCountry(txtCountry.getText());
+//        obCustomer.setPostal(txtPostal.getText());
+//        obCustomer.setEmail(txtEmail.getText());
+//        obCustomer.setFax(Long.parseLong(txtFax.getText()));
+//        obCustomer.setPhone(Long.parseLong(txtPhone.getText()));
+//        obCustomer.setSecPhone(Long.parseLong(txtSecPhone.getText()));
 
         Label lblID = new Label("ID: ");
         Label lblGetID = new Label(String.valueOf(obCustomer.getCustomerID()));

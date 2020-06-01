@@ -4,6 +4,7 @@ public class Customer {
     private final int MAX_LENGTH = 255;
     private int CustomerID;
     private String sName;
+    private String sLast;
     private String sAddress;
     private String sProvince;
     private String sCity;
@@ -17,12 +18,13 @@ public class Customer {
     private boolean isFrequent;
     private static int idPool = 0;
 
-    public Customer(String sName, String sAddress, String sProvince, String sCity,
+    public Customer(String sName, String sLast, String sAddress, String sProvince, String sCity,
                     String sPostal, String sCountry, String sEmail, long nFax, long nPhone,
                     long nSecPhone, int nVisits, boolean isFrequent)
     {
         this.CustomerID = idPool++;
         this.sName = sName;
+        this.sLast = sLast;
         this.sAddress = sAddress;
         this.sProvince = sProvince;
         this.sCity = sCity;
@@ -36,11 +38,12 @@ public class Customer {
         this.isFrequent = isFrequent;
     }
 
-    public Customer(String sName, String sAddress, String sProvince, String sCity,
+    public Customer(String sName, String sLast, String sAddress, String sProvince, String sCity,
                     String sPostal, String sCountry, String sEmail, long nPhone)
     {
         this.CustomerID = idPool++;
         this.sName = sName;
+        this.sLast = sLast;
         this.sAddress = sAddress;
         this.sProvince = sProvince;
         this.sCity = sCity;
@@ -61,9 +64,15 @@ public class Customer {
         this.Name = name;
     }
 
+    public Customer() {
+
+    }
+
     public int getCustomerID() { return CustomerID; }
 
     public String getName() { return sName; }
+
+    public String getLast() { return sLast; }
 
     public String getAddress() { return sAddress; }
 
@@ -95,6 +104,13 @@ public class Customer {
         if (sName.length() > 0 && sName.length()<=MAX_LENGTH)
         {
             this.sName = sName;
+        }
+    }
+
+    public void setLast(String sName) {
+        if (sName.length() > 0 && sName.length()<=MAX_LENGTH)
+        {
+            this.sLast = sName;
         }
     }
 
@@ -166,11 +182,14 @@ public class Customer {
     public void setFrequent(boolean frequent) { isFrequent = frequent; }
 
 
-    public String updateCustomer(String sName, String sAddress, String sProvince,
+    public String updateCustomer(String sName, String sLast, String sAddress, String sProvince,
                                  String sCity, String sPostal, String sCountry, String sEmail,
                                  long nPhone, long nFax, long nSecPhone) {
         if (!(sName.length() > 0 && sName.length() <= MAX_LENGTH)) {
-            return "Customer name must be between 1 and 255 characters.";
+            return "First name must be between 1 and 255 characters.";
+        }
+        if (!(sLast.length() > 0 && sLast.length() <= MAX_LENGTH)) {
+            return "Last name must be between 1 and 255 characters.";
         }
         if (!(sAddress.length() > 0 && sAddress.length() <= MAX_LENGTH)){
             return "Street address must be between 1 and 255 characters.";
@@ -202,6 +221,7 @@ public class Customer {
         }
 
         this.setName(sName);
+        this.setLast(sLast);
         this.setAddress(sAddress);
         this.setProvince(sProvince);
         this.setCity(sCity);

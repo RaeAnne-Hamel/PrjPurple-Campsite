@@ -23,8 +23,8 @@ public class ManageCustomer6bTest
     private static ValidatorFactory vf;
     private static Validator validator;
 
-    int nCustID = 5;
     String sName = "Harry";
+    String sLast = "Edwards";
     String sAddress = "Box 312";
     String sEmail = "email@email.com";
     String sProvince = "Saskatchewan";
@@ -41,9 +41,8 @@ public class ManageCustomer6bTest
     boolean bFreq = true;
     int nIDPool = 2;
 
-    Customer testCustomer = new Customer(sName, sAddress, sProvince, sCity, sPostal, sCountry, sEmail,
+    private Customer testCustomer = new Customer(sName, sLast, sAddress, sProvince, sCity, sPostal, sCountry, sEmail,
             nFax, nPhone, nPhone, nVisits, bFreq);
-
 
     /**
      * INVALID: Province length must be no more than 255 characters and must be at least 1 character.
