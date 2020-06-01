@@ -16,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
@@ -33,7 +34,7 @@ import java.util.Stack;
  * - Check that LotID updates correctly when new lots are added after save system is implemented
  */
 
-public class addAccommodationGUI extends Application {
+public class addAccommodationGUI extends Stage {
 
     BookingsLedger BL;
 
@@ -42,10 +43,7 @@ public class addAccommodationGUI extends Application {
     ComboBox<String> cboAvailable;
     TextArea txtReason;
 
-
-
-    @Override
-    public void start(Stage primaryStage)
+    public addAccommodationGUI(Stage primaryStage)
     {
 
         /**
@@ -126,16 +124,12 @@ public class addAccommodationGUI extends Application {
 
         //Creates the windows where everything goes -EB
         Scene scene = new Scene(mainPane, 500, 500);
-        primaryStage.setTitle("Add Accommodation");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        this.setTitle("Add Accommodation");
+        this.setScene(scene);
+        this.initModality(Modality.APPLICATION_MODAL);
 
     }
 
-    public static void main(String[] args)
-    {
-        launch(args);
-    }
 
     /*
     Sets the TextArea visibility so that the box appears when set to not Available and disappears when set to available.

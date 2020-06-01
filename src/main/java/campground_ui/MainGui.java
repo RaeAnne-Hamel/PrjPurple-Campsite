@@ -6,10 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.*;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
@@ -29,11 +26,17 @@ public class MainGui extends Application {
         paneCenter.setAlignment(Pos.CENTER);
         paneCenter.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
 
-            //The Pane used in the Accomodations section. -EB
+            //The Panes used in the Accomodations section. -EB
         BorderPane accomPane = new BorderPane();
-        HBox AccomCenter = new HBox();
+        GridPane AccomCenter = new GridPane();
         AccomCenter.setAlignment(Pos.CENTER);
         AccomCenter.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
+        AccomCenter.setHgap(10);
+        AccomCenter.setVgap(10);
+
+        HBox AccomBottom = new HBox();
+        AccomBottom.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
+
 
             //The Pane used in the Customer Section. -EB
         BorderPane custPane = new BorderPane();
@@ -69,11 +72,25 @@ public class MainGui extends Application {
 
         //Code for the Accommodations Section. -EB
         Button btnBack1 = new Button("Back");
+        Button btnAdd = new Button("Add Accommodation");
+        Button btnEdit = new Button("Edit Accommodation");
+        Button btnSet = new Button("Set Availability");
+        Button btnPrice = new Button("Set Accommodation Price");
 
-        AccomCenter.getChildren().add(btnBack1);
+
+        AccomCenter.add(btnAdd, 0, 1);
+        AccomCenter.add(btnEdit, 0, 2);
+        AccomCenter.add(btnSet, 0, 3);
+        AccomCenter.add(btnPrice, 0, 4);
         accomPane.setCenter(AccomCenter);
 
+        AccomBottom.getChildren().add(btnBack1);
+        accomPane.setBottom(AccomBottom);
+
+        addAccommodationGUI addGUI = new addAccommodationGUI(stage);
+
         btnBack1.setOnAction(e -> stage.setScene(mainScene));
+        btnAdd.setOnAction(e -> addGUI.showAndWait());
 
         //End of Code for the Accommodations Section. -EB
 
