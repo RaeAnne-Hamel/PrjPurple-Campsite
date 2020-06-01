@@ -12,7 +12,6 @@ public class PersistentDataManager {
      * @param <E>
      * @param sFile
      * @param eType
-     * @param objects
      * @return
      */
     public static <E> ArrayList<E> load(String sFile, LoadType eType)
@@ -29,7 +28,7 @@ public class PersistentDataManager {
         try(Scanner obIn = new Scanner(obFile))
         {
 
-            //Want you to read each line of the file and break each line into componenet parts
+            /* read each line of the file and break each line into component parts */
             while (obIn.hasNext())
             {
                 String[] sFields  = parseCSVLine(obIn.nextLine());
@@ -47,19 +46,7 @@ public class PersistentDataManager {
         return aLoaded;
     }
 
-    /**
-     *
-     * @param eType
-     * @param argument
-     *
-     * Customer:
-     * Lot:
-     * Manager:
-     * Reservation:
-     * Transaction:
-     *
-     * @return
-     */
+    /* Load a single record, called many times when a file is loaded */
     public static Object loadRecord(LoadType eType, Object... arg)
     {
         Object record = null;
@@ -69,7 +56,7 @@ public class PersistentDataManager {
         {
             case Customer:
                 record = new Customer();
-                ((Customer) record).save();
+                ((Customer) record).load(arg);
                 break;
             case Lot:
                 //record = new Lot();
@@ -88,6 +75,28 @@ public class PersistentDataManager {
         }
 
         return record;
+    }
+
+
+    public static void saveFile()
+    {
+
+    }
+
+    public static void saveRecord()
+    {
+
+    }
+
+    /* Check if a directory is a file. */
+    public static File isFilePresent(String sFile)
+    {
+        File obFile = new File(sFile);
+        if(!obFile.exists()||!obFile.isFile())
+        {
+            return null;
+        }
+        return obFile;
     }
 
     /**

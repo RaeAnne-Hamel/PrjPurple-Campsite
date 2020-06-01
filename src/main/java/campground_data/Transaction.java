@@ -1,6 +1,6 @@
 package campground_data;
 
-public class Transaction extends Savable{
+public class Transaction{
 
     public PaymentType payType;
     public PaymentMethod payMethod;
@@ -73,8 +73,4 @@ public class Transaction extends Savable{
          return String.format("Reservation: %s, Payment type: %s, Payment method: %s Price: %.2f", this.obRes, this.payType, this.payMethod, this.getPrice());
      }
 
-    @Override
-    public void save(String fName) {
-
-    }
 }

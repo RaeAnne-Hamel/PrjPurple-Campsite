@@ -3,7 +3,7 @@ package campground_data;
 
 import java.util.ArrayList;
 
-public class Lot extends Persistent{
+public class Lot{
 
 
     int nLotID;

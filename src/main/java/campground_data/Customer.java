@@ -12,7 +12,7 @@ public class Customer extends Persistent{
     private long nSecPhone;
     private int nVisits;
     private boolean isFrequent;
-    private int idPool;
+    public static int idPool;
 
     public Customer(int CustomerID, String sName, String sAddress, String sEmail, long nFax,
                     long nPhone, long nSecPhone, int nVisits, boolean isFrequent, int idPool)
@@ -76,6 +76,26 @@ public class Customer extends Persistent{
     public void setFrequent(boolean frequent) { isFrequent = frequent; }
 
     public void setIdPool(int idPool) { this.idPool = idPool; }
+
+    /* Load information for the Customer */
+    public void load(Object... arg) {
+        this.setCustomerID(Integer.parseInt((String) arg[0]));
+        this.setAddress((String)arg[1]);
+        this.setEmail((String)arg[2]);
+        this.setFax(Long.parseLong((String) arg[3]));
+        this.setPhone(Long.parseLong((String) arg[4]));
+        this.setSecPhone(Long.parseLong((String) arg[5]));
+        this.setVisits(Integer.parseInt((String) arg[6]));
+        this.setFrequent(Boolean.parseBoolean((String) arg[7]));
+        idPool++;
+    }
+
+    public String toString()
+    {
+        return String.format("ID: %d, Address %s, Fax: %d, Phone: %d, SecPhone: %d, Visits %d, frequent: %b, Id Pool: %d",
+                getCustomerID(),getAddress(),getFax(),getPhone(),getSecPhone(),getVisits(),getFrequent(),Customer.idPool);
+
+    }
 }
 
 
