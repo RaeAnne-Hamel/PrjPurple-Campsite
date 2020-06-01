@@ -34,13 +34,7 @@ public class Reservation<Static> {
         this.status = true;
 
     }
-
-
-    public Lot getLot() {
-        return this.obLot;
-    }
-
-
+    /*Reservation Constructor */
     public Reservation(ArrayList<Customer> customers, int nPeople, Date startDate, Date endDate, Lot obLot)
     {
             this.obLot = obLot;
@@ -53,100 +47,102 @@ public class Reservation<Static> {
             String Status = "Active";
     }
 
-            /**
-             * this method will check to make sure that the proper number of people have been set
-             *
-             * @param number
-             * @return
-             */
-            public String setCustomerNumber(int number) {
-                if (obLot.getLotType() == LotType.Cabin) {
-                    return checkRegularType(number);
-                } else if (obLot.getLotType() == LotType.ServicedIndividual) {
-                    return checkRegularType(number);
-                } else if (obLot.getLotType() == LotType.NonServicedIndividual) {
-                    return checkRegularType(number);
-                } else if (obLot.getLotType() == LotType.ServicedGroup) {
-                    return checkGroupType(number);
-                } else if (obLot.getLotType() == LotType.NonServicedGroup) {
-                    return checkGroupType(number);
-                } else if (obLot.getLotType() == LotType.DeluxeCabin) {
-                    return checkGroupType(number);
-                } else {
-                    return "There is already the maximum number of people booked";
-                }
 
+
+    /**
+     * this method will check to make sure that the proper number of people have been set
+     *
+     * @param number
+     * @return
+     */
+    public String setCustomerNumber(int number) {
+        if (obLot.getLotType() == LotType.Cabin) {
+            return checkRegularType(number);
+        } else if (obLot.getLotType() == LotType.ServicedIndividual) {
+            return checkRegularType(number);
+        } else if (obLot.getLotType() == LotType.NonServicedIndividual) {
+            return checkRegularType(number);
+        } else if (obLot.getLotType() == LotType.ServicedGroup) {
+            return checkGroupType(number);
+        } else if (obLot.getLotType() == LotType.NonServicedGroup) {
+            return checkGroupType(number);
+        } else if (obLot.getLotType() == LotType.DeluxeCabin) {
+            return checkGroupType(number);
+        } else {
+            return "There is already the maximum number of people booked";
+        }
+    }
+
+
+    private String checkRegularType(int number) {
+        if (number <= 4 && number >= 1) {
+            this.nCustomerCount = number;
+            return "";
+        } else {
+            return "There is already the maximum number of people booked";
+        }
+    }
+
+    private String checkGroupType(int number) {
+        if (number <= 8 && number >= 1) {
+            this.nCustomerCount = number;
+            return "";
+        } else {
+            return "There is already the maximum number of people booked";
+        }
+    }
+
+    public Lot getLot() {
+        return this.obLot;
+    }
+    public int getID() {
+        return this.obLot.getLotID();
+    }
+
+
+    /**
+     * allows the person to be able to
+     * set a price for the reservation.
+     *
+     * @param newPrice
+     */
+    private void setPrice(double newPrice) {
+        this.price = newPrice;
+    }
+
+    /**
+     * @param
+     * @return
+     */
+    public boolean setSiteType(LotType NewLot) {
+        Lot TempLot = new Lot(NewLot);
+        Boolean check = BookingsLedger.checkOverlap(TempLot.getLotID(), this.obStartDate, this.obEndDate);
+        if (!check) {
+            this.obLot = TempLot;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    public String changeDate(Date obStart, Date obEnd) {
+        //if there is overlap between the sites
+        if(CheckDateCases(obStart, obEnd))
+        {
+            if (!BookingsLedger.checkOverlap(this.obLot.getLotID(), obStart, obEnd)) {
+                this.obStartDate = obStart;
+                this.obEndDate = obEnd;
+                return "";
+            } else {
+                return "These dates will not work for this reservation";
             }
-
-
-            private String checkRegularType(int number) {
-                if (number <= 4 && number >= 1) {
-                    this.nCustomerCount = number;
-                    return "";
-                } else {
-                    return "There is already the maximum number of people booked";
-                }
-
-            }
-
-            private String checkGroupType(int number) {
-                if (number <= 8 && number >= 1) {
-                    this.nCustomerCount = number;
-                    return "";
-                } else {
-                    return "There is already the maximum number of people booked";
-                }
-            }
-
-
-            public int getID() {
-                return this.obLot.getLotID();
-            }
-
-
-            /**
-             * allows the person to be able to
-             * set a price for the reservation.
-             *
-             * @param newPrice
-             */
-            private void setPrice(double newPrice) {
-                this.price = newPrice;
-            }
-
-            /**
-             * @param
-             * @return
-             */
-            public boolean setSiteType(LotType NewLot) {
-                Lot TempLot = new Lot(NewLot);
-                Boolean check = BookingsLedger.checkOverlap(TempLot.getLotID(), this.obStartDate, this.obEndDate);
-                if (!check) {
-                    this.obLot = TempLot;
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-
-
-            public String changeDate(Date obStart, Date obEnd) {
-                //if there is overlap between the sites
-                if(CheckDateCases(obStart, obEnd))
-                {
-                    if (!BookingsLedger.checkOverlap(this.obLot.getLotID(), obStart, obEnd)) {
-                        this.obStartDate = obStart;
-                        this.obEndDate = obEnd;
-                        return "";
-                    } else {
-                        return "These dates will not work for this reservation";
-                    }
-                }
-                else
-                {
-                    return "These dates will not work for this reservation";
-                }
-            }
+        }
+        else
+        {
+            return "These dates will not work for this reservation";
+        }
+    }
 
 
     /**
@@ -156,21 +152,15 @@ public class Reservation<Static> {
      * @return
      */
     public boolean CheckDateCases(Date obStartDate, Date obEndDate)
-            {
-                //checks to make sure the start date is not before the end date
-                if(obStartDate.compareTo(obEndDate) > 0)
-                {
-                    return false;
-                }
-                return true;
-            }
+    {
+        //checks to make sure the start date is not before the end date
+        return !(obStartDate.compareTo(obEndDate) > 0);
+    }
 
-
-
-            public int getReservationID() {
-                /*Set the ID for the specific reservation*/
-                return this.ReservationID;
-            }
+    public int getReservationID() {
+        /*Set the ID for the specific reservation*/
+        return this.ReservationID;
+    }
 
     //get the status of the reservation option
     public boolean getStatus() {

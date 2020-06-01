@@ -333,90 +333,97 @@ public class BookingsLedger
                     }
 
 
-                    /**
-                     * Add a customer if valid
-                     */
-                    public void addCustomer (Customer customer)
-                    {
-                        String sName = customer.getName();
-                        String sAddress = customer.getAddress();
-                        String sEmail = customer.getEmail();
-                        long nFax = customer.getFax();
-                        long nPhone = customer.getPhone();
-                        long nSecPhone = customer.getSecPhone();
+    /**
+     * Add a customer if valid
+     */
+    public void addCustomer (Customer customer)
+    {
+        String sName = customer.getName();
+        String sAddress = customer.getAddress();
+        String sEmail = customer.getEmail();
+        long nFax = customer.getFax();
+        long nPhone = customer.getPhone();
+        long nSecPhone = customer.getSecPhone();
 
-                        containsLetters(sName);
-                        tooLongString(sName, 256);
-                        tooShortString(sName, 1);
+        containsLetters(sName);
+        tooLongString(sName, 256);
+        tooShortString(sName, 1);
 
-                        tooLongString(sAddress, 256);
-                        tooShortString(sAddress, 1);
+        tooLongString(sAddress, 256);
+        tooShortString(sAddress, 1);
 
-                        tooLongString(sEmail, 256);
-                        tooShortString(sEmail, 5);
+        tooLongString(sEmail, 256);
+        tooShortString(sEmail, 5);
 
-                        tooBigLong(nFax);
-                        tooSmallLong(nFax);
+        tooBigLong(nFax);
+        tooSmallLong(nFax);
 
-                        tooBigLong(nPhone);
-                        tooSmallLong(nPhone);
+        tooBigLong(nPhone);
+        tooSmallLong(nPhone);
 
-                        tooBigLong(nSecPhone);
-                        tooSmallLong(nSecPhone);
+        tooBigLong(nSecPhone);
+        tooSmallLong(nSecPhone);
 
-                        if (bCustomerPasses) {
-                            aCustomer.add(customer);
-                            System.out.println("Customer has been added");
-                        } else System.out.println("Customer could not be added");
-                    }
+        if (bCustomerPasses) {
+            aCustomer.add(customer);
+            System.out.println("Customer has been added");
+        } else System.out.println("Customer could not be added");
+    }
 
-                    public void containsLetters (String word)
-                    {
-                        char[] arCh = word.toCharArray();
-                        for (char ch : arCh) {
-                            if (!(Character.isLetter(ch))) {
-                                bCustomerPasses = false;
-                                break;
-                            }
-                        }
-                    }
+    public void containsLetters (String word)
+    {
+        char[] arCh = word.toCharArray();
+        for (char ch : arCh) {
+            if (!(Character.isLetter(ch))) {
+                bCustomerPasses = false;
+                break;
+            }
+        }
+    }
 
-                    public void tooLongString (String word,int length){
-                    if (word.length() >= length) bCustomerPasses = false;
-                }
+    public void tooLongString (String word,int length){
+    if (word.length() >= length) bCustomerPasses = false;
+}
 
-                    public void tooShortString (String word,int length){
-                    if (word.length() <= length) bCustomerPasses = false;
-                }
+    public void tooShortString (String word,int length){
+    if (word.length() <= length) bCustomerPasses = false;
+}
 
-                    public void tooBigLong ( long number){
-                    if (number > 99999999999L) bCustomerPasses = false;
-                }
+    public void tooBigLong ( long number){
+    if (number > 99999999999L) bCustomerPasses = false;
+}
 
-                    public void tooSmallLong ( long number){
-                    if (number < 1000000000) bCustomerPasses = false;
-                }
+    public void tooSmallLong ( long number){
+    if (number < 1000000000) bCustomerPasses = false;
+}
 
 
-                    public static Manager getUser () {
-                    return user;
-                }
+    public static Manager getUser () {
+    return user;
+}
 
         /*
         this will add a reservation to the reservation list.
          */
-                    public void addReservation (Reservation reservation){
-                    aReservation.add(reservation);
-                }
+    public void addReservation (Reservation reservation){
+    aReservation.add(reservation);
+}
 
-                    public ArrayList<Reservation> getAllReservations ()
-                    {
-                        return aReservation;
+    public ArrayList<Reservation> getAllReservations ()
+    {
+        return aReservation;
 
-                    }
+    }
 
-                    public void setReservationsList (ArrayList < Reservation > obReservations)
-                    {
-                        this.aReservation = obReservations;
-                    }
-                }
+    public void setReservationsList (ArrayList < Reservation > obReservations)
+    {
+        this.aReservation = obReservations;
+    }
+
+    public ArrayList<Customer> getCustomerList()
+    {
+        return this.aCustomer;
+    }
+}
+
+

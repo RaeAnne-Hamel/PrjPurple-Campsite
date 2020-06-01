@@ -1,12 +1,9 @@
 package campground_ui;
 
-import campground_data.BookingsLedger;
 import campground_data.Customer;
 import campground_data.Lot;
 import campground_data.Reservation;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -21,7 +18,7 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
-public class AddReservationGui extends Application {
+public class EditReservationGui extends Application {
 
 
 
@@ -37,14 +34,14 @@ public class AddReservationGui extends Application {
     private HBox obHBox;
 
     //Labels
-    private Label lblCustomers, lblArrival, lblDeparture, lblLotID, lblLotType, lblGuest, lblResID, lblResID2;
+    private Label lblCustomers, lblCust1, lblCust2,  lblArrival, lblDeparture, lblLotID, lblLotType, lblGuest, lblResID, lblResID2;
 
     //Textfield
     private TextField txtArrivalYear, txtArrivalDay, txtArrivalMonth, txtDepartDay, txtDepartMonth, txtDepartYear,
                         txtGuest, txtLotID;
 
     //comboBoxes
-    private ComboBox<String> cboCust1, cboCust2;
+    private ComboBox<Customer> cboCust1, cboCust2;
 
     //button
     Button btnBack, btnConfirm;
@@ -62,6 +59,8 @@ public class AddReservationGui extends Application {
         lblResID = new Label("Reservation Id: ");
         lblResID2 = new Label("");
         lblCustomers = new Label("Customer Names: ");
+        lblCust1 = new Label("");
+        lblCust2 = new Label("");
         lblLotID = new Label("Lot ID:");
         lblLotType = new Label("");
         lblArrival = new Label("Arrival Date (yyyy/m/d): ");
@@ -71,9 +70,6 @@ public class AddReservationGui extends Application {
         //Creating text fields
         txtLotID = new TextField();
         txtLotID.setMaxSize(70, 50);
-
-
-
         txtArrivalYear = new TextField();
         txtArrivalYear.setMaxSize(70,50);
         txtArrivalMonth = new TextField();
@@ -89,11 +85,6 @@ public class AddReservationGui extends Application {
         txtGuest = new TextField();
         txtGuest.setMaxSize(70, 50);
 
-        //creating combo boxes
-        cboCust1 = new ComboBox<>();
-        cboCust1.setMinSize(150,10);
-        cboCust2 = new ComboBox<>();
-        cboCust2.setMinSize(150,10);
 
         //creating Buttons
         btnBack = new Button("Back to Reservation");
@@ -109,27 +100,9 @@ public class AddReservationGui extends Application {
         obGrid.add(lblResID2, 1, 0);
 
         obGrid.add(lblCustomers, 0, 2);
-        obGrid.add(cboCust1, 1, 2);
-        obGrid.add(cboCust2, 2, 2);
+        obGrid.add(lblCust1, 1, 2);
+        obGrid.add(lblCust2, 2, 2);
 
-        ObservableList<String> names = FXCollections.observableList(this.getCustNameList());
-        cboCust1.setItems(names);
-        cboCust2.setItems(names);
-
-        cboCust1.setOnAction(e->
-                cboCust1.getValue()
-                //Find the full customer object from:
-                //MainGui.BookingsLedger.getCustomerList();
-                //Loop through the customer list until you match customer names
-                //Get that customer object back
-                //Add it to your reservation array list
-
-                );
-
-        txtLotID.setOnKeyReleased(e-> {
-            lblLotType.setText(MainGui.BookingLedger.querySearchCampsite(Integer.parseInt(txtLotID.getText())).toString());
-        });
- 
         obGrid.add(lblLotID, 0,3);
         obGrid.add(txtLotID, 1, 3);
         obGrid.add(lblLotType, 2, 3);
@@ -167,7 +140,7 @@ public class AddReservationGui extends Application {
 
 
         obStage.setScene(new Scene(obBorder, 650, 500));
-        obStage.setTitle("Add Reservation");
+        obStage.setTitle("Edit Reservation");
         obStage.show();
 
 
@@ -183,17 +156,17 @@ public class AddReservationGui extends Application {
     }
 
 
-    private ArrayList<String> getCustNameList()
+    private ArrayList<Customer> getCustNameList(ArrayList<Customer> obCustomer)
     {
-        ArrayList<Customer> custList = MainGui.BookingLedger.getCustomerList();
-        ArrayList<String> names = new ArrayList<>();
+        ArrayList<Customer> obRet = new ArrayList<>();
 
-        for(Customer obCust : custList)
+        for(Customer obCust : obCustomer)
         {
-           names.add(obCust.getName());
+           // obCust = obCustomer.get
         }
 
-        return names;
+
+        return obRet;
     }
 
 

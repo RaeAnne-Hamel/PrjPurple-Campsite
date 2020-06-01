@@ -1,5 +1,6 @@
 package campground_ui;
 
+import campground_data.BookingsLedger;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,6 +12,9 @@ import javafx.stage.Stage;
 
 
 public class MainGui extends Application {
+
+    public static BookingsLedger BookingLedger = new BookingsLedger();
+
 
     @Override
     public void start(Stage stage) {
