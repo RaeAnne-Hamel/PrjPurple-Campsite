@@ -15,7 +15,7 @@ import java.util.GregorianCalendar;
 
 import static org.junit.Assert.assertEquals;
 
-public class DateSearchAccommodationsTest
+public class DateSearchAccommodations6cTest
 {
     private static Lot testLot = new Lot(LotType.NonServicedIndividual, true);
     ArrayList<Lot> lotArray = new ArrayList<>();
