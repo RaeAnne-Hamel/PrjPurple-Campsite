@@ -249,34 +249,34 @@ public class BookingsLedger
                      * @param ID
                      * @return
                      */
-                    public boolean removeReservation ( int ID){
-                    /* Create a temporary Reservation ArrayList */
-                    ArrayList<Reservation> tmpReservations = new ArrayList<>();
-                    boolean resFound = false;
+      public boolean removeReservation ( int ID){
+             /* Create a temporary Reservation ArrayList */
+             ArrayList<Reservation> tmpReservations = new ArrayList<>();
+             boolean resFound = false;
 
-                    for (Reservation res : aReservation) {
-                        /*If the Reservation ID is found*/
-                        if (res.getReservationID() == ID) {
-                            /*Asks for a confirmation from the user if they want to remove the reservatin */
-                            String sConfirm = MainConsole.Prompt("Are you sure you want to remove the reservation? (Y , N )");
-                            if (sConfirm.equals("Y")) {
-                                resFound = true;
-                                /* Double check if they want to remove */
-                                continue;
-                            }
-                        }
+              for (Reservation res : aReservation) {
+                /*If the Reservation ID is found*/
+               if (res.getReservationID() == ID) {
+                 /*Asks for a confirmation from the user if they want to remove the reservatin */
+                 String sConfirm = MainConsole.Prompt("Are you sure you want to remove the reservation? (Y , N )");
+                 if (sConfirm.equals("Y")) {
+                   resFound = true;
+                    /* Double check if they want to remove */
+                    continue;
+                  }
+               }
 
-                        /* Add a reservation to the tmp resorvation */
-                        tmpReservations.add(res);
-                    }
+                /* Add a reservation to the tmp resorvation */
+                 tmpReservations.add(res);
+             }
 
-                    /*If the reservation is not fount */
-                    if (resFound == false)
-                        System.out.println("Reservation Not Found");
+               /*If the reservation is not fount */
+             if (resFound == false)
+              System.out.println("Reservation Not Found");
 
-                    aReservation = tmpReservations;
-                    return resFound;
-                }
+               aReservation = tmpReservations;
+               return resFound;
+       }
 
                     /**
                      * Check get a reservation based on the ID
