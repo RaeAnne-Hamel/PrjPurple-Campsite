@@ -131,7 +131,7 @@ public class Lot extends Persistent{
 
     /* LotID, LotType, Removal Reason, bAvailability, Reservationcount */
     @Override
-    public void load(Object... arg) {
+    public void load(BookingsLedger bl, Object... arg) {
         nLotID = Integer.parseInt((String)arg[0]);
         setLotType(LotType.valueOf((String)arg[1]));
         setRemovalReason((String)arg[2]);
@@ -144,5 +144,9 @@ public class Lot extends Persistent{
         return String.format("%d,%s,%s,%b,%d",
                 getLotID(),getLotType(),getRemovalReason(),getAvailability(),obReservationListLength);
     }
+
+    /* Empty until needed */
+    @Override
+    public void link() { }
 }
 

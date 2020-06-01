@@ -12,7 +12,7 @@ public class Reservation<Static> extends Persistent{
     int ReservationID, nCustomerCount, nLinkedLotID;
     double price;
     Lot obLot;
-    ArrayList<Customer> obCustomerList;
+    ArrayList<Customer> obCustomerList = new ArrayList<>();
     Date obStartDate;
     Date obEndDate;
     public Boolean status;
@@ -212,7 +212,7 @@ public class Reservation<Static> extends Persistent{
 
     /* ID, nCustCount, Price, LinkedLotID, StartDate(Y,M,D), EndDate(Y,M,D), status*/
     @Override
-    public void load(Object... arg) {
+    public void load(BookingsLedger bl, Object... arg) {
         this.ReservationID = Integer.parseInt((String)arg[0]);
         this.nCustomerCount = Integer.parseInt((String)arg[1]);
         this.price = Double.parseDouble((String)arg[2]);
@@ -229,9 +229,35 @@ public class Reservation<Static> extends Persistent{
 
     @Override
     public String savable() {
-        return String.format("%d,%f,%d,%d,%d,%d,%d,%d,%d,%b",
+
+        String CustomerIDs = "";
+        for (int i = 0; i < nCustomerCount; i ++)
+        {
+            CustomerIDs += "" + obCustomerList.get(0).getCustomerID();
+            if(i < nCustomerCount -1)
+                CustomerIDs +=",";
+        }
+
+        return String.format("%d,%f,%d,%d,%d,%d,%d,%d,%d,%b,%s",
                 getReservationID(),nCustomerCount,nLinkedLotID,obStartDate.getYear(),obStartDate.getMonth(),
-                obStartDate.getDay(),obEndDate.getYear(),obEndDate.getMonth(),obEndDate.getDay(),status);
+                obStartDate.getDay(),obEndDate.getYear(),obEndDate.getMonth(),obEndDate.getDay(),status,CustomerIDs);
+    }
+
+    /* Must link with an Arraylist of customers. */
+    @Override
+    public void link(BookingsLedger bl, Object... arg){
+
+        ArrayList<Customer> aCustomers = new ArrayList<>();
+        /* searches for customers with the ID's in their save data */
+        for(int i = 0; i < nCustomerCount; i++)
+        {
+            int searchForID = Integer.parseInt((String)arg[11+i]);
+            for (int j = 0; j < bl.aCustomer.size(); j++)
+            {
+                if (bl.aCustomer.get(i).getCustomerID() == searchForID)
+                    obCustomerList.add(bl.aCustomer.get(i));
+            }
+        }
     }
 }
 

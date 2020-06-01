@@ -81,7 +81,7 @@ public class PersistentDataManager {
     }
 
 
-    public static <E> void save(ArrayList<Object> aList, String sFile){
+    public static <E> void save(ArrayList<E> aList, String sFile){
 
         try (FileWriter fileWriter = new FileWriter("src/files/save.txt")) {
             /* Loop through savable objects */
@@ -94,6 +94,15 @@ public class PersistentDataManager {
 
 
         }catch (Exception x){};
+    }
+
+    public static void saveAll(BookingsLedger bl)
+    {
+        save(bl.aManager,"src/files/Managers.txt");
+        save(bl.aCustomer,"src/files/Customers.txt");
+        save(BookingsLedger.aReservation,"src/files/Reservations.txt");
+        save(bl.getLotList(),"src/files/Lots.txt");
+        save(bl.aTransaction, "src/files/Transactions.txt");
     }
 
     /* Check if a directory is a file. */

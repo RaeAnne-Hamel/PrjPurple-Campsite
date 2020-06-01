@@ -26,7 +26,7 @@ public class Manager extends Persistent{
 
     /* ID, Permissions */
     @Override
-    public void load(Object... arg) {
+    public void load(BookingsLedger bl, Object... arg) {
         setID(Integer.parseInt((String) arg[0]));
         setPermissions(Integer.parseInt((String) arg[1]));
     }
@@ -36,5 +36,9 @@ public class Manager extends Persistent{
         return String.format("%d,%s",
                 this.EmployeeID,this.Permissions);
     }
+
+    /*Empty until needed */
+    @Override
+    public void link() { }
 
 }

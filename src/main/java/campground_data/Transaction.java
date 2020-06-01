@@ -74,13 +74,22 @@ public class Transaction extends Persistent{
          return String.format("Reservation: %s, Payment type: %s, Payment method: %s Price: %.2f", this.obRes, this.payType, this.payMethod, this.getPrice());
      }
 
+     /* PaymentType, PaymentMethod, ReservationID */
     @Override
-    public void load(Object... arg) {
-
+    public void load(BookingsLedger bl, Object... arg) {
+        setPayType(PaymentType.valueOf((String)arg[0]));
+        setPayMethod(PaymentMethod.valueOf((String)arg[1]));
+        obResID = Integer.parseInt((String)arg[2]);
     }
 
     @Override
     public String savable() {
-        return null;
+        return String.format("%s,%s,%d",
+                getPayType(),getPayMethod(),obResID);
     }
+
+
+    /* Must link with a reservation */
+    @Override
+    public void link() { }
 }

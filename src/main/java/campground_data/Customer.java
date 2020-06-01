@@ -78,7 +78,7 @@ public class Customer extends Persistent{
     public void setIdPool(int idPool) { this.idPool = idPool; }
 
     /* ID, Address, Email, Fax, Phone, SecPhone, Visits, frequent */
-    public void load(Object... arg) {
+    public void load(BookingsLedger bl, Object... arg) {
         this.setCustomerID(Integer.parseInt((String) arg[0]));
         this.setAddress((String)arg[1]);
         this.setEmail((String)arg[2]);
@@ -96,6 +96,10 @@ public class Customer extends Persistent{
         return String.format("%d,%s,%d,%d,%d,%d,%b",
                 getCustomerID(),getAddress(),getFax(),getPhone(),getSecPhone(),getVisits(),getFrequent());
     }
+
+    /* Empty until needed */
+    @Override
+    public void link() { }
 }
 
 
