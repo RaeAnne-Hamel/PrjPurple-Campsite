@@ -194,12 +194,13 @@ public class Customer {
         if (!(nPhone > 1000000000L && nPhone < 9999999999L)){
             return "Phone number must be 10 digits.";
         }
-        if (!(nFax > 1000000000L && nFax < 9999999999L)){
-            return "Fax number must be 10 digits.";
-        }
-        if (!(nSecPhone > 1000000000L && nSecPhone < 9999999999L)){
+        if (!(nSecPhone > 1000000000L && nSecPhone < 9999999999L) && nSecPhone != 0){
             return "Secondary phone number must be 10 digits.";
         }
+        if (!(nFax > 1000000000L && nFax < 9999999999L) && nFax != 0){
+            return "Fax number must be 10 digits.";
+        }
+
         this.setName(sName);
         this.setAddress(sAddress);
         this.setProvince(sProvince);
