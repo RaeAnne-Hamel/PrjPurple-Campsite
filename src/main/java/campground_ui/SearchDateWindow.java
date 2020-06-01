@@ -3,6 +3,7 @@ package campground_ui;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -11,6 +12,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+
+import java.util.Date;
+import java.util.regex.Pattern;
 
 public class SearchDateWindow extends Application {
 
@@ -28,6 +32,9 @@ public class SearchDateWindow extends Application {
         //HBoxes will be used for entry fields
         HBox obFirstRow = new HBox();
         HBox obSecondRow = new HBox();
+
+        //HBox for holding buttons
+        HBox obButtonRow = new HBox();
 
         Label obArrivalLabel = new Label("Arrival Date: (YYYY,M,D)\t\t\t");
         Label obDepartureLabel = new Label("Departure Date: (YYYY,M,D)\t\t");
@@ -63,11 +70,61 @@ public class SearchDateWindow extends Application {
         Button obSearch = new Button("Search");
         obSearch.setFont(new Font(20));
 
+        //Back button
+        Button obBack = new Button("Back");
+        obBack.setFont(new Font(20));
+
+        //Set up buttonRow
+        obButtonRow.getChildren().addAll(obBack,obSearch);
+        //Increase Spacing in buttonRow
+        obButtonRow.setSpacing(12);
+
         //Increase Spacing in VBox
         obFields.setSpacing(12);
 
         //Set up VBox with HBoxes
-        obFields.getChildren().addAll(obFirstRow,obSecondRow,obSearch);
+        obFields.getChildren().addAll(obFirstRow,obSecondRow,obButtonRow);
+
+        //Set up label for displaying Accommodations.
+        //This label will be changed to reflect the accommodation list
+        Label obAccommodations = new Label("");
+
+        //Set up button for searching
+        obSearch.setOnAction(e-> {
+
+            //Verify all fields have positive numbers
+            if(testForPosInt(obAYear.getText())
+            && testForPosInt(obAMonth.getText())
+            && testForPosInt(obADay.getText())
+            && testForPosInt(obDYear.getText())
+            && testForPosInt(obDMonth.getText())
+            && testForPosInt(obDDay.getText())) {
+
+
+                int[] arrivalDate = {
+                        Integer.parseInt(obAYear.getText()),
+                        Integer.parseInt(obAMonth.getText()),
+                        Integer.parseInt(obADay.getText()),
+                };
+                int[] departureDate = {
+                        Integer.parseInt(obDYear.getText()),
+                        Integer.parseInt(obDMonth.getText()),
+                        Integer.parseInt(obDDay.getText())
+                };
+
+                
+
+            }
+            //If one of the fields is not a number display error
+            else
+            {
+                Alert obAlert = new Alert(Alert.AlertType.ERROR);
+                obAlert.setTitle("Error Detected");
+                obAlert.setHeaderText("All Fields must be positive numbers");
+                obAlert.showAndWait();
+            }
+
+        });
 
         obGridPane.add(obFields,1,0);
         obGridPane.setPadding(new Insets(30,30,30,30));
@@ -76,4 +133,13 @@ public class SearchDateWindow extends Application {
         primaryStage.setScene(new Scene(obGridPane,950,500));
         primaryStage.show();
     }
+
+    private boolean testForPosInt(String sField)
+    {
+        //returns false if the string has any non numeric characters or if the number is negative
+        return Pattern.compile("^\\d+$").matcher(sField).matches();
+
+    }
+
+
 }
