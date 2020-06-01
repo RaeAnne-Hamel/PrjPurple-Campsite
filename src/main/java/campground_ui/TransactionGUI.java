@@ -1,6 +1,8 @@
 package campground_ui;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -78,10 +80,20 @@ public class TransactionGUI  extends Application {
         grid.add(PaymentMethodBox, 1, 2);
 
 //this is the discount Informtion
-        Label discountinfo = new Label("Discount:");
+        Label discountinfo = new Label("Discount %:");
         grid.add(discountinfo, 0, 3);
         //place a textinput and a empty label to display an error if needed
         TextField discountBox = new TextField(); //error handeling will be in the Save button.
+        // force the field to be numeric only
+        discountBox.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    discountBox.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
         grid.add(discountBox,1,3);
         discountError = new Label();
         grid.add(discountError, 2,3);
@@ -92,6 +104,15 @@ public class TransactionGUI  extends Application {
         grid.add(Priceinfo, 0, 4);
         //place a textinput for the price infomration
         TextField Price = new TextField(); //error handeling will be in the Save button.
+        Price.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    Price.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
         grid.add(Price,1,4);
         PriceError = new Label();
         grid.add(PriceError, 2, 4);
@@ -132,8 +153,8 @@ public class TransactionGUI  extends Application {
                 //change our button to a confirm button
                 btnSave.setText("Confirm Changes");
                 //check the input placed into the boxes
-                checkDiscount(discountBox.getText(), transaction);
                 checkPrice(Price.getText(), transaction);
+                checkDiscount(discountBox.getText(), transaction);
                 //calculate a new ammount to dispaly for the toal price.
                 String newAmmount = changeNewammount(transaction.discount, transaction.getPrice(), transaction);
                 adustedPrice.setText("$ CAD " + newAmmount);
@@ -164,7 +185,7 @@ public class TransactionGUI  extends Application {
      * @param discount
      * @return
      */
-    private String changeNewammount(double price, double discount, Transaction transaction)
+    private String changeNewammount(double discount, double price, Transaction transaction)
     {
         //if no discount if given then just display the price.
         if(discount == 0.0)
@@ -178,7 +199,7 @@ public class TransactionGUI  extends Application {
         else
         {
             //find the discounted price
-            price = price * discount;
+            price = price - (price * discount);
             return Double.toString(price);
         }
     }

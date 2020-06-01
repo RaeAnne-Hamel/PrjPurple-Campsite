@@ -405,6 +405,11 @@ public class BookingsLedger
         /*
         this will add a reservation to the reservation list.
          */
+
+    /**
+     * this add redervation is only for testing purposes.
+     * @param reservation
+     */
                     public void addReservation (Reservation reservation){
                     aReservation.add(reservation);
                 }
