@@ -36,7 +36,7 @@ public class Test_7b_Manager_Saves_And_Loads_Previous_Information {
     @Test
     public void tLoadFile()
     {
-        ArrayList<Customer> aCustomers = new ArrayList<>();
+        ArrayList<Object> aCustomers = new ArrayList<>();
         assertEquals(0, aCustomers.size());
 
         aCustomers = PersistentDataManager.load(fName, LoadType.Customer);
@@ -50,12 +50,21 @@ public class Test_7b_Manager_Saves_And_Loads_Previous_Information {
     }
 
     /* Check if a desired group of files are not loaded */
-    @Test
-    public void tSystemNotLoaded()
-    {
-
-
-    }
+//    @Test
+//    public void tSystemNotLoaded()
+//    {
+//        File fCustomers = PersistentDataManager.isFilePresent("src/files/Customers.txt");
+//        File fReservation = PersistentDataManager.isFilePresent("src/files/Customers.txt");
+//        File fLot = PersistentDataManager.isFilePresent("src/files/Customers.txt");
+//        File fTransaction = PersistentDataManager.isFilePresent("src/files/Customers.txt");
+//        File fManager = PersistentDataManager.isFilePresent("src/files/Customers.txt");
+//
+//        assertEquals(null, fCustomers);
+//        assertEquals(null, fReservation);
+//        assertEquals(null, fLot);
+//        assertEquals(null, fTransaction);
+//        assertEquals(null, fManager);
+//    }
 
     /* Check if a desired group of files are saved */
     @Test

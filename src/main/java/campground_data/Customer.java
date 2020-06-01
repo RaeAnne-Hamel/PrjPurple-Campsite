@@ -90,11 +90,10 @@ public class Customer extends Persistent{
         idPool++;
     }
 
-    public String toString()
-    {
+    @Override
+    public String savable() {
         return String.format("%d,%s,%d,%d,%d,%d,%b",
                 getCustomerID(),getAddress(),getFax(),getPhone(),getSecPhone(),getVisits(),getFrequent());
-
     }
 }
 

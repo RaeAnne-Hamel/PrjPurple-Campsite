@@ -81,13 +81,14 @@ public class PersistentDataManager {
     }
 
 
-    public static <E> void save(ArrayList<E> aList, String sFile){
+    public static <E> void save(ArrayList<Object> aList, String sFile){
 
         try (FileWriter fileWriter = new FileWriter("src/files/save.txt")) {
             /* Loop through savable objects */
             for(int i = 0; i < aList.size(); i++)
             {
-                fileWriter.write(aList.get(i).toString()+"\n");
+                if (aList.get(i) instanceof Persistent)
+                    fileWriter.write(((Persistent) aList.get(i)).savable()+"\n");
             }
 
 
