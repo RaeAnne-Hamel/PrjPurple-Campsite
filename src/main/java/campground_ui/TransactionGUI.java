@@ -20,25 +20,12 @@ import javafx.stage.Window;
 
 import java.util.Date;
 
-public class TransactionGUI  extends Application {
-    //this is  just test information so that i can see how the grid works.
-    Reservation testRes = new Reservation(null, 3, new Date(), new Date(), new Lot());
+public class TransactionGUI{
     //this will dynamically change as we make edits to the reservation
     Text scenetitle; //this is the information for the current reservation
     Label discountError; //this is an error handeling box.
     Label PriceError;
     Button btnSave, btnExit;
-
-    @Override
-    public void start(Stage stage) throws Exception {
-        //you will need to pass in the transaction you want to edit from
-        //the reservation.
-        GridPane grid = EditTransaction(testRes.getTransaction());
-
-        stage.setScene(new Scene(grid, 600, 600));
-        stage.setTitle("Pricing and Payment Information");
-        stage.show();
-    }
 
     /**
      * this will take in the transactions that we will want to edit from the reservation
@@ -47,7 +34,7 @@ public class TransactionGUI  extends Application {
      * @param transaction
      * @return
      */
-    private GridPane EditTransaction(Transaction transaction)
+    public GridPane EditTransaction(Transaction transaction)
     {
         GridPane grid = new GridPane();
         //have all the elements letf align
@@ -122,7 +109,7 @@ public class TransactionGUI  extends Application {
         grid.add(Total, 0, 5);
         //display the price after all of these changes
         //get the price of this reservation and display it.
-        Text adustedPrice = new Text("$ CAD " + Double.toString(transaction.obRes.getPrice()));
+        Text adustedPrice = new Text("$ CAD " + Double.toString(transaction.getPrice()));
         adustedPrice.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
         grid.add(adustedPrice, 1,5);
 
@@ -148,23 +135,24 @@ public class TransactionGUI  extends Application {
         btnSave = new Button("Save");
         btnSave.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
-                //change the Exit button to a back button
-                btnExit.setText("Back to edit");
-                //change our button to a confirm button
-                btnSave.setText("Confirm Changes");
-                //check the input placed into the boxes
-                checkPrice(Price.getText(), transaction);
-                checkDiscount(discountBox.getText(), transaction);
-                //calculate a new ammount to dispaly for the toal price.
-                String newAmmount = changeNewammount(transaction.discount, transaction.getPrice(), transaction);
-                adustedPrice.setText("$ CAD " + newAmmount);
-
                 //if all the errors have been shown and the data has been adjusted.
                 if(btnSave.getText().equals("Confirm Changes"))
                 {
-
+                    System.exit(0);
                 }
-
+                else
+                {
+                    //change the Exit button to a back button
+                    btnExit.setText("Back to edit");
+                    //change our button to a confirm button
+                    btnSave.setText("Confirm Changes");
+                    //check the input placed into the boxes
+                    checkPrice(Price.getText(), transaction);
+                    checkDiscount(discountBox.getText(), transaction);
+                    //calculate a new ammount to dispaly for the toal price.
+                    String newAmmount = changeNewammount(transaction.discount, transaction.getPrice(), transaction);
+                    adustedPrice.setText("$ CAD " + newAmmount);
+                }
             }
         });
 
@@ -344,10 +332,5 @@ public class TransactionGUI  extends Application {
         comboBox.setOnAction(event);
         return comboBox;
 
-    }
-
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

@@ -55,7 +55,7 @@ public class Reservation<Static> {
             int StaticReservationID = 0;
             //a New Transaction
             this.transaction = new Transaction(this);
-            double price;
+            double price = 100.0;
             this.status = true;
             String Status = "Active";
     }

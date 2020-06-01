@@ -1,6 +1,10 @@
 import campground_data.Lot;
 import campground_data.LotType;
 import campground_data.Reservation;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import org.junit.*;
 import campground_ui.*;
 
@@ -9,7 +13,7 @@ import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 
-public class Test2bManagerEditsThePriceOfAnAccomidation {
+public class Test2bManagerEditsThePriceOfAnAccomidation extends Application {
 
 
     //this is the start of the test's for testing if you can add a discount to the price of a cabin
@@ -49,6 +53,23 @@ public class Test2bManagerEditsThePriceOfAnAccomidation {
 
     }
 
+    @Override
+    public void start(Stage stage) throws Exception {
+        //you will need to pass in the transaction you want to edit from
+        //the reservation.
+        GridPane grid = EditTransaction(GlobalGroupReservation.getTransaction());
+
+
+
+        stage.setScene(new Scene(grid, 600, 600));
+        stage.setTitle("Pricing and Payment Information");
+        stage.show();
+    }
+
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 
 
 
