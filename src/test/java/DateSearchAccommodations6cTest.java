@@ -1,8 +1,5 @@
-import campground_data.BookingsLedger;
+import campground_data.*;
 
-import campground_data.Customer;
-import campground_data.Lot;
-import campground_data.LotType;
 import junit.framework.TestCase;
 import org.junit.Assert;
 import org.junit.Before;
@@ -15,39 +12,36 @@ import java.util.GregorianCalendar;
 
 import static org.junit.Assert.assertEquals;
 
-public class DateSearchAccommodations6cTest
-{
-    private static Lot testLot = new Lot(LotType.NonServicedIndividual, true);
+public class DateSearchAccommodations6cTest {
+
+
     ArrayList<Lot> lotArray = new ArrayList<>();
     ArrayList<Customer> testCustomer = new ArrayList<>();
-    private static Customer obCustomer = new Customer(0,"John Doe","Addr","Email@Email",1L,1L,1L,1,true,1);
+    private static Customer obCustomer = new Customer(0, "John Doe", "Addr", "Email@Email", 1L, 1L, 1L, 1, true, 1);
 
 
     @Test
-    public void FindNothingTest()
-    {
+    public void FindNothingTest() {
+        Lot testLot = new Lot(0);
         lotArray.add(testLot);
         testCustomer.add(obCustomer);
         BookingsLedger BL = new BookingsLedger();
         BL.setLotList(lotArray);
 
         //GregorianCalendar of Jan 1st, 2021 12:00PM
-        Date testStartDate = new GregorianCalendar(2021, 0,1).getTime();
+        Date testStartDate = new GregorianCalendar(2021, 0, 1).getTime();
         //GregorianCalendar of Jan 5th, 2021 12:00PM
-        Date testEndDate = new GregorianCalendar(2021,0,5).getTime();
+        Date testEndDate = new GregorianCalendar(2021, 0, 5).getTime();
 
-        Date secondaryStartDate = new GregorianCalendar(2021,0,1).getTime();
-        Date secondaryEndDate = new GregorianCalendar(2021,0,5).getTime();
+        BL.addReservation(0, testStartDate, testEndDate, testCustomer, 2);
 
-        BL.addReservation(0,testStartDate,testEndDate,testCustomer,2);
-
-        assertEquals(0,BL.checkAvailability(secondaryStartDate,secondaryEndDate).size());
+        assertEquals(0, BL.checkAvailability(testStartDate, testEndDate).size());
     }
 
     @Test
-    public void FindOneAccommodationTest()
-    {
-        Lot secondLot = new Lot(LotType.NonServicedIndividual, true);
+    public void FindOneAccommodationTest() {
+        Lot testLot = new Lot(1);
+        Lot secondLot = new Lot(2);
         lotArray.add(testLot);
         lotArray.add(secondLot);
         testCustomer.add(obCustomer);
@@ -55,23 +49,23 @@ public class DateSearchAccommodations6cTest
         BL.setLotList(lotArray);
 
         //GregorianCalendar of Jan 1st, 2021 12:00PM
-        Date testStartDate = new GregorianCalendar(2021, 0,1).getTime();
+        Date testStartDate = new GregorianCalendar(2021, 0, 1).getTime();
         //GregorianCalendar of Jan 5th, 2021 12:00PM
-        Date testEndDate = new GregorianCalendar(2021,0,5).getTime();
+        Date testEndDate = new GregorianCalendar(2021, 0, 5).getTime();
 
-        Date secondaryStartDate = new GregorianCalendar(2021,0,1).getTime();
-        Date secondaryEndDate = new GregorianCalendar(2021,0,5).getTime();
+        Date secondaryStartDate = new GregorianCalendar(2021, 0, 1).getTime();
+        Date secondaryEndDate = new GregorianCalendar(2021, 0, 5).getTime();
 
-        BL.addReservation(0,testStartDate,testEndDate,testCustomer,2);
+        BL.addReservation(1, testStartDate, testEndDate, testCustomer, 2);
 
-        assertEquals(1,BL.checkAvailability(secondaryStartDate,secondaryEndDate).size());
+        assertEquals(1, BL.checkAvailability(secondaryStartDate, secondaryEndDate).size());
     }
 
     @Test
-    public void FindThreeAccommodationTest()
-    {
-        Lot secondLot = new Lot(LotType.NonServicedIndividual, true);
-        Lot thirdLot = new Lot(LotType.NonServicedIndividual, true);
+    public void FindThreeAccommodationTest() {
+        Lot testLot = new Lot(3);
+        Lot secondLot = new Lot(4);
+        Lot thirdLot = new Lot(5);
         lotArray.add(testLot);
         lotArray.add(secondLot);
         lotArray.add(thirdLot);
@@ -79,29 +73,29 @@ public class DateSearchAccommodations6cTest
         BL.setLotList(lotArray);
 
 
+        Date secondaryStartDate = new GregorianCalendar(2021, 0, 10).getTime();
+        Date secondaryEndDate = new GregorianCalendar(2021, 0, 15).getTime();
 
-        Date secondaryStartDate = new GregorianCalendar(2021,0,1).getTime();
-        Date secondaryEndDate = new GregorianCalendar(2021,0,5).getTime();
 
-
-        assertEquals(3,BL.checkAvailability(secondaryStartDate,secondaryEndDate).size());
+        assertEquals(3, BL.checkAvailability(secondaryStartDate, secondaryEndDate).size());
     }
 
     @Test
-    public void InvalidDateTest()
-    {
+    public void InvalidDateTest() {
         {
+            Lot testLot = new Lot(6);
             lotArray.add(testLot);
             BookingsLedger BL = new BookingsLedger();
             BL.setLotList(lotArray);
 
 
+            Date secondaryStartDate = new GregorianCalendar(2021, 0, 1).getTime();
+            Date secondaryEndDate = new GregorianCalendar(2021, 0, 5).getTime();
 
-            Date secondaryStartDate = new GregorianCalendar(2021,0,1).getTime();
-            Date secondaryEndDate = new GregorianCalendar(2021,0,5).getTime();
 
+            assertEquals(null, BL.checkAvailability(secondaryEndDate, secondaryStartDate));
+        }
 
-            assertEquals(null,BL.checkAvailability(secondaryEndDate,secondaryStartDate));
     }
 
 }
