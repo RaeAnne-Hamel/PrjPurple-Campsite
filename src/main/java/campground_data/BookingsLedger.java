@@ -192,13 +192,7 @@ public class BookingsLedger
 
     }
 
-    /*
-    Test Code Change Later -EB
-     */
-    public void addAccommodation(Lot obLot)
-    {
 
-    }
 
         /*
         Sets the availability of the lot to the boolean passed in.
@@ -220,6 +214,14 @@ public class BookingsLedger
                     obRes.add(aReservation.get(i));
             }
         return obRes;
+    }
+
+    /*
+    Test Code Change Later -EB
+     */
+    public void addAccommodation(Lot obLot)
+    {
+        aLot.add(obLot);
     }
 
     /**
