@@ -20,6 +20,7 @@ public class Test1aManagerAddsCustomer
 
     int nCustID = 5;
     String sName = "Harry";
+    String sLast = "Edwards";
     String sAddress = "Box 312";
     String sEmail = "email@email.com";
     long nFax = 47583945721L;
@@ -29,7 +30,7 @@ public class Test1aManagerAddsCustomer
     boolean bFreq = true;
     int nIDPool = 2;
 
-    private Customer testCustomer = new Customer(sName, sAddress, sAddress, sAddress, sAddress, sAddress, sEmail, nFax, nPhone, nSecPhone, nVists, bFreq);
+    private Customer testCustomer = new Customer(sName, sLast, sAddress, sAddress, sAddress, sAddress, sAddress, sEmail, nFax, nPhone, nSecPhone, nVists, bFreq);
 
     private Customer obCustomer;
     @NotNull(message = "Can not be empty")

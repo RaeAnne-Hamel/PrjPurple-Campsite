@@ -7,6 +7,7 @@ import static org.junit.Assert.*;
  */
 public class EditCustomer1eTest {
     String sName = "Harry";
+    String sLast = "Edwards";
     String sAddress = "Box 312";
     String sEmail = "email@email.com";
     String sProvince = "Saskatchewan";
@@ -23,7 +24,7 @@ public class EditCustomer1eTest {
     boolean bFreq = true;
     int nIDPool = 2;
 
-    private Customer testCustomer = new Customer(sName, sAddress, sProvince, sCity, sPostal, sCountry, sEmail,
+    private Customer testCustomer = new Customer(sName, sLast, sAddress, sProvince, sCity, sPostal, sCountry, sEmail,
             nFax, nPhone, nPhone, nVisits, bFreq);
 
 

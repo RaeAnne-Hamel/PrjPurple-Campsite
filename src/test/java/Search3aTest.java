@@ -33,7 +33,7 @@ public class Search3aTest {
         ArrayList<Customer> aCustomer = new ArrayList<>();
         ArrayList<Reservation> aReservation = new ArrayList<>();
 
-        aCustomer.add(new Customer("bob", "215 bob street",
+        aCustomer.add(new Customer("bob", "loblaw", "215 bob street",
                 "BC", "VA", "S7N4V2", "Canada", "bob@bob.com",
                 3,7801234, 3144567, 4, true));
 
