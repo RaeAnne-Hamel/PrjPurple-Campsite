@@ -27,10 +27,10 @@ public class AddAccommodation2aTest {
 
         ArrayList<Reservation> obRes = new ArrayList<>();
 
-        Lot lotTesta = new Lot(0, LotType.ServicedIndividual, obRes, 0, "", true);
+        Lot lotTesta = new Lot(0, LotType.ServicedIndividual, obRes, 0, "N/A", true);
         Lot lotTestb = new Lot(1, LotType.ServicedIndividual, obRes, 1, "Test", false);
         Lot lotTestc = new Lot(2, LotType.ServicedIndividual, obRes, 2, "Test", true);
-        Lot lotTestd = new Lot(3, LotType.ServicedIndividual, obRes, 3, "", false);
+        Lot lotTestd = new Lot(3, LotType.ServicedIndividual, obRes, 3, "N/A", false);
 
         BL.addAccommodation(lotTesta);
         BL.addAccommodation(lotTestb);
@@ -44,8 +44,8 @@ public class AddAccommodation2aTest {
 
         assertEquals(lotTesta, lotTesta1);
         assertEquals(lotTestb, lotTestb1);
-        assertNotEquals(lotTestc, lotTestc1);
-        assertNotEquals(lotTestd, lotTestd1);
+        assertEquals(lotTestc, lotTestc1);
+        assertEquals(lotTestd, lotTestd1);
 
     }
 

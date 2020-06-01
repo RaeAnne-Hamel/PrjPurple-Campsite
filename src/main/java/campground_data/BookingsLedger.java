@@ -221,6 +221,12 @@ public class BookingsLedger
      */
     public void addAccommodation(Lot obLot)
     {
+        if (obLot.getAvailability())
+        {
+            obLot.setRemovalReason("N/A");
+        }
+
+
         aLot.add(obLot);
     }
 
