@@ -40,6 +40,7 @@ public class EditCustomerWindow extends Application {
     TextField txtFax3 = new TextField();
     Button btnConfirm;
     GridPane obGrid;
+    Label lblGetID;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -49,7 +50,6 @@ public class EditCustomerWindow extends Application {
 
         //Setting up all the labels. The customer's ID isn't editable, so it uses a label rather than a text field.
         Label lblID = new Label("ID");
-        Label lblGetID = new Label(String.valueOf(obCustomer.getCustomerID()));
         Label lblName = new Label("Name");
         Label lblAddress = new Label("Address");
         Label lblCountry = new Label("Country");
@@ -63,37 +63,42 @@ public class EditCustomerWindow extends Application {
         lblSecPhone.setMinWidth(100);
         Label lblFax = new Label("Fax Number");
 
-        //Setting up the GridPane. The labels all go in the first column, and the ID number is at the top of the second column.
+        //Setting up the GridPane. The labels all go in the first column.
         obGrid = new GridPane();
         obGrid.addColumn(0, lblID, lblName, lblAddress, lblCountry, lblProvince, lblCity, lblPostal, lblEmail,
                 lblPhone, lblSecPhone, lblFax);
-        obGrid.add(lblGetID, 1, 0);
-        setupTextFields();
 
+        //Everything is housed in a BorderPane. The HBox goes at the bottom to house the buttons, while the grid goes in the middle.
         BorderPane obBorder = new BorderPane();
         HBox obBox = new HBox();
-
+        HBox obBoxRight = new HBox();
         obBorder.setBottom(obBox);
         obBorder.setCenter(obGrid);
 
+        //Sets up spacing for the grid.
         obGrid.setVgap(10);
         obGrid.setHgap(10);
         obGrid.setAlignment(Pos.CENTER_LEFT);
         obGrid.setPadding(new Insets(25, 25, 25, 25));
 
+        //Adds the buttons. Confirm starts out disabled until you actually edit some text.
         Button btnBack = new Button("Back to Home");
         Button btnEdit = new Button("Edit");
         btnConfirm = new Button("Confirm");
-        btnConfirm.setDisable(true);
-
         btnEdit.setOnAction(e -> Edit());
         btnConfirm.setOnAction(e -> Confirm());
 
-        obBox.setSpacing(10);
-        obBox.setAlignment(Pos.CENTER);
-        obBox.getChildren().addAll(btnBack, btnEdit);
-        obBox.getChildren().add(2, btnConfirm);
+        setupTextFields();
 
+        //Set up spacing and alignment for the buttons. A second HBox is used so that two buttons can be in the bottom right while the other's in the bottom left.
+        obBox.setSpacing(300);
+        obBox.setAlignment(Pos.CENTER);
+        obBoxRight.getChildren().addAll(btnEdit, btnConfirm);
+        obBoxRight.setSpacing(10);
+        obBoxRight.setAlignment(Pos.BOTTOM_RIGHT);
+        obBox.getChildren().addAll(btnBack, obBoxRight);
+
+        //Sets up the scene and the stage.
         stage.setTitle("Edit Customer Information");
         stage.setScene(new Scene(obBorder, 500, 500));
         stage.show();
@@ -115,7 +120,9 @@ public class EditCustomerWindow extends Application {
         txtPhone = new TextField(sPhone.substring(0,3));
         txtPhone2 = new TextField(sPhone.substring(3,6));
         txtPhone3 = new TextField(sPhone.substring(6));
+        lblGetID = new Label(String.valueOf(obCustomer.getCustomerID()));
 
+        //SecPhone and Fax will be 0 if they don't exist. Error handling is needed to prevent crashes from substring.
         if (obCustomer.getSecPhone() != 0)
         {
             String sSecPhone = String.valueOf(obCustomer.getSecPhone());
@@ -123,7 +130,6 @@ public class EditCustomerWindow extends Application {
             txtSecPhone2.setText(sSecPhone.substring(3,6));
             txtSecPhone3.setText(sSecPhone.substring(6));
         }
-
         if (obCustomer.getFax() != 0)
         {
             String sFax = String.valueOf(obCustomer.getFax());
@@ -132,25 +138,10 @@ public class EditCustomerWindow extends Application {
             txtFax3.setText(sFax.substring(6));
         }
 
+        UnEditable();
 
-        txtName.setEditable(false);
-        txtName.setMinWidth(100);
-        txtAddress.setEditable(false);
-        txtCity.setEditable(false);
-        txtCountry.setEditable(false);
-        txtPostal.setEditable(false);
-        txtProvince.setEditable(false);
-        txtEmail.setEditable(false);
-        txtPhone.setEditable(false);
-        txtPhone2.setEditable(false);
-        txtPhone3.setEditable(false);
-        txtSecPhone.setEditable(false);
-        txtSecPhone2.setEditable(false);
-        txtSecPhone3.setEditable(false);
-        txtFax.setEditable(false);
-        txtFax2.setEditable(false);
-        txtFax3.setEditable(false);
-
+        //All items are added to the grid. The non-phone entries are multiple columns wide, since they're larger.
+        obGrid.add(lblGetID, 1, 0);
         obGrid.add(txtName, 1, 1, 3, 1);
         obGrid.add(txtAddress, 1, 2, 3, 1);
         obGrid.add(txtCountry, 1, 3, 3, 1);
@@ -169,6 +160,32 @@ public class EditCustomerWindow extends Application {
         obGrid.add(txtFax3, 3, 10);
     }
 
+    /**
+     * A method to set all the TextFields to be not-editable. Also sets the confirm button to not be clickable.
+     */
+    private void UnEditable(){
+        txtName.setEditable(false);
+        txtAddress.setEditable(false);
+        txtCity.setEditable(false);
+        txtCountry.setEditable(false);
+        txtPostal.setEditable(false);
+        txtProvince.setEditable(false);
+        txtEmail.setEditable(false);
+        txtPhone.setEditable(false);
+        txtPhone2.setEditable(false);
+        txtPhone3.setEditable(false);
+        txtSecPhone.setEditable(false);
+        txtSecPhone2.setEditable(false);
+        txtSecPhone3.setEditable(false);
+        txtFax.setEditable(false);
+        txtFax2.setEditable(false);
+        txtFax3.setEditable(false);
+        btnConfirm.setDisable(true);
+    }
+
+    /**
+     * A method to set all the TextFields to be editable.
+     */
     private void Edit(){
         txtName.setEditable(true);
         txtAddress.setEditable(true);
@@ -189,10 +206,16 @@ public class EditCustomerWindow extends Application {
         btnConfirm.setDisable(false);
     }
 
+    /**
+     * Method for the confirm button. Will update the customer's information with what it finds in the TextFields, and give a success alert or an error alert
+     * depending on whether the information is correct.
+     */
     private void Confirm(){
+        //Concatenates the phone boxes into one string each.
         String sPhone = txtPhone.getText() + txtPhone2.getText() + txtPhone3.getText();
         String sSecPhone = txtSecPhone.getText() + txtSecPhone2.getText() + txtSecPhone3.getText();
         String sFax = txtFax.getText() + txtFax2.getText() + txtFax3.getText();
+        //Having the fax or secondary phone fields blank will cause errors, so they're set to 0 if they don't exist.
         if (sFax.equals("")) {
             sFax = "0";
         }
@@ -201,6 +224,8 @@ public class EditCustomerWindow extends Application {
             sSecPhone = "0";
         }
         String sVal = "";
+
+        //Try/catch block to prevent non-numbers from being entered in phone/fax fields.
         try {
             sVal = obCustomer.updateCustomer(txtName.getText(), txtAddress.getText(),
                     txtProvince.getText(), txtCity.getText(), txtPostal.getText(), txtCountry.getText(), txtEmail.getText(),
@@ -209,7 +234,11 @@ public class EditCustomerWindow extends Application {
         catch (NumberFormatException exp){
             sVal = "Please enter only numbers in phone and fax fields.";
         }
+
+        //An alert will pop up denoting success or failure. The error contents come from Customer's UpdateCustomer method.
+        //If successful, all fields will revert to being non-editable.
         if (sVal.equals("Successfully changed")){
+            UnEditable();
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Success!");
             alert.setHeaderText(null);
