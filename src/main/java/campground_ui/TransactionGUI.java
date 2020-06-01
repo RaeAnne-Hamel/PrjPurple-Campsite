@@ -14,6 +14,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import campground_data.*;
+import javafx.stage.Window;
 
 import java.util.Date;
 
@@ -78,6 +79,8 @@ public class TransactionGUI  extends Application {
         //place a textinput and a empty label to display an error if needed
         TextField discountBox = new TextField(); //error handeling will be in the Save button.
         grid.add(discountBox,1,3);
+        Label discountError = new Label();
+        grid.add(discountError, 2,3);
 
 
 //this is the price information
@@ -92,7 +95,7 @@ public class TransactionGUI  extends Application {
         grid.add(Total, 0, 5);
         //display the price after all of these changes
         //get the price of this reservation and display it.
-        Text adustedPrice = new Text(Double.toString(transaction.obRes.getPrice()) + "$");
+        Text adustedPrice = new Text("$ CAD " + Double.toString(transaction.obRes.getPrice()));
         adustedPrice.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
         grid.add(adustedPrice, 1,5);
 
@@ -107,11 +110,15 @@ public class TransactionGUI  extends Application {
         Button btnSave = new Button("Save");
         btnSave.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
+                String discountResults = checkDiscount(discountBox.getText(), transaction);
 
             }
         });
         //this button will clode the window and not update any of the inforamtion that was selected
         Button btnExit = new Button("Exit");
+        btnExit.setOnAction(actionEvent -> {
+            System.exit(0);
+        });
         //exit this
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.CENTER);
@@ -120,6 +127,26 @@ public class TransactionGUI  extends Application {
 
         //return the Grid pane we have made
         return grid;
+    }
+
+    /**
+     * this method will check the discount and new price information
+     * And will return a blank string depending on what was restuned from
+     * the diecount method in the reservaation class.
+     * @return
+     */
+    private String checkDiscount(String discount, Transaction transaction) {
+
+        int newDiscount = Integer.parseInt(discount);
+        Double results = transaction.setDiscount(newDiscount);
+        if(results == transaction.obRes.getPrice())
+        {
+            return "no Discount applyied";
+        }
+        else
+        {
+            return "";
+        }
     }
 
     /**
@@ -209,6 +236,7 @@ public class TransactionGUI  extends Application {
         return comboBox;
 
     }
+    
 
     public static void main(String[] args) {
         launch(args);
