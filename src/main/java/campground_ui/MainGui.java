@@ -6,6 +6,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -14,55 +16,61 @@ import campground_data.*;
 
 
 public class MainGui extends Application {
+    //Loads image once so it isn't wasteful. Declares the separate panes here for general use.
+    Image Camp = new Image("file:images/campground.jpg");
+    BorderPane custPane;
+    BorderPane accomPane;
+    BorderPane resPane;
+    Scene mainScene;
 
     @Override
     public void start(Stage stage) {
+        //Setting up the image to use is the same in each section - DW
+        ImageView imgCamp = new ImageView(Camp);
+        imgCamp.setFitHeight(353);
+        imgCamp.setFitWidth(500);
         javafx.scene.control.Button btnExit = new javafx.scene.control.Button("Exit");
 
         //Panes for use in the Scenes for each section. -EB
-            //The Main Pane for the Main Section. -EB
+
+        //The Main Pane for the Main Section. -EB
         BorderPane mainPane = new BorderPane();
         HBox paneCenter = new HBox();
+        VBox paneLeft = new VBox();
+        VBox paneRight = new VBox();
+        paneLeft.setAlignment(Pos.BOTTOM_LEFT);
+        paneRight.setAlignment(Pos.CENTER_RIGHT);
+        paneRight.setSpacing(10);
+
         paneCenter.setAlignment(Pos.CENTER);
         paneCenter.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
+        paneCenter.setSpacing(200);
+        mainPane.setTop(imgCamp);
 
-            //The Panes used in the Accomodations section. -EB
-        BorderPane accomPane = new BorderPane();
-        GridPane AccomCenter = new GridPane();
-        AccomCenter.setAlignment(Pos.CENTER);
-        AccomCenter.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
-        AccomCenter.setHgap(10);
-        AccomCenter.setVgap(10);
-
-        HBox AccomBottom = new HBox();
-        AccomBottom.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
-
-
-            //The Pane used in the Customer Section. -EB
-        BorderPane custPane = new BorderPane();
-        HBox custCenter = new HBox();
-        custCenter.setAlignment(Pos.CENTER);
-        custCenter.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
-
-            //The Pane used in the Reservations Section. -EB
-        BorderPane resPane = new BorderPane();
-        HBox resCenter = new HBox();
-        resCenter.setAlignment(Pos.CENTER);
-        resCenter.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
+        //The Pane used in the Accommodations, Customer, and Reservations sections. -EB
+        OpenAccommodation(stage);
+        OpenCustomer(stage);
+        OpenReservation(stage);
 
         //Scenes are set up here with default sizes and using the Panes.
-        Scene mainScene = new Scene(mainPane, 500, 500);
+        mainScene = new Scene(mainPane, 500, 500);
         Scene Accommodations = new Scene(accomPane, 500, 500);
         Scene Customers = new Scene(custPane, 500, 500);
-        Scene Reservations = new Scene(resPane, 500, 500);
+        Scene Reservations = new Scene(resPane, 500, 550);
 
         //Created Buttons for each section. When clicked they should navigate to new scenes containing the content for each. -EB
         Button btnAccom = new Button("Accommodations");
+        btnAccom.setPrefWidth(150);
         Button btnCust = new Button("Customers");
+        btnCust.setPrefWidth(150);
         Button btnRes = new Button("Reservations");
+        btnRes.setPrefWidth(150);
 
         //Adding Buttons to the center pane and setting the center pane to the center of the main pane.
-        paneCenter.getChildren().addAll(btnAccom, btnCust, btnRes, btnExit);
+        paneLeft.getChildren().add(btnExit);
+        paneRight.getChildren().addAll(btnAccom, btnCust, btnRes);
+        paneCenter.getChildren().addAll(paneLeft, paneRight);
+
         mainPane.setCenter(paneCenter);
 
         //Event Handlers for moving to another section of the main window.
@@ -70,53 +78,12 @@ public class MainGui extends Application {
         btnCust.setOnAction(e -> stage.setScene(Customers));
         btnRes.setOnAction(e -> stage.setScene(Reservations));
 
+
         //Code for the Accommodations Section. -EB
         Button btnBack1 = new Button("Back");
-        Button btnAdd = new Button("Add Accommodation");
-        Button btnEdit = new Button("Edit Accommodation");
-        Button btnSet = new Button("Set Availability");
-        Button btnPrice = new Button("Set Accommodation Price");
 
 
-        AccomCenter.add(btnAdd, 0, 1);
-        AccomCenter.add(btnEdit, 0, 2);
-        AccomCenter.add(btnSet, 0, 3);
-        AccomCenter.add(btnPrice, 0, 4);
-        accomPane.setCenter(AccomCenter);
 
-        AccomBottom.getChildren().add(btnBack1);
-        accomPane.setBottom(AccomBottom);
-
-        addAccommodationGUI addGUI = new addAccommodationGUI(stage);
-        EditAccommodationGUI editGUI = new EditAccommodationGUI(stage);
-        setAvailabilityGUI setGUI = new setAvailabilityGUI(stage);
-
-        btnBack1.setOnAction(e -> stage.setScene(mainScene));
-        btnAdd.setOnAction(e -> addGUI.showAndWait());
-        btnEdit.setOnAction(e -> editGUI.showAndWait());
-        btnSet.setOnAction(e -> setGUI.showAndWait());
-
-        //End of Code for the Accommodations Section. -EB
-
-        //Code for the Customer Section goes here -EB
-        Button btnBack2 = new Button("Back");
-
-        custCenter.getChildren().add(btnBack2);
-        custPane.setCenter(custCenter);
-
-        btnBack2.setOnAction(e -> stage.setScene(mainScene));
-
-        //End of Code for the Customer Section. -EB
-
-        //Code for the Reservation Section goes here. -EB
-        Button btnBack3 = new Button("Back");
-
-        resCenter.getChildren().add(btnBack3);
-        resPane.setCenter(resCenter);
-
-        btnBack3.setOnAction(e -> stage.setScene(mainScene));
-
-        //End of Code for the Reservation Section. -EB
 
 
         //Code for running the initial Scene. -EB
@@ -126,6 +93,133 @@ public class MainGui extends Application {
         stage.setScene(mainScene);
         stage.setTitle("Main Window");
         stage.show();
+    }
+
+    /**
+     * Code for the Reservations section - DW
+     * @param stage Takes in the parent stage.
+     */
+    private void OpenReservation(Stage stage) {
+        //Creates new panes for the top and bottom. Separate VBoxes are created for the buttons on the left and right for alignment reasons - DW
+        resPane = new BorderPane();
+        HBox resCenter = new HBox();
+        VBox paneLeft = new VBox();
+        VBox paneRight = new VBox();
+        paneLeft.setAlignment(Pos.BOTTOM_LEFT);
+        paneRight.setAlignment(Pos.CENTER_RIGHT);
+        paneRight.setSpacing(10);
+
+        resCenter.setAlignment(Pos.CENTER);
+        resCenter.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
+        resCenter.setSpacing(150);
+        ImageView imgCampR = new ImageView(Camp);
+        imgCampR.setFitHeight(353);
+        imgCampR.setFitWidth(500);
+        resPane.setTop(imgCampR);
+
+        Button btnBack3 = new Button("Back to Home");
+        Button btnSearch = new Button("Search Available Accommodations");
+        Button btnAdd = new Button("Add Reservation");
+        btnAdd.setPrefWidth(200);
+        Button btnEdit = new Button("Edit Reservation");
+        btnEdit.setPrefWidth(200);
+        Button btnRemove = new Button("Remove Reservation");
+        btnRemove.setPrefWidth(200);
+        Button btnTrans = new Button("Transactions");
+        btnTrans.setPrefWidth(200);
+
+        paneLeft.getChildren().add(btnBack3);
+        paneRight.getChildren().addAll(btnSearch, btnAdd, btnEdit, btnRemove, btnTrans);
+
+        resCenter.getChildren().addAll(paneLeft, paneRight);
+        resPane.setCenter(resCenter);
+
+        btnBack3.setOnAction(e -> stage.setScene(mainScene));
+    }
+
+    /**
+     * Code for the Accommodations section - DW
+     * @param stage Takes in the parent stage.
+     */
+    private void OpenAccommodation(Stage stage) {
+        //Creates new panes for the top and bottom. Separate VBoxes are created for the buttons on the left and right for alignment reasons - DW
+        accomPane = new BorderPane();
+        HBox AccomCenter = new HBox();
+        VBox AccomLeft = new VBox();
+        AccomLeft.setAlignment(Pos.BOTTOM_LEFT);
+        VBox AccomRight = new VBox();
+        AccomRight.setSpacing(10);
+        AccomRight.setAlignment(Pos.CENTER_RIGHT);
+
+        AccomCenter.setAlignment(Pos.CENTER);
+        AccomCenter.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
+        AccomCenter.setSpacing(200);
+        ImageView imgCampA = new ImageView(Camp);
+        imgCampA.setFitHeight(353);
+        imgCampA.setFitWidth(500);
+        accomPane.setTop(imgCampA);
+
+        Button btnBack1 = new Button("Back to Home");
+        Button btnAddAccom = new Button("Add Accommodation");
+        btnAddAccom.setPrefWidth(150);
+        Button btnEditAccom = new Button("Edit Accommodation");
+        btnEditAccom.setPrefWidth(150);
+        Button btnSetAvailability = new Button("Set Availability");
+        btnSetAvailability.setPrefWidth(150);
+        Button btnSetPrice = new Button("Set Price");
+        btnSetPrice.setPrefWidth(150);
+
+        AccomLeft.getChildren().add(btnBack1);
+        AccomRight.getChildren().addAll(btnAddAccom, btnEditAccom, btnSetAvailability, btnSetPrice);
+        AccomCenter.getChildren().addAll(AccomLeft, AccomRight);
+        accomPane.setCenter(AccomCenter);
+
+        addAccommodationGUI addGUI = new addAccommodationGUI(stage);
+        EditAccommodationGUI editGUI = new EditAccommodationGUI(stage);
+        setAvailabilityGUI setGUI = new setAvailabilityGUI(stage);
+
+        btnBack1.setOnAction(e -> stage.setScene(mainScene));
+        btnAddAccom.setOnAction(e -> addGUI.showAndWait());
+        btnEditAccom.setOnAction(e -> editGUI.showAndWait());
+        btnSetAvailability.setOnAction(e -> setGUI.showAndWait());
+
+        btnBack1.setOnAction(e -> stage.setScene(mainScene));
+    }
+
+    /**
+     * Code for the Customers section - DW
+     * @param stage Takes in the parent stage
+     */
+    private void OpenCustomer(Stage stage) {
+        //Creates new panes for the top and bottom. Separate VBoxes are created for the buttons on the left and right for alignment reasons - DW
+        custPane = new BorderPane();
+        HBox custCenter = new HBox();
+        VBox custLeft = new VBox();
+        custLeft.setAlignment(Pos.BOTTOM_LEFT);
+        VBox custRight = new VBox();
+        custRight.setSpacing(10);
+        custRight.setAlignment(Pos.CENTER_RIGHT);
+
+        custCenter.setAlignment(Pos.CENTER);
+        custCenter.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
+        custCenter.setSpacing(200);
+        ImageView imgCampC = new ImageView(Camp);
+        imgCampC.setFitHeight(353);
+        imgCampC.setFitWidth(500);
+        custPane.setTop(imgCampC);
+
+        Button btnBack2 = new Button("Back to Home");
+        Button btnAddCustomer = new Button("Add Customer");
+        btnAddCustomer.setPrefWidth(150);
+        Button btnEditCustomer = new Button("Edit Customer");
+        btnEditCustomer.setPrefWidth(150);
+
+        custLeft.getChildren().add(btnBack2);
+        custRight.getChildren().addAll(btnAddCustomer, btnEditCustomer);
+        custCenter.getChildren().addAll(custLeft, custRight);
+        custPane.setCenter(custCenter);
+
+        btnBack2.setOnAction(e -> stage.setScene(mainScene));
     }
 
     public static void main(String[] args) {

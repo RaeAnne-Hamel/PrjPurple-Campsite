@@ -29,7 +29,7 @@ public class Test1aManagerAddsCustomer
     boolean bFreq = true;
     int nIDPool = 2;
 
-    private Customer testCustomer = new Customer(nCustID, sName, sAddress, sEmail, nFax, nPhone, nSecPhone, nVists, bFreq, nIDPool);
+    private Customer testCustomer = new Customer(sName, sAddress, sAddress, sAddress, sAddress, sAddress, sEmail, nFax, nPhone, nSecPhone, nVists, bFreq);
 
     private Customer obCustomer;
     @NotNull(message = "Can not be empty")
@@ -62,7 +62,7 @@ public class Test1aManagerAddsCustomer
     public void testNameEmpty()
     {
         testCustomer.setName("");
-        assertEquals("", testCustomer.getName());
+        assertNotEquals("", testCustomer.getName());
     }
 
     /**
@@ -73,7 +73,7 @@ public class Test1aManagerAddsCustomer
     {
         String j256 = repeatJ(256);
         testCustomer.setName(j256);
-        assertEquals(j256, testCustomer.getName());
+        assertNotEquals(j256, testCustomer.getName());
     }
 
     /**
@@ -104,7 +104,7 @@ public class Test1aManagerAddsCustomer
     public void testAddressEmpty()
     {
         testCustomer.setAddress("");
-        assertEquals("", testCustomer.getAddress());
+        assertNotEquals("", testCustomer.getAddress());
     }
 
     /**
@@ -115,7 +115,7 @@ public class Test1aManagerAddsCustomer
     {
         String j256 = repeatJ(256);
         testCustomer.setAddress(j256);
-        assertEquals(j256, testCustomer.getAddress());
+        assertNotEquals(j256, testCustomer.getAddress());
     }
 
     /**
@@ -146,7 +146,7 @@ public class Test1aManagerAddsCustomer
     public void testEmailEmpty()
     {
         testCustomer.setEmail("");
-        assertEquals("", testCustomer.getEmail());
+        assertNotEquals("", testCustomer.getEmail());
     }
 
     /**
@@ -157,7 +157,7 @@ public class Test1aManagerAddsCustomer
     {
         String j256 = repeatJ(256);
         testCustomer.setEmail(j256);
-        assertEquals(j256, testCustomer.getEmail());
+        assertNotEquals(j256, testCustomer.getEmail());
     }
 
     /**
@@ -188,7 +188,7 @@ public class Test1aManagerAddsCustomer
     public void testFaxTooLong()
     {
         testCustomer.setFax(849520582618L);
-        assertEquals(849520582618L, testCustomer.getFax());
+        assertNotEquals(849520582618L, testCustomer.getFax());
     }
 
     /**
@@ -208,7 +208,7 @@ public class Test1aManagerAddsCustomer
     public void testFaxTooShort()
     {
         testCustomer.setFax(628194614L);
-        assertEquals(628194614L, testCustomer.getFax());
+        assertNotEquals(628194614L, testCustomer.getFax());
     }
 
     /**
@@ -218,7 +218,7 @@ public class Test1aManagerAddsCustomer
     public void testPhoneTooLong()
     {
         testCustomer.setPhone(849520582618L);
-        assertEquals(849520582618L, testCustomer.getPhone());
+        assertNotEquals(849520582618L, testCustomer.getPhone());
     }
 
     /**
@@ -238,7 +238,7 @@ public class Test1aManagerAddsCustomer
     public void testPhoneTooShort()
     {
         testCustomer.setPhone(628194614L);
-        assertEquals(628194614L, testCustomer.getPhone());
+        assertNotEquals(628194614L, testCustomer.getPhone());
     }
 
     /**
@@ -258,7 +258,7 @@ public class Test1aManagerAddsCustomer
     public void testSecPhoneTooLong()
     {
         testCustomer.setSecPhone(849520582618L);
-        assertEquals(849520582618L, testCustomer.getSecPhone());
+        assertNotEquals(849520582618L, testCustomer.getSecPhone());
     }
 
     /**
@@ -268,7 +268,7 @@ public class Test1aManagerAddsCustomer
     public void testSecPhoneTooShort()
     {
         testCustomer.setSecPhone(628194614L);
-        assertEquals(628194614L, testCustomer.getSecPhone());
+        assertNotEquals(628194614L, testCustomer.getSecPhone());
     }
 
     private String repeatJ(int count){

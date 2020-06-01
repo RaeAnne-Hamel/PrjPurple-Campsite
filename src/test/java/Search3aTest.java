@@ -33,7 +33,9 @@ public class Search3aTest {
         ArrayList<Customer> aCustomer = new ArrayList<>();
         ArrayList<Reservation> aReservation = new ArrayList<>();
 
-        aCustomer.add(new Customer(1, "bob", "215 bob street", "bob@bob.com", 3, 7801234, 3144567, 4, true, 3));
+        aCustomer.add(new Customer("bob", "215 bob street",
+                "BC", "VA", "S7N4V2", "Canada", "bob@bob.com",
+                3,7801234, 3144567, 4, true));
 
         aReservation.add(new Reservation(new Lot(1), new GregorianCalendar(2020, 7, 1).getTime(),
                 new GregorianCalendar(2020, 7, 8).getTime(), aCustomer, 4,0));
