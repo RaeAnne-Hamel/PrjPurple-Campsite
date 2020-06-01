@@ -113,12 +113,20 @@ public class addAccommodationGUI extends Stage {
         paneBottom.getChildren().add(Spacer);
         paneBottom.getChildren().add(btConfirm);
 
+        //Code for clicking Back. Takes closes the current window. -EB
+        btBack.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Back();
+            }
+        });
+
         //Code for clicking Confirm. Runs the Confirm() method. -EB
         btConfirm.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 Confirm();
-                primaryStage.close();
+
             }
         });
 
@@ -127,6 +135,7 @@ public class addAccommodationGUI extends Stage {
         this.setTitle("Add Accommodation");
         this.setScene(scene);
         this.initModality(Modality.APPLICATION_MODAL);
+
 
     }
 
@@ -181,6 +190,7 @@ public class addAccommodationGUI extends Stage {
 
             default:
                 break;
+
         }
 
         /*
@@ -215,6 +225,13 @@ public class addAccommodationGUI extends Stage {
         //Adds the accommodation created to the List of accommodations.
         BL.addAccommodation(obLot);
 
+        this.close();
+
+    }
+
+    public void Back()
+    {
+        this.close();
     }
 
 

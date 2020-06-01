@@ -88,9 +88,13 @@ public class MainGui extends Application {
         accomPane.setBottom(AccomBottom);
 
         addAccommodationGUI addGUI = new addAccommodationGUI(stage);
+        EditAccommodationGUI editGUI = new EditAccommodationGUI(stage);
+        setAvailabilityGUI setGUI = new setAvailabilityGUI(stage);
 
         btnBack1.setOnAction(e -> stage.setScene(mainScene));
         btnAdd.setOnAction(e -> addGUI.showAndWait());
+        btnEdit.setOnAction(e -> editGUI.showAndWait());
+        btnSet.setOnAction(e -> setGUI.showAndWait());
 
         //End of Code for the Accommodations Section. -EB
 

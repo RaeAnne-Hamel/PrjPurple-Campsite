@@ -1,14 +1,11 @@
 package campground_ui;
 
-import campground_data.BookingsLedger;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -16,29 +13,12 @@ import javafx.scene.layout.Priority;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class EditAccommodationGUI extends Stage {
+public class setAvailabilityGUI extends Stage {
 
-    BookingsLedger BL;
-
-    public EditAccommodationGUI(Stage primaryStage) {
-        BL = new BookingsLedger();
+    public setAvailabilityGUI(Stage primaryStage)
+    {
 
         BorderPane mainPane = new BorderPane();
-
-        //Creating the top pane for the label. -EB
-        HBox paneTop = new HBox();
-        paneTop.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
-
-        //Adding the label to the top pane. -EB
-        Label lblTop = new Label("Select an Accommodation to edit:");
-        paneTop.getChildren().add(lblTop);
-
-        //Creating the centre pane for the ListView displaying Lot data. -EB
-        HBox paneCentre = new HBox();
-        paneCentre.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
-
-        //Adding the ListView to the centre pane. -EB
-
 
         // Creating the bottom pane for the "Back" and "Confirm" buttons. -EB
         HBox paneBottom = new HBox();
@@ -52,6 +32,13 @@ public class EditAccommodationGUI extends Stage {
         Button btBack = new Button("Back");
         Button btConfirm = new Button("Confirm");
 
+        //Adding the nodes to the Bottom Pane. -EB
+        paneBottom.getChildren().add(btBack);
+        paneBottom.getChildren().add(Spacer);
+        paneBottom.getChildren().add(btConfirm);
+
+        mainPane.setBottom(paneBottom);
+
         //Code for clicking Back. Takes closes the current window. -EB
         btBack.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -60,17 +47,9 @@ public class EditAccommodationGUI extends Stage {
             }
         });
 
-        //Adding the nodes to the Bottom Pane. -EB
-        paneBottom.getChildren().add(btBack);
-        paneBottom.getChildren().add(Spacer);
-        paneBottom.getChildren().add(btConfirm);
-
-        mainPane.setTop(paneTop);
-        mainPane.setBottom(paneBottom);
-
 
         Scene scene = new Scene(mainPane, 500, 500);
-        this.setTitle("Edit Accommodation");
+        this.setTitle("Set Availability");
         this.setScene(scene);
         this.initModality(Modality.APPLICATION_MODAL);
     }
@@ -79,4 +58,5 @@ public class EditAccommodationGUI extends Stage {
     {
         this.close();
     }
+
 }
