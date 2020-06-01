@@ -36,7 +36,7 @@ public class EditAccommodationGUI extends Application {
         paneCentre.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
 
         //Adding the ListView to the centre pane. -EB
-        ListView
+
 
         // Creating the bottom pane for the "Back" and "Confirm" buttons. -EB
         HBox paneBottom = new HBox();
@@ -57,6 +57,7 @@ public class EditAccommodationGUI extends Application {
 
         mainPane.setTop(paneTop);
         mainPane.setBottom(paneBottom);
+
 
         Scene scene = new Scene(mainPane, 500, 500);
         stage.setTitle("Edit Accommodation");

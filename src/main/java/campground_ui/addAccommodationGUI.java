@@ -132,6 +132,11 @@ public class addAccommodationGUI extends Application {
 
     }
 
+    public static void main(String[] args)
+    {
+        launch(args);
+    }
+
     /*
     Sets the TextArea visibility so that the box appears when set to not Available and disappears when set to available.
     The TextArea should only be available to the user when it is needed. So when the lot is set to unavailable there needs to be a reason for it. -EB
