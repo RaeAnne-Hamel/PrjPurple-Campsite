@@ -1,6 +1,9 @@
 package campground_data;
 
+import com.sun.org.apache.xpath.internal.objects.XObject;
+
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -78,14 +81,18 @@ public class PersistentDataManager {
     }
 
 
-    public static void saveFile()
-    {
+    public static <E> void save(ArrayList<E> aList, String sFile){
 
-    }
+        try (FileWriter fileWriter = new FileWriter("src/files/save.txt")) {
+            /* Loop through savable objects */
+            for(int i = 0; i < aList.size(); i++)
+            {
+                fileWriter.write(aList.get(i).toString()+"\n");
+            }
 
-    public static void saveRecord()
-    {
 
+
+        }catch (Exception x){};
     }
 
     /* Check if a directory is a file. */

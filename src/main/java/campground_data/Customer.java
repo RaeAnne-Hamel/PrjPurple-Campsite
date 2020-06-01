@@ -92,8 +92,8 @@ public class Customer extends Persistent{
 
     public String toString()
     {
-        return String.format("ID: %d, Address %s, Fax: %d, Phone: %d, SecPhone: %d, Visits %d, frequent: %b, Id Pool: %d",
-                getCustomerID(),getAddress(),getFax(),getPhone(),getSecPhone(),getVisits(),getFrequent(),Customer.idPool);
+        return String.format("%d,%s,%d,%d,%d,%d,%b",
+                getCustomerID(),getAddress(),getFax(),getPhone(),getSecPhone(),getVisits(),getFrequent());
 
     }
 }

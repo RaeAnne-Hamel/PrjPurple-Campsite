@@ -45,6 +45,8 @@ public class Test_7b_Manager_Saves_And_Loads_Previous_Information {
         assertEquals(2, aCustomers.size());
         System.out.println(aCustomers.get(0));
         System.out.println(aCustomers.get(1));
+
+        PersistentDataManager.save(aCustomers,"src/files/save1.txt");
     }
 
     /* Check if a desired group of files are not loaded */
