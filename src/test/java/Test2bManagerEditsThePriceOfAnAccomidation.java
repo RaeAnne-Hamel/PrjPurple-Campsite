@@ -13,7 +13,7 @@ import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 
-public class Test2bManagerEditsThePriceOfAnAccomidation extends Application {
+public class Test2bManagerEditsThePriceOfAnAccomidation {
 
 
     //this is the start of the test's for testing if you can add a discount to the price of a cabin
@@ -53,24 +53,6 @@ public class Test2bManagerEditsThePriceOfAnAccomidation extends Application {
 
     }
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        //you will need to pass in the transaction you want to edit from
-        //the reservation.
-        GridPane grid = EditTransaction(GlobalGroupReservation.getTransaction());
-
-
-
-        stage.setScene(new Scene(grid, 600, 600));
-        stage.setTitle("Pricing and Payment Information");
-        stage.show();
-    }
-
-
-    public static void main(String[] args) {
-        launch(args);
-    }
-
 
 
     /**
@@ -79,32 +61,29 @@ public class Test2bManagerEditsThePriceOfAnAccomidation extends Application {
     @Test
     public void tCustomerDiscountRegular()
     {
+        System.out.println("Testing");
         //these are test done by the regualr Cabins
         //normal cases for regualr cabins
-        double newPriceTest1 = GlobalRegularReservation.getPrice() * (0.9);
         double test1 = GlobalRegularReservation.getTransaction().setDiscount(90);
 
-        double newPriceTest2 = GlobalRegularReservation.getPrice() * (0.5);
         double test2 = GlobalRegularReservation.getTransaction().setDiscount(50);
 
 
         //these tests are for a group cabins
         //normal cases for group cabins
-        double newPriceTest8 = GlobalGroupReservation.getPrice() * (0.9);
         double test8 = GlobalGroupReservation.getTransaction().setDiscount(90);
 
-        double newPriceTest9 = GlobalGroupReservation.getPrice() * (0.5);
         double test9 = GlobalGroupReservation.getTransaction().setDiscount(50);
 
 
 
         //regular Cabins, normal
-        assertEquals(test1,  newPriceTest1, 0.001);
-        assertEquals(test2, newPriceTest2, 0.001);
+        assertEquals(test1,  0.9, 0.001);
+        assertEquals(test2, 0.5, 0.001);
 
         //group cabins, normal
-        assertEquals(test8, newPriceTest8, 0.001);
-        assertEquals(test9, newPriceTest9, 0.001);
+        assertEquals(test8, 0.9, 0.001);
+        assertEquals(test9, 0.5, 0.001);
 
     }
 

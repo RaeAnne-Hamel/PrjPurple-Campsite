@@ -1,5 +1,4 @@
 package campground_ui;
-
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -14,18 +13,48 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import campground_data.*;
-import javafx.stage.Window;
+import javafx.stage.Stage;
+import javafx.util.converter.FloatStringConverter;
 
+import java.util.Calendar;
 import java.util.Date;
 
-public class TransactionGUI{
+
+public class TransactionGUI extends Application {
+
     //this will dynamically change as we make edits to the reservation
-    Text scenetitle; //this is the information for the current reservation
-    Label discountError; //this is an error handeling box.
-    Label PriceError;
-    Button btnSave, btnExit;
+    private static Text scenetitle; //this is the information for the current reservation
+    private static Label discountError; //this is an error handeling box.
+    private static Label PriceError;
+    private static Button btnSave, btnExit;
+
+    //this is for testing purposes
+    private Date obStart = new Date(2020, Calendar.JUNE, 11);
+    private Date obEnd = new Date(2020, Calendar.JUNE, 15);
+
+
+    //this will be a basic reservation
+    Reservation GlobalRegularReservation = new Reservation(null, 3, obStart, obEnd, new Lot());
+
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        //you will need to pass in the transaction you want to edit from
+        //the reservation.
+        GridPane grid = EditTransaction(GlobalRegularReservation.getTransaction());
+
+
+
+        stage.setScene(new Scene(grid, 600, 600));
+        stage.setTitle("Pricing and Payment Information");
+        stage.show();
+    }
+
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     /**
      * this will take in the transactions that we will want to edit from the reservation
@@ -34,7 +63,7 @@ public class TransactionGUI{
      * @param transaction
      * @return
      */
-    public GridPane EditTransaction(Transaction transaction)
+    public static GridPane EditTransaction(Transaction transaction)
     {
         GridPane grid = new GridPane();
         //have all the elements letf align
@@ -173,7 +202,7 @@ public class TransactionGUI{
      * @param discount
      * @return
      */
-    private String changeNewammount(double discount, double price, Transaction transaction)
+    private static String changeNewammount(double discount, double price, Transaction transaction)
     {
         //if no discount if given then just display the price.
         if(discount == 0.0)
@@ -199,7 +228,7 @@ public class TransactionGUI{
      * @param price - the new price
      * @param transaction - the current transaction we are working with.
      */
-    private void checkPrice(String price, Transaction transaction) {
+    private static void checkPrice(String price, Transaction transaction) {
         if(price.equals(""))
         {
             PriceError.setText("Price not changed");
@@ -226,7 +255,7 @@ public class TransactionGUI{
      * the diecount method in the reservaation class.
      * @return
      */
-    private void checkDiscount(String discount, Transaction transaction) {
+    private static void checkDiscount(String discount, Transaction transaction) {
         if(discount.equals(""))
         {
             discountError.setText("No Discount added");
@@ -252,7 +281,7 @@ public class TransactionGUI{
      * @param transaction
      * @return
      */
-    private CheckBox getPaidBox(Transaction transaction) {
+    private static CheckBox getPaidBox(Transaction transaction) {
         CheckBox returnThis = new CheckBox("Paid");
         if(transaction.obRes.getStatus())
         {
@@ -273,7 +302,7 @@ public class TransactionGUI{
      * @param transaction
      * @return
      */
-    private ComboBox<PaymentMethod> PaymentMethodCombo(Transaction transaction) {
+    private static ComboBox<PaymentMethod> PaymentMethodCombo(Transaction transaction) {
 
         ComboBox<PaymentMethod> comboBox = new ComboBox<PaymentMethod>();
         comboBox.getItems().addAll( //put all of the enumerations into the combo Box
@@ -308,7 +337,7 @@ public class TransactionGUI{
      * @param transaction
      * @return
      */
-    private ComboBox<PaymentType> PaymentTypeCombo(Transaction transaction)
+    private static ComboBox<PaymentType> PaymentTypeCombo(Transaction transaction)
     {
         ComboBox<PaymentType> comboBox = new ComboBox<PaymentType>();
         comboBox.getItems().addAll( //put all of the enumerations into the combo Box
