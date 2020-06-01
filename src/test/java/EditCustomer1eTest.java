@@ -6,7 +6,6 @@ import static org.junit.Assert.*;
  * Created by Dustin Wiebe
  */
 public class EditCustomer1eTest {
-    int nCustID = 5;
     String sName = "Harry";
     String sAddress = "Box 312";
     String sEmail = "email@email.com";

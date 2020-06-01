@@ -25,6 +25,7 @@ public class EditCustomerWindow extends Application {
     TextField txtPhone;
     TextField txtSecPhone;
     TextField txtFax;
+    Label lblStatus = new Label();
 
 
     @Override
@@ -88,6 +89,25 @@ public class EditCustomerWindow extends Application {
         Button btnConfirm = new Button("Confirm");
 
         btnEdit.setOnAction(e -> Edit());
+        btnConfirm.setOnAction(e -> {
+            String sVal = obCustomer.updateCustomer(txtName.getText(), txtAddress.getText(),
+                            txtProvince.getText(), txtCity.getText(), txtPostal.getText(), txtCountry.getText(), txtEmail.getText(),
+                            Long.parseLong(txtPhone.getText()), Long.parseLong(txtFax.getText()), Long.parseLong(txtSecPhone.getText()));
+            if (sVal.equals("Successfully changed")){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Success!");
+                alert.setHeaderText(null);
+                alert.setContentText("Customer information successfully updated.");
+                alert.showAndWait();
+            }
+            else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Detected");
+                alert.setHeaderText("Not all fields were correctly entered.");
+                alert.setContentText(sVal);
+                alert.showAndWait();
+            }
+        });
 
         obBox.getChildren().addAll(btnBack, btnEdit, btnConfirm);
 

@@ -142,17 +142,23 @@ public class Customer {
 
     public void setFax(long nPhone) {
         if (nPhone > 1000000000L && nPhone < 9999999999L)
+        {
             this.nFax = nPhone;
+        }
     }
 
     public void setPhone(long nPhone) {
         if (nPhone > 1000000000L && nPhone < 9999999999L)
+        {
             this.nPhone = nPhone;
+        }
     }
 
     public void setSecPhone(long nPhone) {
         if (nPhone > 1000000000L && nPhone < 9999999999L)
+        {
             this.nSecPhone = nPhone;
+        }
     }
 
     public void setVisits(int nVisits) { this.nVisits = nVisits; }
@@ -160,14 +166,52 @@ public class Customer {
     public void setFrequent(boolean frequent) { isFrequent = frequent; }
 
 
-    public String updateCustomer(Customer obCust, String sName, String sAddress, String sProvince,
+    public String updateCustomer(String sName, String sAddress, String sProvince,
                                  String sCity, String sPostal, String sCountry, String sEmail,
-                                 long nPhone, long nFax, long nSecPhone){
+                                 long nPhone, long nFax, long nSecPhone) {
+        if (!(sName.length() > 0 && sName.length() <= MAX_LENGTH)) {
+            return "Customer name must be between 1 and 255 characters.";
+        }
+        if (!(sAddress.length() > 0 && sAddress.length() <= MAX_LENGTH)){
+            return "Street address must be between 1 and 255 characters.";
+        }
 
-        String sVal = "Successfully changed";
+        if (!(sProvince.length() > 0 && sProvince.length()<=MAX_LENGTH)){
+            return "State/province must be between 1 and 255 characters.";
+        }
+        if (!(sCity.length() > 0 && sCity.length()<=MAX_LENGTH)){
+            return "City must be between 1 and 255 characters.";
+        }
+        if (!(sPostal.length() > 2 && sPostal.length()<=10)){
+            return "Postal code must be between 3 and 10 characters";
+        }
+        if (!(sCountry.length() > 0 && sCountry.length()<=MAX_LENGTH)){
+            return "Country must be between 1 and 255 characters.";
+        }
+        if (!(sEmail.length() > 4 && sEmail.length()<=MAX_LENGTH && sEmail.contains("@"))){
+            return "Email must be between 5 and 255 characters and include an @ symbol.";
+        }
+        if (!(nPhone > 1000000000L && nPhone < 9999999999L)){
+            return "Phone number must be 10 digits.";
+        }
+        if (!(nFax > 1000000000L && nFax < 9999999999L)){
+            return "Fax number must be 10 digits.";
+        }
+        if (!(nSecPhone > 1000000000L && nSecPhone < 9999999999L)){
+            return "Secondary phone number must be 10 digits.";
+        }
+        this.setName(sName);
+        this.setAddress(sAddress);
+        this.setProvince(sProvince);
+        this.setCity(sCity);
+        this.setPostal(sPostal);
+        this.setCountry(sCountry);
+        this.setEmail(sEmail);
+        this.setPhone(nPhone);
+        this.setFax(nFax);
+        this.setSecPhone(nSecPhone);
 
-
-        return sVal;
+        return "Successfully changed";
     }
 }
 
