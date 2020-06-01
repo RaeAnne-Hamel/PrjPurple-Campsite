@@ -36,10 +36,18 @@ public class Test_7b_Manager_Saves_And_Loads_Previous_Information {
     @Test
     public void tLoadFile()
     {
+        BookingsLedger bl = new BookingsLedger();
+
         ArrayList<Object> aCustomers = new ArrayList<>();
         assertEquals(0, aCustomers.size());
 
-        aCustomers = PersistentDataManager.load(fName, LoadType.Customer);
+        bl.setCustomerList(PersistentDataManager.load(fName, LoadType.Customer));
+        bl.setManagerList(PersistentDataManager.load(fName, LoadType.Customer));
+        bl.setLotList(PersistentDataManager.load(fName, LoadType.Customer));
+        bl.setReservationsList(PersistentDataManager.load(fName, LoadType.Customer));
+        bl.setReservationsList(PersistentDataManager.load(fName, LoadType.Customer));
+
+
 
         /* Check if 2 customers have been loaded */
         assertEquals(2, aCustomers.size());

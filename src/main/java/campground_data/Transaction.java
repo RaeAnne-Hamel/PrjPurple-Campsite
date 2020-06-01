@@ -91,5 +91,9 @@ public class Transaction extends Persistent{
 
     /* Must link with a reservation */
     @Override
-    public void link() { }
+    public void link(BookingsLedger bl, Object... arg) {
+        for (int i = 0; i < bl.getAllReservations().size(); i ++)
+            if (bl.getAllReservations().get(i).getID() == obResID)
+                obRes = bl.getAllReservations().get(i);
+    }
 }

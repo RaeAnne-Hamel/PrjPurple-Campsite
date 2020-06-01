@@ -99,7 +99,7 @@ public class Customer extends Persistent{
 
     /* Empty until needed */
     @Override
-    public void link() { }
+    public void link(BookingsLedger bl, Object... arg) { }
 }
 
 

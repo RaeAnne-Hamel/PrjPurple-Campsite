@@ -216,7 +216,7 @@ public class Reservation<Static> extends Persistent{
         this.ReservationID = Integer.parseInt((String)arg[0]);
         this.nCustomerCount = Integer.parseInt((String)arg[1]);
         this.price = Double.parseDouble((String)arg[2]);
-        this.nLinkedLotID = Integer.parseInt((String)arg[3]);
+        this.nLinkedLotID = Integer.parseInt((String)arg[3]); /* For linking lot */
 
         Date obStartDate = new Date(Integer.parseInt((String)arg[4]),Integer.parseInt((String)arg[5]),Integer.parseInt((String)arg[6]));
         this.obStartDate = obStartDate;
@@ -245,10 +245,15 @@ public class Reservation<Static> extends Persistent{
 
     /* Must link with an Arraylist of customers. */
     @Override
-    public void link(BookingsLedger bl, Object... arg){
+    public void link(BookingsLedger bl, Object... arg) {
 
-        ArrayList<Customer> aCustomers = new ArrayList<>();
+        /* searches for Lots with the ID's in their save data */
+        for (int i = 0; i < bl.getLotList().size(); i++)
+            if (bl.getLotList().get(i).nLotID == this.nLinkedLotID)
+                obLot = bl.getLotList().get(i);
+
         /* searches for customers with the ID's in their save data */
+        ArrayList<Customer> aCustomers = new ArrayList<>();
         for(int i = 0; i < nCustomerCount; i++)
         {
             int searchForID = Integer.parseInt((String)arg[11+i]);
@@ -258,6 +263,8 @@ public class Reservation<Static> extends Persistent{
                     obCustomerList.add(bl.aCustomer.get(i));
             }
         }
+
+        this.obCustomerList = aCustomers;
     }
 }
 

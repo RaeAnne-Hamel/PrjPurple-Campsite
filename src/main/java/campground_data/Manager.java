@@ -7,6 +7,8 @@ public class Manager extends Persistent{
 
     int EmployeeID;
 
+    private static int StaticEmplayeeID = 0;
+
     public void setPermissions(int nPermissions)
     {
         this.Permissions = nPermissions;
@@ -29,6 +31,8 @@ public class Manager extends Persistent{
     public void load(BookingsLedger bl, Object... arg) {
         setID(Integer.parseInt((String) arg[0]));
         setPermissions(Integer.parseInt((String) arg[1]));
+        StaticEmplayeeID++;
+
     }
 
     @Override
@@ -39,6 +43,6 @@ public class Manager extends Persistent{
 
     /*Empty until needed */
     @Override
-    public void link() { }
+    public void link(BookingsLedger bl, Object... arg) { }
 
 }

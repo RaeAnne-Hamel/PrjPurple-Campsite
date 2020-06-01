@@ -1,14 +1,10 @@
 package campground_data;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import campground_ui.MainConsole;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.UUID;
 
 public class BookingsLedger
 {
@@ -309,115 +305,131 @@ public class BookingsLedger
         A simple template class. Checks permissions. Always returns true
         because the permission system is not yet implemented.
          */
-                    public static boolean isValidPermissions (Manager user){
-                    return true;
-                }
+    public static boolean isValidPermissions (Manager user){
+    return true;
+}
 
-                    /**
-                     * Takes in a CustomerID and returns a customer object --Andrew
-                     * @param ID
-                     */
-                    public Customer getCustomerByID ( int ID)
-                    {
-                        System.out.println("test1");
-                        List<Customer> obCustomerList = aCustomer.stream()
-                                .filter(e -> e.getCustomerID() == ID)
-                                .collect(Collectors.toList());
+    /**
+     * Takes in a CustomerID and returns a customer object --Andrew
+     * @param ID
+     */
+    public Customer getCustomerByID ( int ID)
+    {
+        System.out.println("test1");
+        List<Customer> obCustomerList = aCustomer.stream()
+                .filter(e -> e.getCustomerID() == ID)
+                .collect(Collectors.toList());
 
-                        //Return null if no customer is found
-                        if (obCustomerList.size() == 0) {
-                            return null;
-                        } else {
-                            Customer obCustomer = obCustomerList.get(0);
-                            return obCustomer;
-                        }
-                    }
-
-
-                    /**
-                     * Add a customer if valid
-                     */
-                    public void addCustomer (Customer customer)
-                    {
-                        String sName = customer.getName();
-                        String sAddress = customer.getAddress();
-                        String sEmail = customer.getEmail();
-                        long nFax = customer.getFax();
-                        long nPhone = customer.getPhone();
-                        long nSecPhone = customer.getSecPhone();
-
-                        containsLetters(sName);
-                        tooLongString(sName, 256);
-                        tooShortString(sName, 1);
-
-                        tooLongString(sAddress, 256);
-                        tooShortString(sAddress, 1);
-
-                        tooLongString(sEmail, 256);
-                        tooShortString(sEmail, 5);
-
-                        tooBigLong(nFax);
-                        tooSmallLong(nFax);
-
-                        tooBigLong(nPhone);
-                        tooSmallLong(nPhone);
-
-                        tooBigLong(nSecPhone);
-                        tooSmallLong(nSecPhone);
-
-                        if (bCustomerPasses) {
-                            aCustomer.add(customer);
-                            System.out.println("Customer has been added");
-                        } else System.out.println("Customer could not be added");
-                    }
-
-                    public void containsLetters (String word)
-                    {
-                        char[] arCh = word.toCharArray();
-                        for (char ch : arCh) {
-                            if (!(Character.isLetter(ch))) {
-                                bCustomerPasses = false;
-                                break;
-                            }
-                        }
-                    }
-
-                    public void tooLongString (String word,int length){
-                    if (word.length() >= length) bCustomerPasses = false;
-                }
-
-                    public void tooShortString (String word,int length){
-                    if (word.length() <= length) bCustomerPasses = false;
-                }
-
-                    public void tooBigLong ( long number){
-                    if (number > 99999999999L) bCustomerPasses = false;
-                }
-
-                    public void tooSmallLong ( long number){
-                    if (number < 1000000000) bCustomerPasses = false;
-                }
+        //Return null if no customer is found
+        if (obCustomerList.size() == 0) {
+            return null;
+        } else {
+            Customer obCustomer = obCustomerList.get(0);
+            return obCustomer;
+        }
+    }
 
 
-                    public static Manager getUser () {
-                    return user;
-                }
+    /**
+     * Add a customer if valid
+     */
+    public void addCustomer (Customer customer)
+    {
+        String sName = customer.getName();
+        String sAddress = customer.getAddress();
+        String sEmail = customer.getEmail();
+        long nFax = customer.getFax();
+        long nPhone = customer.getPhone();
+        long nSecPhone = customer.getSecPhone();
 
-        /*
-        this will add a reservation to the reservation list.
-         */
-                    public void addReservation (Reservation reservation){
-                    aReservation.add(reservation);
-                }
+        containsLetters(sName);
+        tooLongString(sName, 256);
+        tooShortString(sName, 1);
 
-                    public ArrayList<Reservation> getAllReservations ()
-                    {
-                        return aReservation;
+        tooLongString(sAddress, 256);
+        tooShortString(sAddress, 1);
 
-                    }
+        tooLongString(sEmail, 256);
+        tooShortString(sEmail, 5);
 
-                    public void setReservationsList (ArrayList < Reservation > obReservations)
-                    {
-                        this.aReservation = obReservations;
-                    }
-                }
+        tooBigLong(nFax);
+        tooSmallLong(nFax);
+
+        tooBigLong(nPhone);
+        tooSmallLong(nPhone);
+
+        tooBigLong(nSecPhone);
+        tooSmallLong(nSecPhone);
+
+        if (bCustomerPasses) {
+            aCustomer.add(customer);
+            System.out.println("Customer has been added");
+        } else System.out.println("Customer could not be added");
+    }
+
+    public void containsLetters (String word)
+    {
+        char[] arCh = word.toCharArray();
+        for (char ch : arCh) {
+            if (!(Character.isLetter(ch))) {
+                bCustomerPasses = false;
+                break;
+            }
+        }
+    }
+
+    public void tooLongString (String word,int length){
+    if (word.length() >= length) bCustomerPasses = false;
+    }
+
+    public void tooShortString (String word,int length){
+    if (word.length() <= length) bCustomerPasses = false;
+    }
+
+    public void tooBigLong ( long number){
+    if (number > 99999999999L) bCustomerPasses = false;
+}
+
+    public void tooSmallLong ( long number){
+    if (number < 1000000000) bCustomerPasses = false;
+}
+
+
+    public static Manager getUser () {
+    return user;
+}
+
+/*
+this will add a reservation to the reservation list.
+*/
+    public void addReservation (Reservation reservation){
+    aReservation.add(reservation);
+}
+
+    public ArrayList<Reservation> getAllReservations ()
+    {
+        return aReservation;
+
+    }
+
+    public void setReservationsList (ArrayList < Reservation > obReservations)
+    {
+        this.aReservation = obReservations;
+    }
+
+
+    public void setCustomerList(ArrayList<Customer> aCustomer)
+    {
+        this.aCustomer = aCustomer;
+    }
+
+    public void setManagerList(ArrayList<Manager> aManager)
+    {
+        this.aManager = aManager;
+    }
+
+    public void seTransactionList(ArrayList<Transaction> aTransaction)
+    {
+        this.aTransaction = aTransaction;
+    }
+}

@@ -17,7 +17,7 @@ public class PersistentDataManager {
      * @param eType
      * @return
      */
-    public static <E> ArrayList<E> load(String sFile, LoadType eType)
+    public static <E> ArrayList<E> load(String sFile, LoadType eType, BookingsLedger bl)
     {
         /* Hold on to the locally saved files */
         ArrayList<E> aLoaded = new ArrayList<E>();
@@ -35,7 +35,7 @@ public class PersistentDataManager {
             while (obIn.hasNext())
             {
                 String[] sFields  = parseCSVLine(obIn.nextLine());
-                Object record = loadRecord(eType, sFields);
+                Object record = loadRecord(eType, bl, sFields);
 
                 /* Append to ArrayList */
                 aLoaded.add((E) record);
@@ -50,7 +50,7 @@ public class PersistentDataManager {
     }
 
     /* Load a single record, called many times when a file is loaded */
-    public static Object loadRecord(LoadType eType, Object... arg)
+    public static Object loadRecord(LoadType eType, BookingsLedger bl, Object... arg)
     {
         Object record = null;
 
@@ -59,7 +59,8 @@ public class PersistentDataManager {
         {
             case Customer:
                 record = new Customer();
-                ((Customer) record).load(arg);
+                if (record instanceof Persistent)
+                    ((Persistent) record).load(bl, arg);
                 break;
             case Lot:
                 //record = new Lot();

@@ -147,6 +147,19 @@ public class Lot extends Persistent{
 
     /* Empty until needed */
     @Override
-    public void link() { }
+    public void link(BookingsLedger bl, Object... arg) {
+
+        /* searches for Reservations with the ID's in their save data */
+        ArrayList<Reservation> aReservations = new ArrayList<>();
+        for(int i = 0; i < obReservationListLength; i++)
+        {
+            int searchForID = Integer.parseInt((String)arg[5+i]);
+            for (int j = 0; j < bl.getAllReservations().size(); j++)
+            {
+                if (bl.getAllReservations().get(i).getReservationID() == searchForID)
+                    obReservationList.add(bl.getAllReservations().get(i));
+            }
+        }
+    }
 }
 
