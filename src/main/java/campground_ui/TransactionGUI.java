@@ -22,7 +22,10 @@ public class TransactionGUI  extends Application {
     //this is  just test information so that i can see how the grid works.
     Reservation testRes = new Reservation(null, 3, new Date(), new Date(), new Lot());
     //this will dynamically change as we make edits to the reservation
-    Text scenetitle = new Text(testRes.getTransaction().toString()); //this is the information for the current reservation
+    Text scenetitle; //this is the information for the current reservation
+    Label discountError; //this is an error handeling box.
+    Label PriceError;
+    Button btnSave, btnExit;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -55,6 +58,7 @@ public class TransactionGUI  extends Application {
 
 
 //this is the information for the form section.
+        scenetitle = new Text(transaction.toString());
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 14));
         grid.add(scenetitle, 0, 0, 2, 1);
 
@@ -79,16 +83,18 @@ public class TransactionGUI  extends Application {
         //place a textinput and a empty label to display an error if needed
         TextField discountBox = new TextField(); //error handeling will be in the Save button.
         grid.add(discountBox,1,3);
-        Label discountError = new Label();
+        discountError = new Label();
         grid.add(discountError, 2,3);
 
 
 //this is the price information
-        Label Priceinfo = new Label("Price:");
+        Label Priceinfo = new Label("Change Price:");
         grid.add(Priceinfo, 0, 4);
         //place a textinput for the price infomration
         TextField Price = new TextField(); //error handeling will be in the Save button.
         grid.add(Price,1,4);
+        PriceError = new Label();
+        grid.add(PriceError, 2, 4);
 
 //this is the total price of the reservation after the discount and everything has been applied.
         Label Total = new Label("Total Price:");
@@ -103,22 +109,44 @@ public class TransactionGUI  extends Application {
         CheckBox paidBox = getPaidBox(transaction); //erroe handeling and setting will be in the save button.
         grid.add(paidBox, 2, 5);
 
-
-
+        //this button will clode the window and not update any of the inforamtion that was selected
+        btnExit = new Button("Exit");
+        btnExit.setOnAction(actionEvent -> {
+            if(btnExit.getText().equalsIgnoreCase("Back to edit"))
+            {
+                btnExit.setText("Exit");
+                btnSave.setText("Save");
+            }
+            else
+            {
+                System.exit(0);
+            }
+        });
 
 //this will update all of the information for the current transaction and reservation.
-        Button btnSave = new Button("Save");
+        btnSave = new Button("Save");
         btnSave.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
-                String discountResults = checkDiscount(discountBox.getText(), transaction);
+                //change the Exit button to a back button
+                btnExit.setText("Back to edit");
+                //change our button to a confirm button
+                btnSave.setText("Confirm Changes");
+                //check the input placed into the boxes
+                checkDiscount(discountBox.getText(), transaction);
+                checkPrice(Price.getText(), transaction);
+                //calculate a new ammount to dispaly for the toal price.
+                String newAmmount = changeNewammount(transaction.discount, transaction.getPrice(), transaction);
+                adustedPrice.setText("$ CAD " + newAmmount);
+
+                //if all the errors have been shown and the data has been adjusted.
+                if(btnSave.getText().equals("Confirm Changes"))
+                {
+
+                }
 
             }
         });
-        //this button will clode the window and not update any of the inforamtion that was selected
-        Button btnExit = new Button("Exit");
-        btnExit.setOnAction(actionEvent -> {
-            System.exit(0);
-        });
+
         //exit this
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.CENTER);
@@ -130,22 +158,82 @@ public class TransactionGUI  extends Application {
     }
 
     /**
+     * this method wil return a string ammount of how much the new reservation will cost
+     * after all of the changes place in the boxes are applyied.
+     * @param price
+     * @param discount
+     * @return
+     */
+    private String changeNewammount(double price, double discount, Transaction transaction)
+    {
+        //if no discount if given then just display the price.
+        if(discount == 0.0)
+        {
+            return Double.toString(transaction.getPrice());
+        }
+        else if(price == 0.0)
+        {
+            return Double.toString(price);
+        }
+        else
+        {
+            //find the discounted price
+            price = price * discount;
+            return Double.toString(price);
+        }
+    }
+
+    /**
+     * this method will check the new price inputted into the text box if one if put into the text box
+     * It will return no error if eveything is correct and place a error into PriceError if something is wrong
+     * This Method uses the setPrice in the reservation method.
+     * @param price - the new price
+     * @param transaction - the current transaction we are working with.
+     */
+    private void checkPrice(String price, Transaction transaction) {
+        if(price.equals(""))
+        {
+            PriceError.setText("Price not changed");
+        }
+        else
+        {
+            Double newPrice = Double.parseDouble(price);
+
+            if(newPrice == 0.0)
+            {
+                PriceError.setText("Price Not Set");
+            }
+            else
+            {
+                transaction.setPrice(newPrice);
+                scenetitle.setText(transaction.toString());
+            }
+        }
+    }
+
+    /**
      * this method will check the discount and new price information
      * And will return a blank string depending on what was restuned from
      * the diecount method in the reservaation class.
      * @return
      */
-    private String checkDiscount(String discount, Transaction transaction) {
-
-        int newDiscount = Integer.parseInt(discount);
-        Double results = transaction.setDiscount(newDiscount);
-        if(results == transaction.obRes.getPrice())
+    private void checkDiscount(String discount, Transaction transaction) {
+        if(discount.equals(""))
         {
-            return "no Discount applyied";
+            discountError.setText("No Discount added");
         }
         else
         {
-            return "";
+            int newDiscount = Integer.parseInt(discount);
+            Double results = transaction.setDiscount(newDiscount);
+            if(results == transaction.obRes.getPrice())
+            {
+                discountError.setText("No Discount added");
+            }
+            else
+            {
+                discountError.setText("");
+            }
         }
     }
 
@@ -193,7 +281,7 @@ public class TransactionGUI  extends Application {
                         //when a new type is selected change the value of the trnsaction
                         transaction.setPayMethod(comboBox.getValue());
                         //change the title so that is shows the change
-                        scenetitle.setText(testRes.getTransaction().toString());
+                        scenetitle.setText(transaction.toString());
                     }
                 };
 
@@ -227,7 +315,7 @@ public class TransactionGUI  extends Application {
                         //when a new type is selected change the value of the trnsaction
                         transaction.setPayType(comboBox.getValue());
                         //change the title so that is shows the change
-                        scenetitle.setText(testRes.getTransaction().toString());
+                        scenetitle.setText(transaction.toString());
                     }
                 };
 
@@ -236,7 +324,7 @@ public class TransactionGUI  extends Application {
         return comboBox;
 
     }
-    
+
 
     public static void main(String[] args) {
         launch(args);

@@ -121,6 +121,11 @@ public class Transaction {
         return obRes.getPrice();
     }
 
+    public void setPrice(double Price)
+    {
+        obRes.setPrice(Price);
+    }
+
      @Override
     public String toString()
      {
