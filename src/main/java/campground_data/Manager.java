@@ -1,6 +1,6 @@
 package campground_data;
 
-public class Manager{
+public class Manager extends Persistent{
 
 
     private int Permissions;
@@ -16,6 +16,25 @@ public class Manager{
     public int getPermissions()
     {
         return Permissions;
+    }
+
+    public void setID(int ID)
+    {
+        this.EmployeeID = ID;
+    }
+
+
+    /* ID, Permissions */
+    @Override
+    public void load(Object... arg) {
+        setID(Integer.parseInt((String) arg[0]));
+        setPermissions(Integer.parseInt((String) arg[1]));
+    }
+
+    @Override
+    public String savable() {
+        return String.format("%d,%s",
+                this.EmployeeID,this.Permissions);
     }
 
 }

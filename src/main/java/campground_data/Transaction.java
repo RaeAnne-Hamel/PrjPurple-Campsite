@@ -1,9 +1,10 @@
 package campground_data;
 
-public class Transaction{
+public class Transaction extends Persistent{
 
     public PaymentType payType;
     public PaymentMethod payMethod;
+    public int obResID;
     Reservation obRes;
 
 
@@ -73,4 +74,13 @@ public class Transaction{
          return String.format("Reservation: %s, Payment type: %s, Payment method: %s Price: %.2f", this.obRes, this.payType, this.payMethod, this.getPrice());
      }
 
+    @Override
+    public void load(Object... arg) {
+
+    }
+
+    @Override
+    public String savable() {
+        return null;
+    }
 }

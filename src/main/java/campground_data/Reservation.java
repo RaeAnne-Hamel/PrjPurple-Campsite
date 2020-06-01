@@ -6,10 +6,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Reservation<Static> {
+public class Reservation<Static> extends Persistent{
 
     /*Primitive Variables */
-    int ReservationID, nCustomerCount;
+    int ReservationID, nCustomerCount, nLinkedLotID;
     double price;
     Lot obLot;
     ArrayList<Customer> obCustomerList;
@@ -208,6 +208,30 @@ public class Reservation<Static> {
                 " - " + obEndDate +
                 " Number Of People " + nCustomerCount +
                 " Lot Type: " + obLot.getLotType();
+    }
+
+    /* ID, nCustCount, Price, LinkedLotID, StartDate(Y,M,D), EndDate(Y,M,D), status*/
+    @Override
+    public void load(Object... arg) {
+        this.ReservationID = Integer.parseInt((String)arg[0]);
+        this.nCustomerCount = Integer.parseInt((String)arg[1]);
+        this.price = Double.parseDouble((String)arg[2]);
+        this.nLinkedLotID = Integer.parseInt((String)arg[3]);
+
+        Date obStartDate = new Date(Integer.parseInt((String)arg[4]),Integer.parseInt((String)arg[5]),Integer.parseInt((String)arg[6]));
+        this.obStartDate = obStartDate;
+
+        Date obEndDate = new Date(Integer.parseInt((String)arg[7]),Integer.parseInt((String)arg[8]),Integer.parseInt((String)arg[9]));
+        this.obStartDate = obEndDate;
+
+        status = Boolean.parseBoolean((String) arg[10]);
+    }
+
+    @Override
+    public String savable() {
+        return String.format("%d,%f,%d,%d,%d,%d,%d,%d,%d,%b",
+                getReservationID(),nCustomerCount,nLinkedLotID,obStartDate.getYear(),obStartDate.getMonth(),
+                obStartDate.getDay(),obEndDate.getYear(),obEndDate.getMonth(),obEndDate.getDay(),status);
     }
 }
 

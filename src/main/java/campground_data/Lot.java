@@ -1,17 +1,20 @@
 package campground_data;
 
 
+import org.omg.CORBA.Environment;
+
 import java.util.ArrayList;
 
-public class Lot{
+public class Lot extends Persistent{
 
 
     int nLotID;
     LotType obType;
     ArrayList<Reservation> obReservationList;
-    int StaticLotID = 0;
+    public static int StaticLotID = 0;
     String sRemovalReason;
     boolean bAvailability;
+    int obReservationListLength;
 
     public Lot(int nLotID,
                LotType obType,
@@ -126,5 +129,20 @@ public class Lot{
         return ("Lot ID " + this.getLotID() + " Lot Type: " + this.getLotType() + " Removal Reason: " + this.sRemovalReason + " Availability: " + this.getAvailability());
     }
 
+    /* LotID, LotType, Removal Reason, bAvailability, Reservationcount */
+    @Override
+    public void load(Object... arg) {
+        nLotID = Integer.parseInt((String)arg[0]);
+        setLotType(LotType.valueOf((String)arg[1]));
+        setRemovalReason((String)arg[2]);
+        setAvailability(Boolean.parseBoolean((String)arg[3]));
+        obReservationListLength = Integer.parseInt((String)arg[4]);
+    }
+
+    @Override
+    public String savable() {
+        return String.format("%d,%s,%s,%b,%d",
+                getLotID(),getLotType(),getRemovalReason(),getAvailability(),obReservationListLength);
+    }
 }
 

@@ -77,7 +77,7 @@ public class Customer extends Persistent{
 
     public void setIdPool(int idPool) { this.idPool = idPool; }
 
-    /* Load information for the Customer */
+    /* ID, Address, Email, Fax, Phone, SecPhone, Visits, frequent */
     public void load(Object... arg) {
         this.setCustomerID(Integer.parseInt((String) arg[0]));
         this.setAddress((String)arg[1]);
@@ -90,6 +90,7 @@ public class Customer extends Persistent{
         idPool++;
     }
 
+    /* ID, Address, Email, Fax, Phone, SecPhone, Visits, frequent */
     @Override
     public String savable() {
         return String.format("%d,%s,%d,%d,%d,%d,%b",
