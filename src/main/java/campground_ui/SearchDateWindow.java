@@ -3,7 +3,10 @@ package campground_ui;
 import campground_data.BookingsLedger;
 import campground_data.Lot;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -91,56 +94,68 @@ public class SearchDateWindow extends Stage {
         //This label will be changed to reflect the accommodation list
         Label obAccommodations = new Label("");
 
+
         //Set up button for searching
-        obSearch.setOnAction(e-> {
+        obSearch.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                System.out.println("Button Pressed");
 
-            //Verify all fields have positive numbers
-            if(testForPosInt(obAYear.getText())
-            && testForPosInt(obAMonth.getText())
-            && testForPosInt(obADay.getText())
-            && testForPosInt(obDYear.getText())
-            && testForPosInt(obDMonth.getText())
-            && testForPosInt(obDDay.getText())) {
+                //Verify all fields have positive numbers
+                if (testForPosInt(obAYear.getText())
+                        && testForPosInt(obAMonth.getText())
+                        && testForPosInt(obADay.getText())
+                        && testForPosInt(obDYear.getText())
+                        && testForPosInt(obDMonth.getText())
+                        && testForPosInt(obDDay.getText())) {
 
 
-                int[] arrivalDate = {
-                        Integer.parseInt(obAYear.getText()),
-                        Integer.parseInt(obAMonth.getText()),
-                        Integer.parseInt(obADay.getText()),
-                };
-                int[] departureDate = {
-                        Integer.parseInt(obDYear.getText()),
-                        Integer.parseInt(obDMonth.getText()),
-                        Integer.parseInt(obDDay.getText())
-                };
+                    int[] arrivalDate = {
+                            Integer.parseInt(obAYear.getText()),
+                            Integer.parseInt(obAMonth.getText()),
+                            Integer.parseInt(obADay.getText()),
+                    };
+                    int[] departureDate = {
+                            Integer.parseInt(obDYear.getText()),
+                            Integer.parseInt(obDMonth.getText()),
+                            Integer.parseInt(obDDay.getText())
+                    };
 
-                Date obStartDate = new GregorianCalendar(arrivalDate[0],arrivalDate[1],arrivalDate[2]).getTime();
-                Date obEndDate = new GregorianCalendar(arrivalDate[0],arrivalDate[1],arrivalDate[2]).getTime();
+                    Date obStartDate = new GregorianCalendar(arrivalDate[0], arrivalDate[1], arrivalDate[2]).getTime();
+                    Date obEndDate = new GregorianCalendar(arrivalDate[0], arrivalDate[1], arrivalDate[2]).getTime();
 
-                List<Lot> obLotList = MainGui.obBookingsLedger.checkAvailability(obStartDate,obEndDate);
-                String obOutput = "";
-                for(Lot obLot : obLotList)
-                {
-                    obOutput += obLot.getLotType().toString() + ", ID:" + obLot.getLotID() + "\n";
+                    List<Lot> obLotList = MainGui.obBookingsLedger.checkAvailability(obStartDate, obEndDate);
+                    String obOutput = "";
+                    if(obLotList.size() > 0)
+                    for (Lot obLot : obLotList) {
+                        obOutput += obLot.getLotType().toString() + ", ID:" + obLot.getLotID() + "\n";
+                    }
+                    else{
+                        System.out.println("None found");
+                        obOutput = "No Accommodations Available";
+
+                    }
+
+                    //Display list
+                    obAccommodations.setText(obOutput);
+                    obAccommodations.setFont(new Font(20));
+
                 }
 
 
-
-            }
-
-
-            //If one of the fields is not a number display error
-            else
-            {
-                Alert obAlert = new Alert(Alert.AlertType.ERROR);
-                obAlert.setTitle("Error Detected");
-                obAlert.setHeaderText("All Fields must be positive numbers");
-                obAlert.showAndWait();
+                //If one of the fields is not a number display error
+                else {
+                    Alert obAlert = new Alert(Alert.AlertType.ERROR);
+                    obAlert.setTitle("Error Detected");
+                    obAlert.setHeaderText("All Fields must be positive numbers");
+                    obAlert.showAndWait();
+                }
             }
 
         });
 
         obGridPane.add(obFields,1,0);
+        obGridPane.add(obAccommodations,1,2);
         obGridPane.setPadding(new Insets(30,30,30,30));
 
         this.setTitle("Search for Available Accommodations");
