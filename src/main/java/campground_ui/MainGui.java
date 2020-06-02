@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import campground_data.BookingsLedger;
 
@@ -217,6 +218,15 @@ public class MainGui extends Application {
      */
     private void EditCust(Stage stage) {
         //Creates new panes for the top and bottom. Separate VBoxes are created for the buttons on the left and right for alignment reasons - DW
+
+        obBookingsLedger.aCustomer.add(new Customer("bob", "loblaw", "215 bob street",
+                "BC", "VA", "S7N4V2", "Canada", "bob@bob.com",
+                3,7801234, 3144567, 4, true));
+
+        obBookingsLedger.aCustomer.add(new Customer("bob", "lawless", "215 bob street",
+                "BC", "VA", "S7N4V2", "Canada", "bob@bob.com",
+                3,7801234, 3144567, 4, true));
+
         BorderPane editCustPane = new BorderPane();
         HBox custCenter = new HBox();
         VBox custLeft = new VBox();
@@ -227,33 +237,67 @@ public class MainGui extends Application {
 
         custCenter.setAlignment(Pos.CENTER);
         custCenter.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
-        custCenter.setSpacing(200);
+        custCenter.setSpacing(100);
 
-        Button btnBack2 = new Button("Back to Home");
         TextField txtSearch = new TextField();
+        Button btnBack2 = new Button("Back to Home");
         Button btnSearch = new Button("Search");
+        Button btnID = new Button("Edit with Customer ID");
 
-        String sSearch = txtSearch.getText();
+        Label lblID = new Label("Customer ID");
+        Label lblName = new Label("Last Name");
+        TextField txtID = new TextField();
+        Label lblResults = new Label();
 
-        ArrayList<Customer> obCustomers = obBookingsLedger.aCustomer;
-        ArrayList<String> obAC = obCustomers.stream()
-                .filter(x -> x.getLast().equalsIgnoreCase(sSearch))
-                .sorted((x, y) -> (x.getLast().compareTo(y.getLast())))
-                .map(x -> x.getName() + " " + x.getLast() + " " + x.getCustomerID())
-                .collect(Collectors.toCollection(ArrayList::new));
-        ComboBox cmbResults = new ComboBox();
+        //ComboBox cmbResults = new ComboBox();
+
+//        cmbResults.setOnAction(e -> {
+//            new EditCustomerWindow();
+//        });
+        //btnSearch.setOnAction(e -> cmbResults.setItems(FXCollections.observableArrayList(obAC)));
+
+        GridPane bottomGrid = new GridPane();
+        bottomGrid.add(lblID, 0, 0);
+        bottomGrid.add(lblName, 0, 1);
+        bottomGrid.add(btnBack2, 0, 3);
+
+        bottomGrid.add(txtSearch, 1, 0);
+        bottomGrid.add(txtID, 1, 1);
+
+        editCustPane.setTop(lblResults);
+        custRight.getChildren().addAll(btnID, btnSearch);
+        custCenter.getChildren().addAll(bottomGrid, custRight);
+        editCustPane.setBottom(custCenter);
 
         btnBack2.setOnAction(e -> stage.setScene(mainScene));
-        btnSearch.setOnAction(e -> cmbResults.setItems(FXCollections.observableArrayList(obAC)));
-        cmbResults.setOnAction(e -> {
-            new EditCustomerWindow();
+
+
+        btnSearch.setOnAction(e -> {
+            String sSearch = txtSearch.getText();
+            ArrayList<String> obAC = obBookingsLedger.aCustomer.stream()
+                    .filter(x -> x.getLast().equalsIgnoreCase(sSearch))
+                    .sorted((x, y) -> (x.getLast().compareTo(y.getLast())))
+                    .map(x -> x.getName() + " " + x.getLast() + " " + x.getCustomerID())
+                    .collect(Collectors.toCollection(ArrayList::new));
+
+            String sResults = "";
+
+            for (String sVal : obAC)
+            {
+                sResults += (sVal + "\n");
+            }
+            lblResults.setText(sResults);
         });
 
-
-        custLeft.getChildren().addAll(cmbResults, btnBack2);
-        custCenter.getChildren().addAll(custLeft, custRight);
-        custRight.getChildren().add(btnSearch);
-        editCustPane.setCenter(custCenter);
+        btnID.setOnAction(e -> {
+            for (Customer obCust : obBookingsLedger.aCustomer)
+            {
+                if (obCust.getCustomerID() == Integer.parseInt(txtID.getText()))
+                {
+                    new EditCustomerWindow(stage, obCust);
+                }
+            }
+        });
 
         stage.setScene(new Scene(editCustPane, 500, 500));
     }

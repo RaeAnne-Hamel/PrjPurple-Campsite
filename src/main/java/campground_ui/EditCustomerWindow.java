@@ -16,10 +16,10 @@ import javafx.stage.Stage;
 public class EditCustomerWindow extends Application {
     private Customer obCustomer;
 
-//    public EditCustomerWindow(Customer obCustomer)
-//    {
-//        this.obCustomer = obCustomer;
-//    }
+    public EditCustomerWindow(Stage stage, Customer obCustomer)
+    {
+        this.obCustomer = obCustomer;
+    }
 
     //Declaring all the variables that'll be used in multiple methods.
     TextField txtName;
