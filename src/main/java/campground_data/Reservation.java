@@ -114,7 +114,7 @@ public class Reservation<Static> {
      *
      * @param newPrice
      */
-    private void setPrice(double newPrice) {
+    public void setPrice(double newPrice) {
         this.price = newPrice;
     }
 

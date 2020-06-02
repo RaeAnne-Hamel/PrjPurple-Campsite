@@ -21,7 +21,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 
-public class TransactionGUI extends Application {
+public class TransactionGUI extends Stage {
 
     //this will dynamically change as we make edits to the reservation
     private static Text scenetitle; //this is the information for the current reservation
@@ -29,32 +29,6 @@ public class TransactionGUI extends Application {
     private static Label PriceError;
     private static Button btnSave, btnExit;
 
-    //this is for testing purposes
-    private Date obStart = new Date(2020, Calendar.JUNE, 11);
-    private Date obEnd = new Date(2020, Calendar.JUNE, 15);
-
-
-    //this will be a basic reservation
-    Reservation GlobalRegularReservation = new Reservation(null, 3, obStart, obEnd, new Lot());
-
-
-    @Override
-    public void start(Stage stage) throws Exception {
-        //you will need to pass in the transaction you want to edit from
-        //the reservation.
-        GridPane grid = EditTransaction(GlobalRegularReservation.getTransaction());
-
-
-
-        stage.setScene(new Scene(grid, 600, 600));
-        stage.setTitle("Pricing and Payment Information");
-        stage.show();
-    }
-
-
-    public static void main(String[] args) {
-        launch(args);
-    }
 
     /**
      * this will take in the transactions that we will want to edit from the reservation
@@ -63,7 +37,7 @@ public class TransactionGUI extends Application {
      * @param transaction
      * @return
      */
-    public static GridPane EditTransaction(Transaction transaction)
+    public TransactionGUI(Transaction transaction)
     {
         GridPane grid = new GridPane();
         //have all the elements letf align
@@ -192,7 +166,9 @@ public class TransactionGUI extends Application {
         grid.add(hbBtn, 1, 7);
 
         //return the Grid pane we have made
-        return grid;
+        this.setScene(new Scene(grid, 600, 600));
+        this.setTitle("Pricing and Payment Information");
+        this.show();
     }
 
     /**

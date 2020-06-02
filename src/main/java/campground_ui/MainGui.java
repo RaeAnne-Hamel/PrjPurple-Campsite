@@ -16,6 +16,8 @@ import campground_data.*;
 
 public class MainGui extends Application {
     //Loads image once so it isn't wasteful. Declares the separate panes here for general use.
+    public static BookingsLedger bookingsLedger = new BookingsLedger();
+
     Image Camp = new Image("file:images/campground.jpg");
     BorderPane custPane;
     BorderPane accomPane;

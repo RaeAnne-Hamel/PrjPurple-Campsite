@@ -12,6 +12,7 @@ public class Lot {
     int StaticLotID = 0;
     String sRemovalReason;
     boolean bAvailability;
+    double price = 0;
 
     public Lot(int nLotID,
                LotType obType,

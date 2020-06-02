@@ -126,10 +126,6 @@ public class AddReservationGui extends Application {
 
                 );
 
-        txtLotID.setOnKeyReleased(e-> {
-            lblLotType.setText(MainGui.BookingLedger.querySearchCampsite(Integer.parseInt(txtLotID.getText())).toString());
-        });
-
         obGrid.add(lblLotID, 0,3);
         obGrid.add(txtLotID, 1, 3);
         obGrid.add(lblLotType, 2, 3);
@@ -159,6 +155,10 @@ public class AddReservationGui extends Application {
         obBorder.setBottom(obHBox);
 
 
+        txtLotID.setOnKeyReleased(e-> {
+            lblLotType.setText(MainGui.bookingsLedger.querySearchCampsite(Integer.parseInt(txtLotID.getText())).toString());
+        });
+
 
 
 
@@ -185,7 +185,7 @@ public class AddReservationGui extends Application {
 
     private ArrayList<String> getCustNameList()
     {
-        ArrayList<Customer> custList = MainGui.BookingLedger.getCustomerList();
+        ArrayList<Customer> custList = MainGui.bookingsLedger.getCustomerList();
         ArrayList<String> names = new ArrayList<>();
 
         for(Customer obCust : custList)

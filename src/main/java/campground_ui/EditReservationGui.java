@@ -4,6 +4,9 @@ import campground_data.Customer;
 import campground_data.Lot;
 import campground_data.Reservation;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -14,11 +17,23 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.TextBoundsType;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class EditReservationGui extends Application {
+
+    //this is for testing purposes
+    private Date obStart = new Date(2020, Calendar.JUNE, 11);
+    private Date obEnd = new Date(2020, Calendar.JUNE, 15);
+
+
+    //this will be a basic reservation
+    Reservation GlobalRegularReservation = new Reservation(null, 3, obStart, obEnd, new Lot());
+
 
 
 
@@ -34,16 +49,15 @@ public class EditReservationGui extends Application {
     private HBox obHBox;
 
     //Labels
-    private Label lblCustomers, lblCust1, lblCust2,  lblArrival, lblDeparture, lblLotID, lblLotType, lblGuest, lblResID,
-            lblResID2;
+    private Label lblCustomers, lblCust1, lblCust2,  lblArrival, lblDeparture, lblLotID, lblLotType, lblGuest, lblResID;
 
     //Textfield
     private TextField txtArrivalYear, txtArrivalDay, txtArrivalMonth, txtDepartDay, txtDepartMonth, txtDepartYear,
-                        txtGuest, txtLotID;
+                        txtGuest, txtLotID, txtResID2;
 
 
     //button
-    Button btnBack, btnConfirm;
+    Button btnBack, btnConfirm, btnTransaction, btnEdit;
 
 
     @Override
@@ -55,8 +69,29 @@ public class EditReservationGui extends Application {
         obHBox = new HBox();
 
         //Creating Labels
+        //reservation label.
         lblResID = new Label("Reservation Id: ");
-        lblResID2 = new Label("");
+        txtResID2 = new TextField();
+        lblResID.setMaxSize(70, 50);
+        //only let numbers be put into this test feild
+        txtResID2.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    txtResID2.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
+
+        btnEdit = new Button("Edit");
+        btnBack.setOnAction(ActionEvent ->{
+            allowEdits();
+
+                }
+        );
+
+
         lblCustomers = new Label("Customer Names: ");
         lblCust1 = new Label("");
         lblCust2 = new Label("");
@@ -88,6 +123,7 @@ public class EditReservationGui extends Application {
         //creating Buttons
         btnBack = new Button("Back to Reservation");
         btnConfirm = new Button("Confirm");
+        btnTransaction = new Button("Edit Pricing Information");
 
         //Setting spacing and alignment
         obGrid.setVgap(5);
@@ -96,7 +132,7 @@ public class EditReservationGui extends Application {
 
         //make the Grid
         obGrid.add(lblResID, 0, 0);
-        obGrid.add(lblResID2, 1, 0);
+        obGrid.add(txtResID2, 1, 0);
 
         obGrid.add(lblCustomers, 0, 2);
         obGrid.add(lblCust1, 1, 2);
@@ -122,21 +158,15 @@ public class EditReservationGui extends Application {
         obGrid.setPadding(new Insets(10,10,10,10));
 
 
+        //add the buttons onto the plane.
         obHBox.setAlignment(Pos.BASELINE_CENTER);
-        obHBox.setSpacing(430);
+        obHBox.setSpacing(125);
         obHBox.setPadding(new Insets(15,10,10,10));
-        obHBox.getChildren().addAll(btnBack, btnConfirm);
+        obHBox.getChildren().addAll(btnBack, btnTransaction, btnConfirm);
+        onClickForButtons();
 
         obBorder.setCenter(obGrid);
         obBorder.setBottom(obHBox);
-
-
-
-
-
-
-
-
 
         obStage.setScene(new Scene(obBorder, 650, 500));
         obStage.setTitle("Edit Reservation");
@@ -145,9 +175,17 @@ public class EditReservationGui extends Application {
 
     }
 
+    private void allowEdits() {
+        return;
+    }
 
-
-
+    public void onClickForButtons()
+    {
+        btnTransaction.setOnAction(actionEvent -> {
+                TransactionGUI transGui = new TransactionGUI(GlobalRegularReservation.getTransaction());
+                transGui.showAndWait();
+        });
+    }
 
 
 
