@@ -2,6 +2,7 @@ package campground_ui;
 
 import campground_data.BookingsLedger;
 import campground_data.Lot;
+import campground_data.LotType;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,16 +20,24 @@ import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.regex.Pattern;
 
+
 public class SearchDateWindow extends Stage {
 
-
+    /**
+     * This stage allows the user to enter Two dates and have a label show all the available accomodations -AE
+     * @param parent
+     */
     public SearchDateWindow(Stage parent){
 
+        ArrayList<Lot> lotArray = new ArrayList<>();
+        lotArray.add(new Lot(0));
+        MainGui.obBookingsLedger.setLotList(lotArray);
 
         //Grid pane will be used for Scene
         GridPane obGridPane = new GridPane();
@@ -95,8 +104,13 @@ public class SearchDateWindow extends Stage {
         Label obAccommodations = new Label("");
 
 
-        //Set up button for searching
+        /**
+         * This button contains all the code used to verify all fields are positive numbers,
+         * Use those numbers to make a StartDate and EndDate, Retrieve a lot List using checkAvailability,
+         * and output that lot List as a string into a label to display to the user. -AE
+         */
         obSearch.setOnAction(new EventHandler<ActionEvent>() {
+            //event handler needed to change label
             @Override
             public void handle(ActionEvent actionEvent) {
                 System.out.println("Button Pressed");
@@ -121,14 +135,19 @@ public class SearchDateWindow extends Stage {
                             Integer.parseInt(obDDay.getText())
                     };
 
+                    //Create Dates using numbers user has inputted
                     Date obStartDate = new GregorianCalendar(arrivalDate[0], arrivalDate[1], arrivalDate[2]).getTime();
                     Date obEndDate = new GregorianCalendar(arrivalDate[0], arrivalDate[1], arrivalDate[2]).getTime();
 
+                    //Lot List loaded from dates
                     List<Lot> obLotList = MainGui.obBookingsLedger.checkAvailability(obStartDate, obEndDate);
                     String obOutput = "";
                     if(obLotList.size() > 0)
                     for (Lot obLot : obLotList) {
-                        obOutput += obLot.getLotType().toString() + ", ID:" + obLot.getLotID() + "\n";
+
+                        //String gets lotType as a properly formated string
+                        String sLotType = lotTypeAsString(obLot.getLotType());
+                        obOutput += sLotType + ", ID:" + obLot.getLotID() + "\n";
                     }
                     else{
                         System.out.println("None found");
@@ -170,6 +189,27 @@ public class SearchDateWindow extends Stage {
         //returns false if the string has any non numeric characters or if the number is negative
         return Pattern.compile("^\\d+$").matcher(sField).matches();
 
+    }
+
+    private String lotTypeAsString(LotType obType)
+    {
+        switch (obType) {
+            case NonServicedIndividual:
+                return "Non-Serviced Individual";
+
+            case ServicedIndividual:
+                return "Serviced Individual";
+            case NonServicedGroup:
+                return "Non-Serviced Group";
+            case ServicedGroup:
+                return "Serviced Group";
+            case Cabin:
+                return "Cabin";
+            case DeluxeCabin:
+                return "Deluxe Cabin";
+            default:
+                return "ERROR LOT TYPE NOT FOUND";
+        }
     }
 
 
