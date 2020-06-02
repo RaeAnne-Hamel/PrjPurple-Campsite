@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Customer extends Persistent{
     private int CustomerID;
     private String sName;
+    private String lName;
     private String sAddress;
     private String sEmail;
     private long nFax;
@@ -17,8 +18,10 @@ public class Customer extends Persistent{
     public Customer(int CustomerID, String sName, String sAddress, String sEmail, long nFax,
                     long nPhone, long nSecPhone, int nVisits, boolean isFrequent, int idPool)
     {
+        super();
         this.CustomerID = CustomerID;
         this.sName = sName;
+        this.lName = lName;
         this.sAddress = sAddress;
         this.sEmail = sEmail;
         this.nFax = nFax;

@@ -412,6 +412,10 @@ this will add a reservation to the reservation list.
 
     }
 
+    public void addManager(Manager manager) {
+        aManager.add(manager);
+    }
+
     public void setReservationsList (ArrayList < Reservation > obReservations)
     {
         this.aReservation = obReservations;
@@ -426,6 +430,11 @@ this will add a reservation to the reservation list.
     public void setManagerList(ArrayList<Manager> aManager)
     {
         this.aManager = aManager;
+    }
+
+    public ArrayList<Manager> getManagerList()
+    {
+        return aManager;
     }
 
     public void seTransactionList(ArrayList<Transaction> aTransaction)
