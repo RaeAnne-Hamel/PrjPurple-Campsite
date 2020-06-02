@@ -1,6 +1,8 @@
 package campground_ui;
 
-import javafx.application.Application;
+import campground_data.BookingsLedger;
+import campground_data.Lot;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -11,20 +13,20 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.regex.Pattern;
 
-public class SearchDateWindow extends Application {
-
-    public static void main(String[] args) {
-        launch(args);
-    }
+public class SearchDateWindow extends Stage {
 
 
-    @Override
-    public void start(Stage primaryStage) {
+    public SearchDateWindow(Stage parent){
+
+
         //Grid pane will be used for Scene
         GridPane obGridPane = new GridPane();
         //VBox will hold both HBoxes
@@ -112,9 +114,21 @@ public class SearchDateWindow extends Application {
                         Integer.parseInt(obDDay.getText())
                 };
 
-                
+                Date obStartDate = new GregorianCalendar(arrivalDate[0],arrivalDate[1],arrivalDate[2]).getTime();
+                Date obEndDate = new GregorianCalendar(arrivalDate[0],arrivalDate[1],arrivalDate[2]).getTime();
+
+                List<Lot> obLotList = MainGui.obBookingsLedger.checkAvailability(obStartDate,obEndDate);
+                String obOutput = "";
+                for(Lot obLot : obLotList)
+                {
+                    obOutput += obLot.getLotType().toString() + ", ID:" + obLot.getLotID() + "\n";
+                }
+
+
 
             }
+
+
             //If one of the fields is not a number display error
             else
             {
@@ -129,9 +143,11 @@ public class SearchDateWindow extends Application {
         obGridPane.add(obFields,1,0);
         obGridPane.setPadding(new Insets(30,30,30,30));
 
-        primaryStage.setTitle("Search for Available Accommodations");
-        primaryStage.setScene(new Scene(obGridPane,950,500));
-        primaryStage.show();
+        this.setTitle("Search for Available Accommodations");
+        this.setScene(new Scene(obGridPane,950,500));
+        this.initOwner(parent);
+        this.initModality(Modality.APPLICATION_MODAL);
+
     }
 
     private boolean testForPosInt(String sField)
