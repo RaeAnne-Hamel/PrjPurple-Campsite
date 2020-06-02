@@ -24,6 +24,10 @@ public class EditAccommodationGUI extends Stage {
     Scene scene;
     Scene scene2;
 
+    Text txtID;
+    ComboBox<String> cboType;
+    ComboBox<String> cboAvailable;
+
     public EditAccommodationGUI(Stage primaryStage) {
         BL = new BookingsLedger();
         Lot obLot1 = new Lot(0);
@@ -130,9 +134,21 @@ public class EditAccommodationGUI extends Stage {
 
             //Adding nodes to center pane. -EB
         Label lblID = new Label("Accomodation ID:");
-        Text txtID = new Text("");
-        Label lbltype = new Label("Accommodation Type");
-        ComboBox cboType = new ComboBox();
+        txtID = new Text("");
+        Label lbltype = new Label("Accommodation Type:");
+        cboType = new ComboBox<>();
+        Label lblAvailable = new Label("Availability:");
+        cboAvailable = new ComboBox<>();
+
+        gPane2.add(lblID, 0, 0);
+        gPane2.add(txtID, 1, 0);
+        gPane2.add(lbltype, 0, 1);
+        gPane2.add(cboType, 1, 1);
+        gPane2.add(lblAvailable, 0, 2);
+        gPane2.add(cboAvailable, 1, 2);
+
+        String[] aTypes = {"Non-Serviced Individual", "Serviced Individual", "Non-Serviced Group", "Serviced Group", "Cabin", "Deluxe Cabin"};
+        cboType.getItems().addAll(aTypes);
 
             //Adding the nodes to the Bottom Pane. -EB
         paneBottom2.getChildren().add(btBack2);
@@ -184,6 +200,11 @@ public class EditAccommodationGUI extends Stage {
     public void Confirm(Lot obLot)
     {
         this.setScene(scene2);
+
+        String sID = Integer.toString(obLot.getLotID());
+        txtID.setText(sID);
+
+
     }
 
     public void backToEdit()
