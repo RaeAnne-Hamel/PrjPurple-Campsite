@@ -153,9 +153,9 @@ public class AddCustomerWindow extends Application {
 
         //Try/catch block to prevent non-numbers from being entered in phone/fax fields.
         try {
-            sVal = obCustomer.addCustomer(obCustomer.getName(), obCustomer.getLast(), obCustomer.getAddress(),
+            sVal = obCustomer.updateCustomer(obCustomer.getName(), obCustomer.getLast(), obCustomer.getAddress(),
                     obCustomer.getProvince(), obCustomer.getCity(), obCustomer.getPostal(), obCustomer.getCountry(),
-                    obCustomer.getEmail(), Long.parseLong(sPhone), Long.parseLong(sFax), Long.parseLong(sSecPhone));
+                    obCustomer.getEmail(), Long.parseLong(sPhone), Long.parseLong(sFax), Long.parseLong(sSecPhone), 1);
         }
         catch (NumberFormatException exp){
             sVal = "Please enter only numbers in phone and fax fields.";
