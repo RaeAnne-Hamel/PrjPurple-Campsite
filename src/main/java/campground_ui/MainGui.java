@@ -29,7 +29,7 @@ public class MainGui extends Application {
     BorderPane custPane;
     BorderPane accomPane;
     BorderPane resPane;
-    Scene mainScene;
+    static Scene mainScene;
     public static BookingsLedger obBookingsLedger = new BookingsLedger();
 
     @Override
@@ -213,20 +213,11 @@ public class MainGui extends Application {
     }
 
     /**
-     * Code for what happens when you click the edit customer button. Brings up a search command.
+     * Code for what happens when you click the edit customer button. Brings up a search command. -DW
      * @param stage Takes in the parent stage
      */
     private void EditCust(Stage stage) {
-        //Creates new panes for the top and bottom. Separate VBoxes are created for the buttons on the left and right for alignment reasons - DW
-
-        obBookingsLedger.aCustomer.add(new Customer("bob", "loblaw", "215 bob street",
-                "BC", "VA", "S7N4V2", "Canada", "bob@bob.com",
-                3,7801234, 3144567, 4, true));
-
-        obBookingsLedger.aCustomer.add(new Customer("bob", "lawless", "215 bob street",
-                "BC", "VA", "S7N4V2", "Canada", "bob@bob.com",
-                3,7801234, 3144567, 4, true));
-
+        //Creates new panes for the top and bottom. Separate VBoxes are created for the buttons on the left and right for alignment reasons.
         BorderPane editCustPane = new BorderPane();
         HBox custCenter = new HBox();
         VBox custLeft = new VBox();
@@ -239,39 +230,37 @@ public class MainGui extends Application {
         custCenter.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
         custCenter.setSpacing(100);
 
-        TextField txtSearch = new TextField();
         Button btnBack2 = new Button("Back to Home");
         Button btnSearch = new Button("Search");
         Button btnID = new Button("Edit with Customer ID");
 
+        //Label and TextField for where you search a customer's ID.
         Label lblID = new Label("Customer ID");
-        Label lblName = new Label("Last Name");
         TextField txtID = new TextField();
+
+        //TextField and label for where you search a customer's last name.
+        Label lblName = new Label("Last Name");
+        TextField txtSearch = new TextField();
+
+        //Label where search results go
         Label lblResults = new Label();
 
-        //ComboBox cmbResults = new ComboBox();
-
-//        cmbResults.setOnAction(e -> {
-//            new EditCustomerWindow();
-//        });
-        //btnSearch.setOnAction(e -> cmbResults.setItems(FXCollections.observableArrayList(obAC)));
-
+        //GridPane for the labels and buttons and text fields on the bottom, needed so that they would line up.
         GridPane bottomGrid = new GridPane();
         bottomGrid.add(lblID, 0, 0);
         bottomGrid.add(lblName, 0, 1);
         bottomGrid.add(btnBack2, 0, 3);
+        bottomGrid.add(txtID, 1, 0);
+        bottomGrid.add(txtSearch, 1, 1);
 
-        bottomGrid.add(txtSearch, 1, 0);
-        bottomGrid.add(txtID, 1, 1);
-
+        //The label goes on top with the grid in the bottom and the search buttons in the bottom right.
         editCustPane.setTop(lblResults);
         custRight.getChildren().addAll(btnID, btnSearch);
         custCenter.getChildren().addAll(bottomGrid, custRight);
         editCustPane.setBottom(custCenter);
 
-        btnBack2.setOnAction(e -> stage.setScene(mainScene));
 
-
+        //Stream that returns a sorted list of customers with the last name entered. List will include first and last names and ID.
         btnSearch.setOnAction(e -> {
             String sSearch = txtSearch.getText();
             ArrayList<String> obAC = obBookingsLedger.aCustomer.stream()
@@ -282,6 +271,7 @@ public class MainGui extends Application {
 
             String sResults = "";
 
+            //Results label shows everyone with that last name.
             for (String sVal : obAC)
             {
                 sResults += (sVal + "\n");
@@ -290,15 +280,21 @@ public class MainGui extends Application {
         });
 
         btnID.setOnAction(e -> {
-            for (Customer obCust : obBookingsLedger.aCustomer)
-            {
-                if (obCust.getCustomerID() == Integer.parseInt(txtID.getText()))
-                {
-                    new EditCustomerWindow(stage, obCust);
+            //Try catch block in case ID field is left empty or not a number.
+            try {
+                for (Customer obCust : obBookingsLedger.aCustomer) {
+                    //Opens a new edit customer window for the customer that was searched for.
+                    if (obCust.getCustomerID() == Integer.parseInt(txtID.getText())) {
+                        new EditCustomerWindow(stage, obCust);
+                    }
                 }
+            }
+            catch (NumberFormatException ignored){
             }
         });
 
+        //Back button goes back to main scene.
+        btnBack2.setOnAction(e -> stage.setScene(mainScene));
         stage.setScene(new Scene(editCustPane, 500, 500));
     }
 

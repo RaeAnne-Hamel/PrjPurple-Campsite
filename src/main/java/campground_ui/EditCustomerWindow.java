@@ -1,7 +1,6 @@
 package campground_ui;
 
 import campground_data.Customer;
-import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -13,13 +12,8 @@ import javafx.stage.Stage;
  * Author: Dustin Wiebe
  * Class for the window where the user will edit a customer's information.
  */
-public class EditCustomerWindow extends Application {
+public class EditCustomerWindow{
     private Customer obCustomer;
-
-    public EditCustomerWindow(Stage stage, Customer obCustomer)
-    {
-        this.obCustomer = obCustomer;
-    }
 
     //Declaring all the variables that'll be used in multiple methods.
     TextField txtName;
@@ -43,11 +37,13 @@ public class EditCustomerWindow extends Application {
     GridPane obGrid;
     Label lblGetID;
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        obCustomer = new Customer("bob", "loblaw", "215 bob street",
-                "BC", "VA", "S7N4V2", "Canada", "bob@bob.com",
-                1123456789);
+    /**
+     * A new EditCustomerWindow will bring up a screen for editing the customer who's passed in on the stage that's passed in.
+     * @param stage The parent stage
+     * @param obCustomer The customer to be edited
+     */
+    public EditCustomerWindow(Stage stage, Customer obCustomer) {
+        this.obCustomer = obCustomer;
 
         //Setting up all the labels. The customer's ID isn't editable, so it uses a label rather than a text field.
         Label lblID = new Label("ID");
@@ -89,21 +85,23 @@ public class EditCustomerWindow extends Application {
         btnConfirm = new Button("Confirm");
         btnEdit.setOnAction(e -> Edit());
         btnConfirm.setOnAction(e -> Confirm());
+        btnBack.setOnAction(e -> stage.setScene(MainGui.mainScene));
 
         setupTextFields();
 
         //Set up spacing and alignment for the buttons. A second HBox is used so that two buttons can be in the bottom right while the other's in the bottom left.
-        obBox.setSpacing(300);
+        obBox.setSpacing(250);
         obBox.setAlignment(Pos.CENTER);
         obBoxRight.getChildren().addAll(btnEdit, btnConfirm);
         obBoxRight.setSpacing(10);
         obBoxRight.setAlignment(Pos.BOTTOM_RIGHT);
         obBox.getChildren().addAll(btnBack, obBoxRight);
+        obBox.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
 
         //Sets up the scene and the stage.
         stage.setTitle("Edit Customer Information");
         stage.setScene(new Scene(obBorder, 500, 500));
-        stage.show();
+
     }
 
     /**
@@ -235,7 +233,7 @@ public class EditCustomerWindow extends Application {
         try {
             sVal = obCustomer.updateCustomer(txtName.getText(), txtLast.getText(), txtAddress.getText(),
                     txtProvince.getText(), txtCity.getText(), txtPostal.getText(), txtCountry.getText(), txtEmail.getText(),
-                    Long.parseLong(sPhone), Long.parseLong(sFax), Long.parseLong(sSecPhone));
+                    Long.parseLong(sPhone), Long.parseLong(sFax), Long.parseLong(sSecPhone), 0);
         }
         catch (NumberFormatException exp){
             sVal = "Please enter only numbers in phone and fax fields.";
@@ -258,9 +256,5 @@ public class EditCustomerWindow extends Application {
             alert.setContentText(sVal);
             alert.showAndWait();
         }
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

@@ -178,9 +178,25 @@ public class Customer {
     public void setFrequent(boolean frequent) { isFrequent = frequent; }
 
 
+    /**
+     * Method for adding or updating a customer. nCheck determines whether it will be added or updated.
+     * @param sName First name
+     * @param sLast Last name
+     * @param sAddress Street address
+     * @param sProvince Province or state
+     * @param sCity City
+     * @param sPostal Postal code
+     * @param sCountry Country
+     * @param sEmail Email Address
+     * @param nPhone Phone Number
+     * @param nFax Fax Number
+     * @param nSecPhone Secondary Phone Number
+     * @param nCheck Determines whether to add up update a customer
+     * @return Returns a string that shows whether there was an error or the update was successful.
+     */
     public String updateCustomer(String sName, String sLast, String sAddress, String sProvince,
                                  String sCity, String sPostal, String sCountry, String sEmail,
-                                 long nPhone, long nFax, long nSecPhone) {
+                                 long nPhone, long nFax, long nSecPhone, int nCheck) {
         if (!(sName.length() > 0 && sName.length() <= MAX_LENGTH)) {
             return "First name must be between 1 and 255 characters.";
         }
@@ -228,7 +244,9 @@ public class Customer {
         this.setFax(nFax);
         this.setSecPhone(nSecPhone);
 
-        return "Successfully changed";
+        //If nCheck is 1, it returns that the customer is added. Otherwise, that the customer is updated.
+        if (nCheck == 1) return "Successfully added";
+        else return "Successfully updated";
     }
 }
 
