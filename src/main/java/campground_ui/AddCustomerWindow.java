@@ -1,5 +1,6 @@
 package campground_ui;
 
+import campground_data.BookingsLedger;
 import campground_data.Customer;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -135,9 +136,6 @@ public class AddCustomerWindow extends Application {
         obCustomer.setCountry(txtCountry.getText());
         obCustomer.setPostal(txtPostal.getText());
         obCustomer.setEmail(txtEmail.getText());
-        obCustomer.setFax(Long.parseLong(txtFax.getText()));
-        obCustomer.setPhone(Long.parseLong(txtPhone.getText()));
-        obCustomer.setSecPhone(Long.parseLong(txtSecPhone.getText()));
 
         //Concatenates the phone boxes into one string each.
         String sPhone = txtPhone.getText() + txtPhone2.getText() + txtPhone3.getText();
@@ -155,9 +153,9 @@ public class AddCustomerWindow extends Application {
 
         //Try/catch block to prevent non-numbers from being entered in phone/fax fields.
         try {
-            sVal = obCustomer.addCustomer(obCustomer.getName(), txtLast.getText(), txtAddress.getText(),
-                    txtProvince.getText(), txtCity.getText(), txtPostal.getText(), txtCountry.getText(), txtEmail.getText(),
-                    Long.parseLong(sPhone), Long.parseLong(sFax), Long.parseLong(sSecPhone));
+            sVal = obCustomer.addCustomer(obCustomer.getName(), obCustomer.getLast(), obCustomer.getAddress(),
+                    obCustomer.getProvince(), obCustomer.getCity(), obCustomer.getPostal(), obCustomer.getCountry(),
+                    obCustomer.getEmail(), Long.parseLong(sPhone), Long.parseLong(sFax), Long.parseLong(sSecPhone));
         }
         catch (NumberFormatException exp){
             sVal = "Please enter only numbers in phone and fax fields.";
@@ -166,10 +164,11 @@ public class AddCustomerWindow extends Application {
         //An alert will pop up denoting success or failure. The error contents come from Customer's UpdateCustomer method.
         //If successful, all fields will revert to being non-editable.
         if (sVal.equals("Successfully added")){
+            BookingsLedger.aCustomer.add(obCustomer);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Success!");
             alert.setHeaderText(null);
-            alert.setContentText("Customer successfully added.");
+            alert.setContentText(sPhone);
             alert.showAndWait();
         }
         else {
