@@ -1,6 +1,8 @@
 package campground_ui;
 
+import campground_data.Customer;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -12,7 +14,12 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
-import campground_data.*;
+import campground_data.BookingsLedger;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class MainGui extends Application {
@@ -22,6 +29,7 @@ public class MainGui extends Application {
     BorderPane accomPane;
     BorderPane resPane;
     Scene mainScene;
+    public static BookingsLedger obBookingsLedger = new BookingsLedger();
 
     @Override
     public void start(Stage stage) {
@@ -199,7 +207,55 @@ public class MainGui extends Application {
         custCenter.getChildren().addAll(custLeft, custRight);
         custPane.setCenter(custCenter);
 
+        btnEditCustomer.setOnAction(e -> EditCust(stage));
         btnBack2.setOnAction(e -> stage.setScene(mainScene));
+    }
+
+    /**
+     * Code for what happens when you click the edit customer button. Brings up a search command.
+     * @param stage Takes in the parent stage
+     */
+    private void EditCust(Stage stage) {
+        //Creates new panes for the top and bottom. Separate VBoxes are created for the buttons on the left and right for alignment reasons - DW
+        BorderPane editCustPane = new BorderPane();
+        HBox custCenter = new HBox();
+        VBox custLeft = new VBox();
+        custLeft.setAlignment(Pos.BOTTOM_LEFT);
+        VBox custRight = new VBox();
+        custRight.setSpacing(10);
+        custRight.setAlignment(Pos.CENTER_RIGHT);
+
+        custCenter.setAlignment(Pos.CENTER);
+        custCenter.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
+        custCenter.setSpacing(200);
+
+        Button btnBack2 = new Button("Back to Home");
+        TextField txtSearch = new TextField();
+        Button btnSearch = new Button("Search");
+
+        String sSearch = txtSearch.getText();
+
+        ArrayList<Customer> obCustomers = obBookingsLedger.aCustomer;
+        ArrayList<String> obAC = obCustomers.stream()
+                .filter(x -> x.getLast().equalsIgnoreCase(sSearch))
+                .sorted((x, y) -> (x.getLast().compareTo(y.getLast())))
+                .map(x -> x.getName() + " " + x.getLast() + " " + x.getCustomerID())
+                .collect(Collectors.toCollection(ArrayList::new));
+        ComboBox cmbResults = new ComboBox();
+
+        btnBack2.setOnAction(e -> stage.setScene(mainScene));
+        btnSearch.setOnAction(e -> cmbResults.setItems(FXCollections.observableArrayList(obAC)));
+        cmbResults.setOnAction(e -> {
+            new EditCustomerWindow();
+        });
+
+
+        custLeft.getChildren().addAll(cmbResults, btnBack2);
+        custCenter.getChildren().addAll(custLeft, custRight);
+        custRight.getChildren().add(btnSearch);
+        editCustPane.setCenter(custCenter);
+
+        stage.setScene(new Scene(editCustPane, 500, 500));
     }
 
     public static void main(String[] args) {
