@@ -15,6 +15,8 @@ public class Transaction extends Persistent{
         this.obRes = obRes;
     }
 
+    public Transaction(){};
+
 
 
     public PaymentMethod getPayMethod() {

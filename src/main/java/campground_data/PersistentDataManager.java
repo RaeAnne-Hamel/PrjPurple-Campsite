@@ -10,15 +10,15 @@ import java.util.Scanner;
 
 public class PersistentDataManager {
 
-
-
+    /* Manages the saving and loading of the system */
 
 
     /**
-     * Input the file name, the Load type and the data associated with the object
-     * @param <E>
-     * @param sFile
-     * @param eType
+     * loads a single file,
+     * @param sFile - File name.
+     * @param eType - references the type of file that will be loaded
+     * @param bl - references the booking ledger that the file will be loaded into.
+     * @param <E> - Generic, as to work with all savable objects.
      * @return
      */
     public static <E> ArrayList<E> load(String sFile, LoadType eType, BookingsLedger bl)
@@ -26,18 +26,20 @@ public class PersistentDataManager {
         /* Hold on to the locally saved files */
         ArrayList<E> aLoaded = new ArrayList<E>();
 
+        /* Check if a file exists */
         File obFile = new File(sFile);
         if(!obFile.exists()||!obFile.isFile())
         {
             System.out.println("Error");
         }
 
+        /* Begins loading the file */
         try(Scanner obIn = new Scanner(obFile))
         {
-
             /* read each line of the file and break each line into component parts */
             while (obIn.hasNext())
             {
+                /* Loads a single record with the loadRecord method */
                 String[] sFields  = parseCSVLine(obIn.nextLine());
                 Object record = loadRecord(eType, bl, sFields);
 
@@ -67,18 +69,27 @@ public class PersistentDataManager {
                     ((Persistent) record).load(bl, arg);
                 break;
             case Lot:
-                //record = new Lot();
+                record = new Lot();
+                if (record instanceof Persistent)
+                    ((Persistent) record).load(bl, arg);
                 break;
             case Manager:
-                //record = new Manager();
+                record = new Manager();
+                if (record instanceof Persistent)
+                    ((Persistent) record).load(bl, arg);
                 break;
             case Reservation:
-                //record = new Reservation();
+                record = new Reservation();
+                if (record instanceof Persistent)
+                    ((Persistent) record).load(bl, arg);
                 break;
             case Transaction:
-                //record = new Transaction();
+                record = new Transaction();
+                if (record instanceof Persistent)
+                    ((Persistent) record).load(bl, arg);
                 break;
             default:
+                /* Send error if invalid Enum occurs */
                 System.out.print("Error Loading Files!");
         }
 

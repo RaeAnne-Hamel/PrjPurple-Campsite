@@ -33,7 +33,19 @@ public class Test_7b_Manager_Saves_And_Loads_Previous_Information {
 
     Manager manager0 = new Manager();
 
+    /* Sample Reservations */
 
+    Reservation reserveation0 = new Reservation();
+    Reservation reserveation1 = new Reservation();
+
+    /* Transaction */
+    Transaction transaction0 = new Transaction();
+    Transaction transaction1 = new Transaction();
+
+    /* Lots */
+
+    Lot lot0 = new Lot();
+    Lot Lot1 = new Lot();
 
     @Before
     public void setup()
@@ -50,21 +62,18 @@ public class Test_7b_Manager_Saves_And_Loads_Previous_Information {
 
     }
 
+
+    public void tSaveAll()
+    {
+
+    }
+
     /* Checks if a desired file exists PASSED (Assuming Customer file present in src/files/Customer.txt */
     @Test
     public void tCheckIfFileExists()
     {
         File file = PersistentDataManager.isFilePresent(fName);
         assertNotEquals(null, file);
-    }
-
-    /* Save files that are to be loaded */
-    @Test
-    public void tSystemSaved()
-    {
-        PersistentDataManager.save(bl.ma);
-
-
     }
 
     /* Checks a disired file was sussesfully loaded (Customer) */
@@ -76,11 +85,11 @@ public class Test_7b_Manager_Saves_And_Loads_Previous_Information {
         ArrayList<Object> aCustomers = new ArrayList<>();
         assertEquals(0, aCustomers.size());
 
-        bl.setCustomerList(PersistentDataManager.load(fName, LoadType.Customer));
-        bl.setManagerList(PersistentDataManager.load(fName, LoadType.Customer));
-        bl.setLotList(PersistentDataManager.load(fName, LoadType.Customer));
-        bl.setReservationsList(PersistentDataManager.load(fName, LoadType.Customer));
-        bl.setReservationsList(PersistentDataManager.load(fName, LoadType.Customer));
+        bl.setCustomerList(PersistentDataManager.load(fName, LoadType.Customer,bl));
+        bl.setManagerList(PersistentDataManager.load(fName, LoadType.Customer,bl));
+        bl.setLotList(PersistentDataManager.load(fName, LoadType.Customer,bl));
+        bl.setReservationsList(PersistentDataManager.load(fName, LoadType.Customer,bl));
+        bl.setReservationsList(PersistentDataManager.load(fName, LoadType.Customer,bl));
 
 
 

@@ -35,6 +35,8 @@ public class Reservation<Static> extends Persistent{
 
     }
 
+    public Reservation(){};
+
 
     public Lot getLot() {
         return this.obLot;
