@@ -113,11 +113,9 @@ public class MainGui extends Application {
         btnEdit.setPrefWidth(200);
         Button btnRemove = new Button("Remove Reservation");
         btnRemove.setPrefWidth(200);
-        Button btnTrans = new Button("Transactions");
-        btnTrans.setPrefWidth(200);
 
         paneLeft.getChildren().add(btnBack3);
-        paneRight.getChildren().addAll(btnSearch, btnAdd, btnEdit, btnRemove, btnTrans);
+        paneRight.getChildren().addAll(btnSearch, btnAdd, btnEdit, btnRemove);
 
         resCenter.getChildren().addAll(paneLeft, paneRight);
         resPane.setCenter(resCenter);
