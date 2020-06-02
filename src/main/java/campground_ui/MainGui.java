@@ -2,7 +2,6 @@ package campground_ui;
 
 import campground_data.Customer;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -11,15 +10,10 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import campground_data.BookingsLedger;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 
@@ -259,7 +253,6 @@ public class MainGui extends Application {
         custCenter.getChildren().addAll(bottomGrid, custRight);
         editCustPane.setBottom(custCenter);
 
-
         //Stream that returns a sorted list of customers with the last name entered. List will include first and last names and ID.
         btnSearch.setOnAction(e -> {
             String sSearch = txtSearch.getText();
@@ -268,7 +261,6 @@ public class MainGui extends Application {
                     .sorted((x, y) -> (x.getLast().compareTo(y.getLast())))
                     .map(x -> x.getName() + " " + x.getLast() + " " + x.getCustomerID())
                     .collect(Collectors.toCollection(ArrayList::new));
-
             String sResults = "";
 
             //Results label shows everyone with that last name.
@@ -276,20 +268,28 @@ public class MainGui extends Application {
             {
                 sResults += (sVal + "\n");
             }
+            if (sResults.equals("")){
+                sResults = "No one with that last name found.";
+            }
             lblResults.setText(sResults);
         });
 
         btnID.setOnAction(e -> {
-            //Try catch block in case ID field is left empty or not a number.
+            //Try/catch block in case ID field is left empty or not a number.
+            boolean bFound = false;
             try {
                 for (Customer obCust : obBookingsLedger.aCustomer) {
                     //Opens a new edit customer window for the customer that was searched for.
                     if (obCust.getCustomerID() == Integer.parseInt(txtID.getText())) {
+                        bFound = true;
                         new EditCustomerWindow(stage, obCust);
                     }
                 }
             }
             catch (NumberFormatException ignored){
+            }
+            if (!bFound){
+                lblResults.setText("No one with that ID found.");
             }
         });
 

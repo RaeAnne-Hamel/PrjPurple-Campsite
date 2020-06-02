@@ -241,7 +241,7 @@ public class EditCustomerWindow{
 
         //An alert will pop up denoting success or failure. The error contents come from Customer's UpdateCustomer method.
         //If successful, all fields will revert to being non-editable.
-        if (sVal.equals("Successfully changed")){
+        if (sVal.equals("Successfully updated")){
             UnEditable();
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Success!");
