@@ -168,7 +168,7 @@ public class AddCustomerWindow extends Application {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Success!");
             alert.setHeaderText(null);
-            alert.setContentText(sPhone);
+            alert.setContentText("Customer successfully added");
             alert.showAndWait();
         }
         else {
