@@ -308,29 +308,29 @@ public class BookingsLedger
         A simple template class. Checks permissions. Always returns true
         because the permission system is not yet implemented.
          */
-                    public static boolean isValidPermissions (Manager user){
-                    return true;
-                }
-
-                    /**
-                     * Takes in a CustomerID and returns a customer object --Andrew
-                     * @param ID
-                     */
-                    public Customer getCustomerByID ( int ID)
-                    {
-                        System.out.println("test1");
-                        List<Customer> obCustomerList = aCustomer.stream()
-                                .filter(e -> e.getCustomerID() == ID)
-                                .collect(Collectors.toList());
-
-                        //Return null if no customer is found
-                        if (obCustomerList.size() == 0) {
-                            return null;
-                        } else {
-                            Customer obCustomer = obCustomerList.get(0);
-                            return obCustomer;
-                        }
+                        public static boolean isValidPermissions (Manager user){
+                        return true;
                     }
+
+                        /**
+                         * Takes in a CustomerID and returns a customer object --Andrew
+                         * @param ID
+                         */
+                        public Customer getCustomerByID ( int ID)
+                        {
+                            System.out.println("test1");
+                            List<Customer> obCustomerList = aCustomer.stream()
+                                    .filter(e -> e.getCustomerID() == ID)
+                                    .collect(Collectors.toList());
+
+                            //Return null if no customer is found
+                            if (obCustomerList.size() == 0) {
+                                return null;
+                            } else {
+                                Customer obCustomer = obCustomerList.get(0);
+                                return obCustomer;
+                            }
+                        }
 
 
     /**

@@ -26,10 +26,9 @@ public class AddReservationGui extends Application {
 
 
     //Access to specific array list
-    public ArrayList<Customer> obCustomer;
-    public ArrayList<Reservation> obRes;
-    public ArrayList<Lot> obLot;
+
     public ArrayList<Customer> custNameList = new ArrayList<>();
+    private ArrayList<Customer> custCount = new ArrayList<>();
 
     //panes
     private GridPane obGrid;
@@ -112,23 +111,7 @@ public class AddReservationGui extends Application {
         obGrid.add(cboCust1, 1, 2);
         obGrid.add(cboCust2, 2, 2);
 
-        ObservableList<String> names = FXCollections.observableList(this.getCustNameList());
-        cboCust1.setItems(names);
-        cboCust2.setItems(names);
 
-        cboCust1.setOnAction(e->
-                cboCust1.getValue()
-                //Find the full customer object from:
-                //MainGui.BookingsLedger.getCustomerList();
-                //Loop through the customer list until you match customer names
-                //Get that customer object back
-                //Add it to your reservation array list
-
-                );
-
-        txtLotID.setOnKeyReleased(e-> {
-            lblLotType.setText(MainGui.BookingLedger.querySearchCampsite(Integer.parseInt(txtLotID.getText())).toString());
-        });
 
         obGrid.add(lblLotID, 0,3);
         obGrid.add(txtLotID, 1, 3);
@@ -158,7 +141,33 @@ public class AddReservationGui extends Application {
         obBorder.setCenter(obGrid);
         obBorder.setBottom(obHBox);
 
+     //event handlers
 
+        //populates the combo boxes
+        ObservableList<String> names = FXCollections.observableList(this.getCustNameList());
+        cboCust1.setItems(names);
+        cboCust2.setItems(names);
+
+        cboCust1.setOnAction(e-> {
+            String custName = cboCust1.getValue();
+            //Find the full customer object from:
+            ArrayList<Customer> obRet = MainGui.BookingsLedger.getCustomerList();
+
+            for (Customer obcust : obRet) {
+                if (obcust.getName().equals(custName))
+                {
+                    custCount.add(obcust);
+                }
+            }
+            //Loop through the customer list until you match customer names
+            //Get that customer object back
+            //Add it to your reservation array list
+
+        });
+
+        txtLotID.setOnKeyReleased(e-> {
+            lblLotType.setText(MainGui.BookingLedger.querySearchCampsite(Integer.parseInt(txtLotID.getText())).toString());
+        });
 
 
 
@@ -196,7 +205,7 @@ public class AddReservationGui extends Application {
         return names;
     }
 
-
+    private ArrayList<Customer>
 
 
 
