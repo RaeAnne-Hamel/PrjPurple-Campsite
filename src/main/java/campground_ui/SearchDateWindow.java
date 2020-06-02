@@ -84,12 +84,12 @@ public class SearchDateWindow extends Stage {
         Button obSearch = new Button("Search");
         obSearch.setFont(new Font(20));
 
-        //Back button
-        Button obBack = new Button("Back");
-        obBack.setFont(new Font(20));
+        //Exit Button
+        Button obExit = new Button("Exit");
+        obExit.setFont(new Font(20));
 
         //Set up buttonRow
-        obButtonRow.getChildren().addAll(obBack,obSearch);
+        obButtonRow.getChildren().addAll(obExit,obSearch);
         //Increase Spacing in buttonRow
         obButtonRow.setSpacing(12);
 
@@ -103,6 +103,9 @@ public class SearchDateWindow extends Stage {
         //This label will be changed to reflect the accommodation list
         Label obAccommodations = new Label("");
 
+        //Exit button will close window
+        obExit.setOnAction(e-> { this.close(); });
+
 
         /**
          * This button contains all the code used to verify all fields are positive numbers,
@@ -113,7 +116,6 @@ public class SearchDateWindow extends Stage {
             //event handler needed to change label
             @Override
             public void handle(ActionEvent actionEvent) {
-                System.out.println("Button Pressed");
 
                 //Verify all fields have positive numbers
                 if (testForPosInt(obAYear.getText())
