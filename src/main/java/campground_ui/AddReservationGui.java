@@ -129,7 +129,7 @@ public class AddReservationGui extends Application {
         txtLotID.setOnKeyReleased(e-> {
             lblLotType.setText(MainGui.BookingLedger.querySearchCampsite(Integer.parseInt(txtLotID.getText())).toString());
         });
- 
+
         obGrid.add(lblLotID, 0,3);
         obGrid.add(txtLotID, 1, 3);
         obGrid.add(lblLotType, 2, 3);

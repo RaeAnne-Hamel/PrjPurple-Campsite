@@ -34,14 +34,13 @@ public class EditReservationGui extends Application {
     private HBox obHBox;
 
     //Labels
-    private Label lblCustomers, lblCust1, lblCust2,  lblArrival, lblDeparture, lblLotID, lblLotType, lblGuest, lblResID, lblResID2;
+    private Label lblCustomers, lblCust1, lblCust2,  lblArrival, lblDeparture, lblLotID, lblLotType, lblGuest, lblResID,
+            lblResID2;
 
     //Textfield
     private TextField txtArrivalYear, txtArrivalDay, txtArrivalMonth, txtDepartDay, txtDepartMonth, txtDepartYear,
                         txtGuest, txtLotID;
 
-    //comboBoxes
-    private ComboBox<Customer> cboCust1, cboCust2;
 
     //button
     Button btnBack, btnConfirm;
@@ -144,30 +143,9 @@ public class EditReservationGui extends Application {
         obStage.show();
 
 
-
-
-
-
-
-
-
-
-
     }
 
 
-    private ArrayList<Customer> getCustNameList(ArrayList<Customer> obCustomer)
-    {
-        ArrayList<Customer> obRet = new ArrayList<>();
-
-        for(Customer obCust : obCustomer)
-        {
-           // obCust = obCustomer.get
-        }
-
-
-        return obRet;
-    }
 
 
 
