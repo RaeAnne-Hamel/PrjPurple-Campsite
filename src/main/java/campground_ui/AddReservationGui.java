@@ -171,7 +171,7 @@ public class AddReservationGui extends Application {
 
         //set the label to return the lot type that match the id
         txtLotID.setOnKeyReleased(e-> {
-            lblLotType.setText(MainGui.BookingLedger.querySearchCampsite(Integer.parseInt(txtLotID.getText())).toString());
+            lblLotType.setText(MainGui.obBookingLedger.querySearchCampsite(Integer.parseInt(txtLotID.getText())).toString());
         });
 
         //populates the combo boxes
@@ -188,7 +188,7 @@ public class AddReservationGui extends Application {
         cboCust1.setOnAction(e-> {
             String custName = cboCust1.getValue();
             //Find the full customer object from:
-            ArrayList<Customer> obRet = MainGui.BookingLedger.getCustomerList();
+            ArrayList<Customer> obRet = MainGui.obBookingLedger.getCustomerList();
 
             //Loop through the customer list until you match customer names
             for (Customer obCust : obRet) {
@@ -217,7 +217,7 @@ public class AddReservationGui extends Application {
         cboCust2.setOnAction(e-> {
             String custName = cboCust2.getValue();
             //Find the full customer object from:
-            ArrayList<Customer> obRet = MainGui.BookingLedger.getCustomerList();
+            ArrayList<Customer> obRet = MainGui.obBookingLedger.getCustomerList();
 
             //Loop through the customer list until you match customer names
             for (Customer obCust : obRet) {
@@ -249,7 +249,7 @@ public class AddReservationGui extends Application {
             int guest = Integer.parseInt(txtGuest.getText());
 
             //Streams the list of lots
-            List<Lot> filteredLots = MainGui.BookingLedger.aLot.stream()
+            List<Lot> filteredLots = MainGui.obBookingLedger.aLot.stream()
                     .filter(x -> x.getLotID() == lotID)
                     .collect(Collectors.toList());
 
@@ -345,7 +345,7 @@ public class AddReservationGui extends Application {
            int guest = Integer.parseInt(txtGuest.getText());
 
            //Streams the list of lots
-            List<Lot> filteredLots = MainGui.BookingLedger.aLot.stream()
+            List<Lot> filteredLots = MainGui.obBookingLedger.aLot.stream()
                     .filter(x -> x.getLotID() == lotID)
                     .collect(Collectors.toList());
 
@@ -390,11 +390,11 @@ public class AddReservationGui extends Application {
             int guest = Integer.parseInt(txtGuest.getText());
 
 
-            MainGui.BookingLedger.addReservation(lotID, obEnteredArrival, obEnteredDepart, custCount, guest);
+            MainGui.obBookingLedger.addReservation(lotID, obEnteredArrival, obEnteredDepart, custCount, guest);
         });
 
         btnBack.setOnAction(e-> {
-            
+            //obStage.setScene(MainGui.mainScene);
         });
 
 
@@ -413,7 +413,7 @@ public class AddReservationGui extends Application {
      */
     private ArrayList<String> getCustNameList()
     {
-        ArrayList<Customer> custList = MainGui.BookingLedger.getCustomerList();
+        ArrayList<Customer> custList = MainGui.obBookingLedger.getCustomerList();
         ArrayList<String> names = new ArrayList<>();
 
         for(Customer obCust : custList)

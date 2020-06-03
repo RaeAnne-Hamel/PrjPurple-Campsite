@@ -12,7 +12,7 @@ import java.util.UUID;
 
 public class BookingsLedger
 {
-    public static ArrayList<Reservation> aReservation = new ArrayList<>();
+    public  static ArrayList<Reservation> aReservation = new ArrayList<>();
     public ArrayList<Lot> aLot = new ArrayList<>();
     ArrayList<Customer> aCustomer = new ArrayList<>();
     ArrayList<Manager> aManager;
@@ -243,12 +243,12 @@ public class BookingsLedger
     }
 
 
-                    /**
-                     * Removes a reservation based on the ID input
-                     *
-                     * @param ID
-                     * @return
-                     */
+    /**
+     * Removes a reservation based on the ID input
+     *
+     * @param ID
+     * @return
+     */
       public boolean removeReservation ( int ID){
              /* Create a temporary Reservation ArrayList */
              ArrayList<Reservation> tmpReservations = new ArrayList<>();
@@ -283,7 +283,7 @@ public class BookingsLedger
          *
          * @param ID - Inputs an ID
          */
-        public static Reservation getReservation (ArrayList < Reservation > aReservation,int ID){
+        public static Reservation getReservation (ArrayList < Reservation > aReservation, int ID){
         for (Reservation res : aReservation) {
             /*If the Reservation ID is found*/
             if (res.getReservationID() == ID) {
@@ -295,7 +295,7 @@ public class BookingsLedger
 
 
 
-        public Reservation NonStaticgetReservation(ArrayList < Reservation > aReservation,int ID){
+        public Reservation NonStaticgetReservation(ArrayList < Reservation > aReservation, int ID){
         for (Reservation res : aReservation) {
             /*If the Reservation ID is found*/
             if (res.getReservationID() == ID) {

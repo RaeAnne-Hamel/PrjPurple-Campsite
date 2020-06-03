@@ -1,5 +1,6 @@
 package campground_ui;
 
+import campground_data.BookingsLedger;
 import campground_data.Customer;
 import campground_data.Lot;
 import campground_data.Reservation;
@@ -18,17 +19,16 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+import java.lang.reflect.Array;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import campground_ui.MainGui;
 
-public class RemoveReservationGui extends Application {
-
-
-
-    //Access to specific array list
-    public ArrayList<Customer> obCustomer;
-    public ArrayList<Reservation> obRes;
-    public ArrayList<Lot> obLot;
-    public ArrayList<Customer> custNameList = new ArrayList<>();
+public class RemoveReservationGui extends Stage {
 
     //panes
     private GridPane obGrid;
@@ -36,8 +36,8 @@ public class RemoveReservationGui extends Application {
     private HBox obHBox;
 
     //Labels
-    private Label lblCustomers, lblArrival, lblDeparture, lblLotID, lblLotType, lblGuest, lblResID, lblLotID2 , lblArrivalYear,
-            lblArrivalDay, lblArrivalMonth, lblDepartDay, lblDepartMonth, lblDepartYear, lblGuest2, lblCust1, lblCust2;;
+    private Label lblCustomers, lblArrival, lblDeparture, lblLotID, lblLotType, lblGuest, lblResID, lblLotID2 , lblArrivalDate,
+     lblDepartDate, lblGuest2, lblCust1, lblCust2;;
 
     //Textfield
     private TextField  txtResID2;
@@ -48,8 +48,11 @@ public class RemoveReservationGui extends Application {
     Button btnBack, btnConfirm;
 
 
-    @Override
-    public void start(Stage obStage) {
+
+    public RemoveReservationGui(Stage obStage) {
+
+
+
 
         //Creating panes
         obGrid = new GridPane();
@@ -72,13 +75,10 @@ public class RemoveReservationGui extends Application {
 
 
 
-        lblArrivalYear = new Label("");
-        lblArrivalMonth = new Label("");
-        lblArrivalDay = new Label("");
-        lblDepartYear = new Label("");
-        lblDepartMonth = new Label("");
-        lblDepartDay = new Label("");
-        lblDepartDay.setMaxSize(50, 50);
+
+        lblArrivalDate = new Label("");
+        lblDepartDate = new Label("");
+        lblDepartDate.setMaxSize(70, 50);
         lblGuest2 = new Label("");
         lblGuest2.setMaxSize(70, 50);
 
@@ -111,14 +111,11 @@ public class RemoveReservationGui extends Application {
         obGrid.add(lblLotType, 2, 3);
 
         obGrid.add(lblArrival, 0, 4);
-        obGrid.add(lblArrivalYear, 1,4);
-        obGrid.add(lblArrivalMonth, 2, 4);
-        obGrid.add(lblArrivalDay, 3,4);
+        obGrid.add(lblArrivalDate, 1,4);
+
 
         obGrid.add(lblDeparture, 0, 5);
-        obGrid.add(lblDepartYear, 1,5);
-        obGrid.add(lblDepartMonth, 2,5);
-        obGrid.add(lblDepartDay, 3, 5);
+        obGrid.add(lblDepartDate, 3, 5);
 
         obGrid.add(lblGuest, 0, 6);
         obGrid.add(lblGuest2,1,6);
@@ -136,11 +133,46 @@ public class RemoveReservationGui extends Application {
 
 
 
+        txtResID2.setOnKeyReleased(e ->{
+
+            int resID = Integer.parseInt(txtResID2.getText());
+
+           // Reservation obRes = MainGui.obBookingLedger.getReservation(MainGui.obBookingLedger.aReservation, resID);
+
+            //Reservation obRes = BookingsLedger.getReservation(MainGui.obBookingLedger.getAllReservations(), resID);
+
+           Reservation obRes = MainGui.obBookingLedger.NonStaticgetReservation(MainGui.obBookingLedger.getAllReservations(), resID);
+
+            String lotID = Integer.toString(obRes.getID());
+            String guest = Integer.toString(obRes.getCustomerCount());
+            DateFormat stDate = new SimpleDateFormat("yyyy/MM/dd");
+            String startDate = stDate.format(obRes.getObStartDate());
+            DateFormat endDate = new SimpleDateFormat("yyyy/MM/dd");
+            String departDate = endDate.format(obRes.getObEndDate());
 
 
+           // Customer name1 = obRes.getCustomerList().get(0);
+           /// lblCust1.setText(name1.getName());
+
+            lblLotID2.setText(lotID);
+            lblLotType.setText(MainGui.obBookingLedger.querySearchCampsite((obRes.getID())).toString());
+
+            lblArrivalDate.setText(startDate);
+            lblDepartDate.setText(departDate);
+
+            lblGuest2.setText(guest);
 
 
+        });
 
+        btnConfirm.setOnAction(e -> {
+            int resID = Integer.parseInt(txtResID2.getText());
+            MainGui.obBookingLedger.removeReservation(resID);
+        });
+
+        btnBack.setOnAction(e ->{
+            //obStage.setScene(MainGui.mainScene);
+        });
 
         obStage.setScene(new Scene(obBorder, 650, 500));
         obStage.setTitle("Remove Reservation");
@@ -151,11 +183,7 @@ public class RemoveReservationGui extends Application {
 
 
 
-
-
-
-
     public static void main(String[] args) {
-        launch(args);
+        Application.launch(args);
     }
 }

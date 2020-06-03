@@ -6,13 +6,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Reservation<Static> {
+public class Reservation {
 
     /*Primitive Variables */
     int ReservationID, nCustomerCount;
     double price;
     Lot obLot;
-    ArrayList<Customer> obCustomerList;
+    public ArrayList <Customer> obCustomerList = new ArrayList<>();
     Date obStartDate;
     Date obEndDate;
     public Boolean status;
@@ -98,7 +98,10 @@ public class Reservation<Static> {
     public int getID() {
         return this.obLot.getLotID();
     }
-
+    public ArrayList<Customer> getCustomerList() {return this.obCustomerList; }
+    public Date getObStartDate(){ return this.obStartDate;}
+    public Date getObEndDate() { return this.obEndDate; }
+    public int getCustomerCount() { return this.nCustomerCount; }
 
     /**
      * allows the person to be able to
@@ -199,6 +202,7 @@ public class Reservation<Static> {
                 " Number Of People " + nCustomerCount +
                 " Lot Type: " + obLot.getLotType();
     }
+
 
 }
 
