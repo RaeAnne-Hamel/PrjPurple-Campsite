@@ -161,7 +161,6 @@ public class AddCustomerWindow extends Application {
         //An alert will pop up denoting success or failure. The error contents come from Customer's UpdateCustomer method.
         //If successful, all fields will revert to being non-editable.
         if (sVal.equals("Successfully added")){
-//            BookingsLedger.aCustomer.add(obCustomer);
             MainGui.obBookingsLedger.aCustomer.add(obCustomer);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Success!");
