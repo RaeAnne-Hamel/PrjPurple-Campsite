@@ -2,6 +2,7 @@ package campground_ui;
 
 import campground_data.BookingsLedger;
 import campground_data.Lot;
+import campground_data.LotType;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,14 +10,15 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.util.List;
+
+import static campground_ui.MainGui.obBookingsLedger;
 
 public class EditAccommodationGUI extends Stage {
 
@@ -27,6 +29,9 @@ public class EditAccommodationGUI extends Stage {
     Text txtID;
     ComboBox<String> cboType;
     ComboBox<String> cboAvailable;
+    TextArea txtReason;
+
+    ListView accomList;
 
     public EditAccommodationGUI(Stage primaryStage) {
         BL = new BookingsLedger();
@@ -41,17 +46,18 @@ public class EditAccommodationGUI extends Stage {
         Lot obLot9 = new Lot(8);
         Lot obLot10 = new Lot(9);
         Lot obLot11 = new Lot(10);
-        BL.addAccommodation(obLot1);
-        BL.addAccommodation(obLot2);
-        BL.addAccommodation(obLot3);
-        BL.addAccommodation(obLot4);
-        BL.addAccommodation(obLot5);
-        BL.addAccommodation(obLot6);
-        BL.addAccommodation(obLot7);
-        BL.addAccommodation(obLot8);
-        BL.addAccommodation(obLot9);
-        BL.addAccommodation(obLot10);
-        BL.addAccommodation(obLot11);
+        obBookingsLedger.addAccommodation(obLot1);
+        obBookingsLedger.addAccommodation(obLot2);
+        obBookingsLedger.addAccommodation(obLot3);
+        obBookingsLedger.addAccommodation(obLot4);
+        obBookingsLedger.addAccommodation(obLot5);
+        obBookingsLedger.addAccommodation(obLot6);
+        obBookingsLedger.addAccommodation(obLot7);
+        obBookingsLedger.addAccommodation(obLot8);
+        obBookingsLedger.addAccommodation(obLot9);
+        obBookingsLedger.addAccommodation(obLot10);
+        obBookingsLedger.addAccommodation(obLot11);
+
 
         BorderPane mainPane = new BorderPane();
 
@@ -69,11 +75,11 @@ public class EditAccommodationGUI extends Stage {
         paneCentre.setAlignment(Pos.TOP_CENTER);
 
         //Adding the ListView to the centre pane. -EB
-        ListView accomList = new ListView();
+        accomList = new ListView();
         accomList.setMinSize(425, 100);
         accomList.setMaxHeight(200);
 
-        for (Lot obLot : BL.getLotList())
+        for (Lot obLot : obBookingsLedger.getLotList())
         {
             accomList.getItems().add(obLot);
         }
@@ -139,6 +145,9 @@ public class EditAccommodationGUI extends Stage {
         cboType = new ComboBox<>();
         Label lblAvailable = new Label("Availability:");
         cboAvailable = new ComboBox<>();
+        txtReason = new TextArea();
+        txtReason.setMaxSize(300, 100);
+        txtReason.setVisible(false);
 
         gPane2.add(lblID, 0, 0);
         gPane2.add(txtID, 1, 0);
@@ -146,9 +155,16 @@ public class EditAccommodationGUI extends Stage {
         gPane2.add(cboType, 1, 1);
         gPane2.add(lblAvailable, 0, 2);
         gPane2.add(cboAvailable, 1, 2);
+        gPane2.add(txtReason, 0, 3, 2, 3);
 
         String[] aTypes = {"Non-Serviced Individual", "Serviced Individual", "Non-Serviced Group", "Serviced Group", "Cabin", "Deluxe Cabin"};
         cboType.getItems().addAll(aTypes);
+
+        String[] aAvails = {"Available", "Not Available"};
+        cboAvailable.getItems().addAll(aAvails);
+
+            //Functionality for adding removal reason. -EB
+        cboAvailable.setOnAction(e -> setAreaVisibility(txtReason));
 
             //Adding the nodes to the Bottom Pane. -EB
         paneBottom2.getChildren().add(btBack2);
@@ -157,6 +173,17 @@ public class EditAccommodationGUI extends Stage {
 
         secondPane.setBottom(paneBottom2);
         secondPane.setCenter(gPane2);
+
+            //Confirm Button Code -EB
+        btConfirm2.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                int nID = Integer.parseInt(txtID.getText());
+
+                Lot editLot = obBookingsLedger.querySearchCampsite(nID);
+                ConfirmEdit(editLot);
+            }
+        });
 
 
 
@@ -177,7 +204,7 @@ public class EditAccommodationGUI extends Stage {
         btConfirm.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                Lot listLot = BL.querySearchCampsite(accomList.getSelectionModel().getSelectedIndex());
+                Lot listLot = obBookingsLedger.querySearchCampsite(accomList.getSelectionModel().getSelectedIndex());
                 System.out.println(listLot.toString());
                 Confirm(listLot);
             }
@@ -192,11 +219,20 @@ public class EditAccommodationGUI extends Stage {
         this.initModality(Modality.APPLICATION_MODAL);
     }
 
+    //Sets the visibility of the TextArea depending on the setting of the availability. -EB
+    public void setAreaVisibility(TextArea txtArea)
+    {
+        txtArea.setVisible(!txtArea.isVisible());
+
+    }
+
+    //Closes the window. -EB
     public void Back()
     {
         this.close();
     }
 
+    //Opens the window for editing the specific Accommodation and sets the combo boxes to the values of the Accommodation. -EB
     public void Confirm(Lot obLot)
     {
         this.setScene(scene2);
@@ -204,11 +240,127 @@ public class EditAccommodationGUI extends Stage {
         String sID = Integer.toString(obLot.getLotID());
         txtID.setText(sID);
 
+        switch (obLot.getLotType())
+        {
+            case ServicedIndividual:
+                cboType.setValue("Serviced Individual");
+                break;
+
+            case NonServicedIndividual:
+                cboType.setValue("Non-Serviced Individual");
+                break;
+
+            case ServicedGroup:
+                cboType.setValue("Serviced Group");
+                break;
+
+            case NonServicedGroup:
+                cboType.setValue("Non-Serviced Group");
+                break;
+
+            case Cabin:
+                cboType.setValue("Cabin");
+                break;
+
+            case DeluxeCabin:
+                cboType.setValue("Deluxe Cabin");
+                break;
+
+            default:
+                break;
+
+
+        }
+
+        if (obLot.getAvailability())
+        {
+            cboAvailable.setValue("Available");
+            txtReason.setVisible(false);
+        }
+        else
+        {
+            cboAvailable.setValue("Not Available");
+            txtReason.setVisible(true);
+
+        }
+
 
     }
 
+    public void ConfirmEdit(Lot obLot)
+    {
+        String sReason = txtReason.getText();
+
+
+        //Switch case for changing the Lot Type based on which option was chosen in the field. -EB
+        switch (cboType.getValue())
+        {
+            case "Non-Serviced Group":
+                obLot.setLotType(LotType.NonServicedGroup);
+                break;
+
+            case "Serviced Group":
+                obLot.setLotType(LotType.ServicedGroup);
+                break;
+
+            case "Non-Serviced Individual":
+                obLot.setLotType(LotType.NonServicedIndividual);
+                break;
+
+            case "Serviced Individual":
+                obLot.setLotType(LotType.ServicedIndividual);
+                break;
+
+            case "Cabin":
+                obLot.setLotType(LotType.Cabin);
+                break;
+
+            case "Deluxe Cabin":
+                obLot.setLotType(LotType.DeluxeCabin);
+                break;
+
+            default:
+                break;
+
+        }
+
+        /*
+        Switch case for setting the availability based on the value chosen in the combo box.
+        Also sets the removal reason if the availability is set to false. -EB
+         */
+        switch(cboAvailable.getValue())
+        {
+            case "Available":
+                obLot.setAvailability(true);
+                obLot.setRemovalOverride("N/A");
+                break;
+
+            case "Not Available":
+                obLot.setAvailability(false);
+                obLot.setRemovalReason(sReason);
+                break;
+
+            default:
+                break;
+        }
+
+        obBookingsLedger.getLotList().set(obLot.getLotID(), obLot);
+        txtReason.setText("");
+
+        for (Lot obLot1 : obBookingsLedger.getLotList())
+        {
+            accomList.getItems().add(obLot1);
+        }
+
+        this.setScene(scene);
+
+    }
+
+    //Returns back to the list of Accommodations. -EB
     public void backToEdit()
     {
         this.setScene(scene);
     }
+
+
 }

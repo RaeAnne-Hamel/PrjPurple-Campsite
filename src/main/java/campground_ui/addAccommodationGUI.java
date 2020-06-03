@@ -160,6 +160,7 @@ public class addAccommodationGUI extends Stage {
         Lot obLot = new Lot(nID);
 
         String sReason = txtReason.getText();
+        txtReason.setText("");
 
         //Switch case for changing the Lot Type based on which option was chosen in the field. -EB
         switch (cboType.getValue())

@@ -23,6 +23,8 @@ public class MainGui extends Application {
     BorderPane resPane;
     Scene mainScene;
 
+    public static BookingsLedger obBookingsLedger = new BookingsLedger();
+
     @Override
     public void start(Stage stage) {
         //Setting up the image to use is the same in each section - DW
