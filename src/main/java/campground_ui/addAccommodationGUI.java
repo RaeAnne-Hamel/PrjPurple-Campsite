@@ -10,10 +10,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -25,21 +22,10 @@ import java.util.Stack;
 
 import static campground_ui.MainGui.obBookingsLedger;
 
-/**
- * TODO:
- * - add functionality for Back Button after main GUI is created
- * - Add error handling for invalid inputs to the removal reason
- * - Add a window that asks for confirmation that the lot has the correct information. This window will display the lot
- * and then ask the user if this information is correct. If No is clicked, the window closes and you are able to input information again.
- * If Yes is selected, a new window shows up explaining that the lot was created successfully. Both the add accommodation window and this window close
- * when confirm is hit.
- * - Check that LotID updates correctly when new lots are added after save system is implemented
- */
 
 public class addAccommodationGUI extends Stage {
 
-
-
+    //JavaFX Elements. -EB
     Text txtID;
     ComboBox<String> cboType;
     ComboBox<String> cboAvailable;
@@ -47,10 +33,6 @@ public class addAccommodationGUI extends Stage {
 
     public addAccommodationGUI(Stage primaryStage)
     {
-
-        /**
-         * Come back to this and make BL be the loaded bookings Ledger using the saving system. -EB
-         */
 
         //Creating Center Pane where input fields go. -EB
         GridPane paneCenter = new GridPane();
@@ -204,11 +186,65 @@ public class addAccommodationGUI extends Stage {
             case "Available":
                 obLot.setAvailability(true);
                 obLot.setRemovalOverride("N/A");
+                MainGui.obBookingsLedger.addAccommodation(obLot);
+                txtReason.setText("");
+
+                int nID2 = Integer.parseInt(txtID.getText());
+                nID2++;
+                txtID.setText(Integer.toString(nID2));
+
+                Alert confirm = new Alert(Alert.AlertType.INFORMATION, "Accommodation Successfully Added.", ButtonType.CLOSE);
+                confirm.showAndWait();
+                if (confirm.getResult() == ButtonType.CLOSE)
+                {
+                    confirm.close();
+                }
+
+                this.close();
+
                 break;
 
             case "Not Available":
-                obLot.setAvailability(false);
-                obLot.setRemovalReason(sReason);
+                if (sReason.equals(""))
+                {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Removal Reason must contain at least one character", ButtonType.CLOSE);
+                    alert.showAndWait();
+                    if (alert.getResult() == ButtonType.CLOSE)
+                    {
+                        alert.close();
+                    }
+                }
+                else if (sReason.length() > 255)
+                {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Removal Reason must be less than 256 characters in length", ButtonType.CLOSE);
+                    alert.showAndWait();
+                    if (alert.getResult() == ButtonType.CLOSE)
+                    {
+                        alert.close();
+                    }
+                }
+                else
+                {
+                    //Adds the accommodation created to the List of accommodations.
+                    MainGui.obBookingsLedger.addAccommodation(obLot);
+                    obLot.setAvailability(false);
+                    txtReason.setText("");
+                    obLot.setRemovalReason(sReason);
+
+                    int nID3 = Integer.parseInt(txtID.getText());
+                    nID3++;
+                    txtID.setText(Integer.toString(nID3));
+
+                    Alert confirm2 = new Alert(Alert.AlertType.INFORMATION, "Accommodation Successfully Added.", ButtonType.CLOSE);
+                    confirm2.showAndWait();
+                    if (confirm2.getResult() == ButtonType.CLOSE)
+                    {
+                        confirm2.close();
+                    }
+
+                    this.close();
+                }
+
                 break;
 
             default:
@@ -218,37 +254,34 @@ public class addAccommodationGUI extends Stage {
         ArrayList<Reservation> obRes = new ArrayList<>();
         obLot.setReservations(obRes);
 
-        /**
-         * Test Output to console. Remove before finishing.
-         */
-
-        System.out.println(obLot.toString());
-
-        //Adds the accommodation created to the List of accommodations.
-        MainGui.obBookingsLedger.addAccommodation(obLot);
 
 
+
+        //Clears the accommodation listview and reinserts the updated information into it. -EB
         EditAccommodationGUI.accomList.getItems().clear();
         for (Lot obLot1 : obBookingsLedger.getLotList())
         {
             EditAccommodationGUI.accomList.getItems().add(obLot1);
         }
 
-
-        int nID2 = Integer.parseInt(txtID.getText());
-        nID2++;
-        txtID.setText(Integer.toString(nID2));
+        //Increments the ID so that the next ID listed is a new one that has not been used yet. -EB
 
 
 
-        this.close();
+
+
 
     }
 
+    //Closes the window. -EB
     public void Back()
     {
         this.close();
     }
+
+    /**
+     * Add Save methods passed here. -EB
+     */
 
 
 

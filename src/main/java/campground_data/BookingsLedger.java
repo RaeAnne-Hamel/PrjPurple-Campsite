@@ -226,7 +226,6 @@ public class BookingsLedger
             obLot.setRemovalReason("N/A");
         }
 
-
         aLot.add(obLot);
     }
 

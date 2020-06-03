@@ -23,21 +23,20 @@ import static campground_ui.MainGui.obBookingsLedger;
 
 public class EditAccommodationGUI extends Stage {
 
+    //JavaFX Elements
     Scene scene;
     Scene scene2;
-
     Text txtID;
     ComboBox<String> cboType;
     ComboBox<String> cboAvailable;
     TextArea txtReason;
-
     public static ListView accomList;
 
 
 
     public EditAccommodationGUI(Stage primaryStage) {
 
-
+        //Pane created for the first scene that displays the list of lots. -EB
         BorderPane mainPane = new BorderPane();
 
         //Creating the top pane for the label. -EB
@@ -48,7 +47,7 @@ public class EditAccommodationGUI extends Stage {
         Label lblTop = new Label("Select an Accommodation to edit:");
         paneTop.getChildren().add(lblTop);
 
-        //Creating the centre pane for the ListView displaying Lot data. -EB
+        //Creating the centre pane for the ListView displaying Accommodation data. -EB
         HBox paneCentre = new HBox();
         paneCentre.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
         paneCentre.setAlignment(Pos.TOP_CENTER);
@@ -58,6 +57,7 @@ public class EditAccommodationGUI extends Stage {
         accomList.setMinSize(425, 100);
         accomList.setMaxHeight(200);
 
+        //Add the Accommodation information to the ListView. -EB
         for (Lot obLot : obBookingsLedger.getLotList())
         {
             accomList.getItems().add(obLot);
@@ -193,15 +193,33 @@ public class EditAccommodationGUI extends Stage {
         btConfirm.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                Lot listLot = obBookingsLedger.querySearchCampsite(accomList.getSelectionModel().getSelectedIndex());
-                System.out.println(listLot.toString());
-                Confirm(listLot);
+
+                if (accomList.getSelectionModel().getSelectedIndex() == -1)
+                {
+                    Alert error = new Alert(Alert.AlertType.ERROR, "Please select an Accommodation before clicking confirm.", ButtonType.CLOSE);
+                    error.showAndWait();
+                    if (error.getResult() == ButtonType.CLOSE)
+                    {
+                        error.close();
+                    }
+                }
+                else
+                {
+                    Lot listLot = obBookingsLedger.querySearchCampsite(accomList.getSelectionModel().getSelectedIndex());
+                    Confirm(listLot);
+                }
+
+
+
+
+
+
             }
         });
 
 
 
-
+        //Setting the initial Scene for when the Window is loaded in. -EB
         scene = new Scene(mainPane, 500, 500);
         this.setTitle("Edit Accommodation");
         this.setScene(scene);
@@ -224,6 +242,7 @@ public class EditAccommodationGUI extends Stage {
     //Opens the window for editing the specific Accommodation and sets the combo boxes to the values of the Accommodation. -EB
     public void Confirm(Lot obLot)
     {
+
         this.setScene(scene2);
 
         String sID = Integer.toString(obLot.getLotID());
@@ -322,22 +341,70 @@ public class EditAccommodationGUI extends Stage {
             case "Available":
                 obLot.setAvailability(true);
                 obLot.setRemovalOverride("N/A");
+
+                obBookingsLedger.getLotList().set(obLot.getLotID(), obLot);
+                txtReason.setText("");
+                obLot.setRemovalReason(sReason);
+
+                Alert confirm = new Alert(Alert.AlertType.INFORMATION, "Accommodation Successfully Edited.", ButtonType.CLOSE);
+                confirm.showAndWait();
+                if (confirm.getResult() == ButtonType.CLOSE)
+                {
+                    confirm.close();
+                }
+
+                this.setScene(scene);
+
                 break;
 
             case "Not Available":
-                obLot.setAvailability(false);
-                obLot.setRemovalReason(sReason);
+
+                if (sReason.equals(""))
+                {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Removal Reason must contain at least one character", ButtonType.CLOSE);
+                    alert.showAndWait();
+                    if (alert.getResult() == ButtonType.CLOSE)
+                    {
+                        alert.close();
+                    }
+                }
+                else if (sReason.length() > 255)
+                {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Removal Reason must be less than 256 characters in length", ButtonType.CLOSE);
+                    alert.showAndWait();
+                    if (alert.getResult() == ButtonType.CLOSE)
+                    {
+                        alert.close();
+                    }
+                }
+                else
+                {
+                    obBookingsLedger.getLotList().set(obLot.getLotID(), obLot);
+                    obLot.setAvailability(false);
+                    txtReason.setText("");
+                    obLot.setRemovalReason(sReason);
+
+                    Alert confirm2 = new Alert(Alert.AlertType.INFORMATION, "Accommodation Successfully Edited.", ButtonType.CLOSE);
+                    confirm2.showAndWait();
+                    if (confirm2.getResult() == ButtonType.CLOSE)
+                    {
+                        confirm2.close();
+                    }
+
+                    this.setScene(scene);
+                }
+
+
                 break;
 
             default:
                 break;
         }
 
-        obBookingsLedger.getLotList().set(obLot.getLotID(), obLot);
-        txtReason.setText("");
 
 
-        this.setScene(scene);
+
+
 
     }
 

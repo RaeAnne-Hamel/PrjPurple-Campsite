@@ -196,24 +196,20 @@ public class MainGui extends Application {
         btnAddAccom.setPrefWidth(150);
         Button btnEditAccom = new Button("Edit Accommodation");
         btnEditAccom.setPrefWidth(150);
-        Button btnSetAvailability = new Button("Set Availability");
-        btnSetAvailability.setPrefWidth(150);
         Button btnSetPrice = new Button("Set Price");
         btnSetPrice.setPrefWidth(150);
 
         AccomLeft.getChildren().add(btnBack1);
-        AccomRight.getChildren().addAll(btnAddAccom, btnEditAccom, btnSetAvailability, btnSetPrice);
+        AccomRight.getChildren().addAll(btnAddAccom, btnEditAccom, btnSetPrice);
         AccomCenter.getChildren().addAll(AccomLeft, AccomRight);
         accomPane.setCenter(AccomCenter);
 
         addAccommodationGUI addGUI = new addAccommodationGUI(stage);
         EditAccommodationGUI editGUI = new EditAccommodationGUI(stage);
-        setAvailabilityGUI setGUI = new setAvailabilityGUI(stage);
 
         btnBack1.setOnAction(e -> stage.setScene(mainScene));
         btnAddAccom.setOnAction(e -> addGUI.showAndWait());
         btnEditAccom.setOnAction(e -> editGUI.showAndWait());
-        btnSetAvailability.setOnAction(e -> setGUI.showAndWait());
 
         btnBack1.setOnAction(e -> stage.setScene(mainScene));
     }
