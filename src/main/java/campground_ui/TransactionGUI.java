@@ -142,6 +142,7 @@ public class TransactionGUI extends Stage {
                 if(btnSave.getText().equals("Confirm Changes"))
                 {
                     System.exit(0);
+                    //i Would put the save method here !!!!!!
                 }
                 else
                 {
@@ -155,6 +156,8 @@ public class TransactionGUI extends Stage {
                     //calculate a new ammount to dispaly for the toal price.
                     String newAmmount = changeNewammount(transaction.discount, transaction.getPrice(), transaction);
                     adustedPrice.setText("$ CAD " + newAmmount);
+
+
                 }
             }
         });

@@ -166,6 +166,10 @@ public class Reservation<Static> {
         return !(obStartDate.compareTo(obEndDate) > 0);
     }
 
+    public ArrayList<Customer> getObCustomerList(){
+        return this.obCustomerList;
+    }
+
     public int getReservationID() {
         /*Set the ID for the specific reservation*/
         return this.ReservationID;
@@ -188,7 +192,19 @@ public class Reservation<Static> {
         //they can manually input a price if they need.
 
         return this.price;
-         }
+    }
+
+    public Date getObStartDate() {
+        return obStartDate;
+    }
+
+    public Date getObEndDate(){
+        return obEndDate;
+    }
+
+    public int getnCustomerCount(){
+        return nCustomerCount;
+    }
 
     /**
      * this is used for testing cases, it will let me test the trandaction class

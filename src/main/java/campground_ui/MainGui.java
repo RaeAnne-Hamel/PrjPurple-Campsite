@@ -14,9 +14,13 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import campground_data.*;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class MainGui extends Application {
     //Loads image once so it isn't wasteful. Declares the separate panes here for general use.
     public static BookingsLedger bookingsLedger = new BookingsLedger();
+
 
     Image Camp = new Image("file:images/campground.jpg");
     BorderPane custPane;
@@ -26,6 +30,7 @@ public class MainGui extends Application {
 
     @Override
     public void start(Stage stage) {
+
         //Setting up the image to use is the same in each section - DW
         ImageView imgCamp = new ImageView(Camp);
         imgCamp.setFitHeight(353);
