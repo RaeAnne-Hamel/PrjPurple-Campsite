@@ -3,6 +3,7 @@ package campground_ui;
 import campground_data.BookingsLedger;
 import campground_data.Lot;
 import campground_data.LotType;
+import campground_data.Reservation;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,7 +23,6 @@ import static campground_ui.MainGui.obBookingsLedger;
 
 public class EditAccommodationGUI extends Stage {
 
-    BookingsLedger BL;
     Scene scene;
     Scene scene2;
 
@@ -31,32 +31,11 @@ public class EditAccommodationGUI extends Stage {
     ComboBox<String> cboAvailable;
     TextArea txtReason;
 
-    ListView accomList;
+    public static ListView accomList;
+
+
 
     public EditAccommodationGUI(Stage primaryStage) {
-        BL = new BookingsLedger();
-        Lot obLot1 = new Lot(0);
-        Lot obLot2 = new Lot(1);
-        Lot obLot3 = new Lot(2);
-        Lot obLot4 = new Lot(3);
-        Lot obLot5 = new Lot(4);
-        Lot obLot6 = new Lot(5);
-        Lot obLot7 = new Lot(6);
-        Lot obLot8 = new Lot(7);
-        Lot obLot9 = new Lot(8);
-        Lot obLot10 = new Lot(9);
-        Lot obLot11 = new Lot(10);
-        obBookingsLedger.addAccommodation(obLot1);
-        obBookingsLedger.addAccommodation(obLot2);
-        obBookingsLedger.addAccommodation(obLot3);
-        obBookingsLedger.addAccommodation(obLot4);
-        obBookingsLedger.addAccommodation(obLot5);
-        obBookingsLedger.addAccommodation(obLot6);
-        obBookingsLedger.addAccommodation(obLot7);
-        obBookingsLedger.addAccommodation(obLot8);
-        obBookingsLedger.addAccommodation(obLot9);
-        obBookingsLedger.addAccommodation(obLot10);
-        obBookingsLedger.addAccommodation(obLot11);
 
 
         BorderPane mainPane = new BorderPane();
@@ -181,7 +160,17 @@ public class EditAccommodationGUI extends Stage {
                 int nID = Integer.parseInt(txtID.getText());
 
                 Lot editLot = obBookingsLedger.querySearchCampsite(nID);
+
+
                 ConfirmEdit(editLot);
+
+                EditAccommodationGUI.accomList.getItems().clear();
+
+                for (Lot obLot1 : obBookingsLedger.getLotList())
+                {
+                    accomList.getItems().add(obLot1);
+                }
+
             }
         });
 
@@ -347,10 +336,6 @@ public class EditAccommodationGUI extends Stage {
         obBookingsLedger.getLotList().set(obLot.getLotID(), obLot);
         txtReason.setText("");
 
-        for (Lot obLot1 : obBookingsLedger.getLotList())
-        {
-            accomList.getItems().add(obLot1);
-        }
 
         this.setScene(scene);
 

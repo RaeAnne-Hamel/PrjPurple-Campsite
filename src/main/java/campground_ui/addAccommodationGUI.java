@@ -23,6 +23,8 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import static campground_ui.MainGui.obBookingsLedger;
+
 /**
  * TODO:
  * - add functionality for Back Button after main GUI is created
@@ -36,7 +38,7 @@ import java.util.Stack;
 
 public class addAccommodationGUI extends Stage {
 
-    BookingsLedger BL;
+
 
     Text txtID;
     ComboBox<String> cboType;
@@ -49,7 +51,6 @@ public class addAccommodationGUI extends Stage {
         /**
          * Come back to this and make BL be the loaded bookings Ledger using the saving system. -EB
          */
-        BL = new BookingsLedger();
 
         //Creating Center Pane where input fields go. -EB
         GridPane paneCenter = new GridPane();
@@ -72,7 +73,7 @@ public class addAccommodationGUI extends Stage {
         Label lblAvailability = new Label("Availability:");
 
         txtID = new Text("");
-        String sID = Integer.toString(BL.getLotList().size());
+        String sID = Integer.toString(MainGui.obBookingsLedger.getLotList().size());
         txtID.setText(sID);
 
         cboType = new ComboBox<>();
@@ -224,7 +225,21 @@ public class addAccommodationGUI extends Stage {
         System.out.println(obLot.toString());
 
         //Adds the accommodation created to the List of accommodations.
-        BL.addAccommodation(obLot);
+        MainGui.obBookingsLedger.addAccommodation(obLot);
+
+
+        EditAccommodationGUI.accomList.getItems().clear();
+        for (Lot obLot1 : obBookingsLedger.getLotList())
+        {
+            EditAccommodationGUI.accomList.getItems().add(obLot1);
+        }
+
+
+        int nID2 = Integer.parseInt(txtID.getText());
+        nID2++;
+        txtID.setText(Integer.toString(nID2));
+
+
 
         this.close();
 
