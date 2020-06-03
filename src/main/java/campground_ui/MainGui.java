@@ -1,5 +1,6 @@
 package campground_ui;
 
+
 import campground_data.Customer;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -10,14 +11,17 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
-import campground_data.BookingsLedger;
+import campground_data.*;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 
 public class MainGui extends Application {
+
     //Loads image once so it isn't wasteful. Declares the separate panes here for general use.
     Image Camp = new Image("file:images/campground.jpg");
     BorderPane custPane;
@@ -28,6 +32,7 @@ public class MainGui extends Application {
 
     @Override
     public void start(Stage stage) {
+
         //Setting up the image to use is the same in each section - DW
         ImageView imgCamp = new ImageView(Camp);
         imgCamp.setFitHeight(353);
@@ -79,6 +84,7 @@ public class MainGui extends Application {
         btnCust.setOnAction(e -> stage.setScene(Customers));
         btnRes.setOnAction(e -> stage.setScene(Reservations));
 
+
         //Code for running the initial Scene. -EB
         btnExit.setOnAction(e -> stage.close());
 
@@ -119,6 +125,13 @@ public class MainGui extends Application {
         btnRemove.setPrefWidth(200);
         Button btnTrans = new Button("Transactions");
         btnTrans.setPrefWidth(200);
+
+        //Create Stages opened in Reservation scene -AE
+        SearchDateWindow searchDateWindow = new SearchDateWindow(stage);
+
+        //Set event handlers on buttons to open external Stage -AE
+        btnSearch.setOnAction(e-> searchDateWindow.showAndWait());
+
 
         paneLeft.getChildren().add(btnBack3);
         paneRight.getChildren().addAll(btnSearch, btnAdd, btnEdit, btnRemove, btnTrans);

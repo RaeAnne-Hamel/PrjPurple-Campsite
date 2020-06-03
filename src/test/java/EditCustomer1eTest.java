@@ -200,7 +200,7 @@ public class EditCustomer1eTest {
     }
 
     /**
-     * INVALID: Phone length must be 10 characters.
+     * INVALID: Phone length must be 10 or 11 characters.
      */
     @Test
     public void TestPhoneLength()
@@ -212,7 +212,7 @@ public class EditCustomer1eTest {
     }
 
     /**
-     * VALID: Phone can be 10 characters.
+     * VALID: Phone can be 10 or 11 characters.
      */
     @Test
     public void TestValidPhone()
@@ -222,7 +222,7 @@ public class EditCustomer1eTest {
     }
 
     /**
-     * INVALID: Phone length must be 10 characters.
+     * INVALID: Phone length must be 10 or 11 characters.
      */
     @Test
     public void TestSecPhoneLength()
