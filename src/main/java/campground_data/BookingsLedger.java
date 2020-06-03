@@ -1,21 +1,17 @@
 package campground_data;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import campground_ui.MainConsole;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.UUID;
 
 public class BookingsLedger
 {
     public static ArrayList<Reservation> aReservation = new ArrayList<>();
-    ArrayList<Lot> aLot = new ArrayList<>();
-    ArrayList<Customer> aCustomer = new ArrayList<>();
-    ArrayList<Manager> aManager;
+    public ArrayList<Lot> aLot = new ArrayList<>();
+    public ArrayList<Customer> aCustomer = new ArrayList<>();
+    public ArrayList<Manager> aManager;
     Boolean bCustomerPasses = true;
 
     public BookingsLedger()
@@ -250,8 +246,10 @@ public class BookingsLedger
             //If dates Overlap set bOverlap to false and break loop
             if ((obStartDate.compareTo(obReservation.obEndDate) <=0) && (obEndDate.compareTo(obReservation.obStartDate) >=0))
             {
+                System.out.println("Overlap Found");
                 bOverlap = true;
                 break;
+
             }
         }
         return bOverlap;
@@ -434,4 +432,31 @@ public class BookingsLedger
                     {
                         this.aReservation = obReservations;
                     }
+
+    /**
+     * This method runs a a checkOverlap for every possible Lot with specified dates.
+     * It will return a List of reservations that passed the checkOverlap test
+     * If the date is invalid however (obEndDate is before obStartDate) it will return null
+     * @param obStartDate
+     * @param obEndDate
+     * @return
+     */
+    public List<Lot> checkAvailability(Date obStartDate, Date obEndDate)
+                    {
+                        //Check if endDate is before startDate. If so it will fail and return null
+                        if (obStartDate.compareTo(obEndDate) > 0) {
+                            System.out.printf("Invalid date\n");
+                            return null;
+                        }
+
+                        //Start stream to filter and story Lots
+                        List<Lot> obOutput = aLot.stream()
+                                .filter(e-> !(checkOverlap(e.getLotID(),obStartDate,obEndDate)))
+                                .sorted(Comparator.comparingInt(Lot::getLotID))
+                                .collect(Collectors.toList());
+
+
+                        return obOutput;
+                    }
                 }
+

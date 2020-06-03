@@ -1,7 +1,6 @@
 package campground_ui;
 
 import campground_data.Customer;
-import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -13,16 +12,12 @@ import javafx.stage.Stage;
  * Author: Dustin Wiebe
  * Class for the window where the user will edit a customer's information.
  */
-public class EditCustomerWindow extends Application {
+public class EditCustomerWindow{
     private Customer obCustomer;
-
-//    public EditCustomerWindow(Customer obCustomer)
-//    {
-//        this.obCustomer = obCustomer;
-//    }
 
     //Declaring all the variables that'll be used in multiple methods.
     TextField txtName;
+    TextField txtLast;
     TextField txtAddress;
     TextField txtCountry;
     TextField txtProvince;
@@ -42,15 +37,18 @@ public class EditCustomerWindow extends Application {
     GridPane obGrid;
     Label lblGetID;
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        obCustomer = new Customer("bob", "215 bob street",
-                "BC", "VA", "S7N4V2", "Canada", "bob@bob.com",
-                1123456789);
+    /**
+     * A new EditCustomerWindow will bring up a screen for editing the customer who's passed in on the stage that's passed in.
+     * @param stage The parent stage
+     * @param obCustomer The customer to be edited
+     */
+    public EditCustomerWindow(Stage stage, Customer obCustomer) {
+        this.obCustomer = obCustomer;
 
         //Setting up all the labels. The customer's ID isn't editable, so it uses a label rather than a text field.
         Label lblID = new Label("ID");
         Label lblName = new Label("Name");
+        Label lblLast = new Label("Last Name");
         Label lblAddress = new Label("Address");
         Label lblCountry = new Label("Country");
         Label lblProvince = new Label("Province/State");
@@ -65,7 +63,7 @@ public class EditCustomerWindow extends Application {
 
         //Setting up the GridPane. The labels all go in the first column.
         obGrid = new GridPane();
-        obGrid.addColumn(0, lblID, lblName, lblAddress, lblCountry, lblProvince, lblCity, lblPostal, lblEmail,
+        obGrid.addColumn(0, lblID, lblName, lblLast, lblAddress, lblCountry, lblProvince, lblCity, lblPostal, lblEmail,
                 lblPhone, lblSecPhone, lblFax);
 
         //Everything is housed in a BorderPane. The HBox goes at the bottom to house the buttons, while the grid goes in the middle.
@@ -87,21 +85,23 @@ public class EditCustomerWindow extends Application {
         btnConfirm = new Button("Confirm");
         btnEdit.setOnAction(e -> Edit());
         btnConfirm.setOnAction(e -> Confirm());
+        btnBack.setOnAction(e -> stage.setScene(MainGui.mainScene));
 
         setupTextFields();
 
         //Set up spacing and alignment for the buttons. A second HBox is used so that two buttons can be in the bottom right while the other's in the bottom left.
-        obBox.setSpacing(300);
+        obBox.setSpacing(250);
         obBox.setAlignment(Pos.CENTER);
         obBoxRight.getChildren().addAll(btnEdit, btnConfirm);
         obBoxRight.setSpacing(10);
         obBoxRight.setAlignment(Pos.BOTTOM_RIGHT);
         obBox.getChildren().addAll(btnBack, obBoxRight);
+        obBox.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
 
         //Sets up the scene and the stage.
         stage.setTitle("Edit Customer Information");
         stage.setScene(new Scene(obBorder, 500, 500));
-        stage.show();
+
     }
 
     /**
@@ -109,6 +109,7 @@ public class EditCustomerWindow extends Application {
      */
     private void setupTextFields() {
         txtName = new TextField(obCustomer.getName());
+        txtLast = new TextField(obCustomer.getLast());
         txtAddress = new TextField(obCustomer.getAddress());
         txtCountry = new TextField(obCustomer.getCountry());
         txtProvince = new TextField(obCustomer.getProvince());
@@ -143,21 +144,22 @@ public class EditCustomerWindow extends Application {
         //All items are added to the grid. The non-phone entries are multiple columns wide, since they're larger.
         obGrid.add(lblGetID, 1, 0);
         obGrid.add(txtName, 1, 1, 3, 1);
-        obGrid.add(txtAddress, 1, 2, 3, 1);
-        obGrid.add(txtCountry, 1, 3, 3, 1);
-        obGrid.add(txtProvince, 1, 4, 3, 1);
-        obGrid.add(txtCity, 1, 5, 3, 1);
-        obGrid.add(txtPostal, 1, 6, 2, 1);
-        obGrid.add(txtEmail, 1, 7, 3, 1);
-        obGrid.add(txtPhone, 1, 8);
-        obGrid.add(txtSecPhone, 1, 9);
-        obGrid.add(txtFax, 1, 10);
-        obGrid.add(txtPhone2, 2, 8);
-        obGrid.add(txtSecPhone2, 2, 9);
-        obGrid.add(txtFax2, 2, 10);
-        obGrid.add(txtPhone3, 3, 8);
-        obGrid.add(txtSecPhone3, 3, 9);
-        obGrid.add(txtFax3, 3, 10);
+        obGrid.add(txtLast, 1, 2, 3, 1);
+        obGrid.add(txtAddress, 1, 3, 3, 1);
+        obGrid.add(txtCountry, 1, 4, 3, 1);
+        obGrid.add(txtProvince, 1, 5, 3, 1);
+        obGrid.add(txtCity, 1, 6, 3, 1);
+        obGrid.add(txtPostal, 1, 7, 2, 1);
+        obGrid.add(txtEmail, 1, 8, 3, 1);
+        obGrid.add(txtPhone, 1, 9);
+        obGrid.add(txtSecPhone, 1, 10);
+        obGrid.add(txtFax, 1, 11);
+        obGrid.add(txtPhone2, 2, 9);
+        obGrid.add(txtSecPhone2, 2, 10);
+        obGrid.add(txtFax2, 2, 11);
+        obGrid.add(txtPhone3, 3, 9);
+        obGrid.add(txtSecPhone3, 3, 10);
+        obGrid.add(txtFax3, 3, 11);
     }
 
     /**
@@ -165,6 +167,7 @@ public class EditCustomerWindow extends Application {
      */
     private void UnEditable(){
         txtName.setEditable(false);
+        txtLast.setEditable(false);
         txtAddress.setEditable(false);
         txtCity.setEditable(false);
         txtCountry.setEditable(false);
@@ -188,6 +191,7 @@ public class EditCustomerWindow extends Application {
      */
     private void Edit(){
         txtName.setEditable(true);
+        txtLast.setEditable(true);
         txtAddress.setEditable(true);
         txtCity.setEditable(true);
         txtCountry.setEditable(true);
@@ -227,9 +231,9 @@ public class EditCustomerWindow extends Application {
 
         //Try/catch block to prevent non-numbers from being entered in phone/fax fields.
         try {
-            sVal = obCustomer.updateCustomer(txtName.getText(), txtAddress.getText(),
+            sVal = obCustomer.updateCustomer(txtName.getText(), txtLast.getText(), txtAddress.getText(),
                     txtProvince.getText(), txtCity.getText(), txtPostal.getText(), txtCountry.getText(), txtEmail.getText(),
-                    Long.parseLong(sPhone), Long.parseLong(sFax), Long.parseLong(sSecPhone));
+                    Long.parseLong(sPhone), Long.parseLong(sFax), Long.parseLong(sSecPhone), 0);
         }
         catch (NumberFormatException exp){
             sVal = "Please enter only numbers in phone and fax fields.";
@@ -237,7 +241,7 @@ public class EditCustomerWindow extends Application {
 
         //An alert will pop up denoting success or failure. The error contents come from Customer's UpdateCustomer method.
         //If successful, all fields will revert to being non-editable.
-        if (sVal.equals("Successfully changed")){
+        if (sVal.equals("Successfully updated")){
             UnEditable();
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Success!");
@@ -252,9 +256,5 @@ public class EditCustomerWindow extends Application {
             alert.setContentText(sVal);
             alert.showAndWait();
         }
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

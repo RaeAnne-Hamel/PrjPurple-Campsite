@@ -1,11 +1,28 @@
 import campground_data.Customer;
-import org.junit.*;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+import javax.validation.constraints.NotNull;
+
+import java.util.Set;
+
 import static org.junit.Assert.*;
 
-/**
- * Created by Dustin Wiebe
+/*
+    Dylan Attwater
+    CST101
  */
-public class EditCustomer1eTest {
+
+public class ManageCustomer6bTest
+{
+    private static ValidatorFactory vf;
+    private static Validator validator;
+
     String sName = "Harry";
     String sLast = "Edwards";
     String sAddress = "Box 312";
@@ -26,7 +43,6 @@ public class EditCustomer1eTest {
 
     private Customer testCustomer = new Customer(sName, sLast, sAddress, sProvince, sCity, sPostal, sCountry, sEmail,
             nFax, nPhone, nPhone, nVisits, bFreq);
-
 
     /**
      * INVALID: Province length must be no more than 255 characters and must be at least 1 character.
@@ -212,7 +228,7 @@ public class EditCustomer1eTest {
     }
 
     /**
-     * VALID: Phone can be 10 or 11 characters.
+     * VALID: Phone can be 10 characters.
      */
     @Test
     public void TestValidPhone()
@@ -234,7 +250,7 @@ public class EditCustomer1eTest {
     }
 
     /**
-     * VALID: Phone can be 10 or 11 characters.
+     * VALID: Phone can be 10 characters.
      */
     @Test
     public void TestValidSecPhone()
@@ -256,7 +272,7 @@ public class EditCustomer1eTest {
     }
 
     /**
-     * VALID: Fax can be 10 or 11 characters.
+     * VALID: Fax can be 10 characters.
      */
     @Test
     public void TestValidFax()
@@ -265,11 +281,7 @@ public class EditCustomer1eTest {
         assertEquals(nPhone, testCustomer.getFax());
     }
 
-
-
-
-
     private String repeatJ(int count){
-        return new String(new char[count]).replace('\0','M');
+        return new String(new char[count]).replace('\0','J');
     }
 }

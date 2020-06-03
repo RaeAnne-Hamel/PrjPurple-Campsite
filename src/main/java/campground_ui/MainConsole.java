@@ -44,7 +44,7 @@ public class MainConsole {
         /*
         Creating a Customer to add to the Reservation using an ArrayList -EB
          */
-        Customer obCustomer1 = new Customer("John Smith", "223 Real St", "Alberta", "Calgary",
+        Customer obCustomer1 = new Customer("John", "Smith", "223 Real St", "Alberta", "Calgary",
                 "S7N4V2", "Canada", "Johnsmith@hotmail.com",
                 1233211234, 1233322221, 1399587473, 0, false);
         ArrayList<Customer> obCustArray = new ArrayList<>();
@@ -309,7 +309,7 @@ public class MainConsole {
 
                             break;
 
-                            //Start of Add reservation option --Andrew
+                        //Start of Add reservation option --Andrew
                         case "A":
                             int nARLotID = Integer.parseInt(Prompt("Please enter a lot ID to select a lot"));
                             Date obARStartDate = PromptDate("Please Enter the date of arrival");
@@ -353,6 +353,7 @@ public class MainConsole {
                     switch (read.nextLine().toUpperCase()) {
                         case "A":
                             String name = PromptNormal("Please enter a name");
+                            String lastname = PromptNormal("Please enter a lsat name");
                             String address = PromptNormal("Please enter an address");
                             String email = PromptNormal("Please enter an email");
                             long fax = Long.parseLong(PromptNormal("Please enter a fax"));
@@ -362,7 +363,7 @@ public class MainConsole {
                             boolean bFreq = true;
                             int idPool = 0;
 
-                            Customer customer = new Customer(name, address, address, address, address, address, email, fax, phone, secPhone, nVisits, bFreq);
+                            Customer customer = new Customer(name, lastname, address, address, address, address, address, email, fax, phone, secPhone, nVisits, bFreq);
                             BookingLedger.addCustomer(customer);
                             break;
                     }
@@ -374,24 +375,24 @@ public class MainConsole {
                             " [S]setStatus and [C]Check for Price");
 
 
-                        switch(read.nextLine().toUpperCase())
-                        {
-                            case "PT":
-                                setPayType();
-                                break mainSwitch;
-                            case "PM":
-                                setPayMethod();
-                                break mainSwitch;
-                            case "S":
-                                setStatus();
-                                break;
-                            case "C":
-                                checkPrice();
-                                break ;
-                            default:
-                                break;
-                        }
-                        break;
+                    switch(read.nextLine().toUpperCase())
+                    {
+                        case "PT":
+                            setPayType();
+                            break mainSwitch;
+                        case "PM":
+                            setPayMethod();
+                            break mainSwitch;
+                        case "S":
+                            setStatus();
+                            break;
+                        case "C":
+                            checkPrice();
+                            break ;
+                        default:
+                            break;
+                    }
+                    break;
 
                 default:
                     quit = true;
@@ -426,23 +427,23 @@ public class MainConsole {
     public static void setPayType()
     {
         // prompt user for a specific reservation
-       Reservation obRes =  promptReservation();
+        Reservation obRes =  promptReservation();
 
-       //prompt for a Payment type
-       System.out.println("Choose a payment Type: [CA]Cash, [DB] debit and [CC]CreditCard");
+        //prompt for a Payment type
+        System.out.println("Choose a payment Type: [CA]Cash, [DB] debit and [CC]CreditCard");
 
-       // set the variable
-       String input1 = read.nextLine().toUpperCase();
+        // set the variable
+        String input1 = read.nextLine().toUpperCase();
 
-       //the variable to set the paytype
-       PaymentType payType;
+        //the variable to set the paytype
+        PaymentType payType;
 
-       //sets the actual type
+        //sets the actual type
         switch(input1)
         {
             case "CA":
-               payType = PaymentType.CASH;
-               break;
+                payType = PaymentType.CASH;
+                break;
             case "DB":
                 payType = PaymentType.DEBIT;
                 break;
@@ -561,26 +562,26 @@ public class MainConsole {
 
 
 
-        /**
-         * This method will prompt the user with a message of your choice.
-         * It will then prompt the user for Year, Month and Day and construct a Date class
-         * The date will be returned
-         * @param Message
-         * @return
-         */
-        public static Date PromptDate (String Message)
-        {
-            System.out.println(Message);
-            System.out.println("Please enter year in the format \"2020\"");
-            int nYear = Integer.parseInt(read.nextLine().toUpperCase());
-            System.out.println("Please enter the month in the format \"5\"");
-            int nMonth = Integer.parseInt(read.nextLine().toUpperCase());
-            System.out.println("Please enter the day in the format \"27\"");
-            int nDay = Integer.parseInt(read.nextLine().toUpperCase());
+    /**
+     * This method will prompt the user with a message of your choice.
+     * It will then prompt the user for Year, Month and Day and construct a Date class
+     * The date will be returned
+     * @param Message
+     * @return
+     */
+    public static Date PromptDate (String Message)
+    {
+        System.out.println(Message);
+        System.out.println("Please enter year in the format \"2020\"");
+        int nYear = Integer.parseInt(read.nextLine().toUpperCase());
+        System.out.println("Please enter the month in the format \"5\"");
+        int nMonth = Integer.parseInt(read.nextLine().toUpperCase());
+        System.out.println("Please enter the day in the format \"27\"");
+        int nDay = Integer.parseInt(read.nextLine().toUpperCase());
 
-            Date obDate = new GregorianCalendar(nYear, nMonth, nDay).getTime();
-            return obDate;
-        }
+        Date obDate = new GregorianCalendar(nYear, nMonth, nDay).getTime();
+        return obDate;
+    }
 
 
 }
