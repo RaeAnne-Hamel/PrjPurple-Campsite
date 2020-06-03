@@ -1,9 +1,6 @@
 package campground_ui;
 
-import campground_data.BookingsLedger;
-import campground_data.Customer;
-import campground_data.Lot;
-import campground_data.Reservation;
+import campground_data.*;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -18,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
 import javafx.stage.Stage;
 
@@ -40,7 +38,8 @@ public class EditReservationGui extends Application {
     private HBox obHBox;
 
     //Labels
-    private Label lblCustomers, lblCust1, lblCust2,  lblArrival, lblDeparture, lblLotID, lblLotType, lblGuest, lblResID, txtResError;
+    private Label lblCustomers, lblCust1, lblCust2,  lblArrival, lblDeparture, lblLotID, lblLotType, lblGuest, lblResID
+            , txtResError, DateError;
 
     //Textfield
     private TextField txtArrivalYear, txtArrivalDay, txtArrivalMonth, txtDepartDay, txtDepartMonth, txtDepartYear,
@@ -128,6 +127,9 @@ public class EditReservationGui extends Application {
         txtDepartDay.setMaxSize(50, 50);
         txtDepartDay.setDisable(true);
 
+        //space for possible errors
+        DateError = new Label("");
+
         txtGuest = new TextField();
         txtGuest.setMaxSize(70, 50);
         txtGuest.setDisable(true);
@@ -167,6 +169,7 @@ public class EditReservationGui extends Application {
         obGrid.add(txtDepartYear, 1,5);
         obGrid.add(txtDepartMonth, 2,5);
         obGrid.add(txtDepartDay, 3, 5);
+        obGrid.add(DateError, 0, 7);
 
         obGrid.add(lblGuest, 0, 6);
         obGrid.add(txtGuest,1,6);
@@ -218,10 +221,21 @@ public class EditReservationGui extends Application {
         }
     }
 
+    /**
+     * this method will populate the conrtols in the text, and allow the user
+     * to be able to make edits or changed to the reservation.
+     * @param reservation
+     */
     private void populateControls(Reservation reservation) {
-        for(Object cust : reservation.getObCustomerList())
+        if(reservation.getObCustomerList() != null)
         {
-
+            Customer cust1 = (Customer) reservation.getObCustomerList().get(0);
+            lblCust1.setText(cust1.getName());
+            if(reservation.getObCustomerList().size() == 1)
+            {
+                Customer cust2 = (Customer) reservation.getObCustomerList().get(1);
+                lblCust1.setText(cust2.getName());
+            }
         }
 
 
@@ -234,7 +248,7 @@ public class EditReservationGui extends Application {
         txtArrivalYear.setText(Integer.toString(reservation.getObStartDate().getYear()));
         addListenerToTestfeild(txtArrivalYear);
         txtArrivalMonth.setDisable(false);
-        txtArrivalMonth.setText(Integer.toString(reservation.getObStartDate().getMonth()));
+        txtArrivalMonth.setText(Integer.toString((reservation.getObStartDate().getMonth())+1));
         addListenerToTestfeild(txtArrivalMonth);
         txtArrivalDay.setDisable(false);
         txtArrivalDay.setText(Integer.toString(reservation.getObStartDate().getDay()));
@@ -245,7 +259,7 @@ public class EditReservationGui extends Application {
         txtDepartYear.setText(Integer.toString(reservation.getObStartDate().getYear()));
         addListenerToTestfeild(txtDepartYear);
         txtDepartMonth.setDisable(false);
-        txtDepartMonth.setText(Integer.toString(reservation.getObStartDate().getMonth()));
+        txtDepartMonth.setText(Integer.toString((reservation.getObStartDate().getMonth())+1));
         addListenerToTestfeild(txtDepartMonth);
         txtDepartDay.setDisable(false);
         txtDepartDay.setText(Integer.toString(reservation.getObStartDate().getDay()));
@@ -258,6 +272,10 @@ public class EditReservationGui extends Application {
 
     }
 
+
+    /**
+     * this method will add in onclick listeners for all of the buttons
+     */
     public void onClickForButtons()
     {
                 btnEdit.setOnAction(ActionEvent ->{
@@ -279,10 +297,17 @@ public class EditReservationGui extends Application {
 
         btnConfirm.setOnAction(actionEvent -> {
             Checkinputs();
+            System.out.println("This is just for testing");
         });
     }
 
 
+    /**
+     * this method will all a test listner to all of the label feilds that should only be taking in
+     * a number
+     * this will stop the user from putting in a letter or strange space.
+     * @param field
+     */
     private void addListenerToTestfeild(TextField field)
     {
         //only let numbers be put into this test feild
@@ -297,12 +322,65 @@ public class EditReservationGui extends Application {
         });
     }
 
+    /**
+     * this method will check all of the data in the test feilds and
+     * show errors or accept the data accordingly.
+     */
     private void Checkinputs() {
 
+        checkBlank();
+        int LotID = Integer.parseInt(txtLotID.getText());
+        //this method will check to make sure that non of the controls are blank
+        //if they are it will fill the controls will 0's
+        checkBlank();
+        Date newStart = new Date(Integer.parseInt(txtArrivalYear.getText()),
+                (Integer.parseInt(txtArrivalMonth.getText())-1),Integer.parseInt(txtArrivalDay.getText()));
+        Date newEnd = new Date(Integer.parseInt(txtDepartYear.getText()),
+                (Integer.parseInt(txtDepartMonth.getText())-1),Integer.parseInt(txtDepartDay.getText()));
 
 
+        //set the new Lot Types.
+        GReservation.setSiteType(new Lot(LotID).getLotType());
+        txtLotID.setDisable(true);
+
+        //set the new days.
+        String PossibleError = GReservation.changeDate(newStart, newEnd);
+        //set an error if one accouers
+        DateError.setText(PossibleError);
 
 
+        PossibleError += " " + GReservation.setCustomerNumber(Integer.parseInt(txtGuest.getText()));
+        DateError.setText(PossibleError);
+
+
+    }
+
+    /**
+     * this method will check all of the testboxes in the javaFX
+     * if any of the controls are blank it will fill these controls with 0.
+     */
+    private void checkBlank() {
+        isBlank(txtLotID);
+        isBlank(txtArrivalYear);
+        isBlank(txtArrivalMonth);
+        isBlank(txtArrivalDay);
+        isBlank(txtDepartYear);
+        isBlank(txtDepartMonth);
+        isBlank(txtDepartDay);
+        isBlank(txtGuest);
+        
+    }
+
+    public void isBlank(TextField txt)
+    {
+        if(txt.getText().equals(""))
+        {
+            txt.setText(Integer.toString(000));
+        }
+        else
+        {
+
+        }
 
     }
 
