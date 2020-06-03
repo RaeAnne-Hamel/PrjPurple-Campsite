@@ -23,14 +23,14 @@ public class ManageCustomer6bTest
     private static ValidatorFactory vf;
     private static Validator validator;
 
-    String sName = "Harry";
-    String sLast = "Edwards";
+    String sName = "Dylan";
+    String sLast = "Attwater";
     String sAddress = "Box 312";
     String sEmail = "email@email.com";
     String sProvince = "Saskatchewan";
-    String sPostal = "S7N4V2";
-    String sCountry = "South Africa";
-    String sCity = "Johannesburg";
+    String sPostal = "S0K1E0";
+    String sCountry = "Canada";
+    String sCity = "Saskatoon";
     String j256 = repeatJ(256);
     String j255 = repeatJ(255);
     String j1 = repeatJ(1);
@@ -223,7 +223,7 @@ public class ManageCustomer6bTest
     {
         testCustomer.setPhone(0);
         assertEquals(nPhone, testCustomer.getPhone());
-        testCustomer.setPhone(12345678901L);
+        testCustomer.setPhone(123456789012L);
         assertEquals(nPhone, testCustomer.getPhone());
     }
 
@@ -245,7 +245,7 @@ public class ManageCustomer6bTest
     {
         testCustomer.setSecPhone(0);
         assertEquals(nPhone, testCustomer.getSecPhone());
-        testCustomer.setSecPhone(12345678901L);
+        testCustomer.setSecPhone(123456789012L);
         assertEquals(nPhone, testCustomer.getSecPhone());
     }
 
@@ -267,7 +267,7 @@ public class ManageCustomer6bTest
     {
         testCustomer.setFax(0);
         assertEquals(nFax, testCustomer.getFax());
-        testCustomer.setFax(12345678901L);
+        testCustomer.setFax(123456789012L);
         assertEquals(nFax, testCustomer.getFax());
     }
 

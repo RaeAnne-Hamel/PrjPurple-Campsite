@@ -202,6 +202,13 @@ public class MainGui extends Application {
         custCenter.getChildren().addAll(custLeft, custRight);
         custPane.setCenter(custCenter);
 
+        btnAddCustomer.setOnAction(e -> {
+            try {
+                new AddCustomerWindow(stage);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+            });
         btnEditCustomer.setOnAction(e -> EditCust(stage));
         btnBack2.setOnAction(e -> stage.setScene(mainScene));
     }
