@@ -14,7 +14,7 @@ public class BookingsLedger
 {
     public static ArrayList<Reservation> aReservation = new ArrayList<>();
     ArrayList<Lot> aLot = new ArrayList<>();
-    public static ArrayList<Customer> aCustomer = new ArrayList<>();
+    public ArrayList<Customer> aCustomer = new ArrayList<>();
     ArrayList<Manager> aManager;
     Boolean bCustomerPasses = true;
 

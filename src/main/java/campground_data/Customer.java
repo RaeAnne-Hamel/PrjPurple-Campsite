@@ -68,7 +68,7 @@ public class Customer {
 //        this.CustomerID = idPool++;
     }
 
-    public int getCustomerID() { return CustomerID; }
+    public int getCustomerID() { return CustomerID++; }
 
     public String getName() { return sName; }
 
@@ -194,7 +194,7 @@ public class Customer {
         if (!(sAddress.length() > 0 && sAddress.length() <= MAX_LENGTH)){
             return "Street address must be between 1 and 255 characters.";
         }
-        if (!(sProvince.length() > 0 && sProvince.length()<=MAX_LENGTH)){
+        if (!(sProvince.length() > 0 && sProvince.length() <= MAX_LENGTH)){
             return "State/province must be between 1 and 255 characters.";
         }
         if (!(sCity.length() > 0 && sCity.length()<=MAX_LENGTH)){

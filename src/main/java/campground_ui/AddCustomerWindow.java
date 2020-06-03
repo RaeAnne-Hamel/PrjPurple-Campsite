@@ -17,11 +17,6 @@ import javafx.stage.Stage;
 public class AddCustomerWindow extends Application {
     private Customer obCustomer;
 
-//    public EditCustomerWindow(Customer obCustomer)
-//    {
-//        this.obCustomer = obCustomer;
-//    }
-
     //Declaring all the variables that'll be used in multiple methods.
     TextField txtName = new TextField();
     TextField txtLast = new TextField();
@@ -127,7 +122,9 @@ public class AddCustomerWindow extends Application {
      * depending on whether the information is correct.
      */
     private void Confirm(){
-
+        //Set the customer information as the text inputted
+        int length = MainGui.obBookingsLedger.aCustomer.size();
+        obCustomer.setCustomerID(length++);
         obCustomer.setName(txtName.getText());
         obCustomer.setLast(txtLast.getText());
         obCustomer.setAddress(txtAddress.getText());
@@ -164,7 +161,8 @@ public class AddCustomerWindow extends Application {
         //An alert will pop up denoting success or failure. The error contents come from Customer's UpdateCustomer method.
         //If successful, all fields will revert to being non-editable.
         if (sVal.equals("Successfully added")){
-            BookingsLedger.aCustomer.add(obCustomer);
+//            BookingsLedger.aCustomer.add(obCustomer);
+            MainGui.obBookingsLedger.aCustomer.add(obCustomer);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Success!");
             alert.setHeaderText(null);
