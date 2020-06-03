@@ -211,6 +211,10 @@ public class MainGui extends Application {
      * @param stage Takes in the parent stage
      */
     private void EditCust(Stage stage) {
+        obBookingsLedger.aCustomer.add(new Customer("bob", "loblaw", "215 bob street",
+                "BC", "VA", "S7N4V2", "Canada", "bob@bob.com",
+                3454567894L,7801234456L, 3144567123L, 4, true));
+
         //Creates new panes for the top and bottom. Separate VBoxes are created for the buttons on the left and right for alignment reasons.
         BorderPane editCustPane = new BorderPane();
         HBox custCenter = new HBox();

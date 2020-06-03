@@ -153,21 +153,21 @@ public class Customer {
     }
 
     public void setFax(long nPhone) {
-        if (nPhone > 1000000000L && nPhone < 9999999999L)
+        if (nPhone > 1000000000L && nPhone < 99999999999L)
         {
             this.nFax = nPhone;
         }
     }
 
     public void setPhone(long nPhone) {
-        if (nPhone > 1000000000L && nPhone < 9999999999L)
+        if (nPhone > 1000000000L && nPhone < 99999999999L)
         {
             this.nPhone = nPhone;
         }
     }
 
     public void setSecPhone(long nPhone) {
-        if (nPhone > 1000000000L && nPhone < 9999999999L)
+        if (nPhone > 1000000000L && nPhone < 99999999999L)
         {
             this.nSecPhone = nPhone;
         }
@@ -222,14 +222,14 @@ public class Customer {
         if (!(sEmail.length() > 4 && sEmail.length()<=MAX_LENGTH && sEmail.contains("@"))){
             return "Email must be between 5 and 255 characters and include an @ symbol.";
         }
-        if (!(nPhone > 1000000000L && nPhone < 9999999999L)){
-            return "Phone number must be 10 digits.";
+        if (!(nPhone > 1000000000L && nPhone < 99999999999L)){
+            return "Phone number must be 10 or 11 digits.";
         }
-        if (!(nSecPhone > 1000000000L && nSecPhone < 9999999999L) && nSecPhone != 0){
-            return "Secondary phone number must be 10 digits.";
+        if (!(nSecPhone > 1000000000L && nSecPhone < 99999999999L) && nSecPhone != 0){
+            return "Secondary phone number must be 10 or 11 digits.";
         }
-        if (!(nFax > 1000000000L && nFax < 9999999999L) && nFax != 0){
-            return "Fax number must be 10 digits.";
+        if (!(nFax > 1000000000L && nFax < 99999999999L) && nFax != 0){
+            return "Fax number must be 10 or 11 digits.";
         }
 
         this.setName(sName);

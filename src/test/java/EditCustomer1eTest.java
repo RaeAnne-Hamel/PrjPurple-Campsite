@@ -207,7 +207,7 @@ public class EditCustomer1eTest {
     {
         testCustomer.setPhone(0);
         assertEquals(nPhone, testCustomer.getPhone());
-        testCustomer.setPhone(12345678901L);
+        testCustomer.setPhone(123456789012L);
         assertEquals(nPhone, testCustomer.getPhone());
     }
 
@@ -229,12 +229,12 @@ public class EditCustomer1eTest {
     {
         testCustomer.setSecPhone(0);
         assertEquals(nPhone, testCustomer.getSecPhone());
-        testCustomer.setSecPhone(12345678901L);
+        testCustomer.setSecPhone(123456789012L);
         assertEquals(nPhone, testCustomer.getSecPhone());
     }
 
     /**
-     * VALID: Phone can be 10 characters.
+     * VALID: Phone can be 10 or 11 characters.
      */
     @Test
     public void TestValidSecPhone()
@@ -244,19 +244,19 @@ public class EditCustomer1eTest {
     }
 
     /**
-     * INVALID: Fax length must be 10 characters.
+     * INVALID: Fax length must be 10 or 11 characters.
      */
     @Test
     public void TestFaxLength()
     {
         testCustomer.setFax(0);
         assertEquals(nFax, testCustomer.getFax());
-        testCustomer.setFax(12345678901L);
+        testCustomer.setFax(123456789012L);
         assertEquals(nFax, testCustomer.getFax());
     }
 
     /**
-     * VALID: Fax can be 10 characters.
+     * VALID: Fax can be 10 or 11 characters.
      */
     @Test
     public void TestValidFax()
