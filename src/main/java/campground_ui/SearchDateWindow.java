@@ -35,10 +35,6 @@ public class SearchDateWindow extends Stage {
      */
     public SearchDateWindow(Stage parent){
 
-        ArrayList<Lot> lotArray = new ArrayList<>();
-        lotArray.add(new Lot(0));
-        MainGui.obBookingsLedger.setLotList(lotArray);
-
         //Grid pane will be used for Scene
         GridPane obGridPane = new GridPane();
         //VBox will hold both HBoxes
