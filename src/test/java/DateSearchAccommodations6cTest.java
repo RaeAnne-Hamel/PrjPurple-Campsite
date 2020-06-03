@@ -17,7 +17,8 @@ public class DateSearchAccommodations6cTest {
 
     ArrayList<Lot> lotArray = new ArrayList<>();
     ArrayList<Customer> testCustomer = new ArrayList<>();
-    private static Customer obCustomer = new Customer(0, "John Doe", "Addr", "Email@Email", 1L, 1L, 1L, 1, true, 1);
+    private static Customer obCustomer = new Customer("First", "Last", "Address", "Province",
+            "City", "Postal", "Country", "Email",3064443333L);
 
 
     @Test

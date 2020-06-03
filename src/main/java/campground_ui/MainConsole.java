@@ -42,8 +42,9 @@ public class MainConsole {
         /*
         Creating a Customer to add to the Reservation using an ArrayList -EB
          */
-        Customer obCustomer1 = new Customer(0, "John Smith", "223 Real St", "Johnsmith@hotmail.com",
-                1233211234, 1233322221, 1399587473, 0, false, 0);
+        Customer obCustomer1 = new Customer("John", "Smith", "223 Real St", "Alberta", "Calgary",
+                "S7N4V2", "Canada", "Johnsmith@hotmail.com",
+                1233211234, 1233322221, 1399587473, 0, false);
         ArrayList<Customer> obCustArray = new ArrayList<>();
         obCustArray.add(obCustomer1);
 
@@ -349,8 +350,8 @@ public class MainConsole {
                     System.out.print("[A]dd Customer\n");
                     switch (read.nextLine().toUpperCase()) {
                         case "A":
-                            int customerID = 0;
                             String name = PromptNormal("Please enter a name");
+                            String lastname = PromptNormal("Please enter a lsat name");
                             String address = PromptNormal("Please enter an address");
                             String email = PromptNormal("Please enter an email");
                             long fax = Long.parseLong(PromptNormal("Please enter a fax"));
@@ -360,7 +361,7 @@ public class MainConsole {
                             boolean bFreq = true;
                             int idPool = 0;
 
-                            Customer customer = new Customer(customerID, name, address, email, fax, phone, secPhone, nVisits, bFreq, idPool);
+                            Customer customer = new Customer(name, lastname, address, address, address, address, address, email, fax, phone, secPhone, nVisits, bFreq);
                             BookingLedger.addCustomer(customer);
                             break;
                     }

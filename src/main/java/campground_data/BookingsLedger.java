@@ -9,9 +9,9 @@ import java.util.ArrayList;
 public class BookingsLedger
 {
     public static ArrayList<Reservation> aReservation = new ArrayList<>();
-    ArrayList<Lot> aLot = new ArrayList<>();
-    ArrayList<Customer> aCustomer = new ArrayList<>();
-    ArrayList<Manager> aManager;
+    public ArrayList<Lot> aLot = new ArrayList<>();
+    public ArrayList<Customer> aCustomer = new ArrayList<>();
+    public ArrayList<Manager> aManager;
     Boolean bCustomerPasses = true;
 
     public BookingsLedger()
