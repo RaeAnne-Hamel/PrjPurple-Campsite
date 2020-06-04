@@ -34,6 +34,7 @@ public class ManageCustomer6bTest
     String j256 = repeatJ(256);
     String j255 = repeatJ(255);
     String j1 = repeatJ(1);
+    String j2 = repeatJ(2);
     long nPhone = 3067235921L;
 
     long nFax = 4758394571L;
@@ -90,19 +91,6 @@ public class ManageCustomer6bTest
         assertEquals(j255, testCustomer.getName());
         testCustomer.setName(j1);
         assertEquals(j1, testCustomer.getName());
-    }
-
-
-    /**
-     * INVALID: Postal code length must be no more than 10 characters and must be at least 3 characters.
-     */
-    @Test
-    public void TestPostalLength()
-    {
-        testCustomer.setPostal(repeatJ(2));
-        assertEquals("S7N4V2", testCustomer.getPostal());
-        testCustomer.setPostal(repeatJ(11));
-        assertEquals("S7N4V2", testCustomer.getPostal());
     }
 
     /**

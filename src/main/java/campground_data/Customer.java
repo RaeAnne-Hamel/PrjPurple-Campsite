@@ -64,11 +64,25 @@ public class Customer {
         this.Name = name;
     }
 
-    public Customer() {
-//        this.CustomerID = idPool++;
+    public Customer()
+    {
+        this.CustomerID = idPool++;
+        this.sName = "";
+        this.sLast = "";
+        this.sAddress = "";
+        this.sProvince = "";
+        this.sCity = "";
+        this.sPostal = "";
+        this.sCountry = "";
+        this.sEmail = "";
+        this.nPhone = 0;
+        this.isFrequent = false;
+        this.nSecPhone = 0;
+        this.nVisits = 0;
+        this.nFax = 0;
     }
 
-    public int getCustomerID() { return CustomerID++; }
+    public int getCustomerID() { return CustomerID; }
 
     public String getName() { return sName; }
 
@@ -157,21 +171,21 @@ public class Customer {
     }
 
     public void setFax(long nPhone) {
-        if (nPhone > 1000000000L && nPhone < 9999999999L)
+        if (nPhone > 1000000000L && nPhone < 99999999999L)
         {
             this.nFax = nPhone;
         }
     }
 
     public void setPhone(long nPhone) {
-        if (nPhone > 1000000000L && nPhone < 9999999999L)
+        if (nPhone > 1000000000L && nPhone < 99999999999L)
         {
             this.nPhone = nPhone;
         }
     }
 
     public void setSecPhone(long nPhone) {
-        if (nPhone > 1000000000L && nPhone < 9999999999L)
+        if (nPhone > 1000000000L && nPhone < 99999999999L)
         {
             this.nSecPhone = nPhone;
         }
@@ -181,7 +195,23 @@ public class Customer {
 
     public void setFrequent(boolean frequent) { isFrequent = frequent; }
 
-    //Validates the fields inputted and returns a string with what is entered incorrectly
+
+    /**
+     * Method for adding or updating a customer. nCheck determines whether it will be added or updated.
+     * @param sName First name
+     * @param sLast Last name
+     * @param sAddress Street address
+     * @param sProvince Province or state
+     * @param sCity City
+     * @param sPostal Postal code
+     * @param sCountry Country
+     * @param sEmail Email Address
+     * @param nPhone Phone Number
+     * @param nFax Fax Number
+     * @param nSecPhone Secondary Phone Number
+     * @param nCheck Determines whether to add up update a customer
+     * @return Returns a string that shows whether there was an error or the update was successful.
+     */
     public String updateCustomer(String sName, String sLast, String sAddress, String sProvince,
                                  String sCity, String sPostal, String sCountry, String sEmail,
                                  long nPhone, long nFax, long nSecPhone, int nCheck) {
@@ -194,7 +224,8 @@ public class Customer {
         if (!(sAddress.length() > 0 && sAddress.length() <= MAX_LENGTH)){
             return "Street address must be between 1 and 255 characters.";
         }
-        if (!(sProvince.length() > 0 && sProvince.length() <= MAX_LENGTH)){
+
+        if (!(sProvince.length() > 0 && sProvince.length()<=MAX_LENGTH)){
             return "State/province must be between 1 and 255 characters.";
         }
         if (!(sCity.length() > 0 && sCity.length()<=MAX_LENGTH)){
@@ -209,14 +240,14 @@ public class Customer {
         if (!(sEmail.length() > 4 && sEmail.length()<=MAX_LENGTH && sEmail.contains("@"))){
             return "Email must be between 5 and 255 characters and include an @ symbol.";
         }
-        if (!(nPhone > 1000000000L && nPhone < 9999999999L)){
-            return "Phone number must be 10 digits.";
+        if (!(nPhone > 1000000000L && nPhone < 99999999999L)){
+            return "Phone number must be 10 or 11 digits.";
         }
-        if (!(nSecPhone > 1000000000L && nSecPhone < 9999999999L) && nSecPhone != 0){
-            return "Secondary phone number must be 10 digits.";
+        if (!(nSecPhone > 1000000000L && nSecPhone < 99999999999L) && nSecPhone != 0){
+            return "Secondary phone number must be 10 or 11 digits.";
         }
-        if (!(nFax > 1000000000L && nFax < 9999999999L) && nFax != 0){
-            return "Fax number must be 10 digits.";
+        if (!(nFax > 1000000000L && nFax < 99999999999L) && nFax != 0){
+            return "Fax number must be 10 or 11 digits.";
         }
 
         this.setName(sName);
@@ -231,6 +262,7 @@ public class Customer {
         this.setFax(nFax);
         this.setSecPhone(nSecPhone);
 
+        //If nCheck is 1, it returns that the customer is added. Otherwise, that the customer is updated.
         if (nCheck == 1) return "Successfully added";
         else return "Successfully updated";
     }
