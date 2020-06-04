@@ -242,6 +242,7 @@ public class TransactionGUI extends Stage {
             int newDiscount = Integer.parseInt(discount);
             Double results = transaction.setDiscount(newDiscount);
             if(results == transaction.obRes.getPrice())
+            if(results == transaction.obRes.getPrice())
             {
                 discountError.setText("No Discount added");
             }
