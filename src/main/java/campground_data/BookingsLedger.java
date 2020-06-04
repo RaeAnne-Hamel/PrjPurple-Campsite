@@ -193,7 +193,6 @@ public class BookingsLedger
      */
     public void setLotAvailability(Lot obLot, boolean bAvailable) {
         obLot.bAvailability = bAvailable;
-
     }
 
 
@@ -208,6 +207,19 @@ public class BookingsLedger
                 obRes.add(aReservation.get(i));
         }
         return obRes;
+    }
+
+    /*
+    Test Code Change Later -EB
+     */
+    public void addAccommodation(Lot obLot)
+    {
+        if (obLot.getAvailability())
+        {
+            obLot.setRemovalReason("N/A");
+        }
+
+        aLot.add(obLot);
     }
 
     /**
@@ -247,34 +259,34 @@ public class BookingsLedger
      * @param ID
      * @return
      */
-    public boolean removeReservation ( int ID){
-        /* Create a temporary Reservation ArrayList */
-        ArrayList<Reservation> tmpReservations = new ArrayList<>();
-        boolean resFound = false;
+      public boolean removeReservation ( int ID){
+             /* Create a temporary Reservation ArrayList */
+             ArrayList<Reservation> tmpReservations = new ArrayList<>();
+             boolean resFound = false;
 
-        for (Reservation res : aReservation) {
-            /*If the Reservation ID is found*/
-            if (res.getReservationID() == ID) {
-                /*Asks for a confirmation from the user if they want to remove the reservatin */
-                String sConfirm = MainConsole.Prompt("Are you sure you want to remove the reservation? (Y , N )");
-                if (sConfirm.equals("Y")) {
-                    resFound = true;
+              for (Reservation res : aReservation) {
+                /*If the Reservation ID is found*/
+               if (res.getReservationID() == ID) {
+                 /*Asks for a confirmation from the user if they want to remove the reservatin */
+                 String sConfirm = MainConsole.Prompt("Are you sure you want to remove the reservation? (Y , N )");
+                 if (sConfirm.equals("Y")) {
+                   resFound = true;
                     /* Double check if they want to remove */
                     continue;
-                }
-            }
+                  }
+               }
 
-            /* Add a reservation to the tmp resorvation */
-            tmpReservations.add(res);
-        }
+                /* Add a reservation to the tmp resorvation */
+                 tmpReservations.add(res);
+             }
 
-        /*If the reservation is not fount */
-        if (resFound == false)
-            System.out.println("Reservation Not Found");
+               /*If the reservation is not fount */
+             if (resFound == false)
+              System.out.println("Reservation Not Found");
 
-        aReservation = tmpReservations;
-        return resFound;
-    }
+               aReservation = tmpReservations;
+               return resFound;
+       }
 
     /**
      * Check get a reservation based on the ID
@@ -300,7 +312,6 @@ public class BookingsLedger
         }
         return null;
     }
-
 
     /*
     A simple template class. Checks permissions. Always returns true
@@ -329,7 +340,6 @@ public class BookingsLedger
             return obCustomer;
         }
     }
-
 
     /**
      * Add a customer if valid
@@ -400,12 +410,13 @@ public class BookingsLedger
         return user;
     }
 
-    /*
-    this will add a reservation to the reservation list.
+    /**
+     * this add redervation is only for testing purposes.
+     * @param reservation
      */
     public void addReservation (Reservation reservation){
-        aReservation.add(reservation);
-    }
+                    aReservation.add(reservation);
+                }
 
     public ArrayList<Reservation> getAllReservations ()
     {
@@ -416,6 +427,11 @@ public class BookingsLedger
     public void setReservationsList (ArrayList < Reservation > obReservations)
     {
         this.aReservation = obReservations;
+    }
+
+    public ArrayList<Customer> getCustomerList()
+    {
+        return this.aCustomer;
     }
 
     /**

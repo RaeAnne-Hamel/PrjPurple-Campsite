@@ -1,40 +1,22 @@
 import campground_data.Customer;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
-import javax.validation.constraints.NotNull;
-
-import java.util.Set;
-
+import org.junit.*;
 import static org.junit.Assert.*;
 
-/*
-    Dylan Attwater
-    CST101
+/**
+ * Created by Dustin Wiebe
  */
-
-public class ManageCustomer6bTest
-{
-    private static ValidatorFactory vf;
-    private static Validator validator;
-
-    String sName = "Dylan";
-    String sLast = "Attwater";
+public class EditCustomer1eTest {
+    String sName = "Harry";
+    String sLast = "Edwards";
     String sAddress = "Box 312";
     String sEmail = "email@email.com";
     String sProvince = "Saskatchewan";
-    String sPostal = "S0K1E0";
-    String sCountry = "Canada";
-    String sCity = "Saskatoon";
+    String sPostal = "S7N4V2";
+    String sCountry = "South Africa";
+    String sCity = "Johannesburg";
     String j256 = repeatJ(256);
     String j255 = repeatJ(255);
     String j1 = repeatJ(1);
-    String j2 = repeatJ(2);
     long nPhone = 3067235921L;
 
     long nFax = 4758394571L;
@@ -44,6 +26,7 @@ public class ManageCustomer6bTest
 
     private Customer testCustomer = new Customer(sName, sLast, sAddress, sProvince, sCity, sPostal, sCountry, sEmail,
             nFax, nPhone, nPhone, nVisits, bFreq);
+
 
     /**
      * INVALID: Province length must be no more than 255 characters and must be at least 1 character.
@@ -91,6 +74,19 @@ public class ManageCustomer6bTest
         assertEquals(j255, testCustomer.getName());
         testCustomer.setName(j1);
         assertEquals(j1, testCustomer.getName());
+    }
+
+
+    /**
+     * INVALID: Postal code length must be no more than 10 characters and must be at least 3 characters.
+     */
+    @Test
+    public void TestPostalLength()
+    {
+        testCustomer.setPostal(repeatJ(2));
+        assertEquals("S7N4V2", testCustomer.getPostal());
+        testCustomer.setPostal(repeatJ(11));
+        assertEquals("S7N4V2", testCustomer.getPostal());
     }
 
     /**
@@ -216,7 +212,7 @@ public class ManageCustomer6bTest
     }
 
     /**
-     * VALID: Phone can be 10 characters.
+     * VALID: Phone can be 10 or 11 characters.
      */
     @Test
     public void TestValidPhone()
@@ -238,7 +234,7 @@ public class ManageCustomer6bTest
     }
 
     /**
-     * VALID: Phone can be 10 characters.
+     * VALID: Phone can be 10 or 11 characters.
      */
     @Test
     public void TestValidSecPhone()
@@ -260,7 +256,7 @@ public class ManageCustomer6bTest
     }
 
     /**
-     * VALID: Fax can be 10 characters.
+     * VALID: Fax can be 10 or 11 characters.
      */
     @Test
     public void TestValidFax()
@@ -269,7 +265,11 @@ public class ManageCustomer6bTest
         assertEquals(nPhone, testCustomer.getFax());
     }
 
+
+
+
+
     private String repeatJ(int count){
-        return new String(new char[count]).replace('\0','J');
+        return new String(new char[count]).replace('\0','M');
     }
 }

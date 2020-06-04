@@ -1,4 +1,5 @@
-package campground_ui;
+package campground_ui;//package campground_ui;
+
 
 import campground_data.Customer;
 import javafx.application.Application;
@@ -11,23 +12,47 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import campground_data.BookingsLedger;
-
+import campground_data.*;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 
 public class MainGui extends Application {
+
     //Loads image once so it isn't wasteful. Declares the separate panes here for general use.
+    public static BookingsLedger bookingsLedger = new BookingsLedger();
+
+
     Image Camp = new Image("file:images/campground.jpg");
     BorderPane custPane;
     BorderPane accomPane;
     BorderPane resPane;
     static Scene mainScene;
-    public static BookingsLedger obBookingsLedger = new BookingsLedger();
+
+    public static BookingsLedger obBookingsLedger;
+
 
     @Override
     public void start(Stage stage) {
+
+        /**
+         * Test data for adding and editing lots. Feel free to edit, remove or use for yourself. Just used to test the data until
+         * saving functionality is added. -EB
+         */
+
+        obBookingsLedger = new BookingsLedger();
+
+        Lot obLot1 = new Lot(0);
+        Lot obLot2 = new Lot(1);
+        Lot obLot3 = new Lot(2);
+        Lot obLot4 = new Lot(3);
+
+        obBookingsLedger.addAccommodation(obLot1);
+        obBookingsLedger.addAccommodation(obLot2);
+        obBookingsLedger.addAccommodation(obLot3);
+        obBookingsLedger.addAccommodation(obLot4);
+
+
         //Setting up the image to use is the same in each section - DW
         ImageView imgCamp = new ImageView(Camp);
         imgCamp.setFitHeight(353);
@@ -35,6 +60,7 @@ public class MainGui extends Application {
         javafx.scene.control.Button btnExit = new javafx.scene.control.Button("Exit");
 
         //Panes for use in the Scenes for each section. -EB
+
         //The Main Pane for the Main Section. -EB
         BorderPane mainPane = new BorderPane();
         HBox paneCenter = new HBox();
@@ -72,6 +98,7 @@ public class MainGui extends Application {
         paneLeft.getChildren().add(btnExit);
         paneRight.getChildren().addAll(btnAccom, btnCust, btnRes);
         paneCenter.getChildren().addAll(paneLeft, paneRight);
+
         mainPane.setCenter(paneCenter);
 
         //Event Handlers for moving to another section of the main window.
@@ -80,6 +107,7 @@ public class MainGui extends Application {
         btnRes.setOnAction(e -> stage.setScene(Reservations));
 
         //Code for running the initial Scene. -EB
+
         btnExit.setOnAction(e -> stage.close());
 
         stage.setScene(mainScene);
@@ -115,13 +143,22 @@ public class MainGui extends Application {
         btnAdd.setPrefWidth(200);
         Button btnEdit = new Button("Edit Reservation");
         btnEdit.setPrefWidth(200);
+        btnEdit.setOnAction(actionEvent -> {
+            EditReservationGui EditRes = new EditReservationGui();
+            EditRes.showAndWait();
+        });
         Button btnRemove = new Button("Remove Reservation");
         btnRemove.setPrefWidth(200);
-        Button btnTrans = new Button("Transactions");
-        btnTrans.setPrefWidth(200);
+
+        //Create Stages opened in Reservation scene -AE
+        SearchDateWindow searchDateWindow = new SearchDateWindow(stage);
+
+        //Set event handlers on buttons to open external Stage -AE
+        btnSearch.setOnAction(e-> searchDateWindow.showAndWait());
+
 
         paneLeft.getChildren().add(btnBack3);
-        paneRight.getChildren().addAll(btnSearch, btnAdd, btnEdit, btnRemove, btnTrans);
+        paneRight.getChildren().addAll(btnSearch, btnAdd, btnEdit, btnRemove);
 
         resCenter.getChildren().addAll(paneLeft, paneRight);
         resPane.setCenter(resCenter);
@@ -156,15 +193,20 @@ public class MainGui extends Application {
         btnAddAccom.setPrefWidth(150);
         Button btnEditAccom = new Button("Edit Accommodation");
         btnEditAccom.setPrefWidth(150);
-        Button btnSetAvailability = new Button("Set Availability");
-        btnSetAvailability.setPrefWidth(150);
         Button btnSetPrice = new Button("Set Price");
         btnSetPrice.setPrefWidth(150);
 
         AccomLeft.getChildren().add(btnBack1);
-        AccomRight.getChildren().addAll(btnAddAccom, btnEditAccom, btnSetAvailability, btnSetPrice);
+        AccomRight.getChildren().addAll(btnAddAccom, btnEditAccom, btnSetPrice);
         AccomCenter.getChildren().addAll(AccomLeft, AccomRight);
         accomPane.setCenter(AccomCenter);
+
+        addAccommodationGUI addGUI = new addAccommodationGUI(stage);
+        EditAccommodationGUI editGUI = new EditAccommodationGUI(stage);
+
+        btnBack1.setOnAction(e -> stage.setScene(mainScene));
+        btnAddAccom.setOnAction(e -> addGUI.showAndWait());
+        btnEditAccom.setOnAction(e -> editGUI.showAndWait());
 
         btnBack1.setOnAction(e -> stage.setScene(mainScene));
     }
@@ -309,3 +351,5 @@ public class MainGui extends Application {
         launch(args);
     }
 }
+
+

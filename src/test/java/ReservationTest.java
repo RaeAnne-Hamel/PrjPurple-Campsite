@@ -39,6 +39,7 @@ public class ReservationTest {
         payingCustomers.add(new Customer("","","","","","","","", 1  ,1,1,1,true));
         payingCustomers.add(new Customer("","","","","","","","", 1  ,1,1,1,true));
 
+
     }
 
     /*Create dates of check-in and check-out*/

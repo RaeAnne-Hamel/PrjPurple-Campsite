@@ -80,7 +80,7 @@ public class AddCustomerWindow {
         Button btnBack = new Button("Back to Home");
         btnBack.setOnAction(e -> stage.setScene(MainGui.mainScene));
         btnConfirm = new Button("Confirm");
-        btnConfirm.setOnAction(e -> Confirm());
+        btnConfirm.setOnAction(e -> Confirm(stage));
 
         //All items are added to the grid. The non-phone entries are multiple columns wide, since they're larger.
         obGrid.add(txtName, 1, 0, 3, 1);
@@ -118,7 +118,7 @@ public class AddCustomerWindow {
      * Method for the confirm button. Will update the customer's information with what it finds in the TextFields, and give a success alert or an error alert
      * depending on whether the information is correct.
      */
-    private void Confirm(){
+    private void Confirm(Stage stage){
         //Set the customer information as the text inputted
         int length = MainGui.obBookingsLedger.aCustomer.size();
         obCustomer.setCustomerID(length++);
@@ -164,6 +164,7 @@ public class AddCustomerWindow {
             alert.setHeaderText(null);
             alert.setContentText("Customer successfully added");
             alert.showAndWait();
+            stage.setScene(MainGui.mainScene);
         }
         else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -172,5 +173,6 @@ public class AddCustomerWindow {
             alert.setContentText(sVal);
             alert.showAndWait();
         }
+
     }
 }
