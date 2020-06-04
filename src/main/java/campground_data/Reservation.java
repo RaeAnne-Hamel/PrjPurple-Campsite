@@ -17,8 +17,10 @@ public class Reservation {
     Date obEndDate;
     public Boolean status;
 
+    public static int idCounter = 0;
+
     /*Reservation Constructor */
-    public Reservation(Lot obLot, Date startDate, Date endDate, ArrayList<Customer> customers, int nPeople, int StaticReservationID)
+    public Reservation(Lot obLot, Date startDate, Date endDate, ArrayList<Customer> customers, int nPeople)
     {
 
         /*Set the passed in parameters*/
@@ -29,7 +31,7 @@ public class Reservation {
         this.nCustomerCount = nPeople;
 
         /*Set the ID for the specific reservation*/
-        this.ReservationID = StaticReservationID++;
+        this.ReservationID = ++idCounter;
         this.price = 100.00;
         this.status = true;
 
@@ -42,7 +44,7 @@ public class Reservation {
             this.nCustomerCount = nPeople;
             this.obStartDate = startDate;
             this.obEndDate = endDate;
-            int StaticReservationID = 0;
+            this.ReservationID = ++idCounter;
             double price;
             String Status = "Active";
     }

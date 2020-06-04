@@ -36,8 +36,8 @@ public class ReservationTest {
     public void setup()
     {
          payingCustomers = new ArrayList<>();
-        payingCustomers.add(new Customer(0,"","","", 1  ,1,1,1,true,1));
-        payingCustomers.add(new Customer(0,"","","", 1  ,1,1,1,true,1));
+        payingCustomers.add(new Customer("","","","","","","","", 1  ,1,1,1,true));
+        payingCustomers.add(new Customer("","","","","","","","", 1  ,1,1,1,true));
 
 
     }
@@ -45,7 +45,7 @@ public class ReservationTest {
     /*Create dates of check-in and check-out*/
     private Date startDate = new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime();
     private Date endDate = new GregorianCalendar(2014, Calendar.FEBRUARY, 13).getTime();
-    Reservation oneReservation = new Reservation(new Lot(),startDate,endDate,payingCustomers,9,0);
+    Reservation oneReservation = new Reservation(new Lot(),startDate,endDate,payingCustomers,9);
     BookingsLedger BL = new BookingsLedger();
 
 

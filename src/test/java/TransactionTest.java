@@ -22,30 +22,32 @@ public class TransactionTest {
     public void setup()
     {
         payingCustomers = new ArrayList<>();
-        payingCustomers.add(new Customer(0,"","","", 1  ,1,1,1,true,1));
-        payingCustomers.add(new Customer(0,"","","", 1  ,1,1,1,true,1));
+        payingCustomers.add(new Customer("","","","","","","","", 1  ,1,1,1,true));
+        payingCustomers.add(new Customer("","","","","","","","", 1  ,1,1,1,true));
     }
 
     private Date startDate = new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime();
     private Date endDate = new GregorianCalendar(2014, Calendar.FEBRUARY, 13).getTime();
 
-
-    @Test
-    public void testCheckForReservationID()
-    {
-        Reservation testReservation = new Reservation(new Lot(),startDate,endDate,payingCustomers,9, 0);
-        Reservation testReservation2 = new Reservation(new Lot(),startDate,endDate,payingCustomers,9, 1);
-
-        int testID1 = 0;
-        int testID2 = 1;
-        int testID3 = -1;
-        int testID4 =2000000;
-
-        assertEquals(testID1, testReservation.getReservationID());
-        assertEquals(testID2, testReservation2.getReservationID());
-        assertNotEquals(testID3, testReservation.getReservationID());
-        assertNotEquals(testID4, testReservation2.getReservationID());
-    }
+/**
+ * took id out of constructor test invalid
+ */
+//    @Test
+//    public void testCheckForReservationID()
+//    {
+//        Reservation testReservation = new Reservation(new Lot(),startDate,endDate,payingCustomers,9);
+//        Reservation testReservation2 = new Reservation(new Lot(),startDate,endDate,payingCustomers,9);
+//
+//        int testID1 = 0;
+//        int testID2 = 1;
+//        int testID3 = -1;
+//        int testID4 =2000000;
+//
+//        assertEquals(testID1, testReservation.getReservationID());
+//        assertEquals(testID2, testReservation2.getReservationID());
+//        assertNotEquals(testID3, testReservation.getReservationID());
+//        assertNotEquals(testID4, testReservation2.getReservationID());
+//    }
 
 
     @Test
@@ -54,7 +56,7 @@ public class TransactionTest {
         PaymentType testType1 = PaymentType.DEBIT;
         PaymentType testType2 = PaymentType.CREDITCARD;
 
-        Reservation testReservation = new Reservation(new Lot(),startDate,endDate,payingCustomers,9, 0);
+        Reservation testReservation = new Reservation(new Lot(),startDate,endDate,payingCustomers,9);
 
         PaymentMethod payMeth = PaymentMethod.INPERSON;
         PaymentType testDefault = PaymentType.CASH ;
@@ -77,7 +79,7 @@ public class TransactionTest {
     @Test
     public void testCheckPaymentMethod()
     {
-        Reservation testReservation = new Reservation(new Lot(),startDate,endDate,payingCustomers,9, 0);
+        Reservation testReservation = new Reservation(new Lot(),startDate,endDate,payingCustomers,9);
 
         PaymentMethod testDefault = PaymentMethod.EMAIL;
         PaymentMethod testType2 = PaymentMethod.FAX;
@@ -108,7 +110,7 @@ public class TransactionTest {
     @Test
     public void testCheckReservationPaymentAmount()
     {
-        Reservation testReservation = new Reservation(new Lot(),startDate,endDate,payingCustomers,9, 0);
+        Reservation testReservation = new Reservation(new Lot(),startDate,endDate,payingCustomers,9);
 
 
         double expectedPrice1 = 45.00;
@@ -124,8 +126,8 @@ public class TransactionTest {
     @Test
     public void testChangeReservationStatus()
     {
-        Reservation testReservation = new Reservation(new Lot(),startDate,endDate,payingCustomers,9,0);
-        Reservation testReservation2 = new Reservation(new Lot(),startDate,endDate,payingCustomers,9, 1);
+        Reservation testReservation = new Reservation(new Lot(),startDate,endDate,payingCustomers,9);
+        Reservation testReservation2 = new Reservation(new Lot(),startDate,endDate,payingCustomers,9);
 
 
         PaymentType testType = PaymentType.DEBIT;

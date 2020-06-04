@@ -10,27 +10,21 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
-public class AddReservationGui extends Application {
+public class AddReservationGui extends Stage {
 
 
 
     //Access to specific array list
-
-    public ArrayList<Customer> custNameList = new ArrayList<>();
     private ArrayList<Customer> custCount = new ArrayList<>();
 
     //panes
@@ -52,17 +46,9 @@ public class AddReservationGui extends Application {
     //button
     Button btnBack, btnConfirm;
 
-    //variables for dates
-    int year = Integer.parseInt(txtArrivalYear.getText());
-    int month = Integer.parseInt(txtDepartMonth.getText());
-    int day = Integer.parseInt(txtDepartDay.getText());
 
-    int year2 =  Integer.parseInt(txtDepartYear.getText());
-    int month2 = Integer.parseInt(txtDepartMonth.getText());
-    int day2 = Integer.parseInt(txtDepartDay.getText());
+    public AddReservationGui(Stage obStage){
 
-    @Override
-    public void start(Stage obStage) {
 
         //Creating panes
         obGrid = new GridPane();
@@ -158,194 +144,206 @@ public class AddReservationGui extends Application {
 
         obGrid.setPadding(new Insets(5,5,5,5));
 
-
+        //positioning the buttons
         obHBox.setAlignment(Pos.BASELINE_CENTER);
         obHBox.setSpacing(430);
         obHBox.setPadding(new Insets(15,10,10,10));
         obHBox.getChildren().addAll(btnBack, btnConfirm);
 
+        //positioning the layout
         obBorder.setCenter(obGrid);
         obBorder.setBottom(obHBox);
 
      //EVENT HANDLERS
 
-        //set the label to return the lot type that match the id
-        txtLotID.setOnKeyReleased(e-> {
-            lblLotType.setText(MainGui.obBookingLedger.querySearchCampsite(Integer.parseInt(txtLotID.getText())).toString());
-        });
-
-        //populates the combo boxes
-        //set the list
-        ObservableList<String> names = FXCollections.observableList(this.getCustNameList());
-        //populates first Combo box
-        cboCust1.setItems(names);
-        //populates second Combo box
-        cboCust2.setItems(names);
+    //populates the combo boxes
+    //set the list
+    ObservableList<String> names = FXCollections.observableList(this.getCustNameList());
+    //populates first Combo box
+    cboCust1.setItems(names);
+    //populates second Combo box
+    cboCust2.setItems(names);
 
 
 
-        //this add the first customer object to an new ArrayList for validation
-        cboCust1.setOnAction(e-> {
-            String custName = cboCust1.getValue();
-            //Find the full customer object from:
-            ArrayList<Customer> obRet = MainGui.obBookingLedger.getCustomerList();
+    //this add the first customer object to an new ArrayList for validation
+    cboCust1.setOnAction(e-> {
+        String custName = cboCust1.getValue();
+        //Find the full customer object from:
+        ArrayList<Customer> obRet = MainGui.obBookingsLedger.getCustomerList();
 
-            //Loop through the customer list until you match customer names
-            for (Customer obCust : obRet) {
-                //Get that customer object back if the names match
-                if (obCust.getName().equals(custName))
-                {
-                    //Add it to your reservation array list
-                    custCount.add(obCust);
-                }
-            }
-
-            //validation fot duplicate customer names
-            if(custName.equalsIgnoreCase(cboCust2.getValue()))
+        //Loop through the customer list until you match customer names
+        for (Customer obCust : obRet) {
+            String checkName = obCust.getName() + " " + obCust.getLast();
+            //Get that customer object back if the names match
+            if (checkName.equals(custName))
             {
-                lblValid1.setText("Invalid: Duplicate Names.");
+                //Add it to your reservation array list
+                custCount.add(obCust);
             }
-            else
+        }
+
+        //validation fot duplicate customer names
+        if(custName.equalsIgnoreCase(cboCust2.getValue()))
+        {
+            lblValid1.setText("Invalid: Duplicate Names.");
+        }
+        else
+        {
+           lblValid1.setText("");
+        }
+
+
+    });
+
+    //this add the Second customer object to an new ArrayList for validation
+    cboCust2.setOnAction(e-> {
+        String custName = cboCust2.getValue();
+        //Find the full customer object from:
+        ArrayList<Customer> obRet = MainGui.obBookingsLedger.getCustomerList();
+
+        //Loop through the customer list until you match customer names
+        for (Customer obCust : obRet) {
+            String checkName = obCust.getName() + " " + obCust.getLast();
+            //Get that customer object back if the names match
+            if (checkName.equals(custName))
             {
-               lblValid1.setText("");
+                //Add it to your reservation array list
+                custCount.add(obCust);
+            }
+        }
+
+        //validation fot duplicate customer names
+        if(custName.equalsIgnoreCase(cboCust1.getValue()))
+        {
+            lblValid1.setText("Invalid: Duplicate Names.");
+        }
+        else
+        {
+            lblValid1.setText("");
+        }
+    });
+
+
+    //Validation for Lot ID
+    txtLotID.setOnKeyReleased(e-> {
+        // lot ID
+        if(!txtLotID.getText().isEmpty()) {
+            int lotID = Integer.parseInt(txtLotID.getText());
+
+            //Streams the list of lots
+            List<Lot> filteredLots = MainGui.obBookingsLedger.aLot.stream()
+                    .filter(x -> x.getLotID() == lotID)
+                    .collect(Collectors.toList());
+            //validation
+            if (filteredLots.size() == 0) {
+                lblValid2.setText("LotId not found");
+            } else if (lotID > filteredLots.size()) {
+                lblValid2.setText("LotId not found");
+            } else {
+                lblValid2.setText("");
             }
 
+            //sets the label to display the lot type
+            lblLotType.setText(MainGui.obBookingsLedger.querySearchCampsite(Integer.parseInt(txtLotID.getText())).getLotType().toString());
 
-        });
+        }
 
-        //this add the Second customer object to an new ArrayList for validation
-        cboCust2.setOnAction(e-> {
-            String custName = cboCust2.getValue();
-            //Find the full customer object from:
-            ArrayList<Customer> obRet = MainGui.obBookingLedger.getCustomerList();
+    });
 
-            //Loop through the customer list until you match customer names
-            for (Customer obCust : obRet) {
-                //Get that customer object back if the names match
-                if (obCust.getName().equals(custName))
-                {
-                    //Add it to your reservation array list
-                    custCount.add(obCust);
-                }
+
+    //validation for Arrival dates
+    txtArrivalDay.setOnKeyReleased(e->{
+        //validation -- won't work unless all fields for dates are populated
+        if(!emptyfield(txtArrivalYear, txtArrivalMonth, txtArrivalDay, txtDepartYear, txtDepartMonth, txtDepartYear))//if the is not empty then
+        {
+            int year = Integer.parseInt(txtArrivalYear.getText());
+            int month = Integer.parseInt(txtDepartMonth.getText());
+            int day = Integer.parseInt(txtDepartDay.getText());
+
+            int year2 = Integer.parseInt(txtDepartYear.getText());
+            int month2 = Integer.parseInt(txtDepartMonth.getText());
+            int day2 = Integer.parseInt(txtDepartDay.getText());
+
+            //current
+            Date obToday = new Date();
+
+            Date obYearAfter = new Date();
+
+            //Arrival date
+            Date obEnteredArrival = new GregorianCalendar(year, month + 1, day).getTime();
+
+            //Departure date
+            Date obEnteredDepart = new GregorianCalendar(year2, month2 + 1, day2).getTime();
+
+            //the following year
+            obYearAfter.setYear(obYearAfter.getYear() + 1);
+
+            //validation
+            if (obEnteredArrival.compareTo(obToday) < 0) {
+                lblValid3.setText("Invalid Date: In Past.");
+            } else if (obEnteredArrival.compareTo(obYearAfter) > 0) {
+                lblValid3.setText("Invalid: too far in future.");
+            } else if (obEnteredArrival.compareTo(obEnteredDepart) > 0) {
+                lblValid3.setText("Invalid Dates");
+            } else {
+                lblValid3.setText("");
             }
+        }
+    });
 
-            //validation fot duplicate customer names
-            if(custName.equalsIgnoreCase(cboCust1.getValue()))
-            {
-                lblValid1.setText("Invalid: Duplicate Names.");
+
+    //validation for departure date
+    txtDepartDay.setOnKeyReleased(e-> {
+
+        //validation -- won't work unless all fields for dates are populated
+        if(!emptyfield(txtArrivalYear, txtArrivalMonth, txtArrivalDay, txtDepartYear, txtDepartMonth, txtDepartYear)) //if the is not empty then
+        {
+            int year = Integer.parseInt(txtArrivalYear.getText());
+            int month = Integer.parseInt(txtDepartMonth.getText());
+            int day = Integer.parseInt(txtDepartDay.getText());
+
+            int year2 = Integer.parseInt(txtDepartYear.getText());
+            int month2 = Integer.parseInt(txtDepartMonth.getText());
+            int day2 = Integer.parseInt(txtDepartDay.getText());
+
+            //current
+            Date obToday = new Date();
+
+            //following year
+            Date obYearAfter = new Date();
+
+            //Arrival date
+            Date obEnteredArrival = getDateValue(year, month, day);
+
+            //Departure date
+            Date obEnteredDepart = getDateValue(year2, month2, day2);
+
+
+            obYearAfter.setYear(obYearAfter.getYear() + 1);
+
+            //validation
+            if (obEnteredDepart.compareTo(obToday) < 0) {
+                lblValid4.setText("Invalid Date: In Past.");
+            } else if (obEnteredDepart.compareTo(obEnteredArrival) > 0) {
+                lblValid4.setText("Invalid Dates");
+            } else {
+                lblValid4.setText("");
             }
-            else
-            {
-                lblValid1.setText("");
-            }
-        });
+        }
+    });
 
 
-        //Validation for Lot ID
-        txtLotID.setOnKeyReleased(e-> {
-            // lot ID
+    //Guest Validation
+    txtGuest.setOnKeyReleased(e -> {
+       // lot ID
+        if(!txtLotID.getText().isEmpty()) {
             int lotID = Integer.parseInt(txtLotID.getText());
             //Entered amount of guests
             int guest = Integer.parseInt(txtGuest.getText());
 
             //Streams the list of lots
-            List<Lot> filteredLots = MainGui.obBookingLedger.aLot.stream()
-                    .filter(x -> x.getLotID() == lotID)
-                    .collect(Collectors.toList());
-
-            //gets the lost type
-            Lot obLot = filteredLots.get(Integer.parseInt(txtLotID.getText()));
-
-                    if (filteredLots.size() == 0) {
-                        lblValid2.setText("LotId not found");
-                    }else if(lotID > filteredLots.size()){
-                        lblValid2.setText("LotId not found");
-                    }else{
-                        lblValid2.setText("");
-                    }
-    });
-
-
-        //validation for Arrival dates
-        txtArrivalDay.setOnKeyReleased(e->{
-            int year = Integer.parseInt(txtArrivalYear.getText());
-            int month = Integer.parseInt(txtDepartMonth.getText());
-            int day = Integer.parseInt(txtDepartDay.getText());
-
-            int year2 =  Integer.parseInt(txtDepartYear.getText());
-            int month2 = Integer.parseInt(txtDepartMonth.getText());
-            int day2 = Integer.parseInt(txtDepartDay.getText());
-            //current
-            Date obToday = new Date();
-
-            Date obYearAfter = new Date();
-
-            //Arrival date
-            Date obEnteredArrival = new Date(year, month, day);
-
-            //Departure date
-            Date obEnteredDepart = new Date(year2, month2, day2);
-
-
-            obYearAfter.setYear(obYearAfter.getYear() + 1);
-
-            if (obEnteredArrival.compareTo(obToday) < 0)
-            {
-                lblValid3.setText("Invalid Date: In Past.");
-            }else if(obEnteredArrival.compareTo(obYearAfter) > 0)
-            {
-                lblValid3.setText("Invalid: too far in future.");
-            }else if(obEnteredArrival.compareTo(obEnteredDepart) > 0){
-                lblValid3.setText("Invalid Dates");
-            }else{
-                lblValid3.setText("");
-            }
-
-        });
-
-
-        //validation for departure date
-        txtDepartDay.setOnKeyReleased(e-> {
-            int year = Integer.parseInt(txtArrivalYear.getText());
-            int month = Integer.parseInt(txtDepartMonth.getText());
-            int day = Integer.parseInt(txtDepartDay.getText());
-
-            int year2 =  Integer.parseInt(txtDepartYear.getText());
-            int month2 = Integer.parseInt(txtDepartMonth.getText());
-            int day2 = Integer.parseInt(txtDepartDay.getText());
-            //current
-            Date obToday = new Date();
-
-            Date obYearAfter = new Date();
-
-            //Arrival date
-            Date obEnteredArrival = new Date(year, month, day);
-
-            //Departure date
-            Date obEnteredDepart = new Date(year2, month2, day2);
-
-
-            obYearAfter.setYear(obYearAfter.getYear() + 1);
-
-            if (obEnteredDepart.compareTo(obToday) < 0) {
-                lblValid4.setText("Invalid Date: In Past.");
-            }else if(obEnteredDepart.compareTo(obEnteredArrival) > 0){
-                lblValid4.setText("Invalid Dates");
-            }else{
-                lblValid4.setText("");
-            }
-
-        });
-
-        //Guest Validation
-        txtGuest.setOnKeyReleased(e -> {
-           // lot ID
-           int lotID = Integer.parseInt(txtLotID.getText());
-           //Entered amount of guests
-           int guest = Integer.parseInt(txtGuest.getText());
-
-           //Streams the list of lots
-            List<Lot> filteredLots = MainGui.obBookingLedger.aLot.stream()
+            List<Lot> filteredLots = MainGui.obBookingsLedger.aLot.stream()
                     .filter(x -> x.getLotID() == lotID)
                     .collect(Collectors.toList());
 
@@ -380,27 +378,108 @@ public class AddReservationGui extends Application {
                     lblValid5.setText("");
                     break;
             }
+        }
+    });
+
+
+    //add the reservation
+    btnConfirm.setOnAction(e -> {
+        //set variables
+        int year = Integer.parseInt(txtArrivalYear.getText());
+        int month = Integer.parseInt(txtArrivalMonth.getText());
+        int day = Integer.parseInt(txtArrivalDay.getText());
+
+        int year2 =  Integer.parseInt(txtDepartYear.getText());
+        int month2 = Integer.parseInt(txtDepartMonth.getText());
+        int day2 = Integer.parseInt(txtDepartDay.getText());
+
+        Date obEnteredArrival = getDateValue(year, month, day);
+        Date obEnteredDepart = getDateValue(year2, month2, day2);
+
+        int lotID = Integer.parseInt(txtLotID.getText());
+        int guest = Integer.parseInt(txtGuest.getText());
+
+
+        //checks for reservation overlap
+        if (MainGui.obBookingsLedger.checkOverlap(lotID, obEnteredArrival, obEnteredDepart))
+        {
+            //sends an if there is an overlap
+            Alert alert = new Alert(Alert.AlertType.ERROR,"Overlaps with existing reservation.", ButtonType.CLOSE);
+
+            alert.showAndWait();
+
+            //result of button pressed
+            if(alert.getResult() == ButtonType.CLOSE)
+            {
+                //closes the alert window
+                alert.close();
+            }
+        }else{
+
+            //add the reservation
+            MainGui.obBookingsLedger.addReservation(lotID, obEnteredArrival, obEnteredDepart, custCount, guest);
+
+            /**
+             *
+             */
+            for(Reservation obRes: BookingsLedger.aReservation)
+            {
+                System.out.printf("%s", obRes);
+            }
+            /**
+            *
+            */
+
+
+           int size = MainGui.obBookingsLedger.getAllReservations().size();
+
+           int resID = MainGui.obBookingsLedger.getAllReservations().get(size -1).getReservationID();
+
+           lblResID2.setText(Integer.toString(resID));
+
+            //alert stating the reservation was created
+            Alert alert2 = new Alert(Alert.AlertType.INFORMATION, "Reservation " + resID + " has been created. Closing to main reservation window", ButtonType.CLOSE);
+
+            alert2.showAndWait();
+
+            //result of button pressed
+            if(alert2.getResult() == ButtonType.CLOSE)
+            {
+                //clear all the fields
+                txtLotID.setText("");
+                txtArrivalDay.setText("");
+                txtArrivalMonth.setText("");
+                txtArrivalYear.setText("");
+                txtDepartYear.setText("");
+                txtDepartMonth.setText("");
+                txtDepartDay.setText("");
+                txtGuest.setText("");
+                lblLotType.setText("");
+                lblResID2.setText("");
+
+                //closes to main reservation window
+                alert2.close();
+                this.close();
+            }
+        }
+
+
+
+
+
         });
 
-        //add the reservation
-        btnConfirm.setOnAction(e -> {
-            Date obEnteredArrival = new Date(year, month, day);
-            Date obEnteredDepart = new Date(year2, month2, day2);
-            int lotID = Integer.parseInt(txtLotID.getText());
-            int guest = Integer.parseInt(txtGuest.getText());
-
-
-            MainGui.obBookingLedger.addReservation(lotID, obEnteredArrival, obEnteredDepart, custCount, guest);
-        });
-
+        //click back button
         btnBack.setOnAction(e-> {
-            //obStage.setScene(MainGui.mainScene);
+            //close the window
+            this.close();
         });
 
 
-        obStage.setScene(new Scene(obBorder, 650, 500));
+        Scene scene = new Scene(obBorder, 650, 500);
         obStage.setTitle("Add Reservation");
-        obStage.show();
+        this.setScene(scene);
+        this.initModality(Modality.APPLICATION_MODAL);
 
 
     }
@@ -413,19 +492,119 @@ public class AddReservationGui extends Application {
      */
     private ArrayList<String> getCustNameList()
     {
-        ArrayList<Customer> custList = MainGui.obBookingLedger.getCustomerList();
+        //get the array list from BookingsLedger
+        ArrayList<Customer> custList = MainGui.obBookingsLedger.aCustomer;
+
+        //create a new ArrayList of String
         ArrayList<String> names = new ArrayList<>();
 
+        //for each item in the ArrayList
         for(Customer obCust : custList)
         {
-           names.add(obCust.getName());
+           //add the customer name
+           names.add(obCust.getName() + " " + obCust.getLast());
         }
 
+        //return the new ArrayList
         return names;
     }
 
+    /**
+     * sets the date values and check day validation
+     * @param year
+     * @param month
+     * @param day
+     * @return date
+     */
+    public Date getDateValue(int year, int month, int day)
+    {
+        //day validator
+        if(!dateValidator(year, month, day))
+        {
+            lblValid3.setText("Invalid Day");
+        }
+
+        //sets the Date
+        return new GregorianCalendar(year, month - 1, day).getTime();
+
+
+    }
+
+    /**
+     * Method Helper: check for valid for every month, including leap years
+     * @param year
+     * @param month
+     * @param day
+     * @return true or false
+     */
+    public boolean dateValidator(int year, int month, int day)
+    {
+
+        //Months with 31 days
+        if(month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
+        {
+            if(day < 1 || day > 31)
+            {
+              return false;
+            }
+        }
+        //covers leap year
+        else if(month == 2)
+        {
+            if(year % 4 == 0)
+            {
+                if(day < 1 || day > 29)
+                {
+                    return false;
+                }
+            }
+
+            if(day > 28)
+            {
+                if(day < 1 || day > 28)
+                {
+                    return false;
+                }
+            }
+        }
+        else
+        {
+            //remaining months
+            if(day < 1 || day > 30)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Method Helper: checks if a field is empty
+     * @param txtBox
+     * @param textBox2
+     * @param textBox3
+     * @param textBox4
+     * @param textBox5
+     * @param textBox6
+     * @return true or false
+     */
+    public boolean emptyfield(TextField txtBox, TextField textBox2,TextField textBox3,TextField textBox4,
+                              TextField textBox5, TextField textBox6)
+    {
+
+        //if textboxes are not empty
+        if(!txtBox.getText().isEmpty() && !textBox2.getText().isEmpty() && !textBox3.getText().isEmpty() &&
+                !textBox4.getText().isEmpty() && !textBox5.getText().isEmpty() &&!textBox6.getText().isEmpty()) // if the text is not empty
+        {
+            return false; // meaning there is items in it
+        }
+        return true; //it is empty
+    }
+
+
 
     public static void main(String[] args) {
-        launch(args);
+        Application.launch(args);
     }
 }

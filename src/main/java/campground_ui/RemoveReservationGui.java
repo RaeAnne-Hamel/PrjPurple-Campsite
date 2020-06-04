@@ -10,13 +10,11 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.lang.reflect.Array;
@@ -42,24 +40,19 @@ public class RemoveReservationGui extends Stage {
     //Textfield
     private TextField  txtResID2;
 
-
-
     //button
     Button btnBack, btnConfirm;
-
+    Reservation obRes;
 
 
     public RemoveReservationGui(Stage obStage) {
-
-
-
 
         //Creating panes
         obGrid = new GridPane();
         obBorder = new BorderPane();
         obHBox = new HBox();
 
-        //Creating Labels
+        //Creating Labels and text field
         lblResID = new Label("Reservation Id: ");
         lblLotID2 = new Label("");
         lblCustomers = new Label("Customer Names: ");
@@ -69,12 +62,8 @@ public class RemoveReservationGui extends Stage {
         lblDeparture = new Label("Departure Date (yyyy/m/d): ");
         lblGuest = new Label("Number of Guests: ");
 
-
         txtResID2= new TextField();
         txtResID2.setMaxSize(70, 50);
-
-
-
 
         lblArrivalDate = new Label("");
         lblDepartDate = new Label("");
@@ -115,68 +104,148 @@ public class RemoveReservationGui extends Stage {
 
 
         obGrid.add(lblDeparture, 0, 5);
-        obGrid.add(lblDepartDate, 3, 5);
+        obGrid.add(lblDepartDate, 1, 5);
 
         obGrid.add(lblGuest, 0, 6);
         obGrid.add(lblGuest2,1,6);
 
         obGrid.setPadding(new Insets(10,10,10,10));
 
-
+        //set button positions
         obHBox.setAlignment(Pos.BASELINE_CENTER);
         obHBox.setSpacing(430);
         obHBox.setPadding(new Insets(15,10,10,10));
         obHBox.getChildren().addAll(btnBack, btnConfirm);
 
+        //setting layout positions
         obBorder.setCenter(obGrid);
         obBorder.setBottom(obHBox);
 
+        //EVENT HANDLERS
 
-
+        //when the key is released the reservation information will be displayed
         txtResID2.setOnKeyReleased(e ->{
 
+            //gets the reservation ID
             int resID = Integer.parseInt(txtResID2.getText());
 
            // Reservation obRes = MainGui.obBookingLedger.getReservation(MainGui.obBookingLedger.aReservation, resID);
 
             //Reservation obRes = BookingsLedger.getReservation(MainGui.obBookingLedger.getAllReservations(), resID);
+           // obRes = MainGui.obBookingsLedger.getReservation(MainGui.obBookingsLedger.getAllReservations(), resID);
+            obRes = MainGui.obBookingsLedger.getAllReservations().get(resID-1);
+            System.out.println();
+            System.out.printf("%s", obRes);
 
-           Reservation obRes = MainGui.obBookingLedger.NonStaticgetReservation(MainGui.obBookingLedger.getAllReservations(), resID);
-
+            //display Lot ID and  number of Guest
             String lotID = Integer.toString(obRes.getID());
             String guest = Integer.toString(obRes.getCustomerCount());
+
+            //formatting dates to display the date
             DateFormat stDate = new SimpleDateFormat("yyyy/MM/dd");
             String startDate = stDate.format(obRes.getObStartDate());
             DateFormat endDate = new SimpleDateFormat("yyyy/MM/dd");
             String departDate = endDate.format(obRes.getObEndDate());
 
+            //Displays the customers paying names
+           Customer name1 = obRes.getCustomerList().get(0);
+           lblCust1.setText(name1.getName() + " " + name1.getLast());
 
-           // Customer name1 = obRes.getCustomerList().get(0);
-           /// lblCust1.setText(name1.getName());
+           Customer name2 = obRes.getCustomerList().get(1);
+           lblCust2.setText(name2.getName() + " " + name2.getLast());
 
+           //displays Lot information
             lblLotID2.setText(lotID);
-            lblLotType.setText(MainGui.obBookingLedger.querySearchCampsite((obRes.getID())).toString());
+            lblLotType.setText(MainGui.obBookingsLedger.querySearchCampsite((obRes.getID())).getLotType().toString());
 
+            //display dates
             lblArrivalDate.setText(startDate);
             lblDepartDate.setText(departDate);
 
+            //displays number of guest
             lblGuest2.setText(guest);
 
 
         });
 
+        //when button is clicked
         btnConfirm.setOnAction(e -> {
+            //gets the value
             int resID = Integer.parseInt(txtResID2.getText());
-            MainGui.obBookingLedger.removeReservation(resID);
+
+           //calls the boolean for remove reservation -- if true
+            if (MainGui.obBookingsLedger.removeReservation(resID))
+            {
+                //double confirmation
+                Alert alert =  new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to remove this reservation?", ButtonType.OK, ButtonType.CANCEL);
+                alert.showAndWait();
+                if(alert.getResult() == ButtonType.OK)
+                {
+                    //removes the reservation
+                    MainGui.obBookingsLedger.getAllReservations().removeIf(obItem -> resID == obItem.getReservationID());
+
+
+                    //confirmsthe reservation is removed
+                    Alert alert3 = new Alert(Alert.AlertType.INFORMATION, "Reservation removed.", ButtonType.CLOSE);
+                    alert3.showAndWait();
+
+                    //on button clicked
+                    if(alert3.getResult() == ButtonType.CLOSE) {
+                        //clears all the fields
+                        txtResID2.setText("");
+                        lblLotID2.setText("");
+                        lblCust1.setText("");
+                        lblCust2.setText("");
+                        lblGuest2.setText("");
+                        lblDepartDate.setText("");
+                        lblArrivalDate.setText("");
+                        lblLotType.setText("");
+
+                        //closes everything to main reservation window
+                        alert3.close();
+                        this.close();
+
+
+                    }
+                    //closes everything to main reservation window
+                    alert.close();
+                    this.close();
+
+                }else
+                {
+                    if(alert.getResult() == ButtonType.CANCEL)
+                    {
+                        //reservation was not remove, closes to main reservation window
+                        Alert alert2 = new Alert(Alert.AlertType.INFORMATION, "Reservation was not removed. Go back to main reservation screen", ButtonType.CLOSE);
+                        alert2.showAndWait();
+                        //on button clickes
+                        if(alert2.getResult() == ButtonType.CLOSE)
+                        {
+                            //clears all fields
+                            lblLotID2.setText("");
+                            lblCust1.setText("");
+                            lblCust2.setText("");
+                            lblGuest2.setText("");
+                            lblDepartDate.setText("");
+                            lblArrivalDate.setText("");
+
+                            //closes everything to main reservation window
+                            this.close();
+                            alert2.close();
+                        }
+                    }
+                }
+            };
         });
 
         btnBack.setOnAction(e ->{
-            //obStage.setScene(MainGui.mainScene);
+            this.close();
         });
 
-        obStage.setScene(new Scene(obBorder, 650, 500));
+        Scene scene = new Scene(obBorder, 650, 500);
         obStage.setTitle("Remove Reservation");
-        obStage.show();
+        this.setScene(scene);
+        this.initModality(Modality.APPLICATION_MODAL);
 
 
     }
@@ -184,6 +253,6 @@ public class RemoveReservationGui extends Stage {
 
 
     public static void main(String[] args) {
-        Application.launch(args);
+       Application.launch(args);
     }
 }

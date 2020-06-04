@@ -1,21 +1,19 @@
 package campground_data;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import campground_ui.MainConsole;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.UUID;
 
 public class BookingsLedger
 {
-    public  static ArrayList<Reservation> aReservation = new ArrayList<>();
+
+    public static ArrayList<Reservation> aReservation = new ArrayList<>(1000000);
     public ArrayList<Lot> aLot = new ArrayList<>();
-    ArrayList<Customer> aCustomer = new ArrayList<>();
-    ArrayList<Manager> aManager;
+    public ArrayList<Customer> aCustomer = new ArrayList<>();
+    public ArrayList<Manager> aManager;
+
     Boolean bCustomerPasses = true;
 
     public BookingsLedger()
@@ -126,7 +124,8 @@ public class BookingsLedger
 
         //If all checks have succeeded add the reservation to aReservations and return true
         System.out.printf("Adding Reservation...\n");
-        aReservation.add(new Reservation(obLot, obStartDate, obEndDate, obCustomers, nPeople, 0));
+
+        aReservation.add(new Reservation(obLot, obStartDate, obEndDate, obCustomers, nPeople));
         System.out.printf("Reservation Added\n");
         return true;
     }
@@ -235,8 +234,10 @@ public class BookingsLedger
             //If dates Overlap set bOverlap to false and break loop
             if ((obStartDate.compareTo(obReservation.obEndDate) <=0) && (obEndDate.compareTo(obReservation.obStartDate) >=0))
             {
+                System.out.println("Overlap Found");
                 bOverlap = true;
                 break;
+
             }
         }
         return bOverlap;
@@ -246,37 +247,50 @@ public class BookingsLedger
     /**
      * Removes a reservation based on the ID input
      *
+     * I Took out all the prompting I just need it to return true or false
+     * the Gui calls remove(object) to remove it from the booking ledger -RaeAnne
      * @param ID
      * @return
      */
-      public boolean removeReservation ( int ID){
-             /* Create a temporary Reservation ArrayList */
-             ArrayList<Reservation> tmpReservations = new ArrayList<>();
-             boolean resFound = false;
+      public boolean removeReservation ( int ID) {
+          /* Create a temporary Reservation ArrayList */
+          ArrayList<Reservation> tmpReservations = new ArrayList<>();
+          boolean resFound = false;
 
-              for (Reservation res : aReservation) {
-                /*If the Reservation ID is found*/
-               if (res.getReservationID() == ID) {
-                 /*Asks for a confirmation from the user if they want to remove the reservatin */
-                 String sConfirm = MainConsole.Prompt("Are you sure you want to remove the reservation? (Y , N )");
-                 if (sConfirm.equals("Y")) {
-                   resFound = true;
-                    /* Double check if they want to remove */
-                    continue;
-                  }
-               }
+          for (Reservation res : aReservation) {
+              /*If the Reservation ID is found*/
+              if (res.getReservationID() == ID) {
+//                  /*Asks for a confirmation from the user if they want to remove the reservatin */
+//                  String sConfirm = MainConsole.Prompt("Are you sure you want to remove the reservation? (Y , N )");
+//                  if (sConfirm.equals("Y")) {
+//                      resFound = true;
+//                      /* Double check if they want to remove */
+//                      continue;
+//                  }
 
-                /* Add a reservation to the tmp resorvation */
-                 tmpReservations.add(res);
-             }
+                  return true;
+//              }
 
-               /*If the reservation is not fount */
-             if (resFound == false)
-              System.out.println("Reservation Not Found");
+//              /* Add a reservation to the tmp resorvation */
+//              tmpReservations.add(res);
+//
+//              return true;
+              }
 
-               aReservation = tmpReservations;
-               return resFound;
-       }
+
+              /*If the reservation is not fount */
+//          if (resFound == false) {
+//              System.out.println("Reservation Not Found");
+//          }
+
+//              aReservation = tmpReservations;
+
+          }
+
+          return false;
+      }
+
+
 
         /**
          * Check get a reservation based on the ID
@@ -427,6 +441,44 @@ public class BookingsLedger
     public ArrayList<Customer> getCustomerList()
     {
         return this.aCustomer;
+    }
+
+
+
+    /**
+     * This method runs a a checkOverlap for every possible Lot with specified dates.
+     * It will return a List of reservations that passed the checkOverlap test
+     * If the date is invalid however (obEndDate is before obStartDate) it will return null
+     * @param obStartDate
+     * @param obEndDate
+     * @return
+     */
+    public List<Lot> checkAvailability(Date obStartDate, Date obEndDate)
+    {
+        //Check if endDate is before startDate. If so it will fail and return null
+        if (obStartDate.compareTo(obEndDate) > 0) {
+            System.out.printf("Invalid date\n");
+            return null;
+        }
+
+        //Start stream to filter and story Lots
+        List<Lot> obOutput = aLot.stream()
+                .filter(e-> !(checkOverlap(e.getLotID(),obStartDate,obEndDate)))
+                .sorted(Comparator.comparingInt(Lot::getLotID))
+                .collect(Collectors.toList());
+
+
+        return obOutput;
+    }
+
+    public void addAccommodation(Lot obLot)
+    {
+        if(obLot.getAvailability())
+        {
+            obLot.setRemovalReason("N/A");
+        }
+
+        aLot.add(obLot);
     }
 }
 

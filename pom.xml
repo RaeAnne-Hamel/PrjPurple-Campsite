@@ -105,6 +105,7 @@
                     <mainClass>campground_ui.MainGui</mainClass>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 
