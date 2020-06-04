@@ -48,6 +48,8 @@ public class setAvailabilityGUI extends Stage {
         });
 
 
+
+
         Scene scene = new Scene(mainPane, 500, 500);
         this.setTitle("Set Availability");
         this.setScene(scene);

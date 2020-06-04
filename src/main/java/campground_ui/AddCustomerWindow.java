@@ -2,6 +2,7 @@ package campground_ui;
 
 import campground_data.BookingsLedger;
 import campground_data.Customer;
+import campground_data.PersistentDataManager;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -9,6 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+
+import static campground_ui.MainGui.obBookingsLedger;
 
 /**
  * Dylan Attwater
@@ -120,7 +123,7 @@ public class AddCustomerWindow {
      */
     private void Confirm(Stage stage){
         //Set the customer information as the text inputted
-        int length = MainGui.obBookingsLedger.aCustomer.size();
+        int length = MainGui.obBookingsLedger.getCustomerList().size();
         obCustomer.setCustomerID(length++);
         obCustomer.setName(txtName.getText());
         obCustomer.setLast(txtLast.getText());
@@ -158,7 +161,11 @@ public class AddCustomerWindow {
         //An alert will pop up denoting success or failure. The error contents come from Customer's UpdateCustomer method.
         //If successful, all fields will revert to being non-editable.
         if (sVal.equals("Successfully added")){
-            MainGui.obBookingsLedger.aCustomer.add(obCustomer);
+            MainGui.obBookingsLedger.getCustomerList().add(obCustomer);
+
+            /* Save Data */
+            PersistentDataManager.saveAll(obBookingsLedger);
+
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Success!");
             alert.setHeaderText(null);

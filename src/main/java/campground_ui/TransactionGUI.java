@@ -140,6 +140,7 @@ public class TransactionGUI extends Stage {
                 //if all the errors have been shown and the data has been adjusted.
                 if(btnSave.getText().equals("Confirm Changes"))
                 {
+                    PersistentDataManager.saveAll(MainGui.obBookingsLedger);
                     this.close();
                     //i Would put the save method here !!!!!!
                 }

@@ -201,7 +201,7 @@ public class EditReservationGui extends Stage{
 
         //this will be a basic reservation
         Reservation GlobalRegularReservation = new Reservation(null, 3, obStart, obEnd, new Lot());
-        MainGui.bookingsLedger.addReservation(GlobalRegularReservation);
+        MainGui.obBookingsLedger.addReservation(GlobalRegularReservation);
 
         for( Reservation reservation : BookingsLedger.aReservation)
         {
@@ -294,7 +294,7 @@ public class EditReservationGui extends Stage{
 
         btnConfirm.setOnAction(actionEvent -> {
             Checkinputs();
-            System.out.println("This is just for testing");
+            PersistentDataManager.saveAll(MainGui.obBookingsLedger);
         });
 
         btnBack.setOnAction(actionEvent -> {

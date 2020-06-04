@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class MainGui extends Application {
 
     //Loads image once so it isn't wasteful. Declares the separate panes here for general use.
-    public static BookingsLedger bookingsLedger = new BookingsLedger();
+    //public static BookingsLedger bookingsLedger = new BookingsLedger();
 
 
     Image Camp = new Image("file:images/campground.jpg");
@@ -41,6 +41,12 @@ public class MainGui extends Application {
          */
 
         obBookingsLedger = new BookingsLedger();
+
+        obBookingsLedger.setCustomerList(PersistentDataManager.load("src/files/Customers.txt", LoadType.Customer, obBookingsLedger));
+        obBookingsLedger.setLotList(PersistentDataManager.load("src/files/Lots.txt", LoadType.Lot, obBookingsLedger));
+        obBookingsLedger.setManagerList(PersistentDataManager.load("src/files/Managers.txt", LoadType.Manager, obBookingsLedger));
+        obBookingsLedger.setReservationsList(PersistentDataManager.load("src/files/Reservations.txt", LoadType.Reservation, obBookingsLedger));
+        obBookingsLedger.setTransactionList(PersistentDataManager.load("src/files/Transactions.txt", LoadType.Transaction, obBookingsLedger));
 
         Lot obLot1 = new Lot(0);
         Lot obLot2 = new Lot(1);
@@ -305,7 +311,7 @@ public class MainGui extends Application {
         //Stream that returns a sorted list of customers with the last name entered. List will include first and last names and ID.
         btnSearch.setOnAction(e -> {
             String sSearch = txtSearch.getText();
-            ArrayList<String> obAC = obBookingsLedger.aCustomer.stream()
+            ArrayList<String> obAC = obBookingsLedger.getCustomerList().stream()
                     .filter(x -> x.getLast().equalsIgnoreCase(sSearch))
                     .sorted((x, y) -> (x.getLast().compareTo(y.getLast())))
                     .map(x -> x.getName() + " " + x.getLast() + " " + x.getCustomerID())
@@ -327,7 +333,7 @@ public class MainGui extends Application {
             //Try/catch block in case ID field is left empty or not a number.
             boolean bFound = false;
             try {
-                for (Customer obCust : obBookingsLedger.aCustomer) {
+                for (Customer obCust : obBookingsLedger.getCustomerList()) {
                     //Opens a new edit customer window for the customer that was searched for.
                     if (obCust.getCustomerID() == Integer.parseInt(txtID.getText())) {
                         bFound = true;

@@ -1,9 +1,6 @@
 package campground_ui;
 
-import campground_data.BookingsLedger;
-import campground_data.Lot;
-import campground_data.LotType;
-import campground_data.Reservation;
+import campground_data.*;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -347,6 +344,10 @@ public class EditAccommodationGUI extends Stage {
                 obLot.setRemovalReason(sReason);
 
                 Alert confirm = new Alert(Alert.AlertType.INFORMATION, "Accommodation Successfully Edited.", ButtonType.CLOSE);
+
+                /* Save Data */
+                PersistentDataManager.saveAll(obBookingsLedger);
+
                 confirm.showAndWait();
                 if (confirm.getResult() == ButtonType.CLOSE)
                 {
@@ -385,6 +386,10 @@ public class EditAccommodationGUI extends Stage {
                     obLot.setRemovalReason(sReason);
 
                     Alert confirm2 = new Alert(Alert.AlertType.INFORMATION, "Accommodation Successfully Edited.", ButtonType.CLOSE);
+
+                    /* Save Data */
+                    PersistentDataManager.saveAll(obBookingsLedger);
+
                     confirm2.showAndWait();
                     if (confirm2.getResult() == ButtonType.CLOSE)
                     {

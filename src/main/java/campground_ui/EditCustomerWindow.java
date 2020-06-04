@@ -1,12 +1,15 @@
 package campground_ui;
 
 import campground_data.Customer;
+import campground_data.PersistentDataManager;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+
+import static campground_ui.MainGui.obBookingsLedger;
 
 /**
  * Author: Dustin Wiebe
@@ -243,6 +246,10 @@ public class EditCustomerWindow{
         //If successful, all fields will revert to being non-editable.
         if (sVal.equals("Successfully updated")){
             UnEditable();
+
+            /* Save Data */
+            PersistentDataManager.saveAll(obBookingsLedger);
+
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Success!");
             alert.setHeaderText(null);

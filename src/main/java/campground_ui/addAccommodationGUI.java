@@ -1,9 +1,6 @@
 package campground_ui;
 
-import campground_data.BookingsLedger;
-import campground_data.Lot;
-import campground_data.LotType;
-import campground_data.Reservation;
+import campground_data.*;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -194,6 +191,10 @@ public class addAccommodationGUI extends Stage {
                 txtID.setText(Integer.toString(nID2));
 
                 Alert confirm = new Alert(Alert.AlertType.INFORMATION, "Accommodation Successfully Added.", ButtonType.CLOSE);
+
+                /* Save Data */
+                PersistentDataManager.saveAll(obBookingsLedger);
+
                 confirm.showAndWait();
                 if (confirm.getResult() == ButtonType.CLOSE)
                 {
@@ -236,6 +237,10 @@ public class addAccommodationGUI extends Stage {
                     txtID.setText(Integer.toString(nID3));
 
                     Alert confirm2 = new Alert(Alert.AlertType.INFORMATION, "Accommodation Successfully Added.", ButtonType.CLOSE);
+
+                    /* Save Data */
+                    PersistentDataManager.saveAll(obBookingsLedger);
+
                     confirm2.showAndWait();
                     if (confirm2.getResult() == ButtonType.CLOSE)
                     {
