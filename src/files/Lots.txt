@@ -1,1 +1,5 @@
 0,Cabin,String sRemovalReason,true,0
+0,ServicedIndividual,null,false,0
+1,ServicedIndividual,null,false,0
+2,ServicedIndividual,null,false,0
+3,ServicedIndividual,null,false,0

@@ -156,7 +156,7 @@ public class AddReservationGui extends Application {
 
 
         txtLotID.setOnKeyReleased(e-> {
-            lblLotType.setText(MainGui.bookingsLedger.querySearchCampsite(Integer.parseInt(txtLotID.getText())).toString());
+            lblLotType.setText(MainGui.obBookingsLedger.querySearchCampsite(Integer.parseInt(txtLotID.getText())).toString());
         });
 
 
@@ -185,7 +185,7 @@ public class AddReservationGui extends Application {
 
     private ArrayList<String> getCustNameList()
     {
-        ArrayList<Customer> custList = MainGui.bookingsLedger.getCustomerList();
+        ArrayList<Customer> custList = MainGui.obBookingsLedger.getCustomerList();
         ArrayList<String> names = new ArrayList<>();
 
         for(Customer obCust : custList)
