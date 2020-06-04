@@ -1,8 +1,5 @@
 package campground_data;
 
-
-import org.omg.CORBA.Environment;
-
 import java.util.ArrayList;
 
 public class Lot extends Persistent{

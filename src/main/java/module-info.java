@@ -4,7 +4,6 @@ open module campground_ui{
     requires javafx.controls;
     requires java.validation;
     requires json.simple;
-    requires rt;
     exports campground_ui;
 }
 
