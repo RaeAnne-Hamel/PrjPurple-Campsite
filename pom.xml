@@ -27,6 +27,18 @@
 
 
         <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>15-ea+5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>15-ea+5</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
             <version>1.10.19</version>
@@ -95,26 +107,7 @@
                 <configuration>
                     <source>9</source>
                     <target>9</target>
-<<<<<<< HEAD
 
-=======
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.openjfx</groupId>
-                <artifactId>javafx-maven-plugin</artifactId>
-                <version>0.0.4</version>
-                <configuration>
-                    <mainClass>campground_ui.MainGui</mainClass>
->>>>>>> 6a_manager_manages_reservations_through_dialog_boxes
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.openjfx</groupId>
-                <artifactId>javafx-maven-plugin</artifactId>
-                <version>0.0.4</version>
-                <configuration>
-                    <mainClass>campground_ui.MainGui</mainClass>
                 </configuration>
             </plugin>
             <plugin>
@@ -126,7 +119,14 @@
                 </configuration>
             </plugin>
 
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.4</version>
+                <configuration>
+                    <mainClass>campground_ui.MainGui</mainClass>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-
 </project>

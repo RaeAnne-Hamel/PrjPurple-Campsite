@@ -4,6 +4,7 @@ public class Customer {
     private final int MAX_LENGTH = 255;
     private int CustomerID;
     private String sName;
+    private String sLast;
     private String sAddress;
     private String sProvince;
     private String sCity;
@@ -17,12 +18,13 @@ public class Customer {
     private boolean isFrequent;
     private static int idPool = 0;
 
-    public Customer(String sName, String sAddress, String sProvince, String sCity,
+    public Customer(String sName, String sLast, String sAddress, String sProvince, String sCity,
                     String sPostal, String sCountry, String sEmail, long nFax, long nPhone,
                     long nSecPhone, int nVisits, boolean isFrequent)
     {
         this.CustomerID = idPool++;
         this.sName = sName;
+        this.sLast = sLast;
         this.sAddress = sAddress;
         this.sProvince = sProvince;
         this.sCity = sCity;
@@ -36,11 +38,12 @@ public class Customer {
         this.isFrequent = isFrequent;
     }
 
-    public Customer(String sName, String sAddress, String sProvince, String sCity,
+    public Customer(String sName, String sLast, String sAddress, String sProvince, String sCity,
                     String sPostal, String sCountry, String sEmail, long nPhone)
     {
         this.CustomerID = idPool++;
         this.sName = sName;
+        this.sLast = sLast;
         this.sAddress = sAddress;
         this.sProvince = sProvince;
         this.sCity = sCity;
@@ -61,9 +64,15 @@ public class Customer {
         this.Name = name;
     }
 
-    public int getCustomerID() { return CustomerID; }
+    public Customer() {
+//        this.CustomerID = idPool++;
+    }
+
+    public int getCustomerID() { return CustomerID++; }
 
     public String getName() { return sName; }
+
+    public String getLast() { return sLast; }
 
     public String getAddress() { return sAddress; }
 
@@ -95,6 +104,13 @@ public class Customer {
         if (sName.length() > 0 && sName.length()<=MAX_LENGTH)
         {
             this.sName = sName;
+        }
+    }
+
+    public void setLast(String sName) {
+        if (sName.length() > 0 && sName.length()<=MAX_LENGTH)
+        {
+            this.sLast = sName;
         }
     }
 
@@ -141,21 +157,21 @@ public class Customer {
     }
 
     public void setFax(long nPhone) {
-        if (nPhone > 1000000000L && nPhone < 9999999999L)
+        if (nPhone > 1000000000L && nPhone < 99999999999L)
         {
             this.nFax = nPhone;
         }
     }
 
     public void setPhone(long nPhone) {
-        if (nPhone > 1000000000L && nPhone < 9999999999L)
+        if (nPhone > 1000000000L && nPhone < 99999999999L)
         {
             this.nPhone = nPhone;
         }
     }
 
     public void setSecPhone(long nPhone) {
-        if (nPhone > 1000000000L && nPhone < 9999999999L)
+        if (nPhone > 1000000000L && nPhone < 99999999999L)
         {
             this.nSecPhone = nPhone;
         }
@@ -165,17 +181,35 @@ public class Customer {
 
     public void setFrequent(boolean frequent) { isFrequent = frequent; }
 
-
-    public String updateCustomer(String sName, String sAddress, String sProvince,
+    /**
+     * Method for adding or updating a customer. nCheck determines whether it will be added or updated.
+     * @param sName First name
+     * @param sLast Last name
+     * @param sAddress Street address
+     * @param sProvince Province or state
+     * @param sCity City
+     * @param sPostal Postal code
+     * @param sCountry Country
+     * @param sEmail Email Address
+     * @param nPhone Phone Number
+     * @param nFax Fax Number
+     * @param nSecPhone Secondary Phone Number
+     * @param nCheck Determines whether to add up update a customer
+     * @return Returns a string that shows whether there was an error or the update was successful.
+     */
+    //Validates the fields inputted and returns a string with what is entered incorrectly
+    public String updateCustomer(String sName, String sLast, String sAddress, String sProvince,
                                  String sCity, String sPostal, String sCountry, String sEmail,
-                                 long nPhone, long nFax, long nSecPhone) {
+                                 long nPhone, long nFax, long nSecPhone, int nCheck) {
         if (!(sName.length() > 0 && sName.length() <= MAX_LENGTH)) {
-            return "Customer name must be between 1 and 255 characters.";
+            return "First name must be between 1 and 255 characters.";
+        }
+        if (!(sLast.length() > 0 && sLast.length() <= MAX_LENGTH)) {
+            return "Last name must be between 1 and 255 characters.";
         }
         if (!(sAddress.length() > 0 && sAddress.length() <= MAX_LENGTH)){
             return "Street address must be between 1 and 255 characters.";
         }
-
         if (!(sProvince.length() > 0 && sProvince.length()<=MAX_LENGTH)){
             return "State/province must be between 1 and 255 characters.";
         }
@@ -191,17 +225,18 @@ public class Customer {
         if (!(sEmail.length() > 4 && sEmail.length()<=MAX_LENGTH && sEmail.contains("@"))){
             return "Email must be between 5 and 255 characters and include an @ symbol.";
         }
-        if (!(nPhone > 1000000000L && nPhone < 9999999999L)){
-            return "Phone number must be 10 digits.";
+        if (!(nPhone > 1000000000L && nPhone < 99999999999L)){
+            return "Phone number must be 10 or 11 digits.";
         }
-        if (!(nSecPhone > 1000000000L && nSecPhone < 9999999999L) && nSecPhone != 0){
-            return "Secondary phone number must be 10 digits.";
+        if (!(nSecPhone > 1000000000L && nSecPhone < 99999999999L) && nSecPhone != 0){
+            return "Secondary phone number must be 10 or 11 digits.";
         }
-        if (!(nFax > 1000000000L && nFax < 9999999999L) && nFax != 0){
-            return "Fax number must be 10 digits.";
+        if (!(nFax > 1000000000L && nFax < 99999999999L) && nFax != 0){
+            return "Fax number must be 10 or 11 digits.";
         }
 
         this.setName(sName);
+        this.setLast(sLast);
         this.setAddress(sAddress);
         this.setProvince(sProvince);
         this.setCity(sCity);
@@ -212,7 +247,9 @@ public class Customer {
         this.setFax(nFax);
         this.setSecPhone(nSecPhone);
 
-        return "Successfully changed";
+        //If nCheck is 1, it returns that the customer is added. Otherwise, that the customer is updated.
+        if (nCheck == 1) return "Successfully added";
+        else return "Successfully updated";
     }
 }
 

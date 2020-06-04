@@ -22,8 +22,8 @@ public class TransactionTest {
     public void setup()
     {
         payingCustomers = new ArrayList<>();
-        payingCustomers.add(new Customer("","","","","","","", 1  ,1,1,1,true));
-        payingCustomers.add(new Customer("","","","","","","", 1  ,1,1,1,true));
+        payingCustomers.add(new Customer("","","","","","","","", 1  ,1,1,1,true));
+        payingCustomers.add(new Customer("","","","","","","","", 1  ,1,1,1,true));
     }
 
     private Date startDate = new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime();

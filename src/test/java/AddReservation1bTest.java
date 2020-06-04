@@ -21,7 +21,7 @@ public class AddReservation1bTest {
     private static Lot testLot = new Lot(LotType.NonServicedIndividual, true);
     ArrayList<Lot> lotArray = new ArrayList<>();
     ArrayList<Customer> testCustomer = new ArrayList<>();
-    private static Customer obCustomer = new Customer("John Doe","Addr","Addr","Addr","Addr","Addr","Email@Email",1L,1L,1L,1,true);
+    private static Customer obCustomer = new Customer("John", "Doe","Addr","Addr","Addr","Addr","Addr","Email@Email",1L,1L,1L,1,true);
 
 
     @Test
