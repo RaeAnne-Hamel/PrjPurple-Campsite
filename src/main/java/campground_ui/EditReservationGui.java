@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class EditReservationGui extends Application {
+public class EditReservationGui extends Stage{
 
     //Access to specific array list
     public ArrayList<Customer> obCustomer;
@@ -51,17 +51,7 @@ public class EditReservationGui extends Application {
     Button btnBack, btnConfirm, btnTransaction, btnEdit;
 
 
-    @Override
-    public void start(Stage obStage) {
-        EditReservationGui(); //create the pane
-        obStage.setScene(new Scene(obBorder, 650, 500));
-        obStage.setTitle("Edit Reservation");
-        obStage.show();
-
-
-    }
-
-    public void EditReservationGui()
+    public EditReservationGui()
     {
         //Creating panes
         obGrid = new GridPane();
@@ -182,12 +172,18 @@ public class EditReservationGui extends Application {
         obHBox.setSpacing(125);
         obHBox.setPadding(new Insets(15,10,10,10));
         obHBox.getChildren().addAll(btnBack, btnTransaction, btnConfirm);
+        btnTransaction.setDisable(true);
 
         onClickForButtons();
 
         obBorder.setCenter(obGrid);
         obBorder.setBottom(obHBox);
         obBorder = obBorder;
+
+        //return the Grid pane we have made
+        this.setScene(new Scene(obBorder, 600, 600));
+        this.setTitle("Edit Reservation Information");
+        this.show();
 
     }
 
@@ -213,6 +209,7 @@ public class EditReservationGui extends Application {
             {
                 GReservation = reservation;
                 populateControls(reservation);
+                btnTransaction.setDisable(false);
             }
             else
             {
@@ -299,6 +296,11 @@ public class EditReservationGui extends Application {
             Checkinputs();
             System.out.println("This is just for testing");
         });
+
+        btnBack.setOnAction(actionEvent -> {
+            this.close();
+        });
+
     }
 
 
@@ -382,10 +384,5 @@ public class EditReservationGui extends Application {
 
         }
 
-    }
-
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

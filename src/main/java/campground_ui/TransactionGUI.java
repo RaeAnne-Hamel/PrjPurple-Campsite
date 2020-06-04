@@ -130,22 +130,20 @@ public class TransactionGUI extends Stage {
             }
             else
             {
-                System.exit(0);
+                this.close();
             }
         });
 
 //this will update all of the information for the current transaction and reservation.
         btnSave = new Button("Save");
-        btnSave.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
+        btnSave.setOnAction(actionEvent ->  {
                 //if all the errors have been shown and the data has been adjusted.
                 if(btnSave.getText().equals("Confirm Changes"))
                 {
-                    System.exit(0);
+                    this.close();
                     //i Would put the save method here !!!!!!
                 }
-                else
-                {
+                else {
                     //change the Exit button to a back button
                     btnExit.setText("Back to edit");
                     //change our button to a confirm button
@@ -159,7 +157,6 @@ public class TransactionGUI extends Stage {
 
 
                 }
-            }
         });
 
         //exit this

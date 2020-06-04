@@ -118,6 +118,10 @@ public class MainGui extends Application {
         btnAdd.setPrefWidth(200);
         Button btnEdit = new Button("Edit Reservation");
         btnEdit.setPrefWidth(200);
+        btnEdit.setOnAction(actionEvent -> {
+            EditReservationGui EditRes = new EditReservationGui();
+            EditRes.showAndWait();
+        });
         Button btnRemove = new Button("Remove Reservation");
         btnRemove.setPrefWidth(200);
 
