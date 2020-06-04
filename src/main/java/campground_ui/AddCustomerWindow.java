@@ -41,7 +41,7 @@ public class AddCustomerWindow extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        obCustomer = new Customer();
+//        obCustomer = new Customer();
 
         //Setting up all the labels. The customer's ID isn't editable, so it uses a label rather than a text field.
         Label lblID = new Label("ID");
