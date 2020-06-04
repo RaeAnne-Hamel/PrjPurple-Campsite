@@ -6,7 +6,7 @@
 
     <groupId>purple</groupId>
     <artifactId>campground</artifactId>
-    <version>release1</version>
+    <version>release2</version>
     <packaging>jar</packaging>
 
     <repositories>
@@ -23,6 +23,19 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
             <scope>test</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>15-ea+5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>15-ea+5</version>
         </dependency>
 
         <dependency>
@@ -50,6 +63,17 @@
             <version>1.1.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>14.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>14.0.1</version>
+        </dependency>
 
     </dependencies>
     <build>
@@ -59,7 +83,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>campground_ui.MainConsole</mainClass>
+                            <mainClass>campground_ui.MainGui</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
@@ -81,11 +105,19 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
                 <configuration>
-                    <source>8</source>
-                    <target>8</target>
+                    <source>9</source>
+                    <target>9</target>
+
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.4</version>
+                <configuration>
+                    <mainClass>campground_ui.MainGui</mainClass>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
 </project>

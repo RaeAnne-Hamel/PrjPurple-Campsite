@@ -35,6 +35,7 @@ public class ReservationTest {
     @Before
     public void setup()
     {
+
         payingCustomers = new ArrayList<>();
         payingCustomers.add(new Customer("","","","","","","","", 1  ,1,1,1,true));
         payingCustomers.add(new Customer("","","","","","","","", 1  ,1,1,1,true));

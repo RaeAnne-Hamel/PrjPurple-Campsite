@@ -15,6 +15,7 @@ public class Lot extends Persistent{
     String sRemovalReason;
     boolean bAvailability;
     int obReservationListLength;
+    double price = 0;
 
     public Lot(int nLotID,
                LotType obType,
@@ -77,6 +78,11 @@ public class Lot extends Persistent{
         return sRemovalReason;
     }
 
+    public void setRemovalOverride(String sReason)
+    {
+        sRemovalReason = sReason;
+    }
+
     /*
     Checks that the String input is within the acceptable length of between 1 and 255 characters,
     and then sets the reason for the lot being removed to the string.
@@ -96,6 +102,11 @@ public class Lot extends Persistent{
             default:
                 sRemovalReason = sReason;
         }
+    }
+
+    public void setReservations(ArrayList<Reservation> obRes)
+    {
+        this.obReservationList = obRes;
     }
 
     public boolean getAvailability()
