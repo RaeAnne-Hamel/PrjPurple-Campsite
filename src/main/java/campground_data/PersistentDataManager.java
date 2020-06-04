@@ -64,7 +64,7 @@ public class PersistentDataManager {
         switch(eType)
         {
             case Customer:
-                record = new Customer();
+                //record = new Customer();
                 if (record instanceof Persistent)
                     ((Persistent) record).load(bl, arg);
                 break;
@@ -99,7 +99,7 @@ public class PersistentDataManager {
 
     public static <E> void save(ArrayList<E> aList, String sFile){
 
-        try (FileWriter fileWriter = new FileWriter("src/files/save.txt")) {
+        try (FileWriter fileWriter = new FileWriter(sFile)) {
             /* Loop through savable objects */
             for(int i = 0; i < aList.size(); i++)
             {
@@ -114,11 +114,20 @@ public class PersistentDataManager {
 
     public static void saveAll(BookingsLedger bl)
     {
-        save(bl.aManager,"src/files/Managers.txt");
-        save(bl.aCustomer,"src/files/Customers.txt");
-        save(BookingsLedger.aReservation,"src/files/Reservations.txt");
+        System.out.println(bl.getManagerList().size());
+        save(bl.getManagerList(),"src/files/Managers.txt");
+
+        System.out.println(bl.getCustomerList().size());
+        save(bl.getCustomerList(),"src/files/Customers.txt");
+
+        System.out.println(bl.getAllReservations().size());
+        save(bl.getAllReservations(),"src/files/Reservations.txt");
+
+        System.out.println(bl.getLotList().size());
         save(bl.getLotList(),"src/files/Lots.txt");
-        save(bl.aTransaction, "src/files/Transactions.txt");
+
+        System.out.println(bl.getTransactionList().size());
+        save(bl.getTransactionList(), "src/files/Transactions.txt");
     }
 
     /* Check if a directory is a file. */

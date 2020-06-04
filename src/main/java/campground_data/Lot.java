@@ -41,6 +41,7 @@ public class Lot extends Persistent{
         this.bAvailability = bAvailability;
 
     }
+
     public Lot(int nLotID)
     {
         this.nLotID = nLotID;
@@ -141,8 +142,10 @@ public class Lot extends Persistent{
 
     @Override
     public String savable() {
-        return String.format("%d,%s,%s,%b,%d",
+        String out = String.format("%d,%s,%s,%b,%d",
                 getLotID(),getLotType(),getRemovalReason(),getAvailability(),obReservationListLength);
+        System.out.println(out);
+        return out;
     }
 
     /* Empty until needed */

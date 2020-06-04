@@ -35,9 +35,9 @@ public class ReservationTest {
     @Before
     public void setup()
     {
-         payingCustomers = new ArrayList<>();
-        payingCustomers.add(new Customer(0,"","","", 1  ,1,1,1,true,1));
-        payingCustomers.add(new Customer(0,"","","", 1  ,1,1,1,true,1));
+        payingCustomers = new ArrayList<>();
+        payingCustomers.add(new Customer("","","","","","","","", 1  ,1,1,1,true));
+        payingCustomers.add(new Customer("","","","","","","","", 1  ,1,1,1,true));
 
 
     }
@@ -107,13 +107,13 @@ public class ReservationTest {
     @Test
     public void tCustomerStayTypeRegular() {
         //these will be the start and end dates
-         Date obStart = new Date(2020, 6, 11);
-         Date obEnd = new Date(2020, 6, 15);
+        Date obStart = new Date(2020, 6, 11);
+        Date obEnd = new Date(2020, 6, 15);
 
         //this will be a basic reservation
-         Reservation testRegularReservation = new Reservation(null, 3, obStart, obEnd, obRegLot);
+        Reservation testRegularReservation = new Reservation(null, 3, obStart, obEnd, obRegLot);
         //this will be a group reservation
-         Reservation testGroupReservation = new Reservation(null, 6, obStart, obEnd, obGroupLot);
+        Reservation testGroupReservation = new Reservation(null, 6, obStart, obEnd, obGroupLot);
         //from regular to regualr
 
 
@@ -197,18 +197,18 @@ public class ReservationTest {
 
     }
 
-        /*Test if a manager attempting to remove a reservation has IN adequate permissions*/
-        @Test
-        public void testPesmissions() {
-            //Simply returns false if permissions are Invalid
-            boolean access = false;
+    /*Test if a manager attempting to remove a reservation has IN adequate permissions*/
+    @Test
+    public void testPesmissions() {
+        //Simply returns false if permissions are Invalid
+        boolean access = false;
 
-            assertEquals(access, !BookingsLedger.isValidPermissions(BookingsLedger.getUser()));
-            //assertEquals(access, BookingsLedger.isValidPermissions(BookingsLedger.user));
-        }
+        assertEquals(access, !BookingsLedger.isValidPermissions(BookingsLedger.getUser()));
+        //assertEquals(access, BookingsLedger.isValidPermissions(BookingsLedger.user));
+    }
 
 
-        /*If the manager inputs a reservation ID that is not present*/
+    /*If the manager inputs a reservation ID that is not present*/
 //        @Test
 //        public void testRemoveReservationNotPresent() {
 //            boolean access = true;
@@ -217,7 +217,7 @@ public class ReservationTest {
 //            assertEquals(BL.removeReservation(0), false);
 //        }
 
-        /*If the manager inputs a reservation ID that IS present*/
+    /*If the manager inputs a reservation ID that IS present*/
 //        @Test
 //        public void testRemoveReservationPresent() {
 //
@@ -235,5 +235,5 @@ public class ReservationTest {
 //        }
 
 
-    }
+}
 

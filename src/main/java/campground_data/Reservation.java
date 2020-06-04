@@ -218,15 +218,14 @@ public class Reservation<Static> extends Persistent{
         this.ReservationID = Integer.parseInt((String)arg[0]);
         this.nCustomerCount = Integer.parseInt((String)arg[1]);
         this.price = Double.parseDouble((String)arg[2]);
-        this.nLinkedLotID = Integer.parseInt((String)arg[3]); /* For linking lot */
 
-        Date obStartDate = new Date(Integer.parseInt((String)arg[4]),Integer.parseInt((String)arg[5]),Integer.parseInt((String)arg[6]));
+        Date obStartDate = new Date(Integer.parseInt((String)arg[3]),Integer.parseInt((String)arg[4]),Integer.parseInt((String)arg[5]));
         this.obStartDate = obStartDate;
 
-        Date obEndDate = new Date(Integer.parseInt((String)arg[7]),Integer.parseInt((String)arg[8]),Integer.parseInt((String)arg[9]));
+        Date obEndDate = new Date(Integer.parseInt((String)arg[6]),Integer.parseInt((String)arg[7]),Integer.parseInt((String)arg[8]));
         this.obStartDate = obEndDate;
 
-        status = Boolean.parseBoolean((String) arg[10]);
+        status = Boolean.parseBoolean((String) arg[9]);
     }
 
     @Override
@@ -240,9 +239,9 @@ public class Reservation<Static> extends Persistent{
                 CustomerIDs +=",";
         }
 
-        return String.format("%d,%f,%d,%d,%d,%d,%d,%d,%d,%b,%s",
+        return String.format("%d,%d,%d,%d,%d,%d,%d,%d,%d,%b",
                 getReservationID(),nCustomerCount,nLinkedLotID,obStartDate.getYear(),obStartDate.getMonth(),
-                obStartDate.getDay(),obEndDate.getYear(),obEndDate.getMonth(),obEndDate.getDay(),status,CustomerIDs);
+                obStartDate.getDay(),obEndDate.getYear(),obEndDate.getMonth(),obEndDate.getDay(),status);
     }
 
     /* Must link with an Arraylist of customers. */

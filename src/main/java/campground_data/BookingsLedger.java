@@ -16,9 +16,7 @@ public class BookingsLedger
     Boolean bCustomerPasses = true;
 
     public BookingsLedger()
-    {
-
-    }
+    {}
 
     /**
      * Constructor for BookingsLedger mainly used for testing purposes.
@@ -416,6 +414,10 @@ this will add a reservation to the reservation list.
         aManager.add(manager);
     }
 
+    public void addLot(Lot lot) {
+        aLot.add(lot);
+    }
+
     public void setReservationsList (ArrayList < Reservation > obReservations)
     {
         this.aReservation = obReservations;
@@ -437,8 +439,23 @@ this will add a reservation to the reservation list.
         return aManager;
     }
 
-    public void seTransactionList(ArrayList<Transaction> aTransaction)
+    public ArrayList<Customer> getCustomerList()
+    {
+        return aCustomer;
+    }
+
+    public void setTransactionList(ArrayList<Transaction> aTransaction)
     {
         this.aTransaction = aTransaction;
+    }
+
+    public ArrayList<Transaction> getTransactionList()
+    {
+        return aTransaction;
+    }
+
+    public void addTransaction(Transaction aTransaction)
+    {
+        this.aTransaction.add(aTransaction);
     }
 }
