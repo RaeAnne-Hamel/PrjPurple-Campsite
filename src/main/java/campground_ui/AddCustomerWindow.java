@@ -14,7 +14,7 @@ import javafx.stage.Stage;
  * Dylan Attwater
  * Adding a valid customer to the system
  */
-public class AddCustomerWindow extends Application {
+public class AddCustomerWindow {
     private Customer obCustomer;
 
     //Declaring all the variables that'll be used in multiple methods.
@@ -39,14 +39,12 @@ public class AddCustomerWindow extends Application {
     GridPane obGrid = new GridPane();
     Label lblGetID = new Label();
 
-    @Override
-    public void start(Stage stage) throws Exception {
-//        obCustomer = new Customer();
 
+    public AddCustomerWindow(Stage stage) throws Exception {
+        obCustomer = new Customer();
         //Setting up all the labels. The customer's ID isn't editable, so it uses a label rather than a text field.
-        Label lblID = new Label("ID");
         lblGetID = new Label(String.valueOf(obCustomer.getCustomerID()));
-        Label lblName = new Label("Name");
+        Label lblName = new Label("First Name");
         Label lblLast = new Label("Last Name");
         Label lblAddress = new Label("Address");
         Label lblCountry = new Label("Country");
@@ -62,7 +60,7 @@ public class AddCustomerWindow extends Application {
 
         //Setting up the GridPane. The labels all go in the first column.
         obGrid = new GridPane();
-        obGrid.addColumn(0, lblID, lblName, lblLast, lblAddress, lblCountry, lblProvince, lblCity, lblPostal, lblEmail,
+        obGrid.addColumn(0, lblName, lblLast, lblAddress, lblCountry, lblProvince, lblCity, lblPostal, lblEmail,
                 lblPhone, lblSecPhone, lblFax);
 
         //Everything is housed in a BorderPane. The HBox goes at the bottom to house the buttons, while the grid goes in the middle.
@@ -80,28 +78,28 @@ public class AddCustomerWindow extends Application {
 
         //Adds the buttons. Confirm starts out disabled until you actually edit some text.
         Button btnBack = new Button("Back to Home");
+        btnBack.setOnAction(e -> stage.setScene(MainGui.mainScene));
         btnConfirm = new Button("Confirm");
-        btnConfirm.setOnAction(e -> Confirm());
+        btnConfirm.setOnAction(e -> Confirm(stage));
 
         //All items are added to the grid. The non-phone entries are multiple columns wide, since they're larger.
-        obGrid.add(lblGetID, 1, 0);
-        obGrid.add(txtName, 1, 1, 3, 1);
-        obGrid.add(txtLast, 1, 2, 3, 1);
-        obGrid.add(txtAddress, 1, 3, 3, 1);
-        obGrid.add(txtCountry, 1, 4, 3, 1);
-        obGrid.add(txtProvince, 1, 5, 3, 1);
-        obGrid.add(txtCity, 1, 6, 3, 1);
-        obGrid.add(txtPostal, 1, 7, 2, 1);
-        obGrid.add(txtEmail, 1, 8, 3, 1);
-        obGrid.add(txtPhone, 1, 9);
-        obGrid.add(txtSecPhone, 1, 10);
-        obGrid.add(txtFax, 1, 11);
-        obGrid.add(txtPhone2, 2, 9);
-        obGrid.add(txtSecPhone2, 2, 10);
-        obGrid.add(txtFax2, 2, 11);
-        obGrid.add(txtPhone3, 3, 9);
-        obGrid.add(txtSecPhone3, 3, 10);
-        obGrid.add(txtFax3, 3, 11);
+        obGrid.add(txtName, 1, 0, 3, 1);
+        obGrid.add(txtLast, 1, 1, 3, 1);
+        obGrid.add(txtAddress, 1, 2, 3, 1);
+        obGrid.add(txtCountry, 1, 3, 3, 1);
+        obGrid.add(txtProvince, 1, 4, 3, 1);
+        obGrid.add(txtCity, 1, 5, 3, 1);
+        obGrid.add(txtPostal, 1, 6, 2, 1);
+        obGrid.add(txtEmail, 1, 7, 3, 1);
+        obGrid.add(txtPhone, 1, 8);
+        obGrid.add(txtSecPhone, 1, 9);
+        obGrid.add(txtFax, 1, 10);
+        obGrid.add(txtPhone2, 2, 8);
+        obGrid.add(txtSecPhone2, 2, 9);
+        obGrid.add(txtFax2, 2, 10);
+        obGrid.add(txtPhone3, 3, 8);
+        obGrid.add(txtSecPhone3, 3, 9);
+        obGrid.add(txtFax3, 3, 10);
 
         //Set up spacing and alignment for the buttons. A second HBox is used so that two buttons can be in the bottom right while the other's in the bottom left.
         obBox.setSpacing(300);
@@ -112,16 +110,15 @@ public class AddCustomerWindow extends Application {
         obBox.getChildren().addAll(btnBack, obBoxRight);
 
         //Sets up the scene and the stage.
-        stage.setTitle("Edit Customer Information");
+        stage.setTitle("Add Customer Information");
         stage.setScene(new Scene(obBorder, 500, 500));
-        stage.show();
     }
 
     /**
      * Method for the confirm button. Will update the customer's information with what it finds in the TextFields, and give a success alert or an error alert
      * depending on whether the information is correct.
      */
-    private void Confirm(){
+    private void Confirm(Stage stage){
         //Set the customer information as the text inputted
         int length = MainGui.obBookingsLedger.aCustomer.size();
         obCustomer.setCustomerID(length++);
@@ -167,6 +164,7 @@ public class AddCustomerWindow extends Application {
             alert.setHeaderText(null);
             alert.setContentText("Customer successfully added");
             alert.showAndWait();
+            stage.setScene(MainGui.mainScene);
         }
         else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -175,9 +173,6 @@ public class AddCustomerWindow extends Application {
             alert.setContentText(sVal);
             alert.showAndWait();
         }
-    }
 
-    public static void main(String[] args) {
-        launch(args);
     }
 }

@@ -25,6 +25,7 @@
             <scope>test</scope>
         </dependency>
 
+
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics</artifactId>
@@ -106,9 +107,9 @@
                 <configuration>
                     <source>9</source>
                     <target>9</target>
+
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
@@ -117,7 +118,6 @@
                     <mainClass>campground_ui.MainGui</mainClass>
                 </configuration>
             </plugin>
-
         </plugins>
     </build>
 </project>

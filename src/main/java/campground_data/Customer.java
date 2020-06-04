@@ -207,6 +207,9 @@ public class Customer {
      * @param nCheck Determines whether to add up update a customer
      * @return Returns a string that shows whether there was an error or the update was successful.
      */
+
+    //Validates the fields inputted and returns a string with what is entered incorrectly
+
     public String updateCustomer(String sName, String sLast, String sAddress, String sProvince,
                                  String sCity, String sPostal, String sCountry, String sEmail,
                                  long nPhone, long nFax, long nSecPhone, int nCheck) {

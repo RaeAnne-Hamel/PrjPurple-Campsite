@@ -1,4 +1,4 @@
-package campground_ui;
+package campground_ui;//package campground_ui;
 
 
 import campground_data.Customer;
@@ -13,16 +13,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import campground_data.*;
-
 import java.util.ArrayList;
 import java.util.stream.Collectors;
-
-
 
 
 public class MainGui extends Application {
 
     //Loads image once so it isn't wasteful. Declares the separate panes here for general use.
+    public static BookingsLedger bookingsLedger = new BookingsLedger();
+
+
     Image Camp = new Image("file:images/campground.jpg");
     BorderPane custPane;
     BorderPane accomPane;
@@ -143,10 +143,12 @@ public class MainGui extends Application {
         btnAdd.setPrefWidth(200);
         Button btnEdit = new Button("Edit Reservation");
         btnEdit.setPrefWidth(200);
+        btnEdit.setOnAction(actionEvent -> {
+            EditReservationGui EditRes = new EditReservationGui();
+            EditRes.showAndWait();
+        });
         Button btnRemove = new Button("Remove Reservation");
         btnRemove.setPrefWidth(200);
-        Button btnTrans = new Button("Transactions");
-        btnTrans.setPrefWidth(200);
 
         //Create Stages opened in Reservation scene -AE
         SearchDateWindow searchDateWindow = new SearchDateWindow(stage);
@@ -156,7 +158,7 @@ public class MainGui extends Application {
 
 
         paneLeft.getChildren().add(btnBack3);
-        paneRight.getChildren().addAll(btnSearch, btnAdd, btnEdit, btnRemove, btnTrans);
+        paneRight.getChildren().addAll(btnSearch, btnAdd, btnEdit, btnRemove);
 
         resCenter.getChildren().addAll(paneLeft, paneRight);
         resPane.setCenter(resCenter);
@@ -242,6 +244,13 @@ public class MainGui extends Application {
         custCenter.getChildren().addAll(custLeft, custRight);
         custPane.setCenter(custCenter);
 
+        btnAddCustomer.setOnAction(e -> {
+            try {
+                new AddCustomerWindow(stage);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+            });
         btnEditCustomer.setOnAction(e -> EditCust(stage));
         btnBack2.setOnAction(e -> stage.setScene(mainScene));
     }
@@ -251,10 +260,6 @@ public class MainGui extends Application {
      * @param stage Takes in the parent stage
      */
     private void EditCust(Stage stage) {
-        obBookingsLedger.aCustomer.add(new Customer("bob", "loblaw", "215 bob street",
-                "BC", "VA", "S7N4V2", "Canada", "bob@bob.com",
-                3454567894L,7801234456L, 3144567123L, 4, true));
-
         //Creates new panes for the top and bottom. Separate VBoxes are created for the buttons on the left and right for alignment reasons.
         BorderPane editCustPane = new BorderPane();
         HBox custCenter = new HBox();
@@ -346,3 +351,5 @@ public class MainGui extends Application {
         launch(args);
     }
 }
+
+
