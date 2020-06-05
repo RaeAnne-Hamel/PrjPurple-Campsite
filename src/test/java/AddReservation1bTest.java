@@ -1,7 +1,4 @@
-import campground_data.BookingsLedger;
-import campground_data.Customer;
-import campground_data.Lot;
-import campground_data.LotType;
+import campground_data.*;
 import junit.framework.TestCase;
 import org.junit.Assert;
 import org.junit.Before;
@@ -18,10 +15,10 @@ public class AddReservation1bTest {
 
 
     //Will have a lotID of 0
-    private static Lot testLot = new Lot(LotType.NonServicedIndividual, true);
+    private static Lot testLot = new Lot(0, LotType.ServicedIndividual,new ArrayList<Reservation>(),0,"",true);
     ArrayList<Lot> lotArray = new ArrayList<>();
     ArrayList<Customer> testCustomer = new ArrayList<>();
-    private static Customer obCustomer = new Customer("John", "Doe","Addr","Addr","Addr","Addr","Addr","Email@Email",1L,1L,1L,1,true);
+    private static Customer obCustomer = new Customer("John", "Doe","Addr","Addr","Addr","Addr","Addr","Email@Email",1234567890L,1234567890L,1234567890L,1,true);
 
 
     @Test

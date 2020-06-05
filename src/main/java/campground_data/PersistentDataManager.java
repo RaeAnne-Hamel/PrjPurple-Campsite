@@ -1,7 +1,5 @@
 package campground_data;
 
-import com.sun.org.apache.xpath.internal.objects.XObject;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

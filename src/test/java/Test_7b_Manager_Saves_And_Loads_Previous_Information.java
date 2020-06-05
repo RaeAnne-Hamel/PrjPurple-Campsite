@@ -2,7 +2,6 @@
 import campground_data.*;
 import org.junit.Before;
 import org.junit.Test;
-import sun.security.krb5.internal.crypto.EType;
 
 import java.io.File;
 import java.util.ArrayList;

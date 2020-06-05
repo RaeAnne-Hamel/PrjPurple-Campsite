@@ -54,9 +54,9 @@ public class Customer extends Persistent{
         this.nPhone = nPhone;
         this.isFrequent = false;
 
-        this.nSecPhone = 0;
+        this.nSecPhone = 1234567890;
         this.nVisits = 0;
-        this.nFax = 0;
+        this.nFax = 1234567890;
     }
 
     public String Name;
