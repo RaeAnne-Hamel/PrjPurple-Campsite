@@ -35,7 +35,10 @@ public class SearchDateWindow extends Stage {
      */
     public SearchDateWindow(Stage parent){
 
-
+/**
+ *  !!!WARNING!!! Because of how Reservation is designed and loaded this window cannot work with ANY loaded data.
+ *  Reservations.txt must be cleared before use.
+ */
 
         //Grid pane will be used for Scene
         GridPane obGridPane = new GridPane();
@@ -136,8 +139,8 @@ public class SearchDateWindow extends Stage {
                     };
 
                     //Create Dates using numbers user has inputted
-                    Date obStartDate = new GregorianCalendar(arrivalDate[0], arrivalDate[1], arrivalDate[2]).getTime();
-                    Date obEndDate = new GregorianCalendar(arrivalDate[0], arrivalDate[1], arrivalDate[2]).getTime();
+                    Date obStartDate = new GregorianCalendar(arrivalDate[0], arrivalDate[1]-1, arrivalDate[2]).getTime();
+                    Date obEndDate = new GregorianCalendar(departureDate[0], departureDate[1]-1, departureDate[2]).getTime();
 
                     //Lot List loaded from dates
                     List<Lot> obLotList = MainGui.obBookingsLedger.checkAvailability(obStartDate, obEndDate);

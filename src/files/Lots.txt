@@ -1,1 +1,0 @@
-0,Cabin,String sRemovalReason,true,0

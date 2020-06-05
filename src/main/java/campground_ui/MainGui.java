@@ -158,6 +158,10 @@ public class MainGui extends Application {
         resCenter.getChildren().addAll(paneLeft, paneRight);
         resPane.setCenter(resCenter);
 
+        //Create SearchDateWindow and start it
+        SearchDateWindow searchDateWindow = new SearchDateWindow(stage);
+        btnSearch.setOnAction(e-> searchDateWindow.showAndWait());
+
         //btnAdd.setOnAction(e-> stage.setScene(AddReservationGui));
         AddReservationGui addGui = new AddReservationGui(stage);
         btnAdd.setOnAction(e-> addGui.showAndWait());

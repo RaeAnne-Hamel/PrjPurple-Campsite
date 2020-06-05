@@ -277,7 +277,7 @@ public class Reservation extends Persistent{
 
         return String.format("%d,%d,%d,%d,%d,%d,%d,%d,%d,%b",
                 getReservationID(),nCustomerCount,nLinkedLotID,(obStartDate.getYear()+1900),obStartDate.getMonth(),
-                obStartDate.getDay(),(obEndDate.getYear()+1900),obEndDate.getMonth(),obEndDate.getDay(),status);
+                obStartDate.getDate(),(obEndDate.getYear()+1900),obEndDate.getMonth(),obEndDate.getDate(),status);
     }
 
     /* Must link with an Arraylist of customers. */

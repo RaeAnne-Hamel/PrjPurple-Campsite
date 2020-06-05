@@ -248,7 +248,7 @@ public class EditReservationGui extends Stage{
         txtArrivalMonth.setText(Integer.toString((reservation.getObStartDate().getMonth())+1));
         addListenerToTestfeild(txtArrivalMonth);
         txtArrivalDay.setDisable(false);
-        txtArrivalDay.setText(Integer.toString(reservation.getObStartDate().getDay()));
+        txtArrivalDay.setText(Integer.toString(reservation.getObStartDate().getDate()));
         addListenerToTestfeild(txtArrivalDay);
 
         //set the leaving day
@@ -259,7 +259,7 @@ public class EditReservationGui extends Stage{
         txtDepartMonth.setText(Integer.toString((reservation.getObStartDate().getMonth())+1));
         addListenerToTestfeild(txtDepartMonth);
         txtDepartDay.setDisable(false);
-        txtDepartDay.setText(Integer.toString(reservation.getObStartDate().getDay()));
+        txtDepartDay.setText(Integer.toString(reservation.getObStartDate().getDate()));
         addListenerToTestfeild(txtDepartDay);
 
         txtGuest.setDisable(false);
