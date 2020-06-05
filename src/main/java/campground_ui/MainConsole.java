@@ -1,6 +1,7 @@
 package campground_ui;
 
 import campground_data.*;
+import javafx.scene.control.Button;
 
 import java.util.ArrayList;
 import java.time.LocalDate;
@@ -26,6 +27,7 @@ public class MainConsole {
     Main Method
      */
     public static void main(String[] args) {
+
         /*
         ArrayList for Lots is created so that there is data to use -EB
          */

@@ -1,6 +1,7 @@
-package campground_ui;
 
+package campground_ui;
 import campground_data.*;
+import campground_data.Customer;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -11,7 +12,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -21,12 +21,14 @@ import java.util.stream.Collectors;
 
 public class MainGui extends Application {
     //Loads image once so it isn't wasteful. Declares the separate panes here for general use.
+    //public static BookingsLedger bookingsLedger = new BookingsLedger();
+
+
     Image Camp = new Image("file:images/campground.jpg");
     BorderPane custPane;
     BorderPane accomPane;
     BorderPane resPane;
     static Scene mainScene;
-    //public static BookingsLedger obBookingsLedger = new BookingsLedger();
 
     public static BookingsLedger obBookingsLedger;
     ArrayList<Customer> obCustList;
@@ -34,60 +36,23 @@ public class MainGui extends Application {
 
 
 
+
     @Override
     public void start(Stage stage) {
 
-        obBookingsLedger = new BookingsLedger();
-
 
         /**
-         * TEST DATA!!!!!!!!!!!!!!
+         * Test data for adding and editing lots. Feel free to edit, remove or use for yourself. Just used to test the data until
+         * saving functionality is added. -EB
          */
 
-        obCustList = new ArrayList<>();
-        obResList = new ArrayList<>();
+        obBookingsLedger = new BookingsLedger();
 
-        Date startDate = new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime();
-        Date endDate = new GregorianCalendar(2014, Calendar.FEBRUARY, 13).getTime();
-
-        Customer obCustomer = new Customer("John", "Doe", "Addr", "sk", "Saskatoon", "s7l5h6", "canada", "Email@Email",
-                1000000001, 1000000002, 1000000003, 1, true);
-        Customer obCustomer1 = new Customer("Doe", "John", "Addr","sk", "Saskatoon", "s7l5h6", "canada", "Email@Email",
-                1000000004,1000000005,1000000006,1,true);
-
-        obCustList.add(obCustomer);
-        obCustList.add(obCustomer1);
-
-        Lot obLot = new Lot(0, LotType.NonServicedIndividual, obResList, 0, "", true);
-        Lot obLot2 = new Lot(2, LotType.NonServicedIndividual, obResList, 2, "", true);
-
-        Reservation testReservation = new Reservation(obLot, startDate,endDate,obCustList,9);
-        Reservation testReservation2 = new Reservation(obLot2,startDate,endDate,obCustList,9);
-
-        obResList.add(testReservation);
-        obResList.add(testReservation2);
-
-        obBookingsLedger.addCustomer(obCustomer);
-        obBookingsLedger.addCustomer(obCustomer1);
-
-        obBookingsLedger.addAccommodation(obLot);
-        obBookingsLedger.addAccommodation(obLot2);
-
-        obBookingsLedger.addReservation(testReservation);
-        obBookingsLedger.addReservation(testReservation2);
-
-        for(Reservation obRes: obBookingsLedger.getAllReservations())
-        {
-            System.out.printf("%s", obRes);
-        }
-
-/**
- * DELETE!!!!!!!!!!!!!!!!!!!!!!
- */
-
-
-
-
+        obBookingsLedger.setCustomerList(PersistentDataManager.load("src/files/Customers.txt", LoadType.Customer, obBookingsLedger));
+        obBookingsLedger.setLotList(PersistentDataManager.load("src/files/Lots.txt", LoadType.Lot, obBookingsLedger));
+        obBookingsLedger.setManagerList(PersistentDataManager.load("src/files/Managers.txt", LoadType.Manager, obBookingsLedger));
+        obBookingsLedger.setReservationsList(PersistentDataManager.load("src/files/Reservations.txt", LoadType.Reservation, obBookingsLedger));
+        obBookingsLedger.setTransactionList(PersistentDataManager.load("src/files/Transactions.txt", LoadType.Transaction, obBookingsLedger));
 
 
         //Setting up the image to use is the same in each section - DW
@@ -97,6 +62,7 @@ public class MainGui extends Application {
         javafx.scene.control.Button btnExit = new javafx.scene.control.Button("Exit");
 
         //Panes for use in the Scenes for each section. -EB
+
         //The Main Pane for the Main Section. -EB
         BorderPane mainPane = new BorderPane();
         HBox paneCenter = new HBox();
@@ -134,6 +100,7 @@ public class MainGui extends Application {
         paneLeft.getChildren().add(btnExit);
         paneRight.getChildren().addAll(btnAccom, btnCust, btnRes);
         paneCenter.getChildren().addAll(paneLeft, paneRight);
+
         mainPane.setCenter(paneCenter);
 
         //Event Handlers for moving to another section of the main window.
@@ -142,6 +109,7 @@ public class MainGui extends Application {
         btnRes.setOnAction(e -> stage.setScene(Reservations));
 
         //Code for running the initial Scene. -EB
+
         btnExit.setOnAction(e -> stage.close());
 
         stage.setScene(mainScene);
@@ -177,16 +145,19 @@ public class MainGui extends Application {
         btnAdd.setPrefWidth(200);
         Button btnEdit = new Button("Edit Reservation");
         btnEdit.setPrefWidth(200);
+        btnEdit.setOnAction(actionEvent -> {
+            EditReservationGui EditRes = new EditReservationGui();
+            EditRes.showAndWait();
+        });
         Button btnRemove = new Button("Remove Reservation");
         btnRemove.setPrefWidth(200);
-        Button btnTrans = new Button("Transactions");
-        btnTrans.setPrefWidth(200);
 
         paneLeft.getChildren().add(btnBack3);
-        paneRight.getChildren().addAll(btnSearch, btnAdd, btnEdit, btnRemove, btnTrans);
+        paneRight.getChildren().addAll(btnSearch, btnAdd, btnEdit, btnRemove);
 
         resCenter.getChildren().addAll(paneLeft, paneRight);
         resPane.setCenter(resCenter);
+
         //btnAdd.setOnAction(e-> stage.setScene(AddReservationGui));
         AddReservationGui addGui = new AddReservationGui(stage);
         btnAdd.setOnAction(e-> addGui.showAndWait());
@@ -226,15 +197,20 @@ public class MainGui extends Application {
         btnAddAccom.setPrefWidth(150);
         Button btnEditAccom = new Button("Edit Accommodation");
         btnEditAccom.setPrefWidth(150);
-        Button btnSetAvailability = new Button("Set Availability");
-        btnSetAvailability.setPrefWidth(150);
         Button btnSetPrice = new Button("Set Price");
         btnSetPrice.setPrefWidth(150);
 
         AccomLeft.getChildren().add(btnBack1);
-        AccomRight.getChildren().addAll(btnAddAccom, btnEditAccom, btnSetAvailability, btnSetPrice);
+        AccomRight.getChildren().addAll(btnAddAccom, btnEditAccom, btnSetPrice);
         AccomCenter.getChildren().addAll(AccomLeft, AccomRight);
         accomPane.setCenter(AccomCenter);
+
+        addAccommodationGUI addGUI = new addAccommodationGUI(stage);
+        EditAccommodationGUI editGUI = new EditAccommodationGUI(stage);
+
+        btnBack1.setOnAction(e -> stage.setScene(mainScene));
+        btnAddAccom.setOnAction(e -> addGUI.showAndWait());
+        btnEditAccom.setOnAction(e -> editGUI.showAndWait());
 
         btnBack1.setOnAction(e -> stage.setScene(mainScene));
     }
@@ -272,6 +248,13 @@ public class MainGui extends Application {
         custCenter.getChildren().addAll(custLeft, custRight);
         custPane.setCenter(custCenter);
 
+        btnAddCustomer.setOnAction(e -> {
+            try {
+                new AddCustomerWindow(stage);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+            });
         btnEditCustomer.setOnAction(e -> EditCust(stage));
         btnBack2.setOnAction(e -> stage.setScene(mainScene));
     }
@@ -326,7 +309,7 @@ public class MainGui extends Application {
         //Stream that returns a sorted list of customers with the last name entered. List will include first and last names and ID.
         btnSearch.setOnAction(e -> {
             String sSearch = txtSearch.getText();
-            ArrayList<String> obAC = obBookingsLedger.aCustomer.stream()
+            ArrayList<String> obAC = obBookingsLedger.getCustomerList().stream()
                     .filter(x -> x.getLast().equalsIgnoreCase(sSearch))
                     .sorted((x, y) -> (x.getLast().compareTo(y.getLast())))
                     .map(x -> x.getName() + " " + x.getLast() + " " + x.getCustomerID())
@@ -348,7 +331,7 @@ public class MainGui extends Application {
             //Try/catch block in case ID field is left empty or not a number.
             boolean bFound = false;
             try {
-                for (Customer obCust : obBookingsLedger.aCustomer) {
+                for (Customer obCust : obBookingsLedger.getCustomerList()) {
                     //Opens a new edit customer window for the customer that was searched for.
                     if (obCust.getCustomerID() == Integer.parseInt(txtID.getText())) {
                         bFound = true;
@@ -371,4 +354,5 @@ public class MainGui extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
 }

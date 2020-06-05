@@ -1,9 +1,6 @@
 package campground_ui;
 
-import campground_data.BookingsLedger;
-import campground_data.Customer;
-import campground_data.Lot;
-import campground_data.Reservation;
+import campground_data.*;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -123,12 +120,14 @@ public class AddReservationGui extends Stage {
 
         obGrid.add(lblValid2, 1, 5);
 
+
         obGrid.add(lblArrival, 0, 6);
         obGrid.add(txtArrivalYear, 1,6);
         obGrid.add(txtArrivalMonth, 2, 6);
         obGrid.add(txtArrivalDay, 3,6);
 
         obGrid.add(lblValid3, 1, 7);
+
 
         obGrid.add(lblDeparture, 0, 8);
         obGrid.add(txtDepartYear, 1,8);
@@ -163,6 +162,7 @@ public class AddReservationGui extends Stage {
     cboCust1.setItems(names);
     //populates second Combo box
     cboCust2.setItems(names);
+
 
 
 
@@ -348,7 +348,7 @@ public class AddReservationGui extends Stage {
                     .collect(Collectors.toList());
 
             //gets the lost type
-            Lot obLot = filteredLots.get(Integer.parseInt(txtLotID.getText()));
+            Lot obLot = filteredLots.get(0);
 
             //switch case for the amount of people that can stay on a lot
             switch (obLot.getLotType()) {
@@ -419,21 +419,11 @@ public class AddReservationGui extends Stage {
             //add the reservation
             MainGui.obBookingsLedger.addReservation(lotID, obEnteredArrival, obEnteredDepart, custCount, guest);
 
-            /**
-             *
-             */
-            for(Reservation obRes: BookingsLedger.aReservation)
-            {
-                System.out.printf("%s", obRes);
-            }
-            /**
-            *
-            */
-
-
            int size = MainGui.obBookingsLedger.getAllReservations().size();
 
            int resID = MainGui.obBookingsLedger.getAllReservations().get(size -1).getReservationID();
+
+            PersistentDataManager.saveAll(MainGui.obBookingsLedger);
 
            lblResID2.setText(Integer.toString(resID));
 
@@ -463,10 +453,6 @@ public class AddReservationGui extends Stage {
             }
         }
 
-
-
-
-
         });
 
         //click back button
@@ -493,12 +479,13 @@ public class AddReservationGui extends Stage {
     private ArrayList<String> getCustNameList()
     {
         //get the array list from BookingsLedger
-        ArrayList<Customer> custList = MainGui.obBookingsLedger.aCustomer;
+        ArrayList<Customer> custList = MainGui.obBookingsLedger.getCustomerList();
 
         //create a new ArrayList of String
         ArrayList<String> names = new ArrayList<>();
 
         //for each item in the ArrayList
+
         for(Customer obCust : custList)
         {
            //add the customer name

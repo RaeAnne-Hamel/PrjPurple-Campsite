@@ -35,6 +35,8 @@ public class SearchDateWindow extends Stage {
      */
     public SearchDateWindow(Stage parent){
 
+
+
         //Grid pane will be used for Scene
         GridPane obGridPane = new GridPane();
         //VBox will hold both HBoxes

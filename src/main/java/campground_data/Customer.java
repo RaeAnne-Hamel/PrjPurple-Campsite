@@ -1,6 +1,7 @@
 package campground_data;
 
-public class Customer {
+public class Customer extends Persistent{
+
     private final int MAX_LENGTH = 255;
     private int CustomerID;
     private String sName;
@@ -52,9 +53,10 @@ public class Customer {
         this.sEmail = sEmail;
         this.nPhone = nPhone;
         this.isFrequent = false;
-        this.nSecPhone = 0;
+
+        this.nSecPhone = 1234567890;
         this.nVisits = 0;
-        this.nFax = 0;
+        this.nFax = 1234567890;
     }
 
     public String Name;
@@ -64,11 +66,25 @@ public class Customer {
         this.Name = name;
     }
 
-    public Customer() {
-//        this.CustomerID = idPool++;
+    public Customer()
+    {
+        this.CustomerID = idPool++;
+        this.sName = "";
+        this.sLast = "";
+        this.sAddress = "";
+        this.sProvince = "";
+        this.sCity = "";
+        this.sPostal = "";
+        this.sCountry = "";
+        this.sEmail = "";
+        this.nPhone = 0;
+        this.isFrequent = false;
+        this.nSecPhone = 0;
+        this.nVisits = 0;
+        this.nFax = 0;
     }
 
-    public int getCustomerID() { return CustomerID++; }
+    public int getCustomerID() { return CustomerID; }
 
     public String getName() { return sName; }
 
@@ -121,6 +137,7 @@ public class Customer {
         }
     }
 
+
     public void setProvince(String sProvince) {
         if (sProvince.length() > 0 && sProvince.length()<=MAX_LENGTH)
         {
@@ -171,6 +188,7 @@ public class Customer {
     }
 
     public void setSecPhone(long nPhone) {
+
         if (nPhone > 1000000000L && nPhone < 99999999999L)
         {
             this.nSecPhone = nPhone;
@@ -197,6 +215,7 @@ public class Customer {
      * @param nCheck Determines whether to add up update a customer
      * @return Returns a string that shows whether there was an error or the update was successful.
      */
+
     //Validates the fields inputted and returns a string with what is entered incorrectly
     public String updateCustomer(String sName, String sLast, String sAddress, String sProvince,
                                  String sCity, String sPostal, String sCountry, String sEmail,
@@ -210,6 +229,7 @@ public class Customer {
         if (!(sAddress.length() > 0 && sAddress.length() <= MAX_LENGTH)){
             return "Street address must be between 1 and 255 characters.";
         }
+
         if (!(sProvince.length() > 0 && sProvince.length()<=MAX_LENGTH)){
             return "State/province must be between 1 and 255 characters.";
         }
@@ -225,6 +245,7 @@ public class Customer {
         if (!(sEmail.length() > 4 && sEmail.length()<=MAX_LENGTH && sEmail.contains("@"))){
             return "Email must be between 5 and 255 characters and include an @ symbol.";
         }
+
         if (!(nPhone > 1000000000L && nPhone < 99999999999L)){
             return "Phone number must be 10 or 11 digits.";
         }
@@ -251,6 +272,42 @@ public class Customer {
         if (nCheck == 1) return "Successfully added";
         else return "Successfully updated";
     }
+
+    /* ID, Address, Email, Fax, Phone, SecPhone, Visits, frequent */
+    public void load(BookingsLedger bl, Object... arg) {
+        this.setCustomerID(Integer.parseInt((String) arg[0]));
+        this.setName((String)arg[1]);
+        this.setLast((String)arg[2]);
+        this.setAddress((String)arg[3]);
+        this.setCity((String)arg[4]);
+        this.setProvince((String)arg[5]);
+        this.setCountry((String)arg[6]);
+        this.setPostal((String)arg[7]);
+        this.setEmail((String)arg[8]);
+        this.setFax(Long.parseLong((String) arg[9]));
+        this.setPhone(Long.parseLong((String) arg[10]));
+        this.setSecPhone(Long.parseLong((String) arg[11]));
+        this.setVisits(Integer.parseInt((String) arg[12]));
+        this.setFrequent(Boolean.parseBoolean((String) arg[13]));
+        idPool++;
+    }
+
+    /* ID, Address, Email, Fax, Phone, SecPhone, Visits, frequent */
+    @Override
+    public String savable() {
+        return String.format("%d,%s,%s,%s,%s,%s,%s,%s,%s,%d,%d,%d,%d,%b",
+                getCustomerID(),getName(),getLast(),getAddress(),getCity(),getProvince(),getCountry(),getPostal(),getEmail(),getFax(),getPhone(),getSecPhone(),getVisits(),getFrequent());
+    }
+
+    /* Empty until needed */
+    @Override
+    public void link(BookingsLedger bl, Object... arg) { }
+
 }
+
+
+
+
+
 
 

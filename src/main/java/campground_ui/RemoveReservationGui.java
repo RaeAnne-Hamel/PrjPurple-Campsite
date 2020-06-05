@@ -1,9 +1,6 @@
 package campground_ui;
 
-import campground_data.BookingsLedger;
-import campground_data.Customer;
-import campground_data.Lot;
-import campground_data.Reservation;
+import campground_data.*;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -183,6 +180,7 @@ public class RemoveReservationGui extends Stage {
                 {
                     //removes the reservation
                     MainGui.obBookingsLedger.getAllReservations().removeIf(obItem -> resID == obItem.getReservationID());
+                    PersistentDataManager.saveAll(MainGui.obBookingsLedger);
 
 
                     //confirmsthe reservation is removed

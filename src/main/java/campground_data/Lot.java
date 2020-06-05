@@ -1,17 +1,18 @@
 package campground_data;
 
-
 import java.util.ArrayList;
 
-public class Lot {
+public class Lot extends Persistent{
 
 
     int nLotID;
     LotType obType;
     ArrayList<Reservation> obReservationList;
-    int StaticLotID = 0;
+    public static int StaticLotID = 0;
     String sRemovalReason;
     boolean bAvailability;
+    int obReservationListLength;
+    double price = 0;
 
     public Lot(int nLotID,
                LotType obType,
@@ -38,6 +39,7 @@ public class Lot {
         this.bAvailability = bAvailability;
 
     }
+
     public Lot(int nLotID)
     {
         this.nLotID = nLotID;
@@ -73,6 +75,11 @@ public class Lot {
         return sRemovalReason;
     }
 
+    public void setRemovalOverride(String sReason)
+    {
+        sRemovalReason = sReason;
+    }
+
     /*
     Checks that the String input is within the acceptable length of between 1 and 255 characters,
     and then sets the reason for the lot being removed to the string.
@@ -92,6 +99,11 @@ public class Lot {
             default:
                 sRemovalReason = sReason;
         }
+    }
+
+    public void setReservations(ArrayList<Reservation> obRes)
+    {
+        this.obReservationList = obRes;
     }
 
     public boolean getAvailability()
@@ -124,6 +136,41 @@ public class Lot {
     @Override
     public String toString(){
         return ("Lot ID " + this.getLotID() + " Lot Type: " + this.getLotType() + " Removal Reason: " + this.sRemovalReason + " Availability: " + this.getAvailability());
+    }
+
+    /* LotID, LotType, Removal Reason, bAvailability, Reservationcount */
+    @Override
+    public void load(BookingsLedger bl, Object... arg) {
+        nLotID = Integer.parseInt((String)arg[0]);
+        setLotType(LotType.valueOf((String)arg[1]));
+        setRemovalReason((String)arg[2]);
+        setAvailability(Boolean.parseBoolean((String)arg[3]));
+        obReservationListLength = Integer.parseInt((String)arg[4]);
+    }
+
+    @Override
+    public String savable() {
+        String out = String.format("%d,%s,%s,%b,%d",
+                getLotID(),getLotType(),getRemovalReason(),getAvailability(),obReservationListLength);
+        System.out.println(out);
+        return out;
+    }
+
+    /* Empty until needed */
+    @Override
+    public void link(BookingsLedger bl, Object... arg) {
+
+        /* searches for Reservations with the ID's in their save data */
+        ArrayList<Reservation> aReservations = new ArrayList<>();
+        for(int i = 0; i < obReservationListLength; i++)
+        {
+            int searchForID = Integer.parseInt((String)arg[5+i]);
+            for (int j = 0; j < bl.getAllReservations().size(); j++)
+            {
+                if (bl.getAllReservations().get(i).getReservationID() == searchForID)
+                    obReservationList.add(bl.getAllReservations().get(i));
+            }
+        }
     }
 }
 

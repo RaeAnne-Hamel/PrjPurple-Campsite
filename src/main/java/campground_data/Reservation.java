@@ -6,18 +6,26 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Reservation {
+
+public class Reservation extends Persistent{
+
 
     /*Primitive Variables */
-    int ReservationID, nCustomerCount;
+    int ReservationID, nCustomerCount, nLinkedLotID;
     double price;
     Lot obLot;
+
     public ArrayList <Customer> obCustomerList = new ArrayList<>();
+
     Date obStartDate;
     Date obEndDate;
     public Boolean status;
 
+
     public static int idCounter = 0;
+
+    //a new transaction
+    Transaction transaction;
 
     /*Reservation Constructor */
     public Reservation(Lot obLot, Date startDate, Date endDate, ArrayList<Customer> customers, int nPeople)
@@ -29,6 +37,7 @@ public class Reservation {
         this.obEndDate = endDate;
         this.obCustomerList = customers;
         this.nCustomerCount = nPeople;
+        this.transaction = new Transaction(this);
 
         /*Set the ID for the specific reservation*/
         this.ReservationID = ++idCounter;
@@ -36,6 +45,9 @@ public class Reservation {
         this.status = true;
 
     }
+
+    public Reservation(){};
+
     /*Reservation Constructor */
     public Reservation(ArrayList<Customer> customers, int nPeople, Date startDate, Date endDate, Lot obLot)
     {
@@ -44,8 +56,11 @@ public class Reservation {
             this.nCustomerCount = nPeople;
             this.obStartDate = startDate;
             this.obEndDate = endDate;
+
             this.ReservationID = ++idCounter;
-            double price;
+            this.transaction = new Transaction(this);
+            double price = 100.0;
+            this.status = true;
             String Status = "Active";
     }
 
@@ -101,9 +116,8 @@ public class Reservation {
         return this.obLot.getLotID();
     }
     public ArrayList<Customer> getCustomerList() {return this.obCustomerList; }
-    public Date getObStartDate(){ return this.obStartDate;}
-    public Date getObEndDate() { return this.obEndDate; }
     public int getCustomerCount() { return this.nCustomerCount; }
+
 
     /**
      * allows the person to be able to
@@ -111,9 +125,10 @@ public class Reservation {
      *
      * @param newPrice
      */
-    private void setPrice(double newPrice) {
+    public void setPrice(double newPrice) {
         this.price = newPrice;
     }
+
 
     /**
      * @param
@@ -162,6 +177,10 @@ public class Reservation {
         return !(obStartDate.compareTo(obEndDate) > 0);
     }
 
+    public ArrayList<Customer> getObCustomerList(){
+        return this.obCustomerList;
+    }
+
     public int getReservationID() {
         /*Set the ID for the specific reservation*/
         return this.ReservationID;
@@ -184,14 +203,37 @@ public class Reservation {
         //they can manually input a price if they need.
 
         return this.price;
+    }
+
+    public Date getObStartDate() {
+        return obStartDate;
+    }
+
+    public Date getObEndDate(){
+        return obEndDate;
+    }
+
+    public int getnCustomerCount(){
+        return nCustomerCount;
+    }
+
+    /**
+     * this is used for testing cases, it will let me test the trandaction class
+     * for a reservation.
+     * @return
+     */
+    public Transaction getTransaction()
+         {
+             return this.transaction;
          }
+
 
 
     @Override
     public String toString() {
         return "Reservation: " +
                 "ID: " + ReservationID +
-                "\t " + obStartDate +
+                "\n\t " + obStartDate +
                 " - " + obEndDate;
     }
 
@@ -205,6 +247,62 @@ public class Reservation {
                 " Lot Type: " + obLot.getLotType();
     }
 
+
+    /* ID, nCustCount, Price, LinkedLotID, StartDate(Y,M,D), EndDate(Y,M,D), status*/
+    @Override
+    public void load(BookingsLedger bl, Object... arg) {
+        this.ReservationID = Integer.parseInt((String)arg[0]);
+        this.nCustomerCount = Integer.parseInt((String)arg[1]);
+        this.price = Double.parseDouble((String)arg[2]);
+
+        Date obStartDate = new Date(Integer.parseInt((String)arg[3]),Integer.parseInt((String)arg[4]),Integer.parseInt((String)arg[5]));
+        this.obStartDate = obStartDate;
+
+        Date obEndDate = new Date(Integer.parseInt((String)arg[6]),Integer.parseInt((String)arg[7]),Integer.parseInt((String)arg[8]));
+        this.obStartDate = obEndDate;
+
+        status = Boolean.parseBoolean((String) arg[9]);
+    }
+
+    @Override
+    public String savable() {
+
+        String CustomerIDs = "";
+        for (int i = 0; i < nCustomerCount; i ++)
+        {
+            CustomerIDs += "" + obCustomerList.get(0).getCustomerID();
+            if(i < nCustomerCount -1)
+                CustomerIDs +=",";
+        }
+
+        return String.format("%d,%d,%d,%d,%d,%d,%d,%d,%d,%b",
+                getReservationID(),nCustomerCount,nLinkedLotID,(obStartDate.getYear()+1900),obStartDate.getMonth(),
+                obStartDate.getDay(),(obEndDate.getYear()+1900),obEndDate.getMonth(),obEndDate.getDay(),status);
+    }
+
+    /* Must link with an Arraylist of customers. */
+    @Override
+    public void link(BookingsLedger bl, Object... arg) {
+
+        /* searches for Lots with the ID's in their save data */
+        for (int i = 0; i < bl.getLotList().size(); i++)
+            if (bl.getLotList().get(i).nLotID == this.nLinkedLotID)
+                obLot = bl.getLotList().get(i);
+
+        /* searches for customers with the ID's in their save data */
+        ArrayList<Customer> aCustomers = new ArrayList<>();
+        for(int i = 0; i < nCustomerCount; i++)
+        {
+            int searchForID = Integer.parseInt((String)arg[11+i]);
+            for (int j = 0; j < bl.aCustomer.size(); j++)
+            {
+                if (bl.aCustomer.get(i).getCustomerID() == searchForID)
+                    obCustomerList.add(bl.aCustomer.get(i));
+            }
+        }
+
+        this.obCustomerList = aCustomers;
+    }
 
 }
 
