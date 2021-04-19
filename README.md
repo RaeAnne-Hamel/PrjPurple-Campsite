@@ -6,7 +6,8 @@ This demostrates my first attempt at agile programming and was done in JavaFX.
 Backend - Developed the Transactions base entity class that handles creating, getting and setting transactions. 
 It requires an Enumeration that handles debit, credit, and cash transaction types
 Frontend - I helped developed a few areas of the GUI's for this program
-     1.MainGUI (opening page to the programming) with highlighting the structure and interactive buttons 
+    
+    1.MainGUI (opening page to the programming) with highlighting the structure and interactive buttons 
 
 ![MainGUI](images/MainGUI.JPG)
      
